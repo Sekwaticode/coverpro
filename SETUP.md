@@ -1,5 +1,7 @@
 # Local setup
 
+Planning to move payments to South African providers? See [`docs/payments-migration.md`](docs/payments-migration.md) and section 7 below.
+
 CoverPro is made of one Express API (`services/`) and five Next.js apps (`apps/`).
 
 | App | Port |
@@ -83,6 +85,82 @@ In production, create the same three endpoints in the Stripe dashboard with thes
 3. Put the returned `hmac` value in `DAILY_WEBHOOK_SECRET`.
 
 Without the webhook, rooms still expire automatically after 6 hours.
+
+## 7. South African providers (Paystack, TradeSafe, VerifyNow)
+
+> **Status: the code for these providers hasn't been built yet.**
+> [`docs/payments-migration.md`](docs/payments-migration.md) is the build plan.
+> The steps below get the accounts, keys and webhook URLs ready. Stripe stays the active provider until the `*_PROVIDER` flags are switched, so both can be set up at the same time.
+
+### 7.1 Accounts
+
+| Platform | Used for | Sign up | What to get |
+|---|---|---|---|
+| [Paystack](https://paystack.com) | Connects purchases, saved cards (optional payouts) | Register a South African business, then complete compliance | Test secret key (`sk_test_…`), public key (`pk_test_…`) |
+| [TradeSafe](https://www.tradesafe.co.za) | Escrow for milestone payments | Business account + developer portal application | Client ID + client secret (sandbox first) |
+| [VerifyNow](https://verifynow.co.za) | SA ID + selfie verification, bank account checks | Business account, then buy credits | API key |
+
+### 7.2 Environment variables (`services/.env`)
+
+Add these alongside the Stripe variables. Both sets can be filled in at once.
+
+```env
+# Which provider each flow uses (stripe until the new code is live)
+COLLECTION_PROVIDER=stripe   # stripe | paystack
+ESCROW_PROVIDER=stripe       # stripe | tradesafe | paystack
+IDENTITY_PROVIDER=stripe     # stripe | verifynow
+
+# Paystack (Dashboard → Settings → API Keys & Webhooks)
+PAYSTACK_SECRET_KEY=sk_test_...
+PAYSTACK_PUBLIC_KEY=pk_test_...
+
+# TradeSafe (developer portal → your application)
+TRADESAFE_CLIENT_ID=...
+TRADESAFE_CLIENT_SECRET=...
+TRADESAFE_API_URL=https://api-developer.tradesafe.dev/graphql   # production: https://api.tradesafe.co.za/graphql
+TRADESAFE_AUTH_URL=https://auth.tradesafe.co.za/oauth/token
+TRADESAFE_PLATFORM_TOKEN_ID=...   # CoverPro's own TradeSafe token (receives the platform fee)
+
+# VerifyNow
+VERIFYNOW_API_KEY=...
+```
+
+Paystack signs webhooks with the secret key, so it needs no separate webhook secret.
+
+### 7.3 Webhooks and callbacks for local testing
+
+Paystack and TradeSafe have no CLI like `stripe listen`, so expose the API with ngrok:
+
+```bash
+ngrok http 4000
+```
+
+- **Paystack** (Dashboard → Settings → API Keys & Webhooks, **Test** mode): set the webhook URL to `https://<ngrok-host>/api/v1/paystack/webhook`. Paystack allows only one URL per mode, and the API routes events by `metadata.purpose`.
+- **TradeSafe** (developer portal → application): set the callback URL to `https://<ngrok-host>/api/v1/tradesafe/callback`.
+- **VerifyNow**: no webhook needed. Verification calls return their result in the same request.
+
+The ngrok URL changes each time you restart ngrok unless you have a reserved domain. Update both dashboards when it changes.
+
+### 7.4 One-time setup
+
+1. **Paystack:**
+   - Test a payment with Paystack's test cards.
+   - If you'll use Transfers for payouts, turn off the transfer OTP (Settings → Preferences).
+   - Ask Paystack to enable Transfers on your account.
+2. **TradeSafe:**
+   - In the sandbox, create CoverPro's own token with the `tokenCreate` mutation, using the company and bank details.
+   - Put its ID in `TRADESAFE_PLATFORM_TOKEN_ID`.
+3. **VerifyNow:** run one test check from their dashboard to confirm your credits and API key work.
+4. **Database:** once the migration lands, run `npm run db:migrate` for the new provider columns.
+
+### 7.5 Switching a flow over
+
+Once a flow's code is merged:
+
+1. Change its flag, for example `COLLECTION_PROVIDER=paystack`.
+2. Restart the API.
+
+Existing Stripe payments and milestones still finish on Stripe, because each payment row records the provider that created it.
 
 ## Production notes
 
