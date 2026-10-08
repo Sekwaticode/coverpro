@@ -13,6 +13,7 @@ export const errorHandler: ErrorRequestHandler = (
     error instanceof Error ? error.message : "An unexpted error occured.";
 
   if (statusCode >= 500) {
+    console.error(`${request.method} ${request.path} failed:`, error);
     request.logger
       .error({
         message: "Unhandled request error",

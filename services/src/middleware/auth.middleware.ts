@@ -13,6 +13,15 @@ import { accounts } from "../database/schema.js";
 import { and, eq } from "drizzle-orm";
 
 const accountRoles = ["client", "freelancer"] as const;
+
+// With CLERK_JWT_KEY set, tokens are verified offline instead of fetching Clerk JWKS on each cold start.
+const verifyClerkToken = (token: string) =>
+  verifyToken(
+    token,
+    env.clerkJwtKey
+      ? { jwtKey: env.clerkJwtKey }
+      : { secretKey: env.clerkSecretKey },
+  );
 type AccountRole = (typeof accountRoles)[number];
 
 interface CachedAccountAuth {
@@ -81,18 +90,19 @@ export const authenticateAccount = async (
   if (!isAccountRole(requestedRole)) {
     throw new ApiError(400, "A valid account role is required.");
   }
-  if (!env.clerkSecretKey) {
+  if (!env.clerkSecretKey && !env.clerkJwtKey) {
     throw new ApiError(503, "Authentication is not configured.");
   }
 
   try {
-    const claims = await verifyToken(token, { secretKey: env.clerkSecretKey });
+    const claims = await verifyClerkToken(token);
     return {
       ...(await isAccountAvailable(requestedRole, claims.sub)),
       sessionId: typeof claims.sid === "string" ? claims.sid : undefined,
     };
   } catch (error) {
     if (error instanceof ApiError) throw error;
+    console.error("Sign-up authentication failed:", error);
     throw new ApiError(401, "Authentication token is invalid or expired.");
   }
 };
@@ -113,10 +123,9 @@ export const isAuthenticated: RequestHandler = asyncHandler(
     let claims: Awaited<ReturnType<typeof verifyToken>>;
 
     try {
-      claims = await verifyToken(token, {
-        secretKey: env.clerkSecretKey,
-      });
+      claims = await verifyClerkToken(token);
     } catch (error) {
+      console.error("Token verification failed:", error);
       throw new ApiError(401, "Authentication token is invalid or expired.");
     }
 

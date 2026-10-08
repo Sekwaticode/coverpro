@@ -1,3 +1,4 @@
+import "./config/network.js";
 import { createServer, type Server } from "node:http";
 import { SERVICE_NAME } from "./config/constants.js";
 import { env } from "./config/env.js";

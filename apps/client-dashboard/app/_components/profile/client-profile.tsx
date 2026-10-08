@@ -90,7 +90,6 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
   const [avatarError, setAvatarError] = useState("");
   const [formError, setFormError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isFormComplete, setIsFormComplete] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
@@ -206,7 +205,6 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
     const hasAvatar = Boolean(avatarFile || user?.hasImage);
     const isComplete =
       form.checkValidity() && hasAllRequiredValues && hasAvatar;
-    setIsFormComplete(isComplete);
     return isComplete;
   }, [avatarFile, user?.hasImage]);
 
@@ -374,6 +372,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
         <form
           onSubmit={handleSubmit}
           ref={formRef}
+          noValidate
           onInput={() => {
             setSaved(false);
             validateForm();
@@ -619,11 +618,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
             </button>
             <button
               type="submit"
-              disabled={
-                !isFormComplete ||
-                isSubmitting ||
-                saveClientProfileMutation.isPending
-              }
+              disabled={isSubmitting || saveClientProfileMutation.isPending}
               className="h-11 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white disabled:opacity-40"
             >
               {isSubmitting ? "Saving..." : "Save profile"}

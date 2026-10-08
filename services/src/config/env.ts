@@ -23,6 +23,8 @@ const parsePort = (value: string | undefined): number => {
 export const env = {
   port: parsePort(process.env.PORT),
   clerkSecretKey: process.env.CLERK_SECRET_KEY,
+  // PEM public key from Clerk Dashboard → API Keys; "\n" escapes allowed for single-line .env values.
+  clerkJwtKey: process.env.CLERK_JWT_KEY?.replace(/\\n/g, "\n"),
   nodeEnv: process.env.NODE_ENV || "development",
   redis: {
     host: process.env.REDIS_HOST ?? "localhost",

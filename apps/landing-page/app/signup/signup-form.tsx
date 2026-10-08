@@ -182,7 +182,11 @@ export function SignupForm({ role }: SignupFormProps) {
       }
 
       if (signUp.status !== "complete") {
-        throw new Error("Your email was verified, but signup is not complete.");
+        throw new Error(
+          `Your email was verified, but signup is not complete. Missing: ${
+            signUp.missingFields?.join(", ") || "unknown"
+          }`,
+        );
       }
 
       await redirectWithSessionToken();

@@ -11,7 +11,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "db:generate": "npx drizzle-kit generate",
-    "db:migrate": "npx drizzle-kit migrate",
+    "db:migrate": "tsx src/database/migrate.ts",
     "db:push": "npx drizzle-kit push",
     "typecheck": "tsc --noEmit"
   },
