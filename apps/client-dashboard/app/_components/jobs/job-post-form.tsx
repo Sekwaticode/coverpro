@@ -265,7 +265,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
       {savedStatus && (
         <p
           role="status"
-          className="rounded-xl bg-[#e7f2e4] p-4 text-sm font-semibold text-[#4d784a]"
+          className="rounded-xl bg-[#fae7dc] p-4 text-sm font-semibold text-[#d85a1b]"
         >
           {savedStatus === "DRAFT"
             ? "Your job post has been saved as a draft."
@@ -277,7 +277,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
 
       <Section
         title="Project basics"
-        detail="This information appears on freelancer and agency job feeds."
+        detail="This information appears on pro and company job feeds."
       >
         <FormField label="Job title" error={errors.title} required>
           <input
@@ -292,7 +292,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
                 message: "Job title cannot exceed 100 characters.",
               },
             })}
-            placeholder="e.g. Senior Next.js developer for a collaborative workspace"
+            placeholder="e.g. Retile and waterproof a 6 m² bathroom in Mbombela"
             className={inputClass(Boolean(errors.title))}
           />
         </FormField>
@@ -308,7 +308,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
               minLength: {
                 value: 80,
                 message:
-                  "Add at least 80 characters so talent can scope the work.",
+                  "Add at least 80 characters so pros can quote accurately.",
               },
               maxLength: {
                 value: 5000,
@@ -316,7 +316,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
               },
             })}
             rows={7}
-            placeholder="Describe the product, current stage, expected outcomes, and what success looks like…"
+            placeholder="Describe the job, the size of the area, materials (supplied or not), site access and what a finished result looks like…"
             className={`${inputClass(Boolean(errors.description))} h-auto resize-none py-3`}
           />
         </FormField>
@@ -351,8 +351,8 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
           </FormField>
         </div>
 
-        <p className="rounded-xl bg-[#f3f5f1] p-3 text-xs text-[#737970]">
-          All job posts are publicly visible in the OneMarketplace.io talent
+        <p className="rounded-xl bg-[#f9f1ed] p-3 text-xs text-[#797570]">
+          All job posts are publicly visible in the CoverPro pro
           marketplace.
         </p>
       </Section>
@@ -372,7 +372,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
                   .filter(Boolean).length > 0 ||
                 "Add at least one required skill.",
             })}
-            placeholder="e.g. Next.js, TypeScript, Product design"
+            placeholder="e.g. Tiling, Waterproofing, Plumbing"
             className={inputClass(Boolean(errors.skills))}
           />
         </FormField>
@@ -384,7 +384,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
             .map((skill) => (
               <span
                 key={skill}
-                className="rounded-full bg-[#edf3ea] px-3 py-1.5 text-[10px] font-medium text-[#527052]"
+                className="rounded-full bg-[#f8ece5] px-3 py-1.5 text-[10px] font-medium text-[#d85a1b]"
               >
                 {skill}
               </span>
@@ -396,10 +396,10 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
         title="Fixed budget and milestones"
         detail="The total fixed-price budget is the sum of all project milestones."
       >
-        <div className="rounded-xl bg-[#f2f5ef] p-4">
-          <p className="text-xs text-[#7b8078]">Total project budget</p>
+        <div className="rounded-xl bg-[#f9f0eb] p-4">
+          <p className="text-xs text-[#807c78]">Total project budget</p>
           <p className="mt-1 text-2xl font-semibold">
-            ${totalBudget.toLocaleString()}
+            R{totalBudget.toLocaleString()}
           </p>
         </div>
 
@@ -425,7 +425,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
                         message: "Use at least 3 characters.",
                       },
                     })}
-                    placeholder="e.g. Architecture and prototype"
+                    placeholder="e.g. Strip old tiles and waterproof"
                     className={inputClass(
                       Boolean(milestoneErrors?.title),
                       true,
@@ -433,7 +433,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
                   />
                 </FormField>
                 <FormField
-                  label="Budget (USD)"
+                  label="Budget (ZAR)"
                   error={milestoneErrors?.amount}
                   required
                   compact
@@ -444,7 +444,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
                       valueAsNumber: true,
                       min: {
                         value: 10,
-                        message: "Budget must be greater than $10.",
+                        message: "Budget must be greater than R10.",
                       },
                       validate: (value) =>
                         Number.isFinite(value) || "Enter a valid number.",
@@ -453,7 +453,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
                     inputMode="decimal"
                     min="10"
                     step="1"
-                    placeholder="e.g. 3000"
+                    placeholder="e.g. 8500"
                     className={inputClass(
                       Boolean(milestoneErrors?.amount),
                       true,
@@ -574,7 +574,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
           <Icon icon="solar:add-circle-linear" width="17" />
           Add question
         </button>
-        <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-black/15 p-6 text-xs font-semibold text-[#52784f]">
+        <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-black/15 p-6 text-xs font-semibold text-[#dd5c1b]">
           <Icon icon="solar:paperclip-linear" width="18" />
           Attach project brief
           <input
@@ -615,9 +615,9 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
             {Array.from(attachments).map((file) => (
               <div
                 key={`${file.name}`}
-                className="flex items-center gap-3 rounded-xl bg-[#f3f5f1] p-3"
+                className="flex items-center gap-3 rounded-xl bg-[#f9f1ed] p-3"
               >
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-[#52784f]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-[#dd5c1b]">
                   <Icon
                     icon={
                       file.type === "application/pdf"
@@ -629,7 +629,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
                 </span>
                 <div className="min-w-0">
                   <p className="truncate text-xs font-semibold">{file.name}</p>
-                  <p className="mt-0.5 text-[10px] text-[#7b8078]">
+                  <p className="mt-0.5 text-[10px] text-[#807c78]">
                     {formatFileSize(file.size)}
                   </p>
                 </div>
@@ -644,16 +644,16 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
               <a
                 key={`${file.fileId}`}
                 href={file.fileUrl}
-                className="flex items-center gap-3 rounded-xl bg-[#f3f5f1] p-3"
+                className="flex items-center gap-3 rounded-xl bg-[#f9f1ed] p-3"
               >
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-[#52784f]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-[#dd5c1b]">
                   <Icon icon={"solar:document-text-linear"} width="19" />
                 </span>
                 <div className="min-w-0">
                   <p className="truncate text-xs font-semibold">
                     {file.fileName}
                   </p>
-                  <p className="mt-0.5 text-[10px] text-[#7b8078]">
+                  <p className="mt-0.5 text-[10px] text-[#807c78]">
                     {formatFileSize(file.fileSize)}
                   </p>
                 </div>
@@ -663,7 +663,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
         )}
       </Section>
 
-      <div className="sticky bottom-4 flex justify-end gap-2 rounded-2xl border border-black/8 bg-white/95 p-4 shadow-[0_12px_40px_rgba(28,35,28,.12)] backdrop-blur">
+      <div className="sticky bottom-4 flex justify-end gap-2 rounded-2xl border border-black/8 bg-white/95 p-4 shadow-[0_12px_40px_rgba(35,31,28,.12)] backdrop-blur">
         {editing && (
           <button
             type="button"
@@ -698,7 +698,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
             saveJob.isPending ||
             (editing && !hasChanges)
           }
-          className="h-11 cursor-pointer rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:bg-[#b8bcb6] disabled:text-white/80"
+          className="h-11 cursor-pointer rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:bg-[#bcb9b6] disabled:text-white/80"
         >
           {isSubmitting
             ? editing
@@ -711,7 +711,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
       </div>
 
       {confirmDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#182018]/45 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#201b18]/45 p-4 backdrop-blur-sm">
           <div
             role="dialog"
             aria-modal="true"
@@ -724,7 +724,7 @@ export function JobPostForm({ initialJob }: { initialJob?: InitialJobPost }) {
             <h2 id="delete-job-title" className="mt-4 text-xl font-semibold">
               Delete this job post?
             </h2>
-            <p className="mt-2 text-sm leading-6 text-[#737970]">
+            <p className="mt-2 text-sm leading-6 text-[#797570]">
               This permanently removes the job post and its uploaded
               attachments. This action cannot be undone.
             </p>
@@ -765,7 +765,7 @@ function Section({
     <section className="grid gap-5 rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
       <header>
         <h2 className="font-semibold">{title}</h2>
-        <p className="mt-1 text-xs text-[#7b8078]">{detail}</p>
+        <p className="mt-1 text-xs text-[#807c78]">{detail}</p>
       </header>
       <div className="grid gap-5 border-t border-black/7 pt-5">{children}</div>
     </section>
@@ -787,7 +787,7 @@ function FormField({
 }) {
   return (
     <label
-      className={`${compact ? "text-[10px] text-[#737970]" : "text-xs"} font-semibold`}
+      className={`${compact ? "text-[10px] text-[#797570]" : "text-xs"} font-semibold`}
     >
       {label} {required && <RequiredMark />}
       {children}
@@ -801,10 +801,10 @@ function FormField({
 }
 
 function inputClass(error: boolean, compact = false) {
-  return `${compact ? "mt-2 h-10 rounded-lg text-xs" : "mt-2 h-11 rounded-xl text-sm"} w-full border px-3 font-normal text-[#242724] outline-none transition ${
+  return `${compact ? "mt-2 h-10 rounded-lg text-xs" : "mt-2 h-11 rounded-xl text-sm"} w-full border px-3 font-normal text-[#272624] outline-none transition ${
     error
       ? "border-[#bd6b6b] bg-[#fffafa] focus:border-[#a85252]"
-      : "border-black/10 focus:border-[#6e916a]"
+      : "border-black/10 focus:border-[#e77840]"
   }`;
 }
 

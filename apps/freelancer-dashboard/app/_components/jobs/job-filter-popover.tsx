@@ -72,13 +72,13 @@ export function JobFilterPopover({
         }}
         className={`relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border transition ${
           open || activeCount
-            ? "border-[#8eaa8a] bg-[#edf4ea] text-[#4e774b]"
-            : "border-black/8 text-[#737870] hover:bg-black/3"
+            ? "border-[#e77840] bg-[#faece4] text-[#d85a1b]"
+            : "border-black/8 text-[#787470] hover:bg-black/3"
         }`}
       >
         <Icon icon="solar:tuning-2-linear" width="19" />
         {activeCount > 0 && (
-          <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#5f8d5c] px-1 text-[8px] font-bold text-white">
+          <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#e7753c] px-1 text-[8px] font-bold text-white">
             {activeCount}
           </span>
         )}
@@ -88,12 +88,12 @@ export function JobFilterPopover({
         <section
           role="dialog"
           aria-label="Job filters"
-          className="fixed inset-x-3 top-20 z-50 max-h-[calc(100svh-6rem)] overflow-y-auto rounded-2xl border border-black/8 bg-white shadow-[0_24px_70px_rgba(26,34,26,0.18)] sm:absolute sm:inset-x-auto sm:top-12 sm:right-0 sm:w-105"
+          className="fixed inset-x-3 top-20 z-50 max-h-[calc(100svh-6rem)] overflow-y-auto rounded-2xl border border-black/8 bg-white shadow-[0_24px_70px_rgba(34,29,26,0.18)] sm:absolute sm:inset-x-auto sm:top-12 sm:right-0 sm:w-105"
         >
           <header className="sticky top-0 z-10 flex items-center justify-between border-b border-black/7 bg-white px-5 py-4">
             <div>
               <h3 className="font-semibold">Filter jobs</h3>
-              <p className="mt-0.5 text-[11px] text-[#858a82]">
+              <p className="mt-0.5 text-[11px] text-[#8a8682]">
                 Refine opportunities in your feed
               </p>
             </div>
@@ -111,9 +111,9 @@ export function JobFilterPopover({
 
             <FilterGroup title="Budget">
               <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
-                <label><span className="sr-only">Minimum budget</span><input type="number" min="0" value={draft.minBudget} onChange={(event) => setDraft((current) => ({ ...current, minBudget: event.target.value }))} placeholder="Min $" className="h-10 w-full rounded-xl border border-black/10 px-3 text-sm outline-none focus:border-[#6e916a]" /></label>
-                <span className="text-xs text-[#92978f]">to</span>
-                <label><span className="sr-only">Maximum budget</span><input type="number" min="0" value={draft.maxBudget} onChange={(event) => setDraft((current) => ({ ...current, maxBudget: event.target.value }))} placeholder="Max $" className="h-10 w-full rounded-xl border border-black/10 px-3 text-sm outline-none focus:border-[#6e916a]" /></label>
+                <label><span className="sr-only">Minimum budget</span><input type="number" min="0" value={draft.minBudget} onChange={(event) => setDraft((current) => ({ ...current, minBudget: event.target.value }))} placeholder="Min R" className="h-10 w-full rounded-xl border border-black/10 px-3 text-sm outline-none focus:border-[#e77840]" /></label>
+                <span className="text-xs text-[#97938f]">to</span>
+                <label><span className="sr-only">Maximum budget</span><input type="number" min="0" value={draft.maxBudget} onChange={(event) => setDraft((current) => ({ ...current, maxBudget: event.target.value }))} placeholder="Max R" className="h-10 w-full rounded-xl border border-black/10 px-3 text-sm outline-none focus:border-[#e77840]" /></label>
               </div>
             </FilterGroup>
 
@@ -129,15 +129,15 @@ export function JobFilterPopover({
               </select>
             </FilterGroup>
 
-            <label className="flex cursor-pointer items-center justify-between gap-4 rounded-xl bg-[#f3f6f1] p-4">
-              <span><strong className="block text-xs">Payment verified only</strong><span className="mt-1 block text-[10px] text-[#7b8078]">Show clients with a verified payment method</span></span>
-              <input type="checkbox" checked={draft.verifiedOnly} onChange={(event) => setDraft((current) => ({ ...current, verifiedOnly: event.target.checked }))} className="h-4 w-4 accent-[#5f875c]" />
+            <label className="flex cursor-pointer items-center justify-between gap-4 rounded-xl bg-[#f9f2ee] p-4">
+              <span><strong className="block text-xs">Payment verified only</strong><span className="mt-1 block text-[10px] text-[#807c78]">Show clients with a verified payment method</span></span>
+              <input type="checkbox" checked={draft.verifiedOnly} onChange={(event) => setDraft((current) => ({ ...current, verifiedOnly: event.target.checked }))} className="h-4 w-4 accent-[#e67036]" />
             </label>
           </div>
 
           <footer className="sticky bottom-0 flex items-center justify-between border-t border-black/7 bg-white p-4">
-            <button type="button" onClick={() => { setDraft(emptyJobFilters); onClear(); }} className="cursor-pointer text-xs font-semibold text-[#777c74] hover:underline">Clear all</button>
-            <button type="button" onClick={() => { onApply(draft); setOpen(false); }} className="h-10 cursor-pointer rounded-xl bg-[#252724] px-5 text-xs font-semibold text-white">Apply filters</button>
+            <button type="button" onClick={() => { setDraft(emptyJobFilters); onClear(); }} className="cursor-pointer text-xs font-semibold text-[#7c7874] hover:underline">Clear all</button>
+            <button type="button" onClick={() => { onApply(draft); setOpen(false); }} className="h-10 cursor-pointer rounded-xl bg-[#272624] px-5 text-xs font-semibold text-white">Apply filters</button>
           </footer>
         </section>
       )}
@@ -150,5 +150,5 @@ function FilterGroup({ title, children }: { title: string; children: React.React
 }
 
 function CheckOption({ label, checked, onChange }: { label: string; checked: boolean; onChange: () => void }) {
-  return <label className="flex cursor-pointer items-center gap-2.5 text-sm text-[#656b63]"><input type="checkbox" checked={checked} onChange={onChange} className="h-4 w-4 accent-[#5f875c]" />{label}</label>;
+  return <label className="flex cursor-pointer items-center gap-2.5 text-sm text-[#6b6763]"><input type="checkbox" checked={checked} onChange={onChange} className="h-4 w-4 accent-[#e67036]" />{label}</label>;
 }

@@ -39,8 +39,8 @@ export function AgencyFeaturedMembers({
 
   if (members.length === 0) {
     return (
-      <p className="py-8 text-center text-sm text-[#858a82]">
-        No agency members yet.
+      <p className="py-8 text-center text-sm text-[#8a8682]">
+        No company members yet.
       </p>
     );
   }
@@ -60,7 +60,7 @@ export function AgencyFeaturedMembers({
                 if (!member.profileId) event.preventDefault();
               }}
               aria-label={`View ${member.name}'s public profile`}
-              className="group flex flex-col gap-3 rounded-xl border border-black/7 p-4 transition-colors hover:border-[#9fb99c] hover:bg-[#f6f9f4]"
+              className="group flex flex-col gap-3 rounded-xl border border-black/7 p-4 transition-colors hover:border-[#d1a084] hover:bg-[#fcf5f1]"
             >
               <div className="flex items-center gap-4">
                 {member.avatarUrl ? (
@@ -71,20 +71,20 @@ export function AgencyFeaturedMembers({
                     className="h-12 w-12 shrink-0 rounded-full object-cover"
                   />
                 ) : (
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#527a73] text-xs font-semibold text-white">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#e35e1c] text-xs font-semibold text-white">
                     {getInitials(member.name)}
                   </span>
                 )}
                 <div className="min-w-0 flex-1">
                   <h3 className="text-sm font-semibold">{member.name}</h3>
-                  <p className="mt-1 truncate text-xs text-[#70766e]">
+                  <p className="mt-1 truncate text-xs text-[#76726e]">
                     {member.role || "—"}
                   </p>
                 </div>
                 <Icon
                   icon="solar:arrow-right-up-linear"
                   width="18"
-                  className="shrink-0 text-[#7d847b] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#52784f]"
+                  className="shrink-0 text-[#84807b] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#dd5c1b]"
                 />
               </div>
 
@@ -93,20 +93,20 @@ export function AgencyFeaturedMembers({
                   {visibleSkills.map((skill) => (
                     <span
                       key={skill}
-                      className="rounded-full bg-[#edf3ea] px-2.5 py-1 text-[10px] font-medium text-[#527052]"
+                      className="rounded-full bg-[#f8ece5] px-2.5 py-1 text-[10px] font-medium text-[#d85a1b]"
                     >
                       {skill}
                     </span>
                   ))}
                   {hiddenSkillCount > 0 && (
-                    <span className="rounded-full bg-[#f3f5f1] px-2.5 py-1 text-[10px] font-medium text-[#70766e]">
+                    <span className="rounded-full bg-[#f9f1ed] px-2.5 py-1 text-[10px] font-medium text-[#76726e]">
                       +{hiddenSkillCount}
                     </span>
                   )}
                 </div>
               )}
 
-              <div className="flex items-center gap-4 border-t border-black/6 pt-3 text-[10px] text-[#70766e]">
+              <div className="flex items-center gap-4 border-t border-black/6 pt-3 text-[10px] text-[#76726e]">
                 <span className="inline-flex items-center gap-1">
                   <Icon icon="solar:star-bold" width="13" className="text-[#d4a934]" />
                   {member.rating.toFixed(1)} rating
@@ -127,7 +127,7 @@ export function AgencyFeaturedMembers({
           <button
             type="button"
             onClick={() => setExpanded((current) => !current)}
-            className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-xl border border-black/10 px-4 text-xs font-semibold transition hover:bg-[#f6f8f4]"
+            className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-xl border border-black/10 px-4 text-xs font-semibold transition hover:bg-[#fbf5f2]"
           >
             <Icon
               icon={

@@ -24,7 +24,7 @@ export function MemberCard({
   return (
     <article className="rounded-2xl border border-black/8 bg-white p-5">
       <div className="flex items-start gap-3">
-        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#496e67] text-xs font-semibold text-white">
+        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#cc5519] text-xs font-semibold text-white">
           {row.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -40,10 +40,10 @@ export function MemberCard({
           <div className="flex flex-wrap items-center gap-2">
             <h2 className="truncate font-semibold">{name}</h2>
             {!pending && row.isOwner && (
-              <Icon name="verified" size={15} className="text-[#52784f]" />
+              <Icon name="verified" size={15} className="text-[#dd5c1b]" />
             )}
           </div>
-          <p className="mt-1 truncate text-xs text-[#6f756d]">
+          <p className="mt-1 truncate text-xs text-[#75716d]">
             {pending ? row.email : `${row.completedProjects} completed projects`}
           </p>
         </div>
@@ -54,12 +54,12 @@ export function MemberCard({
           className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${
             pending
               ? "bg-[#f2efe3] text-[#796f42]"
-              : "bg-[#e6f2e3] text-[#477344]"
+              : "bg-[#fbe6da] text-[#cc5519]"
           }`}
         >
           {pending ? "Invitation pending" : "Active"}
         </span>
-        <span className="text-[11px] font-medium text-[#6f756d]">
+        <span className="text-[11px] font-medium text-[#75716d]">
           {row.role}
         </span>
       </div>
@@ -69,18 +69,18 @@ export function MemberCard({
           {row.skills.slice(0, 3).map((skill) => (
             <span
               key={skill}
-              className="rounded-lg bg-[#edf1eb] px-2 py-1 text-[10px] text-[#626960]"
+              className="rounded-lg bg-[#f7ece6] px-2 py-1 text-[10px] text-[#696560]"
             >
               {skill}
             </span>
           ))}
           {row.skills.length > 3 && (
-            <span className="rounded-lg bg-[#edf1eb] px-2 py-1 text-[10px] text-[#626960]">
+            <span className="rounded-lg bg-[#f7ece6] px-2 py-1 text-[10px] text-[#696560]">
               +{row.skills.length - 3}
             </span>
           )}
           {row.skills.length === 0 && (
-            <span className="text-[10px] text-[#9a9f97]">
+            <span className="text-[10px] text-[#9f9b97]">
               No skills listed yet
             </span>
           )}

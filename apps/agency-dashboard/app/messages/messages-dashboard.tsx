@@ -176,7 +176,7 @@ export function MessagesDashboard({
       );
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || "The agency could not be loaded.");
+        throw new Error(result.message || "The company could not be loaded.");
       }
       return result.data;
     },
@@ -772,14 +772,14 @@ export function MessagesDashboard({
     <AgencyShell>
       <div className="mb-5 hidden items-end justify-between lg:flex">
         <div>
-          <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
+          <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
             Client communication
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em]">
             Inbox
           </h1>
         </div>
-        <p className="text-xs text-[#7b8078]">
+        <p className="text-xs text-[#807c78]">
           {conversations.reduce((total, item) => total + item.unread, 0)} unread{" "}
           messages
         </p>
@@ -801,7 +801,7 @@ export function MessagesDashboard({
           {selected ? (
             <ConversationPanel
               conversation={selected}
-              agencyName={agency?.name ?? "your agency"}
+              agencyName={agency?.name ?? "your company"}
               onBack={() => router.push("/messages")}
               onSend={(text) => void sendMessage(text)}
               onSendFile={(file) => void sendMessage("", file)}
@@ -830,13 +830,13 @@ export function MessagesDashboard({
           ) : conversationId ? (
             <section className="grid h-full min-h-0 place-items-center rounded-2xl border border-black/8 bg-white p-8 text-center">
               <div>
-                <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#edf4ea] text-[#52784f]">
+                <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#faece4] text-[#dd5c1b]">
                   <Icon name="message" size={31} />
                 </span>
                 <h2 className="mt-5 text-lg font-semibold">
                   {inboxLoading ? "Loading conversation..." : "Conversation not found"}
                 </h2>
-                <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-[#7b8078]">
+                <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-[#807c78]">
                   {inboxLoading
                     ? "Please wait while the conversation is loaded."
                     : "This conversation does not exist or you do not have access to it."}
@@ -846,13 +846,13 @@ export function MessagesDashboard({
           ) : (
             <section className="grid h-full min-h-0 place-items-center rounded-2xl border border-black/8 bg-white p-8 text-center">
               <div>
-                <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#edf4ea] text-[#52784f]">
+                <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#faece4] text-[#dd5c1b]">
                   <Icon name="message" size={31} />
                 </span>
                 <h2 className="mt-5 text-lg font-semibold">
                   Select a conversation
                 </h2>
-                <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-[#7b8078]">
+                <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-[#807c78]">
                   Choose a client conversation to view messages, share files,
                   or create a project meeting.
                 </p>

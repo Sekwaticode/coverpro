@@ -31,7 +31,7 @@ interface ClientDashboardOverview {
 }
 
 const formatCompactCurrency = (value: number) =>
-  `$${new Intl.NumberFormat("en-US", {
+  `R${new Intl.NumberFormat("en-US", {
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(value)}`;
@@ -71,19 +71,19 @@ export default function ClientDashboardPage() {
       <ClientShell>
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+            <p className="text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
               Client workspace
             </p>
             <h1 className="mt-2 text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
               Good morning, {!isLoaded ? "..." : user?.firstName}.
             </h1>
-            <p className="mt-2 text-sm text-[#72776f]">
-              Keep hiring and delivery moving without the busywork.
+            <p className="mt-2 text-sm text-[#77736f]">
+              Keep your building and renovation projects on track.
             </p>
           </div>
           <Link
             href="/jobs/new"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white"
           >
             <Icon icon="solar:add-circle-linear" width="18" /> Post a job
           </Link>
@@ -131,19 +131,19 @@ export default function ClientDashboardPage() {
             <header className="flex items-center justify-between border-b border-black/7 p-5 sm:p-6">
               <div>
                 <h2 className="font-semibold">Active job posts</h2>
-                <p className="mt-1 text-xs text-[#7b8078]">
+                <p className="mt-1 text-xs text-[#807c78]">
                   Review proposals and keep hiring moving.
                 </p>
               </div>
               <Link
                 href="/jobs"
-                className="text-xs font-semibold text-[#52784f]"
+                className="text-xs font-semibold text-[#dd5c1b]"
               >
                 View all
               </Link>
             </header>
             {overview && overview.activeJobPosts.length === 0 ? (
-              <p className="px-5 py-10 text-center text-sm text-[#858a82] sm:px-6">
+              <p className="px-5 py-10 text-center text-sm text-[#8a8682] sm:px-6">
                 No open job posts yet.
               </p>
             ) : (
@@ -155,7 +155,7 @@ export default function ClientDashboardPage() {
                   <div className="flex flex-wrap justify-between gap-3">
                     <div>
                       <h3 className="text-sm font-semibold">{job.title}</h3>
-                      <p className="mt-2 text-xs text-[#7b8078]">
+                      <p className="mt-2 text-xs text-[#807c78]">
                         Fixed price · ${job.budget.toLocaleString()} ·{" "}
                         {job.level} · {job.duration}
                       </p>
@@ -171,11 +171,11 @@ export default function ClientDashboardPage() {
               ))
             )}
           </section>
-          <section className="rounded-2xl bg-[#252a25] p-6 text-white">
+          <section className="rounded-2xl bg-[#2a2825] p-6 text-white">
             <p className="text-xs text-white/55">Currently in progress</p>
             <p className="mt-2 text-3xl font-semibold">
               {overview
-                ? `$${overview.currentlyFunded.toLocaleString()}`
+                ? `R${overview.currentlyFunded.toLocaleString()}`
                 : "..."}
             </p>
             <div className="mt-6 space-y-4">
@@ -190,7 +190,7 @@ export default function ClientDashboardPage() {
                   <div className="mt-2 h-1.5 rounded-full bg-white/10">
                     <div
                       style={{ width: `${contract.progressPercent}%` }}
-                      className="h-full rounded-full bg-[#8aa486]"
+                      className="h-full rounded-full bg-[#e77840]"
                     />
                   </div>
                 </div>
@@ -203,7 +203,7 @@ export default function ClientDashboardPage() {
             </div>
             <Link
               href="/contracts"
-              className="mt-7 inline-flex text-xs font-semibold text-[#a8c5a1]"
+              className="mt-7 inline-flex text-xs font-semibold text-[#d7a98f]"
             >
               Manage contracts →
             </Link>
@@ -227,12 +227,12 @@ function Metric({
 }) {
   return (
     <article className="rounded-2xl border border-black/8 bg-white p-5">
-      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
         <Icon icon={icon} width="20" />
       </span>
       <p className="mt-5 text-2xl font-semibold">{value}</p>
       <h2 className="mt-1 text-xs font-semibold">{label}</h2>
-      <p className="mt-1 text-[10px] text-[#858a82]">{detail}</p>
+      <p className="mt-1 text-[10px] text-[#8a8682]">{detail}</p>
     </article>
   );
 }

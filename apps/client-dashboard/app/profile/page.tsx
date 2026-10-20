@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ClientProfilePage() {
   return (
     <Suspense>
-      <div className="min-h-svh bg-[#f4f6f2] text-[#242724]">
+      <div className="min-h-svh bg-[#faf3ee] text-[#272624]">
         <ClientHeader />
         <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
           <ClientProfile />

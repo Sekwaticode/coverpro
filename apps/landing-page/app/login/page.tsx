@@ -6,7 +6,7 @@ export default function LoginPage() {
   return (
     <div className="relative flex min-h-svh flex-col overflow-hidden bg-white font-(family-name:--font-dm-sans)">
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-128 bg-[radial-gradient(ellipse_at_top,rgba(224,246,220,0.8),rgba(247,252,245,0.48)_44%,transparent_76%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-128 bg-[radial-gradient(ellipse_at_top,rgba(253,228,213,0.8),rgba(254,247,243,0.48)_44%,transparent_76%)]"
         aria-hidden="true"
       ></div>
 
@@ -14,12 +14,12 @@ export default function LoginPage() {
         <Link
           href="/"
           className="inline-flex items-center gap-2.5"
-          aria-label="OneMarketplace.io home"
+          aria-label="CoverPro home"
         >
           <BrandMark />
           <span className="text-xl font-semibold tracking-tight">
-            OneMarketplace.io
-          </span>
+              Cover<span className="text-[#ee6c2b]">Pro</span>
+            </span>
         </Link>
       </header>
 

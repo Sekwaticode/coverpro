@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./talents.module.css";
 import Image from "next/image";
@@ -31,7 +32,7 @@ const AVATAR_BACKGROUNDS = [
   "linear-gradient(135deg, #466b72, #73a2a8)",
   "linear-gradient(135deg, #6f668e, #a095bd)",
   "linear-gradient(135deg, #8b6f48, #bea071)",
-  "linear-gradient(135deg, #46634b, #7ca181)",
+  "linear-gradient(135deg, #bc4e17, #e77840)",
   "linear-gradient(135deg, #566f8c, #87a5c4)",
   "linear-gradient(135deg, #8c5366, #bd8094)",
   "linear-gradient(135deg, #5b6d91, #8d9dc0)",
@@ -91,23 +92,23 @@ function FilterControls({
   return (
     <div className="space-y-7">
       <div>
-        <p className="text-sm font-semibold">Talent status</p>
+        <p className="text-sm font-semibold">Pro status</p>
         <div className="mt-3 grid gap-3">
-          <label className="flex cursor-pointer items-center gap-3 text-sm text-[#62665f]">
+          <label className="flex cursor-pointer items-center gap-3 text-sm text-[#66635f]">
             <input
               type="checkbox"
               checked={verifiedOnly}
               onChange={(event) => setVerifiedOnly(event.target.checked)}
-              className="h-4 w-4 rounded accent-[#456f42]"
+              className="h-4 w-4 rounded accent-[#c55218]"
             />
-            Verified talent
+            Verified pros
           </label>
-          <label className="flex cursor-pointer items-center gap-3 text-sm text-[#62665f]">
+          <label className="flex cursor-pointer items-center gap-3 text-sm text-[#66635f]">
             <input
               type="checkbox"
               checked={activeOnly}
               onChange={(event) => setActiveOnly(event.target.checked)}
-              className="h-4 w-4 rounded accent-[#456f42]"
+              className="h-4 w-4 rounded accent-[#c55218]"
             />
             Available now
           </label>
@@ -119,7 +120,7 @@ function FilterControls({
         <select
           value={minRating}
           onChange={(event) => setMinRating(Number(event.target.value))}
-          className="h-11 rounded-xl border border-black/10 bg-white px-3 font-normal text-[#5d615a] outline-none focus:border-[#668c63]"
+          className="h-11 rounded-xl border border-black/10 bg-white px-3 font-normal text-[#615e5a] outline-none focus:border-[#e77840]"
         >
           <option value={0}>Any rating</option>
           <option value={4.5}>4.5 and above</option>
@@ -133,7 +134,7 @@ function FilterControls({
         <select
           value={minSuccess}
           onChange={(event) => setMinSuccess(Number(event.target.value))}
-          className="h-11 rounded-xl border border-black/10 bg-white px-3 font-normal text-[#5d615a] outline-none focus:border-[#668c63]"
+          className="h-11 rounded-xl border border-black/10 bg-white px-3 font-normal text-[#615e5a] outline-none focus:border-[#e77840]"
         >
           <option value={0}>Any success rate</option>
           <option value={90}>90% and above</option>
@@ -145,11 +146,11 @@ function FilterControls({
       <div className="border-t border-black/7 pt-6">
         <p className="text-sm font-semibold">Hourly rate</p>
         <div className="mt-3 grid grid-cols-2 gap-3">
-          <label className="grid gap-1.5 text-xs font-medium text-[#777b74]">
+          <label className="grid gap-1.5 text-xs font-medium text-[#7b7874]">
             Minimum
             <span className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-[#777b74]">
-                $
+              <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-[#7b7874]">
+                R
               </span>
               <input
                 type="number"
@@ -159,17 +160,17 @@ function FilterControls({
                 onChange={(event) =>
                   setMinHourlyRate(Math.max(0, Number(event.target.value)))
                 }
-                className="h-11 w-full rounded-xl border border-black/10 bg-white pr-2 pl-7 text-sm font-normal text-[#3d413c] outline-none focus:border-[#668c63]"
+                className="h-11 w-full rounded-xl border border-black/10 bg-white pr-2 pl-7 text-sm font-normal text-[#413f3c] outline-none focus:border-[#e77840]"
                 placeholder="0"
                 aria-label="Minimum hourly rate"
               />
             </span>
           </label>
-          <label className="grid gap-1.5 text-xs font-medium text-[#777b74]">
+          <label className="grid gap-1.5 text-xs font-medium text-[#7b7874]">
             Maximum
             <span className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-[#777b74]">
-                $
+              <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-[#7b7874]">
+                R
               </span>
               <input
                 type="number"
@@ -179,7 +180,7 @@ function FilterControls({
                 onChange={(event) =>
                   setMaxHourlyRate(Math.max(0, Number(event.target.value)))
                 }
-                className="h-11 w-full rounded-xl border border-black/10 bg-white pr-2 pl-7 text-sm font-normal text-[#3d413c] outline-none focus:border-[#668c63]"
+                className="h-11 w-full rounded-xl border border-black/10 bg-white pr-2 pl-7 text-sm font-normal text-[#413f3c] outline-none focus:border-[#e77840]"
                 placeholder="Any"
                 aria-label="Maximum hourly rate"
               />
@@ -191,7 +192,7 @@ function FilterControls({
       <button
         type="button"
         onClick={resetFilters}
-        className="text-sm font-semibold text-[#477344] hover:underline"
+        className="text-sm font-semibold text-[#cc5519] hover:underline"
       >
         Reset all filters
       </button>
@@ -202,7 +203,7 @@ function FilterControls({
 function VerifiedBadge() {
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-full bg-[#eaf4e7] px-2 py-1 text-[11px] font-semibold text-[#477344]"
+      className="inline-flex items-center gap-1 rounded-full bg-[#fceadf] px-2 py-1 text-[11px] font-semibold text-[#cc5519]"
       title="Identity verified with Stripe"
     >
       <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" aria-hidden="true">
@@ -257,15 +258,15 @@ function TalentCard({ talent }: { talent: Talent }) {
               {talent.verified && <VerifiedBadge />}
             </div>
             <p className="shrink-0 text-sm font-semibold">
-              ${talent.hourlyRate}
-              <span className="font-normal text-[#83877f]">/hr</span>
+              R{talent.hourlyRate}
+              <span className="font-normal text-[#87837f]">/hr</span>
             </p>
           </div>
-          <p className="mt-1 truncate text-sm text-[#686c65]">{talent.title}</p>
-          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[#777b74]">
+          <p className="mt-1 truncate text-sm text-[#6c6965]">{talent.title}</p>
+          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[#7b7874]">
             <span
               className={`h-2 w-2 rounded-full ${
-                talent.active ? "bg-[#5a9b59]" : "bg-[#b5b8b2]"
+                talent.active ? "bg-[#e77840]" : "bg-[#b8b5b2]"
               }`}
             ></span>
             {talent.active ? "Available now" : "Currently busy"}
@@ -279,7 +280,7 @@ function TalentCard({ talent }: { talent: Talent }) {
         </div>
       </div>
 
-      <p className="mt-5 line-clamp-3 text-sm leading-6 text-[#656962]">
+      <p className="mt-5 line-clamp-3 text-sm leading-6 text-[#696662]">
         {talent.summary}
       </p>
 
@@ -287,7 +288,7 @@ function TalentCard({ talent }: { talent: Talent }) {
         {talent.skills.slice(0, 6).map((skill) => (
           <span
             key={skill}
-            className="rounded-lg bg-[#f1f4ef] px-2.5 py-1.5 text-xs font-medium text-[#596057]"
+            className="rounded-lg bg-[#f8f0eb] px-2.5 py-1.5 text-xs font-medium text-[#605c57]"
           >
             {skill}
           </span>
@@ -296,25 +297,25 @@ function TalentCard({ talent }: { talent: Talent }) {
 
       <div className="mt-6 grid grid-cols-3 border-y border-black/7 py-4 text-center">
         <div>
-          <p className="text-sm font-semibold text-[#2b2e2a]">
+          <p className="text-sm font-semibold text-[#2e2c2a]">
             {talent.jobSuccess}%
           </p>
-          <p className="mt-1 text-[11px] text-[#858981]">Job success</p>
+          <p className="mt-1 text-[11px] text-[#898581]">Job success</p>
         </div>
         <div className="border-x border-black/7">
-          <p className="text-sm font-semibold text-[#2b2e2a]">
+          <p className="text-sm font-semibold text-[#2e2c2a]">
             {talent.completedProjects}
           </p>
-          <p className="mt-1 text-[11px] text-[#858981]">Projects completed</p>
+          <p className="mt-1 text-[11px] text-[#898581]">Projects completed</p>
         </div>
         <div>
-          <p className="flex items-center justify-center gap-1 text-sm font-semibold text-[#2b2e2a]">
+          <p className="flex items-center justify-center gap-1 text-sm font-semibold text-[#2e2c2a]">
             <span className="text-[#d3a439]" aria-hidden="true">
               ★
             </span>
             {talent.rating.toFixed(1)}
           </p>
-          <p className="mt-1 text-[11px] text-[#858981]">
+          <p className="mt-1 text-[11px] text-[#898581]">
             {talent.reviews} reviews
           </p>
         </div>
@@ -323,13 +324,13 @@ function TalentCard({ talent }: { talent: Talent }) {
       <div className="mt-5 flex gap-3">
         <Link
           href={`/talent/${talent.id}`}
-          className="flex-1 rounded-xl border border-black/10 px-4 py-2.5 text-center text-sm font-semibold transition hover:bg-[#f5f6f3]"
+          className="flex-1 rounded-xl border border-black/10 px-4 py-2.5 text-center text-sm font-semibold transition hover:bg-[#faf3ef]"
         >
           View profile
         </Link>
         <Link
           href="/signup?role=client"
-          className="flex-1 rounded-xl bg-[#252724] px-4 py-2.5 text-center text-sm font-semibold text-white! transition hover:bg-[#3b3e39]"
+          className="flex-1 rounded-xl bg-[#272624] px-4 py-2.5 text-center text-sm font-semibold text-white! transition hover:bg-[#3e3c39]"
         >
           Invite to job
         </Link>
@@ -384,8 +385,9 @@ function TalentCardSkeleton() {
 }
 
 export function TalentsDirectory() {
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const initialSearch = useSearchParams().get("q")?.trim() ?? "";
+  const [search, setSearch] = useState(initialSearch);
+  const [debouncedSearch, setDebouncedSearch] = useState(initialSearch);
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [activeOnly, setActiveOnly] = useState(false);
   const [minRating, setMinRating] = useState(0);
@@ -453,7 +455,7 @@ export function TalentsDirectory() {
       );
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || "Talent search failed.");
+        throw new Error(result.message || "Pro search failed.");
       }
       return result.data as { results: Talent[]; hasMore: boolean };
     },
@@ -560,23 +562,23 @@ export function TalentsDirectory() {
 
   return (
     <>
-      <section className="border-b border-black/7 bg-[#e8f1e5]">
+      <section className="border-b border-black/7 bg-[#f8e7de]">
         <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-18 lg:px-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#5a7d58]">
-            Discover exceptional people
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#e46526]">
+            Building &amp; renovation pros
           </p>
           <h1 className={`${styles.pageTitle} max-w-3xl`}>
-            Find the right talent for your next idea.
+            Find a trusted pro for your next project.
           </h1>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-[#667064] sm:text-base">
-            Search verified independent professionals by expertise,
-            availability, results, and experience.
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-[#706a64] sm:text-base">
+            Search verified builders, roofers, tilers, plumbers, electricians
+            and more by trade, province, reviews and rate.
           </p>
 
-          <label className="mt-8 flex max-w-2xl items-center gap-3 rounded-2xl border border-black/10 bg-white px-4 focus-within:border-[#6e916b] focus-within:ring-3 focus-within:ring-white/60">
+          <label className="mt-8 flex max-w-2xl items-center gap-3 rounded-2xl border border-black/10 bg-white px-4 focus-within:border-[#e77840] focus-within:ring-3 focus-within:ring-white/60">
             <svg
               viewBox="0 0 24 24"
-              className="h-5 w-5 shrink-0 text-[#7d827a]"
+              className="h-5 w-5 shrink-0 text-[#827e7a]"
               fill="none"
               aria-hidden="true"
             >
@@ -594,19 +596,19 @@ export function TalentsDirectory() {
                 strokeLinecap="round"
               />
             </svg>
-            <span className="sr-only">Search talent</span>
+            <span className="sr-only">Search pros</span>
             <input
               type="search"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              className="h-14 w-full bg-transparent text-sm outline-none placeholder:text-[#9a9e97]"
-              placeholder="Search by skill, title, name, or location"
+              className="h-14 w-full bg-transparent text-sm outline-none placeholder:text-[#9e9b97]"
+              placeholder="Search by trade, name, town or province"
             />
             {search && (
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className="text-xs font-semibold text-[#62705f]"
+                className="text-xs font-semibold text-[#70685f]"
               >
                 Clear
               </button>
@@ -635,22 +637,22 @@ export function TalentsDirectory() {
 
           <section>
             <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-[#6d716a]" aria-live="polite">
+              <p className="text-sm text-[#716e6a]" aria-live="polite">
                 {isLoading ? (
                   "Searching…"
                 ) : (
                   <>
-                    <strong className="text-[#272a26]">{talents.length}</strong>{" "}
-                    talented professionals
+                    <strong className="text-[#2a2826]">{talents.length}</strong>{" "}
+                    verified pros
                   </>
                 )}
               </p>
-              <label className="flex items-center gap-3 text-sm text-[#6d716a]">
+              <label className="flex items-center gap-3 text-sm text-[#716e6a]">
                 Sort by
                 <select
                   value={sort}
                   onChange={(event) => setSort(event.target.value as Sort)}
-                  className="h-10 rounded-xl border border-black/10 bg-white px-3 font-medium text-[#3d413c] outline-none focus:border-[#668c63]"
+                  className="h-10 rounded-xl border border-black/10 bg-white px-3 font-medium text-[#413f3c] outline-none focus:border-[#e77840]"
                 >
                   <option value="recommended">Recommended</option>
                   <option value="rating">Highest rated</option>
@@ -676,7 +678,7 @@ export function TalentsDirectory() {
                 </div>
                 <div ref={sentinelRef} className="h-1" />
                 {isFetchingMore && (
-                  <p className="mt-6 text-center text-sm text-[#777b74]">
+                  <p className="mt-6 text-center text-sm text-[#7b7874]">
                     Loading more professionals…
                   </p>
                 )}
@@ -686,13 +688,13 @@ export function TalentsDirectory() {
                 <p className="text-lg font-semibold">
                   No matching talent found
                 </p>
-                <p className="mt-2 text-sm text-[#777b74]">
+                <p className="mt-2 text-sm text-[#7b7874]">
                   Try a broader search or reset your filters.
                 </p>
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="mt-5 rounded-xl bg-[#252724] px-4 py-2.5 text-sm font-semibold text-white"
+                  className="mt-5 rounded-xl bg-[#272624] px-4 py-2.5 text-sm font-semibold text-white"
                 >
                   Reset filters
                 </button>

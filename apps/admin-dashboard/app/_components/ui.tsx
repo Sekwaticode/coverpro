@@ -10,15 +10,15 @@ export function ErrorBanner({ message }: { message: string }) {
 
 export function EmptyState({ label }: { label: string }) {
   return (
-    <div className="p-12 text-center text-sm text-[#7c8179]">{label}</div>
+    <div className="p-12 text-center text-sm text-[#817d79]">{label}</div>
   );
 }
 
 const TONES = {
-  green: "bg-[#edf4ea] text-[#52784f]",
+  green: "bg-[#faece4] text-[#dd5c1b]",
   amber: "bg-[#f5f0de] text-[#82723f]",
   red: "bg-[#f8eceb] text-[#9a5953]",
-  gray: "bg-[#f1f3ef] text-[#71766e]",
+  gray: "bg-[#f8efea] text-[#76726e]",
   blue: "bg-[#e8eef4] text-[#4a6e8f]",
 } as const;
 
@@ -57,10 +57,10 @@ export function TableShell({
         <div className="flex items-center justify-between gap-3">
           <h2 className="font-semibold">{title}</h2>
           {typeof count === "number" && (
-            <span className="text-xs text-[#858a82]">{count} shown</span>
+            <span className="text-xs text-[#8a8682]">{count} shown</span>
           )}
         </div>
-        <p className="text-xs text-[#7c8179]">{description}</p>
+        <p className="text-xs text-[#817d79]">{description}</p>
       </header>
       <div className="overflow-x-auto">{children}</div>
       {footer}
@@ -97,18 +97,18 @@ export function Pagination({
       ) : (
         <Link
           href={`${basePath}?offset=${prevOffset}`}
-          className="h-9 rounded-xl border border-black/9 px-4 text-xs font-semibold flex items-center hover:bg-[#f5f6f3]"
+          className="h-9 rounded-xl border border-black/9 px-4 text-xs font-semibold flex items-center hover:bg-[#faf3ef]"
         >
           Previous
         </Link>
       )}
-      <span className="text-xs text-[#858a82]">
+      <span className="text-xs text-[#8a8682]">
         {count > 0 ? `Showing ${offset + 1}–${offset + count}` : "No results"}
       </span>
       {hasMore ? (
         <Link
           href={`${basePath}?offset=${nextOffset}`}
-          className="h-9 rounded-xl border border-black/9 px-4 text-xs font-semibold flex items-center hover:bg-[#f5f6f3]"
+          className="h-9 rounded-xl border border-black/9 px-4 text-xs font-semibold flex items-center hover:bg-[#faf3ef]"
         >
           Next
         </Link>

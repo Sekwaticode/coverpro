@@ -37,7 +37,7 @@ export function EarningsStatementModal({
       const disposition = response.headers.get("Content-Disposition") ?? "";
       const fileName =
         /filename="([^"]+)"/.exec(disposition)?.[1] ??
-        "OneMarketplace-Earnings-Certificate.pdf";
+        "CoverPro-Earnings-Certificate.pdf";
 
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
@@ -65,12 +65,12 @@ export function EarningsStatementModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="statement-title"
-      className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/45 p-5 backdrop-blur-[2px]"
+      className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/45 p-5 backdrop-blur-[2px]"
     >
       <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl sm:p-7">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-xs font-semibold tracking-wide text-[#62805f] uppercase">
+            <p className="text-xs font-semibold tracking-wide text-[#e66d31] uppercase">
               Verified document
             </p>
             <h2 id="statement-title" className="mt-2 text-xl font-semibold">
@@ -87,29 +87,29 @@ export function EarningsStatementModal({
           </button>
         </div>
 
-        <p className="mt-4 text-sm leading-6 text-[#737870]">
+        <p className="mt-4 text-sm leading-6 text-[#787470]">
           Download a signed PDF certificate confirming your marketplace
-          earnings and professional freelance activity on OneMarketplace.io —
+          earnings and professional trade activity on CoverPro —
           useful for visa, loan, or income verification purposes.
         </p>
 
-        <div className="mt-5 rounded-2xl border border-black/8 bg-[#f5f7f3] p-5">
+        <div className="mt-5 rounded-2xl border border-black/8 bg-[#faf4f0] p-5">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e3efe0] text-[#4d784a]">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f8e3d7] text-[#d85a1b]">
               <Icon icon="solar:document-text-bold" width="22" />
             </span>
             <div>
               <p className="text-sm font-semibold">
                 Statement of Earnings (PDF)
               </p>
-              <p className="mt-0.5 text-[11px] text-[#7b8078]">
-                Signed by OneMinute Stack Inc.
+              <p className="mt-0.5 text-[11px] text-[#807c78]">
+                Signed by CoverPro (Pty) Ltd
               </p>
             </div>
           </div>
-          <p className="mt-4 border-t border-black/7 pt-4 text-xs leading-5 text-[#7b8078]">
+          <p className="mt-4 border-t border-black/7 pt-4 text-xs leading-5 text-[#807c78]">
             The certificate includes your name, title, location, when you
-            joined OneMarketplace.io, and payments received this month,
+            joined CoverPro, and payments received this month,
             quarter, half-year, and year — generated fresh from your account
             records.
           </p>
@@ -130,7 +130,7 @@ export function EarningsStatementModal({
             type="button"
             onClick={() => void downloadCertificate()}
             disabled={downloading}
-            className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Icon icon="solar:download-minimalistic-linear" width="18" />
             {downloading ? "Generating..." : "Download certificate"}

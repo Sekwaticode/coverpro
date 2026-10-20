@@ -66,18 +66,18 @@ function FreelancerIllustration() {
 
 const roles = [
   {
-    title: "Client",
-    description: "Post jobs and hire",
+    title: "Homeowner / Client",
+    description: "Post a project and hire pros",
     href: "/signup?role=client",
     illustration: <ClientIllustration />,
-    background: "linear-gradient(135deg, #e8f8bd 0%, #c8f4d5 100%)",
+    background: "linear-gradient(135deg, #fbd2ba 0%, #fcd6c0 100%)",
   },
   {
-    title: "Freelancer",
-    description: "Work and get paid",
+    title: "Service provider",
+    description: "Quote on jobs and get paid",
     href: "/signup?role=freelancer",
     illustration: <FreelancerIllustration />,
-    background: "linear-gradient(135deg, #cef7d4 0%, #f0f8bc 100%)",
+    background: "linear-gradient(135deg, #fcdcc9 0%, #fbd1b9 100%)",
   },
 ];
 
@@ -98,7 +98,7 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
     return (
       <div className="relative flex min-h-svh flex-col overflow-hidden bg-white font-(family-name:--font-dm-sans)">
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-128 bg-[radial-gradient(ellipse_at_top,rgba(224,246,220,0.8),rgba(247,252,245,0.48)_44%,transparent_76%)]"
+          className="pointer-events-none absolute inset-x-0 top-0 h-128 bg-[radial-gradient(ellipse_at_top,rgba(253,228,213,0.8),rgba(254,247,243,0.48)_44%,transparent_76%)]"
           aria-hidden="true"
         ></div>
 
@@ -106,11 +106,11 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
           <Link
             href="/"
             className="inline-flex items-center gap-2.5"
-            aria-label="OneMarketplace home"
+            aria-label="CoverPro home"
           >
             <BrandMark />
             <span className="text-xl font-semibold tracking-tight">
-              OneMarketplace
+              Cover<span className="text-[#ee6c2b]">Pro</span>
             </span>
           </Link>
         </header>
@@ -125,7 +125,7 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
   return (
     <div className="relative flex min-h-svh flex-col overflow-hidden bg-white font-(family-name:--font-dm-sans)">
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-128 bg-[radial-gradient(ellipse_at_top,rgba(224,246,220,0.8),rgba(247,252,245,0.48)_44%,transparent_76%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-128 bg-[radial-gradient(ellipse_at_top,rgba(253,228,213,0.8),rgba(254,247,243,0.48)_44%,transparent_76%)]"
         aria-hidden="true"
       ></div>
 
@@ -133,21 +133,21 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
         <Link
           href="/"
           className="inline-flex items-center gap-2.5"
-          aria-label="OneMarketplace.io home"
+          aria-label="CoverPro home"
         >
           <BrandMark />
           <span className="text-xl font-semibold tracking-tight">
-            OneMarketplace.io
-          </span>
+              Cover<span className="text-[#ee6c2b]">Pro</span>
+            </span>
         </Link>
       </header>
 
       <main className="relative z-10 flex flex-1 items-center justify-center px-5 py-10 sm:px-8">
         <div className="w-full max-w-5xl text-center">
-          <h1 className={`${styles.title} text-[#171916]`}>
-            Welcome to OneMarketplace
+          <h1 className={`${styles.title} text-[#191816]`}>
+            Welcome to CoverPro
           </h1>
-          <p className="mt-7 text-base font-semibold text-[#666963] sm:text-lg">
+          <p className="mt-7 text-base font-semibold text-[#696663] sm:text-lg">
             Which describes you best?
           </p>
 
@@ -156,17 +156,17 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
               <Link
                 key={role.title}
                 href={role.href}
-                className="group rounded-xl border border-black/12 bg-white p-5 text-left transition duration-200 hover:-translate-y-1 hover:border-black/20 hover:shadow-xl hover:shadow-black/6 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#477944]"
+                className="group rounded-xl border border-black/12 bg-white p-5 text-left transition duration-200 hover:-translate-y-1 hover:border-black/20 hover:shadow-xl hover:shadow-black/6 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d2571a]"
               >
                 <div
-                  className="flex aspect-square items-center justify-center rounded-xl text-[#171916]"
+                  className="flex aspect-square items-center justify-center rounded-xl text-[#191816]"
                   style={{ background: role.background }}
                 >
                   {role.illustration}
                 </div>
                 <div className="px-3 pb-1 pt-6 text-center">
                   <h2
-                    className={`${styles.roleTitle} flex items-center justify-center gap-2 text-xl text-[#181a17] sm:text-2xl`}
+                    className={`${styles.roleTitle} flex items-center justify-center gap-2 text-xl text-[#1a1817] sm:text-2xl`}
                   >
                     {role.title}
                     <span
@@ -176,7 +176,7 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
                       →
                     </span>
                   </h2>
-                  <p className="mt-2 text-sm text-[#a0a29e] sm:text-base">
+                  <p className="mt-2 text-sm text-[#a2a09e] sm:text-base">
                     {role.description}
                   </p>
                 </div>
@@ -186,11 +186,11 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
         </div>
       </main>
 
-      <footer className="relative z-10 px-5 py-8 text-center text-sm font-medium text-[#252724] sm:text-base">
+      <footer className="relative z-10 px-5 py-8 text-center text-sm font-medium text-[#272624] sm:text-base">
         Already have an account?{" "}
         <Link
           href="/login"
-          className="font-semibold text-[#357532] hover:underline! underline-offset-2"
+          className="font-semibold text-[#ba4d17] hover:underline! underline-offset-2"
         >
           Log in
         </Link>

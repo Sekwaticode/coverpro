@@ -1,9 +1,14 @@
-import { Icon } from "@iconify/react";
+import Image from "next/image";
 
 export function BrandMark() {
   return (
-    <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#252724] text-white">
-      <Icon icon="solar:widget-5-linear" width="19" />
-    </span>
+    <Image
+      src="/coverpro-logo.png"
+      alt=""
+      width={36}
+      height={36}
+      priority
+      className="h-9 w-9 shrink-0 rounded-full"
+    />
   );
 }

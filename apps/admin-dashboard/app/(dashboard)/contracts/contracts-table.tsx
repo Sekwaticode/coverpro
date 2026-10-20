@@ -81,7 +81,7 @@ export function ContractsTable({
         footer={footer}
       >
         <table className="w-full min-w-200 border-collapse text-left">
-          <thead className="bg-[#fafbf9] text-[10px] font-semibold tracking-[.08em] text-[#7c8179] uppercase">
+          <thead className="bg-[#fdf9f7] text-[10px] font-semibold tracking-[.08em] text-[#817d79] uppercase">
             <tr>
               <th className="px-5 py-3">Contract</th>
               <th className="px-5 py-3">Client</th>
@@ -96,15 +96,15 @@ export function ContractsTable({
               <tr
                 key={contract.id}
                 onClick={() => setSelected(contract)}
-                className="cursor-pointer border-t border-black/6 text-xs hover:bg-[#fafbf9]"
+                className="cursor-pointer border-t border-black/6 text-xs hover:bg-[#fdf9f7]"
               >
                 <td className="max-w-72 px-5 py-4">
                   <strong className="line-clamp-1">{contract.title}</strong>
                 </td>
-                <td className="px-5 py-4 text-[#71766e]">{contract.clientName}</td>
-                <td className="px-5 py-4 text-[#71766e]">
+                <td className="px-5 py-4 text-[#76726e]">{contract.clientName}</td>
+                <td className="px-5 py-4 text-[#76726e]">
                   {contract.talentName}
-                  <span className="ml-1.5 text-[10px] text-[#a3a89f]">
+                  <span className="ml-1.5 text-[10px] text-[#a8a39f]">
                     ({contract.talentKind})
                   </span>
                 </td>
@@ -117,7 +117,7 @@ export function ContractsTable({
                     tone={STATUS_TONE[contract.status] ?? "gray"}
                   />
                 </td>
-                <td className="px-5 py-4 text-[#858a82]">
+                <td className="px-5 py-4 text-[#8a8682]">
                   {formatDate(contract.createdAt)}
                 </td>
               </tr>
@@ -143,7 +143,7 @@ export function ContractsTable({
                     label={selected.status}
                     tone={STATUS_TONE[selected.status] ?? "gray"}
                   />
-                  <span className="text-[10px] text-[#858a82]">
+                  <span className="text-[10px] text-[#8a8682]">
                     {selected.talentKind}
                   </span>
                 </div>
@@ -168,14 +168,14 @@ export function ContractsTable({
               </div>
 
               <Section title="Client">
-                <div className="rounded-xl bg-[#f4f6f2] p-3 text-xs leading-6">
+                <div className="rounded-xl bg-[#faf3ee] p-3 text-xs leading-6">
                   <p className="font-semibold">{selected.clientName}</p>
                   {selected.clientEmail && <p>{selected.clientEmail}</p>}
                 </div>
               </Section>
 
               <Section title="Talent">
-                <div className="flex items-center gap-3 rounded-xl bg-[#f4f6f2] p-3 text-xs">
+                <div className="flex items-center gap-3 rounded-xl bg-[#faf3ee] p-3 text-xs">
                   {selected.talentAvatarUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -184,7 +184,7 @@ export function ContractsTable({
                       className="h-9 w-9 rounded-full object-cover"
                     />
                   ) : (
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#527a73] text-[9px] font-semibold text-white">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e35e1c] text-[9px] font-semibold text-white">
                       {initialsFor(selected.talentName)}
                     </span>
                   )}
@@ -192,14 +192,14 @@ export function ContractsTable({
                     <p className="font-semibold">{selected.talentName}</p>
                     {selected.talentEmail && <p>{selected.talentEmail}</p>}
                     {selected.agencySpecialty && (
-                      <p className="text-[#71766e]">{selected.agencySpecialty}</p>
+                      <p className="text-[#76726e]">{selected.agencySpecialty}</p>
                     )}
                     {selected.agencyWebsite && (
                       <a
                         href={selected.agencyWebsite}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[#52784f] hover:underline"
+                        className="text-[#dd5c1b] hover:underline"
                       >
                         {selected.agencyWebsite}
                       </a>
@@ -214,7 +214,7 @@ export function ContractsTable({
                     {selected.milestones.map((milestone) => (
                       <div
                         key={milestone.id}
-                        className="rounded-xl bg-[#f4f6f2] px-3 py-2.5 text-xs"
+                        className="rounded-xl bg-[#faf3ee] px-3 py-2.5 text-xs"
                       >
                         <div className="flex items-center justify-between gap-3">
                           <span className="min-w-0 truncate font-semibold">
@@ -225,7 +225,7 @@ export function ContractsTable({
                             tone={MILESTONE_TONE[milestone.status] ?? "gray"}
                           />
                         </div>
-                        <p className="mt-1 text-[10px] text-[#858a82]">
+                        <p className="mt-1 text-[10px] text-[#8a8682]">
                           {formatCurrency(milestone.amount)} · due{" "}
                           {formatDate(milestone.dueDate)}
                           {milestone.fundedAt &&
@@ -234,7 +234,7 @@ export function ContractsTable({
                             ` · completed ${formatDate(milestone.completedAt)}`}
                         </p>
                         {milestone.submissionMessage && (
-                          <p className="mt-1.5 text-[10px] text-[#71766e]">
+                          <p className="mt-1.5 text-[10px] text-[#76726e]">
                             {milestone.submissionMessage}
                           </p>
                         )}
@@ -243,7 +243,7 @@ export function ContractsTable({
                             href={milestone.submissionDeliveryLink}
                             target="_blank"
                             rel="noreferrer"
-                            className="mt-1 inline-block text-[10px] text-[#52784f] hover:underline"
+                            className="mt-1 inline-block text-[10px] text-[#dd5c1b] hover:underline"
                           >
                             {milestone.submissionDeliveryLink}
                           </a>
@@ -254,7 +254,7 @@ export function ContractsTable({
                 </Section>
               )}
 
-              <p className="mt-5 text-[10px] text-[#969b94]">
+              <p className="mt-5 text-[10px] text-[#9b9894]">
                 Contract ID: {selected.id} · Job ID: {selected.jobId} · Proposal
                 ID: {selected.proposalId}
               </p>
@@ -268,9 +268,9 @@ export function ContractsTable({
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-[#f3f5f1] p-3">
+    <div className="rounded-xl bg-[#f9f1ed] p-3">
       <p className="text-sm font-semibold tracking-[-.02em]">{value}</p>
-      <p className="mt-1 text-[9px] text-[#7c8179]">{label}</p>
+      <p className="mt-1 text-[9px] text-[#817d79]">{label}</p>
     </div>
   );
 }
@@ -284,7 +284,7 @@ function Section({
 }) {
   return (
     <div className="mt-5">
-      <h3 className="text-[10px] font-semibold tracking-[.1em] text-[#7c8179] uppercase">
+      <h3 className="text-[10px] font-semibold tracking-[.1em] text-[#817d79] uppercase">
         {title}
       </h3>
       <div className="mt-2">{children}</div>

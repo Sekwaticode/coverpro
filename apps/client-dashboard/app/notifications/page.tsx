@@ -4,7 +4,7 @@ import { ClientNotifications } from "./client-notifications";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Notifications | OneMarketplace.io",
+  title: "Notifications | CoverPro",
   description:
     "Review client updates about proposals, contracts, messages, and payments.",
 };

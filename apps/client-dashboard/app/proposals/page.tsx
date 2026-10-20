@@ -6,7 +6,7 @@ import { Suspense } from "react";
 export const metadata: Metadata = {
   title: "Proposals",
   description:
-    "Review, shortlist, interview, and hire freelancers or agencies.",
+    "Review, shortlist, interview, and hire pros or companies.",
 };
 
 export default async function ProposalsPage() {

@@ -111,7 +111,7 @@ export function SavedJobsDashboard() {
   };
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] font-(family-name:--font-dm-sans) text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] font-(family-name:--font-dm-sans) text-[#272624]">
       <DashboardHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <div className="grid items-start gap-6 xl:grid-cols-[240px_minmax(0,1fr)]">
@@ -119,20 +119,20 @@ export function SavedJobsDashboard() {
           <div className="min-w-0">
             <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
               <div>
-                <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
+                <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
                   Your shortlist
                 </p>
                 <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
                   Saved jobs
                 </h1>
-                <p className="mt-2 text-sm text-[#72776f]">
+                <p className="mt-2 text-sm text-[#77736f]">
                   Keep promising opportunities together and apply when you’re
                   ready.
                 </p>
               </div>
               <Link
                 href="/"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white! hover:bg-[#3b3e39]"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white! hover:bg-[#3e3c39]"
               >
                 <Icon icon="solar:magnifer-linear" width="18" />
                 Browse jobs
@@ -144,7 +144,7 @@ export function SavedJobsDashboard() {
                   <Icon
                     icon="solar:magnifer-linear"
                     width="19"
-                    className="text-[#7b8078]"
+                    className="text-[#807c78]"
                   />
                   <input
                     value={search}
@@ -174,7 +174,7 @@ export function SavedJobsDashboard() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
-                      <p className="text-xs text-[#858a82]">
+                      <p className="text-xs text-[#8a8682]">
                         Saved {format(job.savedAt)} · Posted{" "}
                         {format(
                           job.published_at ?? job.created_at ?? job.savedAt,
@@ -189,7 +189,7 @@ export function SavedJobsDashboard() {
                         href={`/jobs/${job.id}`}
                         target="_blank"
                         aria-label="Open full job"
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-[#737870] hover:bg-[#f2f5f0] hover:text-[#4e774b]"
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-[#787470] hover:bg-[#f9f1ec] hover:text-[#d85a1b]"
                       >
                         <Icon icon="solar:arrow-right-up-linear" width="20" />
                       </Link>
@@ -197,26 +197,26 @@ export function SavedJobsDashboard() {
                         type="button"
                         onClick={() => void remove(job)}
                         aria-label="Remove saved job"
-                        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-[#a8c3a4] bg-[#e8f2e5] text-[#4e784b]"
+                        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-[#d5aa92] bg-[#fae8dd] text-[#d95a1b]"
                       >
                         <Icon icon="solar:bookmark-bold" width="20" />
                       </button>
                     </div>
                   </div>
-                  <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium text-[#656a63]">
+                  <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium text-[#6a6763]">
                     <span>Fixed price</span>
-                    <span>${Number(job.total_budget).toLocaleString()}</span>
+                    <span>R{Number(job.total_budget).toLocaleString()}</span>
                     <span>{job.expertise_level}</span>
                     <span>{job.expected_duration}</span>
                   </div>
-                  <p className="mt-5 text-sm line-clamp-3 leading-6 text-[#626860]">
+                  <p className="mt-5 text-sm line-clamp-3 leading-6 text-[#686460]">
                     {job.description}
                   </p>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {job.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="rounded-lg bg-[#eef2ec] px-2.5 py-1.5 text-xs font-medium text-[#596057]"
+                        className="rounded-lg bg-[#f7ede7] px-2.5 py-1.5 text-xs font-medium text-[#605c57]"
                       >
                         {skill}
                       </span>
@@ -224,24 +224,24 @@ export function SavedJobsDashboard() {
                   </div>
                   <div className="mt-6 flex flex-col justify-between gap-4 border-t border-black/7 pt-5 sm:flex-row sm:items-center">
                     <div>
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-[#737870]">
-                        <strong className="text-[#343833]">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-[#787470]">
+                        <strong className="text-[#383633]">
                           {job.companyName}
                         </strong>
                         {job.paymentVerified && (
-                          <span className="inline-flex items-center gap-1 font-semibold text-[#4f784c]">
+                          <span className="inline-flex items-center gap-1 font-semibold text-[#da5b1b]">
                             <Icon icon="solar:verified-check-bold" width="15" />
                             Payment verified
                           </span>
                         )}
                       </div>
-                      <p className="mt-2 text-xs text-[#858a82]">
+                      <p className="mt-2 text-xs text-[#8a8682]">
                         {proposalLabel(job.proposalCount)}
                       </p>
                     </div>
                     <Link
                       href={`/jobs/${job.id}`}
-                      className="rounded-xl bg-[#252724] px-5 py-2.5 text-center text-sm font-semibold text-white! hover:bg-[#3b3e39]"
+                      className="rounded-xl bg-[#272624] px-5 py-2.5 text-center text-sm font-semibold text-white! hover:bg-[#3e3c39]"
                     >
                       {appliedJobIds.has(job.id)
                         ? "Proposal submitted"
@@ -255,12 +255,12 @@ export function SavedJobsDashboard() {
                   <Icon
                     icon="solar:bookmark-linear"
                     width="30"
-                    className="mx-auto text-[#788076]"
+                    className="mx-auto text-[#807b76]"
                   />
                   <h2 className="mt-4 text-lg font-semibold">
                     No saved jobs found
                   </h2>
-                  <p className="mt-2 text-sm text-[#777c74]">
+                  <p className="mt-2 text-sm text-[#7c7874]">
                     {jobs.length
                       ? "Try a different search term."
                       : "Save opportunities from the job feed and they’ll appear here."}
@@ -274,13 +274,13 @@ export function SavedJobsDashboard() {
       {removed && (
         <div
           role="status"
-          className="fixed right-5 bottom-5 z-50 flex items-center gap-4 rounded-xl bg-[#252724] px-5 py-3.5 text-sm text-white shadow-xl"
+          className="fixed right-5 bottom-5 z-50 flex items-center gap-4 rounded-xl bg-[#272624] px-5 py-3.5 text-sm text-white shadow-xl"
         >
           <span>Removed from saved jobs</span>
           <button
             type="button"
             onClick={() => void undo()}
-            className="cursor-pointer font-semibold text-[#a9cba5]"
+            className="cursor-pointer font-semibold text-[#deae92]"
           >
             Undo
           </button>

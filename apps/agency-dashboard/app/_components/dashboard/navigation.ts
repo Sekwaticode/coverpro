@@ -1,12 +1,12 @@
 export const agencyHeaderNavigation = [
-  { href: "/", label: "Find work" },
+  { href: "/", label: "Find jobs" },
   { href: "/proposals", label: "Proposals" },
   { href: "/contracts", label: "Contracts" },
   { href: "/team", label: "Team" },
 ] as const;
 
 export const agencyNavigation = [
-  { href: "/", label: "Find work", icon: "home" },
+  { href: "/", label: "Find jobs", icon: "home" },
   { href: "/proposals", label: "Proposals", icon: "proposal" },
   { href: "/contracts", label: "Contracts", icon: "contract" },
   { href: "/team", label: "Team", icon: "team" },

@@ -82,7 +82,7 @@ export function AgencyProfileView() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || "The agency profile could not be loaded.");
+        throw new Error(result.message || "The company profile could not be loaded.");
       }
 
       return result.data as AgencyProfile | null;
@@ -97,22 +97,22 @@ export function AgencyProfileView() {
     <>
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
-            Public agency profile
+          <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
+            Public company profile
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
             {agency.name}
           </h1>
-          <p className="mt-2 text-sm text-[#72776f]">
-            This is how clients see your agency on OneMarketplace.io.
+          <p className="mt-2 text-sm text-[#77736f]">
+            This is how clients see your company on CoverPro.
           </p>
         </div>
         <Link
           href="/profile/edit"
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white"
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white"
         >
           <Icon icon="solar:pen-2-linear" width="18" />
-          Edit agency profile
+          Edit company profile
         </Link>
       </div>
 
@@ -127,13 +127,13 @@ export function AgencyProfileView() {
                 className="mx-auto h-24 w-24 rounded-3xl object-cover"
               />
             ) : (
-              <span className="mx-auto flex h-24 w-24 items-center justify-center rounded-3xl bg-[#496e67] text-2xl font-semibold text-white">
+              <span className="mx-auto flex h-24 w-24 items-center justify-center rounded-3xl bg-[#cc5519] text-2xl font-semibold text-white">
                 {getInitials(agency.name)}
               </span>
             )}
             <h2 className="mt-5 text-xl font-semibold">{agency.name}</h2>
-            <p className="mt-1 text-sm text-[#757b73]">{agency.specialty}</p>
-            <div className="mt-3 flex justify-center text-xs text-[#7b8078]">
+            <p className="mt-1 text-sm text-[#7b7773]">{agency.specialty}</p>
+            <div className="mt-3 flex justify-center text-xs text-[#807c78]">
               <span className="inline-flex max-w-52 items-start gap-1.5 text-center">
                 <Icon
                   icon="solar:map-point-linear"
@@ -162,7 +162,7 @@ export function AgencyProfileView() {
           </section>
 
           <section className="rounded-2xl border border-black/8 bg-white p-5">
-            <h2 className="text-sm font-semibold">Agency details</h2>
+            <h2 className="text-sm font-semibold">Company details</h2>
             <dl className="mt-4 grid gap-4 text-xs">
               <Detail label="Team size" value={agency.size || NOT_AVAILABLE} />
               <Detail
@@ -188,14 +188,14 @@ export function AgencyProfileView() {
 
         <div className="grid min-w-0 gap-6">
           <section className="overflow-hidden rounded-2xl border border-black/8 bg-white">
-            <div className="bg-[radial-gradient(circle_at_82%_18%,rgba(151,195,145,.35),transparent_34%),linear-gradient(135deg,#e5efe2,#f8faf6)] p-6 sm:p-9">
-              <p className="text-xs font-semibold tracking-[0.13em] text-[#62805f] uppercase">
+            <div className="bg-[radial-gradient(circle_at_82%_18%,rgba(220,157,120,.35),transparent_34%),linear-gradient(135deg,#f7e5da,#fcf7f4)] p-6 sm:p-9">
+              <p className="text-xs font-semibold tracking-[0.13em] text-[#e66d31] uppercase">
                 Available for selected projects
               </p>
               <h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
                 {agency.professionalTitle || NOT_AVAILABLE}
               </h2>
-              <p className="mt-5 max-w-3xl text-sm leading-7 text-[#687067]">
+              <p className="mt-5 max-w-3xl text-sm leading-7 text-[#706c67]">
                 {agency.overview}
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
@@ -203,13 +203,13 @@ export function AgencyProfileView() {
                   agency.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-white/85 px-3 py-2 text-xs font-medium text-[#527052]"
+                      className="rounded-full bg-white/85 px-3 py-2 text-xs font-medium text-[#d85a1b]"
                     >
                       {tag}
                     </span>
                   ))
                 ) : (
-                  <span className="rounded-full bg-white/85 px-3 py-2 text-xs font-medium text-[#527052]">
+                  <span className="rounded-full bg-white/85 px-3 py-2 text-xs font-medium text-[#d85a1b]">
                     {NOT_AVAILABLE}
                   </span>
                 )}
@@ -219,11 +219,11 @@ export function AgencyProfileView() {
 
           <ProfileSection
             eyebrow="Selected work"
-            title="Agency portfolio"
+            title="Company portfolio"
             detail={`${agency.portfolio.length} featured project${agency.portfolio.length === 1 ? "" : "s"}`}
           >
             {agency.portfolio.length === 0 ? (
-              <p className="py-8 text-center text-sm text-[#858a82]">
+              <p className="py-8 text-center text-sm text-[#8a8682]">
                 No portfolio projects added yet.
               </p>
             ) : (
@@ -234,7 +234,7 @@ export function AgencyProfileView() {
                     className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-black/9 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-black/14 hover:shadow hover:shadow-black/2"
                   >
                     <div
-                      className="relative aspect-video overflow-hidden bg-[#e4ead8] bg-cover bg-center"
+                      className="relative aspect-video overflow-hidden bg-[#f5dccd] bg-cover bg-center"
                       style={{
                         backgroundImage: `url(${project.coverImage.url})`,
                       }}
@@ -242,13 +242,13 @@ export function AgencyProfileView() {
                       <div className="absolute inset-0 bg-linear-to-t from-black/28 via-transparent to-transparent opacity-70" />
                     </div>
                     <div className="flex flex-1 flex-col p-5">
-                      <p className="text-[10px] font-semibold tracking-[0.12em] text-[#62805f] uppercase">
+                      <p className="text-[10px] font-semibold tracking-[0.12em] text-[#e66d31] uppercase">
                         {project.category}
                       </p>
-                      <h3 className="mt-2 line-clamp-2 text-base font-semibold tracking-[-0.015em] text-[#292d28]">
+                      <h3 className="mt-2 line-clamp-2 text-base font-semibold tracking-[-0.015em] text-[#2d2b28]">
                         {project.title}
                       </h3>
-                      <p className="mt-2 line-clamp-3 text-xs leading-5 text-[#777c74]">
+                      <p className="mt-2 line-clamp-3 text-xs leading-5 text-[#7c7874]">
                         {project.description}
                       </p>
                       <div className="mt-5 border-t border-black/7 pt-4">
@@ -257,13 +257,13 @@ export function AgencyProfileView() {
                             href={project.liveUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#52784f] transition hover:text-[#365f34]"
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b] transition hover:text-[#a44414]"
                           >
                             View live project
                             <Icon icon="solar:arrow-right-up-linear" width="15" />
                           </a>
                         ) : (
-                          <span className="text-xs text-[#969b94]">
+                          <span className="text-xs text-[#9b9894]">
                             Portfolio case study
                           </span>
                         )}
@@ -277,8 +277,8 @@ export function AgencyProfileView() {
 
           <ProfileSection
             eyebrow="Our specialists"
-            title="Featured agency members"
-            detail={`${agency.members.length} agency member${agency.members.length === 1 ? "" : "s"}`}
+            title="Featured company members"
+            detail={`${agency.members.length} company member${agency.members.length === 1 ? "" : "s"}`}
           >
             <FeaturedMembers members={agency.members} />
           </ProfileSection>
@@ -308,12 +308,12 @@ function ProfileSection({
     <section className="rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-[10px] font-semibold tracking-[0.13em] text-[#62805f] uppercase">
+          <p className="text-[10px] font-semibold tracking-[0.13em] text-[#e66d31] uppercase">
             {eyebrow}
           </p>
           <h2 className="mt-2 text-xl font-semibold">{title}</h2>
         </div>
-        <p className="text-xs text-[#8a8f87]">{detail}</p>
+        <p className="text-xs text-[#8f8b87]">{detail}</p>
       </div>
       {children}
     </section>
@@ -332,7 +332,7 @@ function Stat({
   return (
     <div className={bordered ? "border-x border-black/7" : ""}>
       <dt className="text-base font-semibold">{value}</dt>
-      <dd className="mt-1 text-[10px] text-[#8a8f87]">{label}</dd>
+      <dd className="mt-1 text-[10px] text-[#8f8b87]">{label}</dd>
     </div>
   );
 }
@@ -340,8 +340,8 @@ function Stat({
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-start justify-between gap-4">
-      <dt className="text-[#898e86]">{label}</dt>
-      <dd className="text-right font-medium text-[#3f443e]">{value}</dd>
+      <dt className="text-[#8e8a86]">{label}</dt>
+      <dd className="text-right font-medium text-[#44413e]">{value}</dd>
     </div>
   );
 }

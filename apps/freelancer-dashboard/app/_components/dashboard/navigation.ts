@@ -1,5 +1,5 @@
 export const headerNavigation = [
-  { href: "/", label: "Find work" },
+  { href: "/", label: "Find jobs" },
   { href: "/my-proposals", label: "My proposals" },
   { href: "/contracts", label: "Contracts" },
   { href: "/saved-jobs", label: "Saved jobs" },

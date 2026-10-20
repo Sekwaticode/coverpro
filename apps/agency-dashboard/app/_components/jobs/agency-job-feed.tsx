@@ -26,7 +26,7 @@ const mapApiJob = (job: any): AgencyJob => ({
   company: job.companyName ?? "Client",
   verified: job.paymentVerified === true,
   posted: format(job.published_at ?? job.created_at ?? new Date()),
-  budget: `$${Number(job.total_budget).toLocaleString()}`,
+  budget: `R${Number(job.total_budget).toLocaleString()}`,
   budgetValue: Number(job.total_budget),
   level: job.expertise_level,
   duration: job.expected_duration,
@@ -45,16 +45,16 @@ const JobCardsSkeleton = () => (
         key={item}
         className="animate-pulse rounded-2xl border border-black/8 bg-white p-7"
       >
-        <div className="h-3 w-32 rounded-full bg-[#e5e8e2]" />
-        <div className="mt-4 h-6 w-3/4 rounded-full bg-[#dfe4dc]" />
-        <div className="mt-5 h-3 w-2/5 rounded-full bg-[#e9ece6]" />
-        <div className="mt-6 h-3 w-full rounded-full bg-[#e5e8e2]" />
-        <div className="mt-2 h-3 w-4/5 rounded-full bg-[#e9ece6]" />
+        <div className="h-3 w-32 rounded-full bg-[#e8e5e2]" />
+        <div className="mt-4 h-6 w-3/4 rounded-full bg-[#f0dcd1]" />
+        <div className="mt-5 h-3 w-2/5 rounded-full bg-[#f4e6de]" />
+        <div className="mt-6 h-3 w-full rounded-full bg-[#e8e5e2]" />
+        <div className="mt-2 h-3 w-4/5 rounded-full bg-[#f4e6de]" />
         <div className="mt-6 flex gap-2">
           {[20, 24, 16].map((width) => (
             <div
               key={width}
-              className="h-7 rounded-lg bg-[#e5e8e2]"
+              className="h-7 rounded-lg bg-[#e8e5e2]"
               style={{ width: `${width}%` }}
             />
           ))}
@@ -86,7 +86,7 @@ export function AgencyJobFeed() {
       );
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || "The agency could not be loaded.");
+        throw new Error(result.message || "The company could not be loaded.");
       }
       return result.data as AgencySummary | null;
     },
@@ -135,7 +135,7 @@ export function AgencyJobFeed() {
       );
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || "Agency Connects could not be loaded.");
+        throw new Error(result.message || "Company Connects could not be loaded.");
       }
       return result.data as { connects: number };
     },
@@ -206,12 +206,12 @@ export function AgencyJobFeed() {
     Number(expertOnly) + Number(verifiedOnly) + Number(Boolean(minBudget));
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] text-[#272624]">
       <AgencyHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <div className="mb-8 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
           <div>
-            <p className="text-sm font-medium text-[#62805f]">
+            <p className="text-sm font-medium text-[#e66d31]">
               {new Date().toLocaleDateString("en-US", {
                 weekday: "long",
                 month: "long",
@@ -219,18 +219,18 @@ export function AgencyJobFeed() {
               })}
             </p>
             <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
-              Good morning, {agency?.name ?? "your agency"}.
+              Good morning, {agency?.name ?? "your company"}.
             </h1>
-            <p className="mt-2 text-sm text-[#72776f]">
-              Here are fixed-price opportunities matched to your agency profile.
+            <p className="mt-2 text-sm text-[#77736f]">
+              Here are fixed-price opportunities matched to your company profile.
             </p>
           </div>
-          <label className="flex h-12 w-full items-center gap-3 rounded-xl border border-black/9 bg-white px-4 focus-within:border-[#72956f] lg:max-w-md">
-            <Icon name="search" size={20} className="text-[#7c8179]" />
+          <label className="flex h-12 w-full items-center gap-3 rounded-xl border border-black/9 bg-white px-4 focus-within:border-[#e77840] lg:max-w-md">
+            <Icon name="search" size={20} className="text-[#817d79]" />
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search jobs by title or skill"
+              placeholder="Search jobs by title or trade"
               className="min-w-0 flex-1 bg-transparent text-sm outline-none"
             />
           </label>
@@ -245,11 +245,11 @@ export function AgencyJobFeed() {
                     key={tab}
                     type="button"
                     onClick={() => setActiveTab(tab)}
-                    className={`relative cursor-pointer px-4 py-3 text-sm font-semibold ${activeTab === tab ? "text-[#4d764a]" : "text-[#777c74]"}`}
+                    className={`relative cursor-pointer px-4 py-3 text-sm font-semibold ${activeTab === tab ? "text-[#d6591a]" : "text-[#7c7874]"}`}
                   >
                     {tab}
                     {activeTab === tab && (
-                      <span className="absolute inset-x-3 bottom-0 h-0.5 bg-[#5e875b]" />
+                      <span className="absolute inset-x-3 bottom-0 h-0.5 bg-[#e67035]" />
                     )}
                   </button>
                 ))}
@@ -257,28 +257,28 @@ export function AgencyJobFeed() {
               <div className="relative flex items-center justify-between px-3 py-4">
                 <div>
                   <h2 className="font-semibold">{activeTab}</h2>
-                  <p className="mt-0.5 text-xs text-[#858a82]">
-                    {visibleJobs.length} opportunities based on your agency
+                  <p className="mt-0.5 text-xs text-[#8a8682]">
+                    {visibleJobs.length} opportunities based on your company
                     specialties
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setFiltersOpen((current) => !current)}
-                  className={`relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border ${activeFilters ? "border-[#8eaa8a] bg-[#edf4ea] text-[#4e774b]" : "border-black/8 text-[#737870]"}`}
+                  className={`relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border ${activeFilters ? "border-[#e77840] bg-[#faece4] text-[#d85a1b]" : "border-black/8 text-[#787470]"}`}
                 >
                   <Icon name="tuning" size={19} />
                   {activeFilters > 0 && (
-                    <span className="absolute -top-1 -right-1 rounded-full bg-[#5f8d5c] px-1.5 py-0.5 text-[8px] text-white">
+                    <span className="absolute -top-1 -right-1 rounded-full bg-[#e7753c] px-1.5 py-0.5 text-[8px] text-white">
                       {activeFilters}
                     </span>
                   )}
                 </button>
                 {filtersOpen && (
-                  <div className="absolute top-14 right-2 z-20 w-72 rounded-2xl border border-black/8 bg-white p-5 shadow-[0_20px_60px_rgba(25,32,25,.16)]">
+                  <div className="absolute top-14 right-2 z-20 w-72 rounded-2xl border border-black/8 bg-white p-5 shadow-[0_20px_60px_rgba(32,27,25,.16)]">
                     <div className="flex items-center justify-between">
                       <h3 className="text-sm font-semibold">
-                        Filter agency jobs
+                        Filter company jobs
                       </h3>
                       <button
                         type="button"
@@ -296,7 +296,7 @@ export function AgencyJobFeed() {
                           onChange={(event) =>
                             setExpertOnly(event.target.checked)
                           }
-                          className="accent-[#5f875c]"
+                          className="accent-[#e67036]"
                         />
                       </label>
                       <label className="flex items-center justify-between text-sm">
@@ -307,7 +307,7 @@ export function AgencyJobFeed() {
                           onChange={(event) =>
                             setVerifiedOnly(event.target.checked)
                           }
-                          className="accent-[#5f875c]"
+                          className="accent-[#e67036]"
                         />
                       </label>
                       <label className="text-xs font-semibold">
@@ -316,7 +316,7 @@ export function AgencyJobFeed() {
                           type="number"
                           value={minBudget}
                           onChange={(event) => setMinBudget(event.target.value)}
-                          placeholder="$0"
+                          placeholder="R0"
                           className="mt-2 h-10 w-full rounded-xl border border-black/10 px-3 text-sm font-normal"
                         />
                       </label>
@@ -327,7 +327,7 @@ export function AgencyJobFeed() {
                           setVerifiedOnly(false);
                           setMinBudget("");
                         }}
-                        className="text-left text-xs font-semibold text-[#52784f]"
+                        className="text-left text-xs font-semibold text-[#dd5c1b]"
                       >
                         Clear filters
                       </button>
@@ -342,7 +342,7 @@ export function AgencyJobFeed() {
               ) : jobsError ? (
                 <div className="rounded-2xl border border-dashed border-black/12 bg-white px-6 py-16 text-center">
                   <h2 className="font-semibold">Job posts could not be loaded</h2>
-                  <p className="mt-2 text-sm text-[#777c74]">
+                  <p className="mt-2 text-sm text-[#7c7874]">
                     Please try again in a moment.
                   </p>
                 </div>
@@ -370,10 +370,10 @@ export function AgencyJobFeed() {
                       <Icon
                         name="briefcase"
                         size={34}
-                        className="mx-auto text-[#7c8179]"
+                        className="mx-auto text-[#817d79]"
                       />
                       <h2 className="mt-4 font-semibold">No matching jobs</h2>
-                      <p className="mt-2 text-sm text-[#777c74]">
+                      <p className="mt-2 text-sm text-[#7c7874]">
                         Try adjusting your search or filters.
                       </p>
                     </div>
@@ -388,7 +388,7 @@ export function AgencyJobFeed() {
                 <h2 className="font-semibold">Proposal activity</h2>
                 <Link
                   href="/proposals"
-                  className="text-xs font-semibold text-[#52784f]"
+                  className="text-xs font-semibold text-[#dd5c1b]"
                 >
                   View all
                 </Link>
@@ -404,16 +404,16 @@ export function AgencyJobFeed() {
                 ].map(([value, label], index) => (
                   <div
                     key={label}
-                    className={`rounded-xl px-2 py-3 ${index === 2 ? "bg-[#eaf3e7]" : "bg-[#f2f4f0]"}`}
+                    className={`rounded-xl px-2 py-3 ${index === 2 ? "bg-[#fae9e0]" : "bg-[#f9f0eb]"}`}
                   >
                     <strong className="text-lg">{value}</strong>
-                    <p className="mt-1 text-[10px] text-[#81867e]">{label}</p>
+                    <p className="mt-1 text-[10px] text-[#86827e]">{label}</p>
                   </div>
                 ))}
               </div>
               <div className="mt-5 border-t border-black/7 pt-4">
                 <div className="flex justify-between text-xs">
-                  <span className="text-[#777c74]">Agency Connects</span>
+                  <span className="text-[#7c7874]">Company Connects</span>
                   <strong>
                     {connectsLoading ? "—" : (agencyConnects?.connects ?? 0)}
                   </strong>
@@ -428,17 +428,17 @@ export function AgencyJobFeed() {
               </div>
             </section>
             {earningsSummary?.hasEarnings && (
-              <section className="rounded-2xl bg-[#252a26] p-5 text-white">
+              <section className="rounded-2xl bg-[#2a2825] p-5 text-white">
                 <div className="flex justify-between">
-                  <p className="text-xs text-[#b9c1b8]">
-                    Agency earnings this month
+                  <p className="text-xs text-[#c1bdb8]">
+                    Company earnings this month
                   </p>
-                  <Icon name="chart" size={20} className="text-[#9fbb9c]" />
+                  <Icon name="chart" size={20} className="text-[#d1a186]" />
                 </div>
                 <p className="mt-3 text-3xl font-semibold">
-                  ${Math.round(earningsSummary.currentMonthTotal).toLocaleString()}
+                  R{Math.round(earningsSummary.currentMonthTotal).toLocaleString()}
                 </p>
-                <p className="mt-1 text-xs text-[#aeb6ad]">
+                <p className="mt-1 text-xs text-[#b6b2ad]">
                   {earningsChange >= 0 ? "+" : "-"}$
                   {Math.round(Math.abs(earningsChange)).toLocaleString()} from
                   last month
@@ -450,7 +450,7 @@ export function AgencyJobFeed() {
                   {earningsSummary.series.map((item) => (
                     <span
                       key={item.month}
-                      className="flex-1 rounded-t bg-[#71866f]"
+                      className="flex-1 rounded-t bg-[#867a6f]"
                       style={{
                         height: `${Math.max(4, Math.round((item.total / earningsChartMax) * 100))}%`,
                       }}
@@ -459,16 +459,16 @@ export function AgencyJobFeed() {
                 </div>
               </section>
             )}
-            <section className="rounded-2xl border border-[#d5dfd2] bg-[#edf4ea] p-5">
-              <Icon name="team" size={22} className="text-[#52784f]" />
-              <h2 className="mt-4 font-semibold">Strengthen your agency</h2>
-              <p className="mt-2 text-xs leading-5 text-[#667064]">
-                Complete member profiles and add recent agency work to improve
+            <section className="rounded-2xl border border-[#ecd3c5] bg-[#faece4] p-5">
+              <Icon name="team" size={22} className="text-[#dd5c1b]" />
+              <h2 className="mt-4 font-semibold">Strengthen your company</h2>
+              <p className="mt-2 text-xs leading-5 text-[#706a64]">
+                Complete member profiles and add recent company work to improve
                 match quality.
               </p>
               <Link
                 href="/team"
-                className="mt-4 inline-block text-xs font-semibold text-[#4c7549]"
+                className="mt-4 inline-block text-xs font-semibold text-[#d3581a]"
               >
                 Manage team
               </Link>

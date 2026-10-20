@@ -45,13 +45,13 @@ function postedAgo(publishedAt: string | null) {
 }
 
 function formatBudget(value: number) {
-  return `$${value.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+  return `R${value.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
 }
 
 function formatSpent(value: number) {
   if (value <= 0) return "New client";
-  if (value < 1000) return `$${Math.round(value)} spent`;
-  return `$${Math.floor(value / 1000)}k+ spent`;
+  if (value < 1000) return `R${Math.round(value)} spent`;
+  return `R${Math.floor(value / 1000)}k+ spent`;
 }
 
 function formatProposalCount(count: number) {
@@ -98,13 +98,13 @@ function FilterControls(props: FilterProps) {
           {experienceLevels.map((level) => (
             <label
               key={level}
-              className="flex cursor-pointer items-center gap-3 text-sm text-[#62665f]"
+              className="flex cursor-pointer items-center gap-3 text-sm text-[#66635f]"
             >
               <input
                 type="checkbox"
                 checked={experience.includes(level)}
                 onChange={() => toggleExperience(level)}
-                className="h-4 w-4 rounded accent-[#456f42]"
+                className="h-4 w-4 rounded accent-[#c55218]"
               />
               {level}
             </label>
@@ -115,21 +115,21 @@ function FilterControls(props: FilterProps) {
       <div className="border-t border-black/7 pt-6">
         <p className="text-sm font-semibold">Client quality</p>
         <div className="mt-3 grid gap-3">
-          <label className="flex cursor-pointer items-center gap-3 text-sm text-[#62665f]">
+          <label className="flex cursor-pointer items-center gap-3 text-sm text-[#66635f]">
             <input
               type="checkbox"
               checked={verifiedOnly}
               onChange={(e) => setVerifiedOnly(e.target.checked)}
-              className="h-4 w-4 rounded accent-[#456f42]"
+              className="h-4 w-4 rounded accent-[#c55218]"
             />
             Payment verified
           </label>
-          <label className="flex cursor-pointer items-center gap-3 text-sm text-[#62665f]">
+          <label className="flex cursor-pointer items-center gap-3 text-sm text-[#66635f]">
             <input
               type="checkbox"
               checked={lowProposalsOnly}
               onChange={(e) => setLowProposalsOnly(e.target.checked)}
-              className="h-4 w-4 rounded accent-[#456f42]"
+              className="h-4 w-4 rounded accent-[#c55218]"
             />
             Fewer than 10 proposals
           </label>
@@ -139,11 +139,11 @@ function FilterControls(props: FilterProps) {
       <div className="border-t border-black/7 pt-6">
         <p className="text-sm font-semibold">Budget</p>
         <div className="mt-3 grid grid-cols-2 gap-3">
-          <label className="grid gap-1.5 text-xs font-medium text-[#777b74]">
+          <label className="grid gap-1.5 text-xs font-medium text-[#7b7874]">
             Minimum
             <span className="relative">
               <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm">
-                $
+                R
               </span>
               <input
                 type="number"
@@ -152,16 +152,16 @@ function FilterControls(props: FilterProps) {
                 onChange={(e) =>
                   setMinBudget(Math.max(0, Number(e.target.value)))
                 }
-                className="h-11 w-full rounded-xl border border-black/10 bg-white pr-2 pl-7 text-sm font-normal outline-none focus:border-[#668c63]"
+                className="h-11 w-full rounded-xl border border-black/10 bg-white pr-2 pl-7 text-sm font-normal outline-none focus:border-[#e77840]"
                 placeholder="0"
               />
             </span>
           </label>
-          <label className="grid gap-1.5 text-xs font-medium text-[#777b74]">
+          <label className="grid gap-1.5 text-xs font-medium text-[#7b7874]">
             Maximum
             <span className="relative">
               <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm">
-                $
+                R
               </span>
               <input
                 type="number"
@@ -170,13 +170,13 @@ function FilterControls(props: FilterProps) {
                 onChange={(e) =>
                   setMaxBudget(Math.max(0, Number(e.target.value)))
                 }
-                className="h-11 w-full rounded-xl border border-black/10 bg-white pr-2 pl-7 text-sm font-normal outline-none focus:border-[#668c63]"
+                className="h-11 w-full rounded-xl border border-black/10 bg-white pr-2 pl-7 text-sm font-normal outline-none focus:border-[#e77840]"
                 placeholder="Any"
               />
             </span>
           </label>
         </div>
-        <p className="mt-2 text-[11px] leading-4 text-[#8a8e87]">
+        <p className="mt-2 text-[11px] leading-4 text-[#8e8b87]">
           Applies to the total fixed-price project budget.
         </p>
       </div>
@@ -184,7 +184,7 @@ function FilterControls(props: FilterProps) {
       <button
         type="button"
         onClick={resetFilters}
-        className="text-sm font-semibold text-[#477344] hover:underline"
+        className="text-sm font-semibold text-[#cc5519] hover:underline"
       >
         Reset all filters
       </button>
@@ -196,38 +196,38 @@ function JobCard({ job }: { job: Job }) {
   return (
     <article className="rounded-2xl border border-black/8 bg-white p-6 transition hover:border-black/13 sm:p-7">
       <div className="min-w-0">
-        <p className="text-xs font-medium text-[#81857e]">
+        <p className="text-xs font-medium text-[#85827e]">
           Posted {postedAgo(job.publishedAt)} ago
         </p>
-        <h2 className={`${styles.uiHeading} mt-2 text-xl text-[#252824]`}>
+        <h2 className={`${styles.uiHeading} mt-2 text-xl text-[#282624]`}>
           {job.title}
         </h2>
       </div>
-      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium text-[#666b64]">
+      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium text-[#6b6864]">
         <span>Fixed price</span>
         <span>{formatBudget(job.totalBudget)}</span>
         <span>{job.expectedDuration}</span>
         <span>{job.expertiseLevel}</span>
       </div>
-      <p className="mt-5 line-clamp-3 text-sm leading-6 text-[#626760]">
+      <p className="mt-5 line-clamp-3 text-sm leading-6 text-[#676460]">
         {job.description}
       </p>
       <div className="mt-5 flex flex-wrap gap-2">
         {job.skills.map((skill) => (
           <span
             key={skill}
-            className="rounded-lg bg-[#eef2ec] px-2.5 py-1.5 text-xs font-medium text-[#596057]"
+            className="rounded-lg bg-[#f7ede7] px-2.5 py-1.5 text-xs font-medium text-[#605c57]"
           >
             {skill}
           </span>
         ))}
       </div>
       <div className="mt-6 flex flex-col justify-between gap-4 border-t border-black/7 pt-5 sm:flex-row sm:items-center">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-[#737870]">
-          <span className="inline-flex items-center gap-1.5 font-semibold text-[#31352f]">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-[#787470]">
+          <span className="inline-flex items-center gap-1.5 font-semibold text-[#35322f]">
             <svg
               viewBox="0 0 24 24"
-              className="h-4 w-4 text-[#668c63]"
+              className="h-4 w-4 text-[#e77840]"
               fill="none"
               aria-hidden="true"
             >
@@ -242,8 +242,8 @@ function JobCard({ job }: { job: Job }) {
             {job.companyName}
           </span>
           {job.paymentVerified ? (
-            <span className="inline-flex items-center gap-1 font-semibold text-[#4d764a]">
-              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#e4f1e1] text-[10px]">
+            <span className="inline-flex items-center gap-1 font-semibold text-[#d6591a]">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#fbe4d7] text-[10px]">
                 ✓
               </span>
               Payment verified
@@ -261,14 +261,14 @@ function JobCard({ job }: { job: Job }) {
           {job.clientLocation && <span>{job.clientLocation}</span>}
         </div>
         <div className="flex items-center justify-between gap-4 sm:justify-end">
-          <span className="text-xs text-[#858981]">
+          <span className="text-xs text-[#898581]">
             {formatProposalCount(job.proposalCount)}
           </span>
           <Link
             href="/signup?role=freelancer"
-            className="rounded-xl bg-[#252724] px-4 py-2.5 text-sm font-semibold text-white! transition hover:bg-[#3b3e39]"
+            className="rounded-xl bg-[#272624] px-4 py-2.5 text-sm font-semibold text-white! transition hover:bg-[#3e3c39]"
           >
-            Apply as a freelancer
+            Apply as a pro
           </Link>
         </div>
       </div>
@@ -483,22 +483,22 @@ export function WorksDirectory() {
 
   return (
     <>
-      <section className="border-b border-black/7 bg-[#e8f1e5]">
+      <section className="border-b border-black/7 bg-[#f8e7de]">
         <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-18 lg:px-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#5a7d58]">
-            Fresh opportunities
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#e46526]">
+            Jobs for tradespeople
           </p>
           <h1 className={`${styles.pageTitle} max-w-3xl`}>
-            Find meaningful work with great clients.
+            Find building and renovation jobs near you.
           </h1>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-[#667064] sm:text-base">
-            Explore recent projects from verified companies looking for
-            independent expertise.
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-[#706a64] sm:text-base">
+            Quote on projects from verified homeowners and property owners —
+            every milestone is funded into escrow before you start.
           </p>
-          <label className="mt-8 flex max-w-2xl items-center gap-3 rounded-2xl border border-black/10 bg-white px-4 focus-within:border-[#6e916b] focus-within:ring-3 focus-within:ring-white/60">
+          <label className="mt-8 flex max-w-2xl items-center gap-3 rounded-2xl border border-black/10 bg-white px-4 focus-within:border-[#e77840] focus-within:ring-3 focus-within:ring-white/60">
             <svg
               viewBox="0 0 24 24"
-              className="h-5 w-5 shrink-0 text-[#7d827a]"
+              className="h-5 w-5 shrink-0 text-[#827e7a]"
               fill="none"
               aria-hidden="true"
             >
@@ -521,14 +521,14 @@ export function WorksDirectory() {
               type="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="h-14 w-full bg-transparent text-sm outline-none placeholder:text-[#9a9e97]"
-              placeholder="Search jobs by title, skill, or client"
+              className="h-14 w-full bg-transparent text-sm outline-none placeholder:text-[#9e9b97]"
+              placeholder="Search jobs by trade, town or client"
             />
             {search && (
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className="text-xs font-semibold text-[#62705f]"
+                className="text-xs font-semibold text-[#70685f]"
               >
                 Clear
               </button>
@@ -555,22 +555,22 @@ export function WorksDirectory() {
           </aside>
           <section>
             <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-[#6d716a]" aria-live="polite">
+              <p className="text-sm text-[#716e6a]" aria-live="polite">
                 {isLoading ? (
                   "Searching…"
                 ) : (
                   <>
-                    <strong className="text-[#272a26]">{jobs.length}</strong>{" "}
+                    <strong className="text-[#2a2826]">{jobs.length}</strong>{" "}
                     recent job posts
                   </>
                 )}
               </p>
-              <label className="flex items-center gap-3 text-sm text-[#6d716a]">
+              <label className="flex items-center gap-3 text-sm text-[#716e6a]">
                 Sort by
                 <select
                   value={sort}
                   onChange={(e) => setSort(e.target.value as Sort)}
-                  className="h-10 rounded-xl border border-black/10 bg-white px-3 font-medium text-[#3d413c] outline-none focus:border-[#668c63]"
+                  className="h-10 rounded-xl border border-black/10 bg-white px-3 font-medium text-[#413f3c] outline-none focus:border-[#e77840]"
                 >
                   <option value="newest">Newest</option>
                   <option value="budget">Highest budget</option>
@@ -594,7 +594,7 @@ export function WorksDirectory() {
                 </div>
                 <div ref={sentinelRef} className="h-1" />
                 {isFetchingMore && (
-                  <p className="mt-6 text-center text-sm text-[#777b74]">
+                  <p className="mt-6 text-center text-sm text-[#7b7874]">
                     Loading more jobs…
                   </p>
                 )}
@@ -602,13 +602,13 @@ export function WorksDirectory() {
             ) : (
               <div className="rounded-2xl border border-dashed border-black/15 bg-white px-6 py-16 text-center">
                 <p className="text-lg font-semibold">No matching jobs found</p>
-                <p className="mt-2 text-sm text-[#777b74]">
+                <p className="mt-2 text-sm text-[#7b7874]">
                   Try a broader search or reset your filters.
                 </p>
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="mt-5 rounded-xl bg-[#252724] px-4 py-2.5 text-sm font-semibold text-white"
+                  className="mt-5 rounded-xl bg-[#272624] px-4 py-2.5 text-sm font-semibold text-white"
                 >
                   Reset filters
                 </button>

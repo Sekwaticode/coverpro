@@ -58,12 +58,12 @@ export function ProposalsTable({
     <>
       <TableShell
         title="Proposal explorer"
-        description="Freelancer and agency proposals across all jobs — click a row to review"
+        description="Pro and company proposals across all jobs — click a row to review"
         count={proposals.length}
         footer={footer}
       >
         <table className="w-full min-w-200 border-collapse text-left">
-          <thead className="bg-[#fafbf9] text-[10px] font-semibold tracking-[.08em] text-[#7c8179] uppercase">
+          <thead className="bg-[#fdf9f7] text-[10px] font-semibold tracking-[.08em] text-[#817d79] uppercase">
             <tr>
               <th className="px-5 py-3">Sender</th>
               <th className="px-5 py-3">Job</th>
@@ -77,16 +77,16 @@ export function ProposalsTable({
               <tr
                 key={proposal.id}
                 onClick={() => setSelected(proposal)}
-                className="cursor-pointer border-t border-black/6 text-xs hover:bg-[#fafbf9]"
+                className="cursor-pointer border-t border-black/6 text-xs hover:bg-[#fdf9f7]"
               >
                 <td className="px-5 py-4">
                   <strong>{proposal.senderName}</strong>
-                  <p className="mt-0.5 text-[10px] text-[#858a82]">
+                  <p className="mt-0.5 text-[10px] text-[#8a8682]">
                     {proposal.senderType === "AGENCY" ? "Agency" : "Freelancer"}
                     {proposal.isShortlisted && " · Shortlisted"}
                   </p>
                 </td>
-                <td className="max-w-72 px-5 py-4 text-[#71766e]">
+                <td className="max-w-72 px-5 py-4 text-[#76726e]">
                   <span className="line-clamp-1">{proposal.jobTitle}</span>
                 </td>
                 <td className="px-5 py-4 font-semibold">
@@ -98,7 +98,7 @@ export function ProposalsTable({
                     tone={STATUS_TONE[proposal.status] ?? "gray"}
                   />
                 </td>
-                <td className="px-5 py-4 text-[#858a82]">
+                <td className="px-5 py-4 text-[#8a8682]">
                   {formatDate(proposal.createdAt)}
                 </td>
               </tr>
@@ -127,7 +127,7 @@ export function ProposalsTable({
                     className="h-11 w-11 shrink-0 rounded-full object-cover"
                   />
                 ) : (
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#527a73] text-xs font-semibold text-white">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#e35e1c] text-xs font-semibold text-white">
                     {initialsFor(selected.senderName)}
                   </span>
                 )}
@@ -144,7 +144,7 @@ export function ProposalsTable({
                       <Badge label="Shortlisted" tone="green" />
                     )}
                   </div>
-                  <p className="mt-0.5 truncate text-[10px] text-[#858a82]">
+                  <p className="mt-0.5 truncate text-[10px] text-[#8a8682]">
                     {selected.senderType === "AGENCY" ? "Agency" : "Freelancer"}
                     {selected.senderEmail && ` · ${selected.senderEmail}`}
                   </p>
@@ -171,14 +171,14 @@ export function ProposalsTable({
               <Section title="Applying to">
                 <Link
                   href="/job-posts"
-                  className="text-xs font-semibold text-[#52784f] hover:underline"
+                  className="text-xs font-semibold text-[#dd5c1b] hover:underline"
                 >
                   {selected.jobTitle}
                 </Link>
               </Section>
 
               <Section title="Cover letter">
-                <p className="whitespace-pre-wrap text-xs leading-6 text-[#4a4e47]">
+                <p className="whitespace-pre-wrap text-xs leading-6 text-[#4e4b47]">
                   {selected.coverLetter}
                 </p>
               </Section>
@@ -189,7 +189,7 @@ export function ProposalsTable({
                     {selected.screeningAnswers.map((qa) => (
                       <div key={qa.question}>
                         <p className="text-xs font-semibold">{qa.question}</p>
-                        <p className="mt-1 text-xs leading-6 text-[#71766e]">
+                        <p className="mt-1 text-xs leading-6 text-[#76726e]">
                           {qa.answer}
                         </p>
                       </div>
@@ -200,17 +200,17 @@ export function ProposalsTable({
 
               {selected.senderType === "AGENCY" && (
                 <Section title="Agency">
-                  <div className="rounded-xl bg-[#f4f6f2] p-3 text-xs leading-6">
+                  <div className="rounded-xl bg-[#faf3ee] p-3 text-xs leading-6">
                     <p className="font-semibold">{selected.senderName}</p>
                     {selected.agencySpecialty && (
-                      <p className="text-[#71766e]">{selected.agencySpecialty}</p>
+                      <p className="text-[#76726e]">{selected.agencySpecialty}</p>
                     )}
                     {selected.agencyWebsite && (
                       <a
                         href={selected.agencyWebsite}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[#52784f] hover:underline"
+                        className="text-[#dd5c1b] hover:underline"
                       >
                         {selected.agencyWebsite}
                       </a>
@@ -219,7 +219,7 @@ export function ProposalsTable({
                 </Section>
               )}
 
-              <p className="mt-5 text-[10px] text-[#969b94]">
+              <p className="mt-5 text-[10px] text-[#9b9894]">
                 Proposal ID: {selected.id} · Sender ID: {selected.senderId}
               </p>
             </div>
@@ -232,9 +232,9 @@ export function ProposalsTable({
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-[#f3f5f1] p-3">
+    <div className="rounded-xl bg-[#f9f1ed] p-3">
       <p className="text-sm font-semibold tracking-[-.02em]">{value}</p>
-      <p className="mt-1 text-[9px] text-[#7c8179]">{label}</p>
+      <p className="mt-1 text-[9px] text-[#817d79]">{label}</p>
     </div>
   );
 }
@@ -248,7 +248,7 @@ function Section({
 }) {
   return (
     <div className="mt-5">
-      <h3 className="text-[10px] font-semibold tracking-[.1em] text-[#7c8179] uppercase">
+      <h3 className="text-[10px] font-semibold tracking-[.1em] text-[#817d79] uppercase">
         {title}
       </h3>
       <div className="mt-2">{children}</div>

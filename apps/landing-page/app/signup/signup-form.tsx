@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { SubmitEvent, useEffect, useState } from "react";
-import { countries } from "./countries";
+import { provinces, SOUTH_AFRICA_CODE } from "./provinces";
 import styles from "./signup.module.css";
 import { useAuth, useSignUp, useUser } from "@clerk/nextjs";
 
@@ -106,7 +106,8 @@ export function SignupForm({ role }: SignupFormProps) {
         legalAccepted: formData.get("terms") === "on",
         unsafeMetadata: {
           role,
-          country: String(formData.get("country") ?? ""),
+          country: SOUTH_AFRICA_CODE,
+          province: String(formData.get("province") ?? ""),
         },
       });
 
@@ -231,28 +232,28 @@ export function SignupForm({ role }: SignupFormProps) {
             setVerificationCode("");
             setStatus("");
           }}
-          className="mb-8 inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-[#5e625c] transition hover:text-[#252724]"
+          className="mb-8 inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-[#625f5c] transition hover:text-[#272624]"
         >
           <span aria-hidden="true">←</span>
           Back to account details
         </button>
 
         <div className="text-center">
-          <span className="inline-flex rounded-full bg-[#e9f4e6] px-3 py-1.5 text-xs font-semibold text-[#4f754d]">
+          <span className="inline-flex rounded-full bg-[#fce9de] px-3 py-1.5 text-xs font-semibold text-[#d85a1b]">
             Verify your email
           </span>
-          <h1 className={`${styles.formTitle} mt-4 text-[#171916]`}>
+          <h1 className={`${styles.formTitle} mt-4 text-[#191816]`}>
             Check your inbox
           </h1>
-          <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#72766f]">
+          <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#76736f]">
             Enter the six-digit code sent to{" "}
-            <span className="font-semibold text-[#30332f]">{pendingEmail}</span>
+            <span className="font-semibold text-[#33312f]">{pendingEmail}</span>
             .
           </p>
         </div>
 
         <form onSubmit={handleVerification} className="mt-8 space-y-5">
-          <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+          <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
             Verification code
             <input
               value={verificationCode}
@@ -265,7 +266,7 @@ export function SignupForm({ role }: SignupFormProps) {
               maxLength={6}
               required
               autoFocus
-              className="h-12 rounded-xl border border-black/13 bg-white px-4 text-center font-mono text-lg tracking-[0.35em] outline-none transition placeholder:text-[#a2a59f] focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+              className="h-12 rounded-xl border border-black/13 bg-white px-4 text-center font-mono text-lg tracking-[0.35em] outline-none transition placeholder:text-[#a5a29f] focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
               placeholder="000000"
             />
           </label>
@@ -273,7 +274,7 @@ export function SignupForm({ role }: SignupFormProps) {
           <button
             type="submit"
             disabled={isLoading || verificationCode.length !== 6}
-            className="h-12 w-full cursor-pointer rounded-xl bg-[#252724] text-sm font-semibold text-white shadow-sm transition hover:bg-[#3b3e39] disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-12 w-full cursor-pointer rounded-xl bg-[#272624] text-sm font-semibold text-white shadow-sm transition hover:bg-[#3e3c39] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? "Verifying..." : "Verify and continue"}
           </button>
@@ -282,7 +283,7 @@ export function SignupForm({ role }: SignupFormProps) {
             type="button"
             onClick={() => void resendVerificationCode()}
             disabled={isLoading}
-            className="w-full cursor-pointer text-center text-sm font-semibold text-[#497446] disabled:opacity-50"
+            className="w-full cursor-pointer text-center text-sm font-semibold text-[#cf561a] disabled:opacity-50"
           >
             Send a new code
           </button>
@@ -292,7 +293,7 @@ export function SignupForm({ role }: SignupFormProps) {
               className={`rounded-xl px-4 py-3 text-center text-xs font-medium ${
                 isError
                   ? "bg-[#fff0ee] text-[#9a4d45]"
-                  : "bg-[#edf5eb] text-[#4e704b]"
+                  : "bg-[#fbede5] text-[#d0561a]"
               }`}
               role={isError ? "alert" : "status"}
             >
@@ -308,25 +309,25 @@ export function SignupForm({ role }: SignupFormProps) {
     <div className="w-full max-w-md text-left">
       <Link
         href="/signup"
-        className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#5e625c] transition hover:text-[#252724]"
+        className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#625f5c] transition hover:text-[#272624]"
       >
         <span aria-hidden="true">←</span>
         Change account type
       </Link>
 
       <div className="text-center">
-        <span className="inline-flex rounded-full bg-[#e9f4e6] px-3 py-1.5 text-xs font-semibold text-[#4f754d]">
-          {isClient ? "Client account" : "Freelancer account"}
+        <span className="inline-flex rounded-full bg-[#fce9de] px-3 py-1.5 text-xs font-semibold text-[#d85a1b]">
+          {isClient ? "Client account" : "Pro account"}
         </span>
-        <h1 className={`${styles.formTitle} mt-4 text-[#171916]`}>
+        <h1 className={`${styles.formTitle} mt-4 text-[#191816]`}>
           {isClient
             ? "Create your client account"
-            : "Create your freelancer account"}
+            : "Create your pro account"}
         </h1>
-        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#72766f]">
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#76736f]">
           {isClient
-            ? "Start hiring trusted independent professionals and agencies."
-            : "Build your profile, find meaningful work, and grow your career."}
+            ? "Hire verified builders, tilers, roofers and plumbers near you."
+            : "Show off your work, quote on local jobs, and get paid through escrow."}
         </p>
       </div>
 
@@ -335,7 +336,7 @@ export function SignupForm({ role }: SignupFormProps) {
           <button
             type="button"
             onClick={() => handleSocialSignup("Google")}
-            className="flex cursor-pointer h-12 items-center justify-center gap-3 rounded-xl border border-black/13 bg-white px-4 text-sm font-semibold text-[#30332f] transition hover:border-black/20 hover:bg-[#f8f9f7] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#4c7849]"
+            className="flex cursor-pointer h-12 items-center justify-center gap-3 rounded-xl border border-black/13 bg-white px-4 text-sm font-semibold text-[#33312f] transition hover:border-black/20 hover:bg-[#fcf7f4] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#d7591b]"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
               <path
@@ -361,7 +362,7 @@ export function SignupForm({ role }: SignupFormProps) {
           <button
             type="button"
             onClick={() => handleSocialSignup("GitHub")}
-            className="flex cursor-pointer h-12 items-center justify-center gap-3 rounded-xl border border-black/13 bg-white px-4 text-sm font-semibold text-[#30332f] transition hover:border-black/20 hover:bg-[#f8f9f7] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#4c7849]"
+            className="flex cursor-pointer h-12 items-center justify-center gap-3 rounded-xl border border-black/13 bg-white px-4 text-sm font-semibold text-[#33312f] transition hover:border-black/20 hover:bg-[#fcf7f4] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#d7591b]"
           >
             <svg
               viewBox="0 0 24 24"
@@ -377,75 +378,75 @@ export function SignupForm({ role }: SignupFormProps) {
 
         <div className="flex items-center gap-4 py-1">
           <span className="h-px flex-1 bg-black/10"></span>
-          <span className="text-xs font-medium text-[#8a8e87]">
+          <span className="text-xs font-medium text-[#8e8b87]">
             or continue with email
           </span>
           <span className="h-px flex-1 bg-black/10"></span>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+          <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
             First name
             <input
               name="firstName"
               type="text"
               autoComplete="given-name"
               required
-              className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a2a59f] focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+              className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a5a29f] focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
               placeholder="First name"
             />
           </label>
-          <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+          <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
             Last name
             <input
               name="lastName"
               type="text"
               autoComplete="family-name"
               required
-              className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a2a59f] focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+              className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a5a29f] focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
               placeholder="Last name"
             />
           </label>
         </div>
 
-        <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+        <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
           Email address
           <input
             name="email"
             type="email"
             autoComplete="email"
             required
-            className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a2a59f] focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+            className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a5a29f] focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
             placeholder="you@example.com"
           />
         </label>
 
-        <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
-          Country
+        <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
+          Province
           <span className="relative">
             <select
-              name="country"
-              autoComplete="country-name"
+              name="province"
+              autoComplete="address-level1"
               defaultValue=""
               required
-              className="h-12 w-full appearance-none rounded-xl border border-black/13 bg-white px-4 pr-11 font-normal outline-none transition invalid:text-[#a2a59f] focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+              className="h-12 w-full appearance-none rounded-xl border border-black/13 bg-white px-4 pr-11 font-normal outline-none transition invalid:text-[#a5a29f] focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
             >
               <option value="" disabled>
-                Select your country
+                Select your province
               </option>
-              {countries.map((country) => (
+              {provinces.map((province) => (
                 <option
-                  key={country.code}
-                  value={country.code}
-                  className="text-[#30332f]"
+                  key={province}
+                  value={province}
+                  className="text-[#33312f]"
                 >
-                  {country.name}
+                  {province}
                 </option>
               ))}
             </select>
             <svg
               viewBox="0 0 20 20"
-              className="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-[#737770]"
+              className="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-[#777470]"
               fill="none"
               aria-hidden="true"
             >
@@ -460,7 +461,7 @@ export function SignupForm({ role }: SignupFormProps) {
           </span>
         </label>
 
-        <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+        <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
           Password
           <span className="relative">
             <input
@@ -469,13 +470,13 @@ export function SignupForm({ role }: SignupFormProps) {
               autoComplete="new-password"
               minLength={8}
               required
-              className="h-12 w-full rounded-xl border border-black/13 bg-white px-4 pr-20 font-normal outline-none transition placeholder:text-[#a2a59f] focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+              className="h-12 w-full rounded-xl border border-black/13 bg-white px-4 pr-20 font-normal outline-none transition placeholder:text-[#a5a29f] focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
               placeholder="At least 8 characters"
             />
             <button
               type="button"
               onClick={() => setShowPassword((value) => !value)}
-              className="absolute cursor-pointer inset-y-0 right-4 text-xs font-semibold text-[#52764f]"
+              className="absolute cursor-pointer inset-y-0 right-4 text-xs font-semibold text-[#db5b1b]"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? "Hide" : "Show"}
@@ -483,25 +484,25 @@ export function SignupForm({ role }: SignupFormProps) {
           </span>
         </label>
 
-        <label className="flex items-start gap-3 text-xs leading-5 text-[#686c65]">
+        <label className="flex items-start gap-3 text-xs leading-5 text-[#6c6965]">
           <input
             name="terms"
             type="checkbox"
             required
-            className="mt-0.5 h-4 w-4 rounded border-black/20 accent-[#426f40]"
+            className="mt-0.5 h-4 w-4 rounded border-black/20 accent-[#c35118]"
           />
           <span>
             I agree to the{" "}
             <Link
               href="/terms"
-              className="font-semibold text-[#416d3e] hover:underline!"
+              className="font-semibold text-[#be4f18] hover:underline!"
             >
               Terms of Service
             </Link>{" "}
             and{" "}
             <Link
               href="/privacy"
-              className="font-semibold text-[#416d3e] hover:underline!"
+              className="font-semibold text-[#be4f18] hover:underline!"
             >
               Privacy Policy
             </Link>
@@ -520,21 +521,21 @@ export function SignupForm({ role }: SignupFormProps) {
         <button
           type="submit"
           disabled={isLoading}
-          className="h-12 cursor-pointer w-full rounded-xl bg-[#252724] text-sm font-semibold text-white shadow-sm transition hover:bg-[#3b3e39] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#4c7849]"
+          className="h-12 cursor-pointer w-full rounded-xl bg-[#272624] text-sm font-semibold text-white shadow-sm transition hover:bg-[#3e3c39] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#d7591b]"
         >
           {isLoading
             ? "Creating account..."
-            : `Create ${isClient ? "client" : "freelancer"} account`}
+            : `Create ${isClient ? "client" : "pro"} account`}
         </button>
 
         {status && (
           <p
-            className={`rounded-xl bg-[#edf5eb] px-4 py-3 text-center text-xs font-medium text-[#4e704b]
+            className={`rounded-xl bg-[#fbede5] px-4 py-3 text-center text-xs font-medium text-[#d0561a]
               
               ${
                 isError
                   ? "bg-[#fff0ee] text-[#914d45]"
-                  : "bg-[#edf5eb] text-[#3e704b]"
+                  : "bg-[#fbede5] text-[#c25018]"
               }
               `}
             role="status"
@@ -544,11 +545,11 @@ export function SignupForm({ role }: SignupFormProps) {
         )}
       </form>
 
-      <p className="mt-7 text-center text-sm text-[#555952]">
+      <p className="mt-7 text-center text-sm text-[#595652]">
         Already have an account?{" "}
         <Link
           href="/login"
-          className="font-semibold text-[#397236] hover:underline!"
+          className="font-semibold text-[#bb4e17] hover:underline!"
         >
           Log in
         </Link>

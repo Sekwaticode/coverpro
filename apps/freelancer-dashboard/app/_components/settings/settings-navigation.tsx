@@ -18,8 +18,8 @@ export function SettingsNavigation({ active, onChange }: SettingsNavigationProps
           onClick={() => onChange(section.id)}
           className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium transition ${
             active === section.id
-              ? "bg-[#edf4ea] text-[#4e774b]"
-              : "text-[#686d65] hover:bg-black/3"
+              ? "bg-[#faece4] text-[#d85a1b]"
+              : "text-[#6d6965] hover:bg-black/3"
           }`}
         >
           <Icon icon={active === section.id ? section.icon.replace("-linear", "-bold") : section.icon} width="19" />

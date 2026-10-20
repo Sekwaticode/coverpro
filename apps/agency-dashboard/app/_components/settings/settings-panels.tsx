@@ -56,7 +56,7 @@ function Panel({
     <section className="overflow-hidden rounded-2xl border border-black/8 bg-white">
       <header className="border-b border-black/7 px-5 py-5 sm:px-6">
         <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="mt-1 text-xs text-[#7b8078]">{description}</p>
+        <p className="mt-1 text-xs text-[#807c78]">{description}</p>
       </header>
       {children}
     </section>
@@ -67,7 +67,7 @@ function SavedNotice({ message }: { message: string }) {
   return (
     <p
       role="status"
-      className="rounded-xl bg-[#eaf3e7] px-4 py-3 text-xs font-medium text-[#4e774b]"
+      className="rounded-xl bg-[#fae9e0] px-4 py-3 text-xs font-medium text-[#d85a1b]"
     >
       {message}
     </p>
@@ -115,7 +115,7 @@ export function OverviewPanel({
     {
       title: "Members & access",
       detail: agency
-        ? `${memberCount} active agency member${memberCount === 1 ? "" : "s"}`
+        ? `${memberCount} active company member${memberCount === 1 ? "" : "s"}`
         : "Loading...",
       section: "members" as const,
       icon: "solar:users-group-rounded-linear",
@@ -124,15 +124,15 @@ export function OverviewPanel({
       title: "Identity verification",
       detail: verification
         ? verification.identityVerified
-          ? "Agency owner verified through Stripe"
-          : "Agency owner not verified yet"
+          ? "Company owner verified through Stripe"
+          : "Company owner not verified yet"
         : "Loading...",
       section: "verification" as const,
       icon: "solar:verified-check-linear",
     },
     {
       title: "Notifications",
-      detail: "How agency activity reaches the team",
+      detail: "How company activity reaches the team",
       section: "notifications" as const,
       icon: "solar:bell-linear",
     },
@@ -140,8 +140,8 @@ export function OverviewPanel({
 
   return (
     <Panel
-      title="Agency settings overview"
-      description="Review the essentials for your agency account."
+      title="Company settings overview"
+      description="Review the essentials for your company account."
     >
       <div className="grid gap-3 p-5 sm:grid-cols-2 sm:p-6">
         {items.map((item) => (
@@ -149,30 +149,30 @@ export function OverviewPanel({
             key={item.title}
             type="button"
             onClick={() => onOpenSection(item.section)}
-            className="flex cursor-pointer items-center gap-4 rounded-xl border border-black/7 p-4 text-left transition hover:bg-[#f8f9f6]"
+            className="flex cursor-pointer items-center gap-4 rounded-xl border border-black/7 p-4 text-left transition hover:bg-[#fbf7f4]"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
               <Icon icon={item.icon} width="20" />
             </span>
             <span className="min-w-0 flex-1">
               <strong className="block text-sm">{item.title}</strong>
-              <span className="mt-1 block text-xs text-[#7b8078]">
+              <span className="mt-1 block text-xs text-[#807c78]">
                 {item.detail}
               </span>
             </span>
             <Icon
               icon="solar:alt-arrow-right-linear"
               width="16"
-              className="text-[#858a82]"
+              className="text-[#8a8682]"
             />
           </button>
         ))}
       </div>
-      <div className="border-t border-black/7 px-5 py-4 text-xs text-[#737870] sm:px-6">
+      <div className="border-t border-black/7 px-5 py-4 text-xs text-[#787470] sm:px-6">
         Financial settings and Connects are managed from the{" "}
         <a
           href="/finances?section=overview"
-          className="font-semibold text-[#52784f] hover:underline"
+          className="font-semibold text-[#dd5c1b] hover:underline"
         >
           Finances page
         </a>
@@ -293,7 +293,7 @@ export function ProfilePanel() {
 
       if (!response.ok) {
         throw new Error(
-          result.message || "The agency profile could not be loaded.",
+          result.message || "The company profile could not be loaded.",
         );
       }
 
@@ -398,7 +398,7 @@ export function ProfilePanel() {
       const result = await response.json();
       if (!response.ok) {
         throw new Error(
-          result.message || "The agency profile could not be saved.",
+          result.message || "The company profile could not be saved.",
         );
       }
 
@@ -409,7 +409,7 @@ export function ProfilePanel() {
       setError(
         err instanceof Error
           ? err.message
-          : "The agency profile could not be saved.",
+          : "The company profile could not be saved.",
       );
     } finally {
       setSaving(false);
@@ -419,11 +419,11 @@ export function ProfilePanel() {
   if (isLoading) {
     return (
       <Panel
-        title="Agency profile"
+        title="Company profile"
         description="Manage the identity, positioning, and work clients see on your public profile."
       >
         <div className="p-5 sm:p-6">
-          <div className="h-32 animate-pulse rounded-xl bg-[#eef0ec]" />
+          <div className="h-32 animate-pulse rounded-xl bg-[#f0eeec]" />
         </div>
       </Panel>
     );
@@ -431,7 +431,7 @@ export function ProfilePanel() {
 
   return (
     <Panel
-      title="Agency profile"
+      title="Company profile"
       description="Manage the identity, positioning, and work clients see on your public profile."
     >
       <form
@@ -439,24 +439,24 @@ export function ProfilePanel() {
         onSubmit={(event) => void submit(event)}
         className="grid gap-5 p-5 sm:p-6"
       >
-        {saved && <SavedNotice message="Agency profile changes saved." />}
-        <section className="flex flex-col gap-4 rounded-xl bg-[#f4f6f2] p-4 sm:flex-row sm:items-center">
+        {saved && <SavedNotice message="Company profile changes saved." />}
+        <section className="flex flex-col gap-4 rounded-xl bg-[#faf3ee] p-4 sm:flex-row sm:items-center">
           {avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={avatarUrl}
-              alt="Agency avatar preview"
+              alt="Company avatar preview"
               className="h-20 w-20 rounded-2xl object-cover"
             />
           ) : (
-            <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-[#496e67] text-xl font-semibold text-white">
+            <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-[#cc5519] text-xl font-semibold text-white">
               ND
             </span>
           )}
           <div className="min-w-0">
-            <h3 className="text-sm font-semibold">Agency avatar</h3>
+            <h3 className="text-sm font-semibold">Company avatar</h3>
             <p
-              className={`mt-1 text-xs leading-5 ${hasAvatar ? "text-[#7b8078]" : "text-[#a4453d]"}`}
+              className={`mt-1 text-xs leading-5 ${hasAvatar ? "text-[#807c78]" : "text-[#a4453d]"}`}
             >
               {hasAvatar
                 ? "Upload a square JPG, PNG, or WebP image. Recommended size: 400 × 400px."
@@ -482,7 +482,7 @@ export function ProfilePanel() {
           </div>
         </section>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Agency name" value={name} onChange={setName} />
+          <Field label="Company name" value={name} onChange={setName} />
           <Field
             label="Website"
             value={website}
@@ -501,14 +501,16 @@ export function ProfilePanel() {
             value={specialty}
             onChange={setSpecialty}
             options={[
-              "Web & software development",
-              "Design & creative",
-              "Data & AI",
-              "Marketing",
+              "General construction",
+              "Roofing & waterproofing",
+              "Tiling & flooring",
+              "Ceilings & drywall",
+              "Plumbing & electrical",
+              "Painting & renovations",
             ]}
           />
           <SelectField
-            label="Agency size"
+            label="Company size"
             value={size}
             onChange={setSize}
             options={[
@@ -526,31 +528,31 @@ export function ProfilePanel() {
             rows={6}
             value={overview}
             onChange={(event) => setOverview(event.target.value)}
-            className="mt-2 w-full resize-none rounded-xl border border-black/10 p-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+            className="mt-2 w-full resize-none rounded-xl border border-black/10 p-3 text-sm font-normal outline-none focus:border-[#e77840]"
           />
         </label>
         <section>
           <label className="text-xs font-semibold">
-            Agency tags
+            Company tags
             <input
               value={agencyTags}
               onChange={(event) => setAgencyTags(event.target.value)}
-              placeholder="Next.js, Product design, TypeScript"
-              className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+              placeholder="Roofing, Brickwork, Waterproofing"
+              className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#e77840]"
             />
           </label>
           <p
-            className={`mt-2 text-[10px] ${hasEnoughTags ? "text-[#8b9088]" : "text-[#a4453d]"}`}
+            className={`mt-2 text-[10px] ${hasEnoughTags ? "text-[#908c88]" : "text-[#a4453d]"}`}
           >
             Separate tags with commas. Add at least 5 tags ({tagList.length}/5)
             — these appear on your public profile and help clients discover your
-            agency.
+            company.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             {tagList.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-[#edf3ea] px-3 py-1.5 text-[10px] font-medium text-[#527052]"
+                className="rounded-full bg-[#f8ece5] px-3 py-1.5 text-[10px] font-medium text-[#d85a1b]"
               >
                 {tag}
               </span>
@@ -562,11 +564,11 @@ export function ProfilePanel() {
             <div>
               <h3 className="text-sm font-semibold">Portfolio</h3>
               <p
-                className={`mt-1 text-xs ${hasPortfolioItem ? "text-[#7b8078]" : "text-[#a4453d]"}`}
+                className={`mt-1 text-xs ${hasPortfolioItem ? "text-[#807c78]" : "text-[#a4453d]"}`}
               >
                 {hasPortfolioItem
-                  ? "Showcase the strongest work completed by your agency."
-                  : "Required — add at least 1 project to showcase your agency's work."}
+                  ? "Showcase the strongest work completed by your company."
+                  : "Required — add at least 1 project to showcase your company's work."}
               </p>
             </div>
             <button
@@ -576,7 +578,7 @@ export function ProfilePanel() {
                   ...current,
                   {
                     id: crypto.randomUUID(),
-                    title: "Untitled agency project",
+                    title: "Untitled company project",
                     category: "Add project category",
                     description: "",
                     link: "",
@@ -606,7 +608,7 @@ export function ProfilePanel() {
                       className="aspect-[4/3] w-full rounded-xl object-cover"
                     />
                   ) : (
-                    <div className="flex aspect-[4/3] w-full items-center justify-center rounded-xl bg-[linear-gradient(135deg,#dcebdd,#c4dec9)] text-[#527052]">
+                    <div className="flex aspect-[4/3] w-full items-center justify-center rounded-xl bg-[linear-gradient(135deg,#f4dfd3,#ebcab7)] text-[#d85a1b]">
                       <Icon icon="solar:gallery-wide-linear" width="28" />
                     </div>
                   )}
@@ -632,12 +634,12 @@ export function ProfilePanel() {
                       }}
                     />
                   </label>
-                  <p className="mt-1.5 text-center text-[9px] leading-4 text-[#91968e]">
+                  <p className="mt-1.5 text-center text-[9px] leading-4 text-[#96928e]">
                     JPG, PNG, or WebP
                   </p>
                 </div>
                 <div className="grid min-w-0 gap-3 sm:grid-cols-2">
-                  <label className="text-[10px] font-semibold text-[#737870]">
+                  <label className="text-[10px] font-semibold text-[#787470]">
                     Project title
                     <input
                       value={project.title}
@@ -650,10 +652,10 @@ export function ProfilePanel() {
                           ),
                         )
                       }
-                      className="mt-1.5 h-10 w-full rounded-lg border border-black/10 px-3 text-xs font-normal text-[#242724] outline-none focus:border-[#6e916a]"
+                      className="mt-1.5 h-10 w-full rounded-lg border border-black/10 px-3 text-xs font-normal text-[#272624] outline-none focus:border-[#e77840]"
                     />
                   </label>
-                  <label className="text-[10px] font-semibold text-[#737870]">
+                  <label className="text-[10px] font-semibold text-[#787470]">
                     Category
                     <input
                       value={project.category}
@@ -666,10 +668,10 @@ export function ProfilePanel() {
                           ),
                         )
                       }
-                      className="mt-1.5 h-10 w-full rounded-lg border border-black/10 px-3 text-xs font-normal text-[#242724] outline-none focus:border-[#6e916a]"
+                      className="mt-1.5 h-10 w-full rounded-lg border border-black/10 px-3 text-xs font-normal text-[#272624] outline-none focus:border-[#e77840]"
                     />
                   </label>
-                  <label className="text-[10px] font-semibold text-[#737870] sm:col-span-2">
+                  <label className="text-[10px] font-semibold text-[#787470] sm:col-span-2">
                     Project description
                     <textarea
                       value={project.description}
@@ -683,11 +685,11 @@ export function ProfilePanel() {
                         )
                       }
                       rows={3}
-                      placeholder="What did your agency build, and what was the outcome?"
-                      className="mt-1.5 w-full resize-none rounded-lg border border-black/10 p-3 text-xs font-normal text-[#242724] outline-none focus:border-[#6e916a]"
+                      placeholder="What did your company build, and what was the outcome?"
+                      className="mt-1.5 w-full resize-none rounded-lg border border-black/10 p-3 text-xs font-normal text-[#272624] outline-none focus:border-[#e77840]"
                     />
                   </label>
-                  <label className="text-[10px] font-semibold text-[#737870] sm:col-span-2">
+                  <label className="text-[10px] font-semibold text-[#787470] sm:col-span-2">
                     Live link <span className="font-normal">(optional)</span>
                     <input
                       type="url"
@@ -702,7 +704,7 @@ export function ProfilePanel() {
                         )
                       }
                       placeholder="https://project.com"
-                      className="mt-1.5 h-10 w-full rounded-lg border border-black/10 px-3 text-xs font-normal text-[#242724] outline-none focus:border-[#6e916a]"
+                      className="mt-1.5 h-10 w-full rounded-lg border border-black/10 px-3 text-xs font-normal text-[#272624] outline-none focus:border-[#e77840]"
                     />
                   </label>
                 </div>
@@ -734,12 +736,12 @@ export function ProfilePanel() {
           </p>
         )}
         {isComplete && !isDirty && (
-          <p className="text-xs text-[#8a8f87]">No changes to save yet.</p>
+          <p className="text-xs text-[#8f8b87]">No changes to save yet.</p>
         )}
         <button
           type="submit"
           disabled={saving || !isComplete || !isDirty}
-          className="h-11 justify-self-start cursor-pointer rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+          className="h-11 justify-self-start cursor-pointer rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save profile"}
         </button>
@@ -770,10 +772,10 @@ export function MembersPanel() {
   return (
     <Panel
       title="Members & access"
-      description="Review who can represent and administer the agency."
+      description="Review who can represent and administer the company."
     >
       {isLoading ? (
-        <p className="px-5 py-10 text-center text-xs text-[#8a8f87] sm:px-6">
+        <p className="px-5 py-10 text-center text-xs text-[#8f8b87] sm:px-6">
           Loading team members...
         </p>
       ) : (
@@ -791,7 +793,7 @@ export function MembersPanel() {
                   className="h-10 w-10 shrink-0 rounded-full object-cover"
                 />
               ) : (
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#527a73] text-xs font-semibold text-white">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e35e1c] text-xs font-semibold text-white">
                   {member.name
                     .split(" ")
                     .map((part) => part[0])
@@ -800,7 +802,7 @@ export function MembersPanel() {
               )}
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold">{member.name}</p>
-                <p className="mt-1 text-xs text-[#7b8078]">
+                <p className="mt-1 text-xs text-[#807c78]">
                   {member.isOwner ? "Owner" : member.role}
                 </p>
               </div>
@@ -811,10 +813,10 @@ export function MembersPanel() {
       <div className="border-t border-black/7 p-5 sm:p-6">
         <a
           href="/team"
-          className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white"
+          className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white"
         >
           <Icon icon="solar:users-group-rounded-linear" width="18" />
-          Manage agency team
+          Manage company team
         </a>
       </div>
     </Panel>
@@ -885,7 +887,7 @@ export function VerificationPanel() {
   return (
     <Panel
       title="Identity verification"
-      description="The agency owner completes identity verification securely through Stripe Identity."
+      description="The company owner completes identity verification securely through Stripe Identity."
     >
       <div className="p-5 sm:p-6">
         <div className="flex flex-wrap items-center gap-4 rounded-xl border border-black/8 p-4">
@@ -897,24 +899,24 @@ export function VerificationPanel() {
               className="h-11 w-11 shrink-0 rounded-xl object-cover"
             />
           ) : (
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
               <Icon icon="solar:user-id-linear" width="22" />
             </span>
           )}
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold">
-              {owner?.name ?? "Agency owner"}
+              {owner?.name ?? "Company owner"}
             </p>
-            <p className="mt-1 text-xs text-[#7b8078]">
+            <p className="mt-1 text-xs text-[#807c78]">
               {isLoading
                 ? "Checking verification status..."
                 : verified
-                  ? "Agency owner identity verified by Stripe."
-                  : "The agency owner has not verified their identity yet."}
+                  ? "Company owner identity verified by Stripe."
+                  : "The company owner has not verified their identity yet."}
             </p>
           </div>
           {verified ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#edf4ea] px-3 py-1.5 text-xs font-semibold text-[#52784f]">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#faece4] px-3 py-1.5 text-xs font-semibold text-[#dd5c1b]">
               <Icon icon="solar:verified-check-bold" width="15" />
               Verified
             </span>
@@ -922,29 +924,29 @@ export function VerificationPanel() {
             <button
               type="button"
               onClick={() => setConfirmOpen(true)}
-              className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+              className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
             >
               Verify with Stripe
             </button>
           ) : (
             !isLoading && (
-              <span className="text-xs text-[#858a82]">
-                Only the agency owner can verify identity.
+              <span className="text-xs text-[#8a8682]">
+                Only the company owner can verify identity.
               </span>
             )
           )}
         </div>
-        <p className="mt-4 rounded-xl bg-[#f3f6f1] p-4 text-xs leading-5 text-[#667064]">
-          Stripe securely handles identity information. OneMarketplace does not
+        <p className="mt-4 rounded-xl bg-[#f9f2ee] p-4 text-xs leading-5 text-[#706a64]">
+          Stripe securely handles identity information. CoverPro does not
           manually collect or review identity documents.
         </p>
       </div>
 
       {confirmOpen && (
-        <div className="fixed inset-0 z-90 grid place-items-center bg-[#172018]/45 p-5 backdrop-blur-sm">
+        <div className="fixed inset-0 z-90 grid place-items-center bg-[#201a17]/45 p-5 backdrop-blur-sm">
           <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
             <div className="flex items-start justify-between gap-4">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
                 <Icon icon="solar:user-id-linear" width="23" />
               </span>
               <button
@@ -957,9 +959,9 @@ export function VerificationPanel() {
               </button>
             </div>
             <h2 className="mt-4 text-xl font-semibold">Verify your identity</h2>
-            <p className="mt-2 text-sm leading-6 text-[#737970]">
+            <p className="mt-2 text-sm leading-6 text-[#797570]">
               You&apos;ll be redirected to Stripe to securely verify your
-              identity as the agency owner. OneMarketplace does not store your
+              identity as the company owner. CoverPro does not store your
               identity document.
             </p>
             {error && <p className="mt-4 text-xs text-red-600">{error}</p>}
@@ -976,7 +978,7 @@ export function VerificationPanel() {
                 type="button"
                 onClick={() => void startVerification()}
                 disabled={redirecting}
-                className="h-10 rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white disabled:opacity-50"
+                className="h-10 rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:opacity-50"
               >
                 {redirecting ? "Redirecting..." : "Continue to verification"}
               </button>
@@ -992,28 +994,28 @@ export function NotificationsPanel() {
   return (
     <Panel
       title="Notifications"
-      description="How agency activity currently reaches the team."
+      description="How company activity currently reaches the team."
     >
       <div className="grid gap-3 p-5 sm:p-6">
         {[
           "Proposal and interview activity",
           "Contract and milestone updates",
           "Messages from clients",
-          "Agency invitation responses",
+          "Company invitation responses",
           "Payments and withdrawals",
         ].map((label) => (
           <div
             key={label}
             className="flex items-center gap-3 rounded-xl border border-black/7 p-4"
           >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
               <Icon icon="solar:bell-linear" width="18" />
             </span>
             <span className="text-sm font-medium">{label}</span>
           </div>
         ))}
       </div>
-      <p className="border-t border-black/7 px-5 py-4 text-xs leading-5 text-[#7b8078] sm:px-6">
+      <p className="border-t border-black/7 px-5 py-4 text-xs leading-5 text-[#807c78] sm:px-6">
         Every current team member sees these updates in the notification bell in
         real time. Per-notification preferences aren&apos;t configurable yet.
       </p>
@@ -1039,7 +1041,7 @@ function Field({
         type={type}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+        className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#e77840]"
       />
     </label>
   );
@@ -1062,7 +1064,7 @@ function SelectField({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-2 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+        className="mt-2 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-normal outline-none focus:border-[#e77840]"
       >
         {options.map((option) => (
           <option key={option}>{option}</option>

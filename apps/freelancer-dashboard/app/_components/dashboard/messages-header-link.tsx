@@ -18,8 +18,8 @@ export function MessagesHeaderLink() {
       aria-label={`Messages${unreadCount ? `, ${unreadCount} unread` : ""}`}
       className={`relative hidden h-10 w-10 items-center justify-center rounded-full transition sm:flex ${
         active
-          ? "bg-[#edf4ea] text-[#4e774b]"
-          : "text-[#60655e] hover:bg-black/5"
+          ? "bg-[#faece4] text-[#d85a1b]"
+          : "text-[#65625e] hover:bg-black/5"
       }`}
     >
       <Icon
@@ -29,7 +29,7 @@ export function MessagesHeaderLink() {
         width="22"
       />
       {unreadCount > 0 && (
-        <span className="absolute top-1.5 right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full border-2 border-white bg-[#5f8d5c] px-1 text-[8px] font-bold text-white">
+        <span className="absolute top-1.5 right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full border-2 border-white bg-[#e7753c] px-1 text-[8px] font-bold text-white">
           {unreadCount}
         </span>
       )}

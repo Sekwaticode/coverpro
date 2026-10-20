@@ -47,7 +47,7 @@ export function ClientSidebar() {
       <section className="rounded-2xl border border-black/8 bg-white p-5">
         <div className="flex items-center gap-3">
           {!user ? (
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#496e67] text-sm font-semibold text-white">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#cc5519] text-sm font-semibold text-white">
               ...
             </span>
           ) : (
@@ -64,18 +64,18 @@ export function ClientSidebar() {
             <h2 className="text-sm font-semibold">
               {!isLoaded ? "..." : user?.fullName}
             </h2>
-            <p className="mt-1 text-xs text-[#858a82]">
+            <p className="mt-1 text-xs text-[#8a8682]">
               {profileMetaDataLoading ? "..." : profileMetaData?.companyName}
             </p>
           </div>
         </div>
         <div className="mt-5 border-t border-black/7 pt-4">
-          <p className="text-[10px] font-semibold tracking-[.12em] text-[#6e826c] uppercase">
+          <p className="text-[10px] font-semibold tracking-[.12em] text-[#82776c] uppercase">
             Client account
           </p>
           <Link
             href="/profile"
-            className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#52784f] hover:underline"
+            className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b] hover:underline"
           >
             View profile
             <Icon icon="solar:arrow-right-up-linear" width="14" />
@@ -93,7 +93,7 @@ export function ClientSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium ${active ? "bg-[#edf4ea] text-[#4e774b]" : "text-[#686d65] hover:bg-black/3"}`}
+              className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium ${active ? "bg-[#faece4] text-[#d85a1b]" : "text-[#6d6965] hover:bg-black/3"}`}
             >
               <Icon
                 icon={

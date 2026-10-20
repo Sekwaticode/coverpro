@@ -164,14 +164,14 @@ export function SystemsExplorer() {
               detail={health.nats.server}
             />
             <article className="rounded-2xl border border-black/8 bg-white p-5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
                 <AdminIcon name="trend" size={20} />
               </span>
               <p className="mt-5 text-2xl font-semibold tracking-[-.04em]">
                 {formatUptime(health.process.uptimeSeconds)}
               </p>
               <h2 className="mt-1 text-xs font-semibold">API uptime</h2>
-              <p className="mt-2 text-[10px] text-[#858a82]">
+              <p className="mt-2 text-[10px] text-[#8a8682]">
                 Node {health.process.nodeVersion}
               </p>
             </article>
@@ -205,7 +205,7 @@ export function SystemsExplorer() {
                   value={`${health.process.totalMemoryMb.toLocaleString()} MB`}
                 />
               </div>
-              <p className="mt-4 text-[10px] text-[#969b94]">
+              <p className="mt-4 text-[10px] text-[#9b9894]">
                 Last checked {formatDate(health.checkedAt)} · refreshes every 10s
               </p>
             </article>
@@ -235,7 +235,7 @@ export function SystemsExplorer() {
         <header className="flex flex-col gap-3 border-b border-black/7 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="font-semibold">Redis explorer</h2>
-            <p className="mt-1 text-xs text-[#7c8179]">
+            <p className="mt-1 text-xs text-[#817d79]">
               Scan keys currently stored in Redis
             </p>
           </div>
@@ -251,7 +251,7 @@ export function SystemsExplorer() {
               type="button"
               onClick={() => void scanKeys()}
               disabled={scanning}
-              className="h-10 rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white disabled:opacity-60"
+              className="h-10 rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:opacity-60"
             >
               {scanning ? "Scanning…" : "Scan"}
             </button>
@@ -263,7 +263,7 @@ export function SystemsExplorer() {
         <div className="grid xl:grid-cols-[1fr_1.2fr]">
           <div className="max-h-100 overflow-y-auto border-b border-black/7 xl:border-r xl:border-b-0">
             <table className="w-full border-collapse text-left text-xs">
-              <thead className="sticky top-0 bg-[#fafbf9] text-[10px] font-semibold tracking-[.08em] text-[#7c8179] uppercase">
+              <thead className="sticky top-0 bg-[#fdf9f7] text-[10px] font-semibold tracking-[.08em] text-[#817d79] uppercase">
                 <tr>
                   <th className="px-5 py-3">Key</th>
                   <th className="px-5 py-3">Type</th>
@@ -275,15 +275,15 @@ export function SystemsExplorer() {
                   <tr
                     key={row.key}
                     onClick={() => void inspectKey(row.key)}
-                    className={`cursor-pointer border-t border-black/6 hover:bg-[#fafbf9] ${
-                      selectedKey === row.key ? "bg-[#edf4ea]" : ""
+                    className={`cursor-pointer border-t border-black/6 hover:bg-[#fdf9f7] ${
+                      selectedKey === row.key ? "bg-[#faece4]" : ""
                     }`}
                   >
                     <td className="max-w-56 truncate px-5 py-3 font-mono">
                       {row.key}
                     </td>
-                    <td className="px-5 py-3 text-[#71766e]">{row.type}</td>
-                    <td className="px-5 py-3 text-[#71766e]">
+                    <td className="px-5 py-3 text-[#76726e]">{row.type}</td>
+                    <td className="px-5 py-3 text-[#76726e]">
                       {row.ttl < 0 ? "No expiry" : `${row.ttl}s`}
                     </td>
                   </tr>
@@ -291,12 +291,12 @@ export function SystemsExplorer() {
               </tbody>
             </table>
             {keys && !keys.length && (
-              <div className="p-8 text-center text-sm text-[#7c8179]">
+              <div className="p-8 text-center text-sm text-[#817d79]">
                 No keys match this pattern.
               </div>
             )}
             {truncated && (
-              <p className="px-5 py-3 text-[10px] text-[#969b94]">
+              <p className="px-5 py-3 text-[10px] text-[#9b9894]">
                 Showing a partial scan — narrow your pattern to see more.
               </p>
             )}
@@ -304,7 +304,7 @@ export function SystemsExplorer() {
 
           <div className="p-5">
             {!selectedKey && (
-              <p className="text-sm text-[#7c8179]">
+              <p className="text-sm text-[#817d79]">
                 Select a key on the left to inspect its value.
               </p>
             )}
@@ -321,17 +321,17 @@ export function SystemsExplorer() {
                 )}
                 {keyDetail && (
                   <>
-                    <p className="mt-2 text-[10px] text-[#969b94]">
+                    <p className="mt-2 text-[10px] text-[#9b9894]">
                       TTL:{" "}
                       {keyDetail.ttl < 0 ? "No expiry" : `${keyDetail.ttl}s`}
                     </p>
-                    <pre className="mt-3 max-h-96 overflow-auto rounded-xl bg-[#f4f6f2] p-4 text-[11px] leading-5 whitespace-pre-wrap">
+                    <pre className="mt-3 max-h-96 overflow-auto rounded-xl bg-[#faf3ee] p-4 text-[11px] leading-5 whitespace-pre-wrap">
                       {typeof keyDetail.value === "string"
                         ? keyDetail.value
                         : JSON.stringify(keyDetail.value, null, 2)}
                     </pre>
                     {keyDetail.truncated && (
-                      <p className="mt-2 text-[10px] text-[#969b94]">
+                      <p className="mt-2 text-[10px] text-[#9b9894]">
                         Value truncated for preview.
                       </p>
                     )}
@@ -360,7 +360,7 @@ function HealthCard({
   return (
     <article className="rounded-2xl border border-black/8 bg-white p-5">
       <div className="flex items-start justify-between">
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
           <AdminIcon name={icon} size={20} />
         </span>
         <Badge
@@ -372,7 +372,7 @@ function HealthCard({
         {result.ok ? `${result.latencyMs ?? 0}ms` : "—"}
       </p>
       <h2 className="mt-1 text-xs font-semibold">{label}</h2>
-      <p className="mt-2 truncate text-[10px] text-[#858a82]">
+      <p className="mt-2 truncate text-[10px] text-[#8a8682]">
         {result.ok ? (detail ?? "Responding normally") : result.error}
       </p>
     </article>
@@ -381,9 +381,9 @@ function HealthCard({
 
 function MiniStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-[#f3f5f1] p-3">
+    <div className="rounded-xl bg-[#f9f1ed] p-3">
       <p className="text-lg font-semibold tracking-[-.03em]">{value}</p>
-      <p className="mt-1 text-[9px] text-[#7c8179]">{label}</p>
+      <p className="mt-1 text-[9px] text-[#817d79]">{label}</p>
     </div>
   );
 }

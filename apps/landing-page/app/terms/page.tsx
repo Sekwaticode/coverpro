@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "../_components/legal-page";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | OneMarketplace.io",
-  description: "The terms governing your use of OneMarketplace.io.",
+  title: "Terms of Service | CoverPro",
+  description: "The terms governing your use of CoverPro.",
 };
 
 const sections: LegalSection[] = [
@@ -12,7 +12,7 @@ const sections: LegalSection[] = [
     title: "Your agreement with us",
     content: (
       <p>
-        By accessing or using OneMarketplace.io, you agree to these Terms. If
+        By accessing or using CoverPro, you agree to these Terms. If
         you use the service on behalf of an organization, you confirm that you
         have authority to bind that organization. If you do not agree, do not
         use the service.
@@ -43,8 +43,8 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          OneMarketplace.io helps clients, independent professionals, and
-          agencies discover and communicate with one another. Unless explicitly
+          CoverPro helps clients, independent professionals, and
+          companies discover and communicate with one another. Unless explicitly
           stated otherwise, users contract directly with each other and remain
           responsible for evaluating opportunities, agreeing on scope, and
           performing their obligations.
@@ -114,7 +114,7 @@ const sections: LegalSection[] = [
           non-infringement.
         </p>
         <p>
-          To the extent permitted by law, OneMarketplace.io will not be liable
+          To the extent permitted by law, CoverPro will not be liable
           for indirect, incidental, special, consequential, or punitive damages,
           or for lost profits, data, opportunities, or goodwill.
         </p>
@@ -133,8 +133,8 @@ const sections: LegalSection[] = [
         </p>
         <p>
           Questions can be sent to{" "}
-          <a href="mailto:legal@onemarketplace.io">
-            legal@onemarketplace.io
+          <a href="mailto:legal@coverpro.co.za">
+            legal@coverpro.co.za
           </a>
           .
         </p>
@@ -148,7 +148,7 @@ export default function TermsPage() {
     <LegalPage
       eyebrow="Terms of service"
       title="Clear expectations make better work possible."
-      introduction="These Terms explain the rules for using OneMarketplace.io and the responsibilities shared by clients, talent, agencies, and our platform."
+      introduction="These Terms explain the rules for using CoverPro and the responsibilities shared by clients, pros, companies, and our platform."
       updated="July 25, 2026"
       sections={sections}
     />

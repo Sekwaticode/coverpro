@@ -46,7 +46,7 @@ export function EditJobPost({ jobId }: { jobId: string }) {
   if (isLoading) return <EditJobPostSkeleton />;
   if (error || !job)
     return (
-      <div className="rounded-2xl border border-black/8 bg-white p-8 text-center text-sm text-[#737970]">
+      <div className="rounded-2xl border border-black/8 bg-white p-8 text-center text-sm text-[#797570]">
         {error?.message || "Job post not found."}
       </div>
     );
@@ -83,18 +83,18 @@ function PageHeader() {
     <div>
       <Link
         href="/jobs"
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#52784f]"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b]"
       >
         <Icon icon="solar:arrow-left-linear" width="15" />
         Back to job posts
       </Link>
-      <p className="mt-6 text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+      <p className="mt-6 text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
         Hiring
       </p>
       <h1 className="mt-2 text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
         Edit job post
       </h1>
-      <p className="mt-2 text-sm text-[#72776f]">
+      <p className="mt-2 text-sm text-[#77736f]">
         Update the scope, requirements, and milestones before making a hire.
       </p>
     </div>
@@ -108,12 +108,12 @@ function LockedJob() {
         <Icon icon="solar:lock-keyhole-linear" width="30" />
       </span>
       <h1 className="mt-5 text-2xl font-semibold">This job post is locked</h1>
-      <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[#737970]">
-        You hired talent from this job post, so it can no longer be edited.
+      <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[#797570]">
+        You hired a pro from this job post, so it can no longer be edited.
       </p>
       <Link
         href="/contracts"
-        className="mt-6 inline-flex h-11 rounded-xl bg-[#252724] px-5 py-3 text-sm font-semibold text-white"
+        className="mt-6 inline-flex h-11 rounded-xl bg-[#272624] px-5 py-3 text-sm font-semibold text-white"
       >
         View contract
       </Link>
@@ -124,48 +124,48 @@ function LockedJob() {
 function EditJobPostSkeleton() {
   return (
     <div className="animate-pulse" aria-label="Loading job post">
-      <div className="h-3 w-28 rounded bg-[#e1e5df]" />
-      <div className="mt-6 h-3 w-16 rounded bg-[#e7eae5]" />
-      <div className="mt-3 h-9 w-56 rounded-lg bg-[#dde1db]" />
-      <div className="mt-3 h-3 w-96 max-w-full rounded bg-[#e7eae5]" />
+      <div className="h-3 w-28 rounded bg-[#e5e2df]" />
+      <div className="mt-6 h-3 w-16 rounded bg-[#eae8e5]" />
+      <div className="mt-3 h-9 w-56 rounded-lg bg-[#e1dedb]" />
+      <div className="mt-3 h-3 w-96 max-w-full rounded bg-[#eae8e5]" />
 
       <div className="mt-8 grid gap-5">
         <SkeletonSection>
-          <div className="h-11 rounded-xl bg-[#edf0eb]" />
-          <div className="h-36 rounded-xl bg-[#edf0eb]" />
+          <div className="h-11 rounded-xl bg-[#f6ebe5]" />
+          <div className="h-36 rounded-xl bg-[#f6ebe5]" />
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="h-11 rounded-xl bg-[#edf0eb]" />
-            <div className="h-11 rounded-xl bg-[#edf0eb]" />
+            <div className="h-11 rounded-xl bg-[#f6ebe5]" />
+            <div className="h-11 rounded-xl bg-[#f6ebe5]" />
           </div>
         </SkeletonSection>
 
         <SkeletonSection>
-          <div className="h-11 rounded-xl bg-[#edf0eb]" />
+          <div className="h-11 rounded-xl bg-[#f6ebe5]" />
           <div className="flex gap-2">
-            <span className="h-7 w-20 rounded-full bg-[#e5ebe2]" />
-            <span className="h-7 w-24 rounded-full bg-[#e5ebe2]" />
-            <span className="h-7 w-16 rounded-full bg-[#e5ebe2]" />
+            <span className="h-7 w-20 rounded-full bg-[#f3e3da]" />
+            <span className="h-7 w-24 rounded-full bg-[#f3e3da]" />
+            <span className="h-7 w-16 rounded-full bg-[#f3e3da]" />
           </div>
         </SkeletonSection>
 
         <SkeletonSection>
-          <div className="h-20 rounded-xl bg-[#edf0eb]" />
+          <div className="h-20 rounded-xl bg-[#f6ebe5]" />
           {[1, 2, 3].map((item) => (
             <div
               key={item}
               className="grid gap-3 rounded-xl border border-black/6 p-4 sm:grid-cols-[1fr_150px_150px]"
             >
-              <div className="h-10 rounded-lg bg-[#edf0eb]" />
-              <div className="h-10 rounded-lg bg-[#edf0eb]" />
-              <div className="h-10 rounded-lg bg-[#edf0eb]" />
+              <div className="h-10 rounded-lg bg-[#f6ebe5]" />
+              <div className="h-10 rounded-lg bg-[#f6ebe5]" />
+              <div className="h-10 rounded-lg bg-[#f6ebe5]" />
             </div>
           ))}
         </SkeletonSection>
       </div>
 
       <div className="mt-5 flex justify-end gap-2 rounded-2xl border border-black/6 bg-white p-4">
-        <span className="h-11 w-28 rounded-xl bg-[#edf0eb]" />
-        <span className="h-11 w-32 rounded-xl bg-[#dfe3dd]" />
+        <span className="h-11 w-28 rounded-xl bg-[#f6ebe5]" />
+        <span className="h-11 w-32 rounded-xl bg-[#e3e0dd]" />
       </div>
     </div>
   );
@@ -175,8 +175,8 @@ function SkeletonSection({ children }: { children: React.ReactNode }) {
   return (
     <div className="grid gap-5 rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
       <div className="grid gap-2">
-        <span className="h-4 w-40 rounded bg-[#dfe3dd]" />
-        <span className="h-3 w-72 max-w-full rounded bg-[#ecefeb]" />
+        <span className="h-4 w-40 rounded bg-[#e3e0dd]" />
+        <span className="h-3 w-72 max-w-full rounded bg-[#efedeb]" />
       </div>
       <div className="grid gap-4 border-t border-black/7 pt-5">{children}</div>
     </div>

@@ -123,7 +123,7 @@ export function ProposalsDashboard({
         title:
           proposal.senderType === "AGENCY"
             ? `Agency · ${proposal.memberCount ?? 0} member${proposal.memberCount === 1 ? "" : "s"}`
-            : (proposal.professionalTitle ?? "Freelancer"),
+            : (proposal.professionalTitle ?? "Pro"),
         location:
           [
             proposal.city,
@@ -318,11 +318,11 @@ export function ProposalsDashboard({
     if (jobsLoading)
       return (
         <div className="mt-8 animate-pulse rounded-2xl border border-black/8 bg-white p-6">
-          <div className="h-3 w-20 rounded bg-[#e8ebe6]" />
-          <div className="mt-4 h-5 w-72 max-w-full rounded bg-[#dde2db]" />
-          <div className="mt-3 h-3 w-48 rounded bg-[#ecefeb]" />
-          <div className="mt-6 h-3 w-full rounded bg-[#e8ebe6]" />
-          <div className="mt-3 h-3 w-3/4 rounded bg-[#eef0ec]" />
+          <div className="h-3 w-20 rounded bg-[#ebe9e6]" />
+          <div className="mt-4 h-5 w-72 max-w-full rounded bg-[#e2dfdb]" />
+          <div className="mt-3 h-3 w-48 rounded bg-[#efedeb]" />
+          <div className="mt-6 h-3 w-full rounded bg-[#ebe9e6]" />
+          <div className="mt-3 h-3 w-3/4 rounded bg-[#f0eeec]" />
         </div>
       );
     return (
@@ -345,7 +345,7 @@ export function ProposalsDashboard({
     <>
       <Link
         href="/proposals"
-        className="inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold text-[#52784f]"
+        className="inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold text-[#dd5c1b]"
       >
         <Icon icon="solar:arrow-left-linear" width="15" />
         Back to job posts
@@ -353,14 +353,14 @@ export function ProposalsDashboard({
 
       <div className="mt-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+          <p className="text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
             Proposal review
           </p>
           <h1 className="mt-2 max-w-4xl text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
             {selectedJob.title}
           </h1>
-          <p className="mt-2 text-sm text-[#72776f]">
-            Compare every freelancer and agency that applied to this job.
+          <p className="mt-2 text-sm text-[#77736f]">
+            Compare every pro and company that applied to this job.
           </p>
         </div>
         {selectedJob.hires > 0 ? (
@@ -386,7 +386,7 @@ export function ProposalsDashboard({
         <div className="grid gap-4 sm:grid-cols-4">
           <JobMetric
             label="Fixed budget"
-            value={`$${selectedJob?.budget?.toLocaleString()}`}
+            value={`R${selectedJob?.budget?.toLocaleString()}`}
           />
           <JobMetric label="Proposals" value={String(selectedJob.proposals)} />
           <JobMetric
@@ -405,7 +405,7 @@ export function ProposalsDashboard({
           {selectedJob.skills.map((skill: any) => (
             <span
               key={skill}
-              className="rounded-lg bg-[#f0f3ee] px-2.5 py-1.5 text-[10px] text-[#657062]"
+              className="rounded-lg bg-[#f8efe9] px-2.5 py-1.5 text-[10px] text-[#706962]"
             >
               {skill}
             </span>
@@ -416,7 +416,7 @@ export function ProposalsDashboard({
       {notice && (
         <p
           role="status"
-          className="mt-5 rounded-xl bg-[#e7f2e4] p-3 text-xs font-semibold text-[#4d784a]"
+          className="mt-5 rounded-xl bg-[#fae7dc] p-3 text-xs font-semibold text-[#d85a1b]"
         >
           {notice}
         </p>
@@ -453,8 +453,8 @@ export function ProposalsDashboard({
                 }}
                 className={`inline-flex h-9 cursor-pointer items-center gap-2 rounded-lg px-3 text-xs font-semibold ${
                   filter === item
-                    ? "bg-[#edf4ea] text-[#4e774b]"
-                    : "bg-white text-[#6f756d] hover:bg-black/3"
+                    ? "bg-[#faece4] text-[#d85a1b]"
+                    : "bg-white text-[#75716d] hover:bg-black/3"
                 }`}
               >
                 {item}
@@ -463,7 +463,7 @@ export function ProposalsDashboard({
             );
           })}
         </div>
-        <p className="text-xs text-[#858a82]">
+        <p className="text-xs text-[#8a8682]">
           {filteredProposals.length
             ? `Showing ${pageStart + 1}–${Math.min(
                 pageStart + proposalsPerPage,
@@ -487,13 +487,13 @@ export function ProposalsDashboard({
           ))
         ) : (
           <div className="rounded-2xl border border-dashed border-black/10 bg-white p-12 text-center">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#edf4ea] text-[#52784f]">
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#faece4] text-[#dd5c1b]">
               <Icon icon="solar:users-group-rounded-linear" width="26" />
             </span>
             <h2 className="mt-4 text-sm font-semibold">
               No proposals in this view
             </h2>
-            <p className="mt-2 text-xs text-[#858a82]">
+            <p className="mt-2 text-xs text-[#8a8682]">
               Choose another status or return to your job posts.
             </p>
           </div>
@@ -556,7 +556,7 @@ function ProposalPagination({
       aria-label="Proposals pagination"
       className="mt-5 flex flex-col gap-3 rounded-2xl border border-black/8 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
     >
-      <p className="text-[10px] text-[#858a82]">
+      <p className="text-[10px] text-[#8a8682]">
         Showing {pageStart + 1}–
         {Math.min(pageStart + proposalsPerPage, totalResults)} of {totalResults}
       </p>
@@ -583,8 +583,8 @@ function ProposalPagination({
               onClick={() => onPageChange(pageNumber)}
               className={`h-9 min-w-9 cursor-pointer rounded-lg px-3 text-xs font-semibold ${
                 active
-                  ? "bg-[#e9f1e6] text-[#4f794c]"
-                  : "border border-black/10 text-[#656b63]"
+                  ? "bg-[#f8e8df] text-[#db5b1b]"
+                  : "border border-black/10 text-[#6b6763]"
               }`}
             >
               {pageNumber}
@@ -609,19 +609,19 @@ function PageHeading() {
   return (
     <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
       <div>
-        <p className="text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+        <p className="text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
           Talent review
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
           Proposals
         </h1>
-        <p className="mt-2 text-sm text-[#72776f]">
-          Choose a job post to review its freelancers and agencies.
+        <p className="mt-2 text-sm text-[#77736f]">
+          Choose a job post to review its pros and companies.
         </p>
       </div>
       <Link
         href="/jobs/new"
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white"
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white"
       >
         <Icon icon="solar:add-circle-linear" width="18" />
         Post another job
@@ -646,22 +646,22 @@ function JobProposalCard({
               <span
                 className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${
                   job.status === "Open"
-                    ? "bg-[#e7f2e4] text-[#4d784a]"
+                    ? "bg-[#fae7dc] text-[#d85a1b]"
                     : job.status === "Draft"
                       ? "bg-[#f1f0e7] text-[#766f47]"
-                      : "bg-[#f0f1ef] text-[#767b74]"
+                      : "bg-[#f1f0ef] text-[#7b7874]"
                 }`}
               >
                 {job.status}
               </span>
-              <span className="text-[10px] text-[#8a8f87]">{job.posted}</span>
+              <span className="text-[10px] text-[#8f8b87]">{job.posted}</span>
             </div>
             <h2 className="mt-3 text-lg font-semibold">{job.title}</h2>
-            <p className="mt-2 text-xs text-[#757b73]">
+            <p className="mt-2 text-xs text-[#7b7773]">
               Fixed price · ${job?.budget?.toLocaleString()} · {job.level} ·{" "}
               {job.duration}
             </p>
-            <p className="mt-4 line-clamp-2 max-w-4xl text-sm leading-6 text-[#6f756d]">
+            <p className="mt-4 line-clamp-2 max-w-4xl text-sm leading-6 text-[#75716d]">
               {job.description}
             </p>
           </div>
@@ -676,24 +676,24 @@ function JobProposalCard({
           {job.skills.slice(0, 5).map((skill) => (
             <span
               key={skill}
-              className="rounded-lg bg-[#f0f3ee] px-2.5 py-1.5 text-[10px] text-[#657062]"
+              className="rounded-lg bg-[#f8efe9] px-2.5 py-1.5 text-[10px] text-[#706962]"
             >
               {skill}
             </span>
           ))}
         </div>
       </div>
-      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-black/7 bg-[#fafbf9] px-5 py-4 sm:px-6">
-        <p className="text-xs text-[#858a82]">
+      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-black/7 bg-[#fdf9f7] px-5 py-4 sm:px-6">
+        <p className="text-xs text-[#8a8682]">
           {job.proposals
-            ? `${job.proposals} people and agencies applied`
+            ? `${job.proposals} people and companies applied`
             : "No proposals received yet"}
         </p>
         <button
           type="button"
           disabled={job.proposals === 0}
           onClick={onView}
-          className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:bg-[#c2c5c0]"
+          className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:bg-[#c5c3c0]"
         >
           View proposals
           <Icon icon="solar:arrow-right-linear" width="15" />
@@ -716,7 +716,7 @@ function ProposalCard({
     <article className="rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
       <div className="flex flex-col gap-5 lg:flex-row">
         <div className="flex min-w-0 flex-1 gap-4">
-          <span className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#527a73] text-sm font-semibold text-white">
+          <span className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#e35e1c] text-sm font-semibold text-white">
             {proposal.avatarUrl ? (
               <Image
                 src={proposal.avatarUrl}
@@ -728,50 +728,50 @@ function ProposalCard({
               proposal.initials
             )}
             {proposal.online && (
-              <span className="absolute right-0 bottom-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-[#5ca568]" />
+              <span className="absolute right-0 bottom-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-[#e77840]" />
             )}
           </span>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="text-lg font-semibold">{proposal.bidder}</h2>
-              <span className="rounded-full bg-[#f0f3ee] px-2 py-1 text-[9px] font-semibold text-[#627260]">
+              <span className="rounded-full bg-[#f8efe9] px-2 py-1 text-[9px] font-semibold text-[#726960]">
                 {proposal.accountType}
               </span>
               {proposal.verified && (
-                <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#52784f]">
+                <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#dd5c1b]">
                   <Icon icon="solar:verified-check-bold" width="14" />
                   Verified
                 </span>
               )}
             </div>
-            <p className="mt-1 text-sm text-[#70766e]">{proposal.title}</p>
-            <p className="mt-2 text-xs text-[#8a8f87]">
+            <p className="mt-1 text-sm text-[#76726e]">{proposal.title}</p>
+            <p className="mt-2 text-xs text-[#8f8b87]">
               {proposal.location} · Submitted {proposal.submitted}
             </p>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4 text-left sm:grid-cols-4 lg:text-right">
-          <Mini label="Bid" value={`$${proposal.bid.toLocaleString()}`} />
+          <Mini label="Bid" value={`R${proposal.bid.toLocaleString()}`} />
           <Mini label="Duration" value={proposal.duration} />
           <Mini label="Success" value={`${proposal.jobSuccess}%`} />
           <Mini label="Rating" value={String(proposal.rating)} />
         </div>
       </div>
-      <p className="mt-5 line-clamp-2 text-sm leading-6 text-[#686e66]">
+      <p className="mt-5 line-clamp-2 text-sm leading-6 text-[#6e6a66]">
         {proposal.coverLetter}
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         {proposal.skills.map((skill) => (
           <span
             key={skill}
-            className="rounded-lg bg-[#f0f3ee] px-2.5 py-1.5 text-[10px]"
+            className="rounded-lg bg-[#f8efe9] px-2.5 py-1.5 text-[10px]"
           >
             {skill}
           </span>
         ))}
       </div>
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-black/7 pt-4">
-        <span className="rounded-full bg-[#edf4ea] px-3 py-1.5 text-[10px] font-semibold text-[#4e774b]">
+        <span className="rounded-full bg-[#faece4] px-3 py-1.5 text-[10px] font-semibold text-[#d85a1b]">
           {proposal.status}
         </span>
         <div className="flex flex-wrap gap-2">
@@ -795,7 +795,7 @@ function ProposalCard({
             <button
               type="button"
               onClick={onShortlist}
-              className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+              className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
             >
               Shortlist
             </button>
@@ -808,9 +808,9 @@ function ProposalCard({
 
 function JobMetric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-[#f3f5f1] p-3">
+    <div className="rounded-xl bg-[#f9f1ed] p-3">
       <p className="text-base font-semibold">{value}</p>
-      <p className="mt-1 text-[9px] text-[#858a82]">{label}</p>
+      <p className="mt-1 text-[9px] text-[#8a8682]">{label}</p>
     </div>
   );
 }
@@ -819,7 +819,7 @@ function Mini({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <p className="text-sm font-semibold">{value}</p>
-      <p className="mt-1 text-[9px] text-[#8a8f87]">{label}</p>
+      <p className="mt-1 text-[9px] text-[#8f8b87]">{label}</p>
     </div>
   );
 }
@@ -843,11 +843,11 @@ function ProposalDrawer({
       <aside className="absolute top-0 right-0 h-full w-full max-w-2xl overflow-y-auto bg-white p-5 shadow-2xl sm:p-7">
         <div className="flex justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold text-[#62805f]">
+            <p className="text-xs font-semibold text-[#e66d31]">
               {proposal.accountType} proposal
             </p>
             <h2 className="mt-2 text-2xl font-semibold">{proposal.bidder}</h2>
-            <p className="mt-1 text-sm text-[#747a72]">{proposal.title}</p>
+            <p className="mt-1 text-sm text-[#7a7672]">{proposal.title}</p>
           </div>
           <button type="button" onClick={onClose}>
             <Icon icon="solar:close-circle-linear" width="24" />
@@ -855,19 +855,19 @@ function ProposalDrawer({
         </div>
         <div className="mt-6 grid grid-cols-3 gap-3">
           {[
-            ["Bid", `$${proposal.bid.toLocaleString()}`],
+            ["Bid", `R${proposal.bid.toLocaleString()}`],
             ["Duration", proposal.duration],
             ["Completed", String(proposal.completedProjects)],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-xl bg-[#f3f5f1] p-4">
-              <p className="text-[10px] text-[#858a82]">{label}</p>
+            <div key={label} className="rounded-xl bg-[#f9f1ed] p-4">
+              <p className="text-[10px] text-[#8a8682]">{label}</p>
               <p className="mt-1 text-sm font-semibold">{value}</p>
             </div>
           ))}
         </div>
         <section className="mt-6">
           <h3 className="text-sm font-semibold">Cover letter</h3>
-          <p className="mt-3 text-sm leading-7 whitespace-pre-wrap text-[#686e66]">
+          <p className="mt-3 text-sm leading-7 whitespace-pre-wrap text-[#6e6a66]">
             {proposal.coverLetter}
           </p>
         </section>
@@ -878,12 +878,12 @@ function ProposalDrawer({
               <div key={item.title} className="flex justify-between gap-4 p-4">
                 <div>
                   <p className="text-xs font-semibold">{item.title}</p>
-                  <p className="mt-1 text-[10px] text-[#858a82]">
+                  <p className="mt-1 text-[10px] text-[#8a8682]">
                     {item.duration}
                   </p>
                 </div>
                 <p className="text-xs font-semibold">
-                  ${item.amount.toLocaleString()}
+                  R{item.amount.toLocaleString()}
                 </p>
               </div>
             ))}
@@ -900,7 +900,7 @@ function ProposalDrawer({
                   className="rounded-xl border border-black/7 p-4"
                 >
                   <p className="text-xs font-semibold">{item.question}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#686e66]">
+                  <p className="mt-2 text-sm leading-6 text-[#6e6a66]">
                     {item.answer}
                   </p>
                 </div>
@@ -938,7 +938,7 @@ function ProposalDrawer({
           {proposal.contractId ? (
             <Link
               href={`/contracts?contractId=${proposal.contractId}`}
-              className="inline-flex h-11 items-center rounded-xl bg-[#252724] px-5 text-xs font-semibold text-white"
+              className="inline-flex h-11 items-center rounded-xl bg-[#272624] px-5 text-xs font-semibold text-white"
             >
               See contract
             </Link>
@@ -946,7 +946,7 @@ function ProposalDrawer({
             <button
               type="button"
               onClick={onHire}
-              className="h-11 rounded-xl bg-[#252724] px-5 text-xs font-semibold text-white"
+              className="h-11 rounded-xl bg-[#272624] px-5 text-xs font-semibold text-white"
             >
               Send contract offer
             </button>
@@ -961,14 +961,14 @@ function ProposalSkeleton() {
   return (
     <div className="animate-pulse rounded-2xl border border-black/8 bg-white p-6">
       <div className="flex gap-4">
-        <div className="h-14 w-14 rounded-2xl bg-[#e5e9e3]" />
+        <div className="h-14 w-14 rounded-2xl bg-[#f3e3d9]" />
         <div className="flex-1">
-          <div className="h-4 w-40 rounded bg-[#dde2db]" />
-          <div className="mt-3 h-3 w-56 rounded bg-[#ecefeb]" />
+          <div className="h-4 w-40 rounded bg-[#e2dfdb]" />
+          <div className="mt-3 h-3 w-56 rounded bg-[#efedeb]" />
         </div>
       </div>
-      <div className="mt-6 h-3 w-full rounded bg-[#e8ebe6]" />
-      <div className="mt-3 h-3 w-3/4 rounded bg-[#eef0ec]" />
+      <div className="mt-6 h-3 w-full rounded bg-[#ebe9e6]" />
+      <div className="mt-3 h-3 w-3/4 rounded bg-[#f0eeec]" />
     </div>
   );
 }
@@ -1005,7 +1005,7 @@ function FundContractModal({
 
   return (
     <div
-      className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/50 p-5 backdrop-blur-[3px]"
+      className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/50 p-5 backdrop-blur-[3px]"
       onMouseDown={(event) =>
         !isPaying && event.target === event.currentTarget && onClose()
       }
@@ -1013,13 +1013,13 @@ function FundContractModal({
       <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-[10px] font-semibold tracking-[.12em] text-[#62805f] uppercase">
+            <p className="text-[10px] font-semibold tracking-[.12em] text-[#e66d31] uppercase">
               Send contract offer
             </p>
             <h2 className="mt-2 text-xl font-semibold">
               Fund the first milestone
             </h2>
-            <p className="mt-2 text-sm leading-6 text-[#747a72]">
+            <p className="mt-2 text-sm leading-6 text-[#7a7672]">
               Fund the first milestone before sending the contract to {" "}
               {proposal.bidder}.
             </p>
@@ -1036,43 +1036,43 @@ function FundContractModal({
 
         {milestone ? (
           <>
-            <div className="mt-6 rounded-2xl border border-black/8 bg-[#f7f8f5] p-5">
+            <div className="mt-6 rounded-2xl border border-black/8 bg-[#fbf5f2] p-5">
               <div className="flex items-start justify-between gap-5">
                 <div>
-                  <p className="text-[10px] font-semibold tracking-[.1em] text-[#6f756d] uppercase">
+                  <p className="text-[10px] font-semibold tracking-[.1em] text-[#75716d] uppercase">
                     Milestone 1
                   </p>
                   <h3 className="mt-2 text-sm font-semibold">
                     {milestone.title}
                   </h3>
-                  <p className="mt-1 text-xs text-[#7c827a]">
+                  <p className="mt-1 text-xs text-[#827e7a]">
                     Due {milestone.duration}
                   </p>
                 </div>
                 <strong className="text-lg">
-                  ${milestone.amount.toLocaleString()}
+                  R{milestone.amount.toLocaleString()}
                 </strong>
               </div>
             </div>
 
             <div className="mt-5 grid gap-3 border-y border-black/7 py-4 text-sm">
-              <div className="flex items-center justify-between text-[#6d736b]">
+              <div className="flex items-center justify-between text-[#736f6b]">
                 <span>Milestone funding</span>
-                <span>${milestone.amount.toLocaleString()}</span>
+                <span>R{milestone.amount.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between font-semibold">
                 <span>Amount due today</span>
-                <span>${milestone.amount.toLocaleString()}</span>
+                <span>R{milestone.amount.toLocaleString()}</span>
               </div>
             </div>
 
-            <div className="mt-5 flex gap-3 rounded-xl bg-[#edf4ea] p-4">
+            <div className="mt-5 flex gap-3 rounded-xl bg-[#faece4] p-4">
               <Icon
                 icon="solar:shield-check-linear"
                 width="20"
-                className="shrink-0 text-[#52784f]"
+                className="shrink-0 text-[#dd5c1b]"
               />
-              <p className="text-xs leading-5 text-[#657063]">
+              <p className="text-xs leading-5 text-[#706a63]">
                 The milestone payment will be secured until the work is
                 completed and approved.
               </p>
@@ -1099,7 +1099,7 @@ function FundContractModal({
             type="button"
             onClick={handlePay}
             disabled={!milestone || isPaying}
-            className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#252724] px-5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#272624] px-5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Icon icon="solar:card-2-linear" width="17" />
             {isPaying ? "Redirecting..." : "Pay Now"}
@@ -1125,7 +1125,7 @@ function StartInterviewModal({
 
   return (
     <div
-      className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/50 p-5 backdrop-blur-[3px]"
+      className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/50 p-5 backdrop-blur-[3px]"
       onMouseDown={(event) => event.target === event.currentTarget && onClose()}
     >
       <form
@@ -1149,13 +1149,13 @@ function StartInterviewModal({
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-[10px] font-semibold tracking-[.12em] text-[#62805f] uppercase">
+            <p className="text-[10px] font-semibold tracking-[.12em] text-[#e66d31] uppercase">
               Start interview
             </p>
             <h2 className="mt-2 text-xl font-semibold">
               Message {proposal.bidder}
             </h2>
-            <p className="mt-2 text-sm text-[#747a72]">
+            <p className="mt-2 text-sm text-[#7a7672]">
               Introduce yourself and explain the next step in the interview.
             </p>
           </div>
@@ -1170,7 +1170,7 @@ function StartInterviewModal({
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           placeholder="Hi, I reviewed your proposal and would like to discuss..."
-          className="mt-5 min-h-36 w-full resize-y rounded-xl border border-black/10 p-4 text-sm outline-none focus:border-[#62805f]"
+          className="mt-5 min-h-36 w-full resize-y rounded-xl border border-black/10 p-4 text-sm outline-none focus:border-[#e66d31]"
         />
         {error && <p className="mt-2 text-xs text-[#9a5a5a]">{error}</p>}
         <div className="mt-5 flex justify-end gap-2">
@@ -1185,7 +1185,7 @@ function StartInterviewModal({
           <button
             type="submit"
             disabled={!message.trim() || isSubmitting}
-            className="h-11 rounded-xl bg-[#252724] px-5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-11 rounded-xl bg-[#272624] px-5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting ? "Starting..." : "Start interview"}
           </button>

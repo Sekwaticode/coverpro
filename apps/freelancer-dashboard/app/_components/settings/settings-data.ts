@@ -12,8 +12,8 @@ export const settingsSections = [
 export type SettingsSectionId = (typeof settingsSections)[number]["id"];
 
 export const connectsHistory = [
-  { id: 1, label: "Proposal submitted", detail: "AI-assisted research platform", date: "July 25, 2026", amount: -12 },
-  { id: 2, label: "Proposal submitted", detail: "SaaS analytics dashboard", date: "July 24, 2026", amount: -6 },
-  { id: 3, label: "Monthly Connects", detail: "Freelancer plan allocation", date: "July 20, 2026", amount: 60 },
-  { id: 4, label: "Proposal withdrawn refund", detail: "Fintech component system", date: "July 14, 2026", amount: 8 },
+  { id: 1, label: "Proposal submitted", detail: "Kitchen renovation, Centurion", date: "July 25, 2026", amount: -12 },
+  { id: 2, label: "Proposal submitted", detail: "Bathroom retiling, Durban North", date: "July 24, 2026", amount: -6 },
+  { id: 3, label: "Monthly Connects", detail: "Pro plan allocation", date: "July 20, 2026", amount: 60 },
+  { id: 4, label: "Proposal withdrawn refund", detail: "Roof waterproofing, Polokwane", date: "July 14, 2026", amount: 8 },
 ];

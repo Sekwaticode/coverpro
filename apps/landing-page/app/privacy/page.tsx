@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "../_components/legal-page";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | OneMarketplace.io",
+  title: "Privacy Policy | CoverPro",
   description:
-    "Learn how OneMarketplace.io collects, uses, and protects your information.",
+    "Learn how CoverPro collects, uses, and protects your information.",
 };
 
 const sections: LegalSection[] = [
@@ -43,8 +43,8 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          We use information to provide and improve OneMarketplace.io, connect
-          clients with talent and agencies, personalize search results, process
+          We use information to provide and improve CoverPro, connect
+          clients with pros and companies, personalize search results, process
           account requests, prevent misuse, and communicate important service
           updates.
         </p>
@@ -106,8 +106,8 @@ const sections: LegalSection[] = [
         </p>
         <p>
           To make a privacy request, email{" "}
-          <a href="mailto:privacy@onemarketplace.io">
-            privacy@onemarketplace.io
+          <a href="mailto:privacy@coverpro.co.za">
+            privacy@coverpro.co.za
           </a>
           .
         </p>
@@ -119,7 +119,7 @@ const sections: LegalSection[] = [
     title: "International data",
     content: (
       <p>
-        OneMarketplace.io is designed for a global community. Information may
+        CoverPro is designed for a global community. Information may
         be processed in countries other than your own. Where required, we use
         appropriate safeguards for international transfers.
       </p>
@@ -137,8 +137,8 @@ const sections: LegalSection[] = [
         </p>
         <p>
           Questions can be sent to{" "}
-          <a href="mailto:privacy@onemarketplace.io">
-            privacy@onemarketplace.io
+          <a href="mailto:privacy@coverpro.co.za">
+            privacy@coverpro.co.za
           </a>
           .
         </p>
@@ -152,7 +152,7 @@ export default function PrivacyPage() {
     <LegalPage
       eyebrow="Your information"
       title="Privacy should feel straightforward."
-      introduction="This policy explains what information OneMarketplace.io collects, why we use it, when it may be shared, and the choices available to you."
+      introduction="This policy explains what information CoverPro collects, why we use it, when it may be shared, and the choices available to you."
       updated="July 25, 2026"
       sections={sections}
     />

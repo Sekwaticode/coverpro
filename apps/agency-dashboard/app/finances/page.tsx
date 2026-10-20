@@ -4,8 +4,8 @@ import { financeSections } from "../_components/finances/finance-data";
 import { FinancesDashboard } from "./finances-dashboard";
 
 export const metadata: Metadata = {
-  title: "Agency Finances | OneMarketplace.io",
-  description: "Manage agency earnings, withdrawals, and Connects.",
+  title: "Company Finances | CoverPro",
+  description: "Manage company earnings, withdrawals, and Connects.",
 };
 
 export default async function AgencyFinancesPage({

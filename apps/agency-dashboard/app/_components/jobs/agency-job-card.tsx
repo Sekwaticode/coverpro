@@ -34,7 +34,7 @@ export function AgencyJobCard({
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <p className="text-xs font-medium text-[#858a82]">
+            <p className="text-xs font-medium text-[#8a8682]">
               Posted {job.posted}
             </p>
             {job.featured && (
@@ -43,7 +43,7 @@ export function AgencyJobCard({
               </span>
             )}
           </div>
-          <h2 className="mt-2 text-xl leading-7 font-semibold tracking-tight text-[#242724]">
+          <h2 className="mt-2 text-xl leading-7 font-semibold tracking-tight text-[#272624]">
             {job.title}
           </h2>
         </div>
@@ -52,7 +52,7 @@ export function AgencyJobCard({
             href={`/jobs/${job.id}`}
             aria-label={`Open full job details for ${job.title}`}
             title="Open full job details"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-[#777c74] transition hover:border-[#9eb49b] hover:bg-[#f3f7f1] hover:text-[#4e784b]"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-[#7c7874] transition hover:border-[#cf9d80] hover:bg-[#fbf2ed] hover:text-[#d95a1b]"
           >
             <Icon name="arrow" size={20} />
           </Link>
@@ -63,8 +63,8 @@ export function AgencyJobCard({
             aria-pressed={saved}
             className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border transition ${
               saved
-                ? "border-[#a8c3a4] bg-[#e8f2e5] text-[#4e784b]"
-                : "border-black/10 text-[#777c74] hover:bg-[#f3f5f1]"
+                ? "border-[#d5aa92] bg-[#fae8dd] text-[#d95a1b]"
+                : "border-black/10 text-[#7c7874] hover:bg-[#f9f1ed]"
             }`}
           >
             <Icon name="bookmark" active={saved} size={20} />
@@ -72,20 +72,20 @@ export function AgencyJobCard({
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium text-[#656a63]">
+      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium text-[#6a6763]">
         <span>Fixed price</span>
         <span>{job.budget}</span>
         <span>{job.level}</span>
         <span>{job.duration}</span>
       </div>
-      <p className="mt-5 line-clamp-2 text-sm leading-6 text-[#626860]">
+      <p className="mt-5 line-clamp-2 text-sm leading-6 text-[#686460]">
         {job.description}
       </p>
       <div className="mt-5 flex flex-wrap gap-2">
         {job.skills.map((skill) => (
           <span
             key={skill}
-            className="rounded-lg bg-[#eef2ec] px-2.5 py-1.5 text-xs font-medium text-[#596057]"
+            className="rounded-lg bg-[#f7ede7] px-2.5 py-1.5 text-xs font-medium text-[#605c57]"
           >
             {skill}
           </span>
@@ -94,12 +94,12 @@ export function AgencyJobCard({
 
       <div className="mt-6 flex flex-col justify-between gap-5 border-t border-black/7 pt-5 xl:flex-row xl:items-center">
         <div>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-[#737870]">
-            <strong className="font-semibold text-[#30342f]">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-[#787470]">
+            <strong className="font-semibold text-[#34322f]">
               {job.company}
             </strong>
             <span
-              className={`inline-flex items-center gap-1 font-semibold ${job.verified ? "text-[#4f784c]" : "text-[#a6534d]"}`}
+              className={`inline-flex items-center gap-1 font-semibold ${job.verified ? "text-[#da5b1b]" : "text-[#a6534d]"}`}
             >
               <Icon
                 name={job.verified ? "verified" : "close"}
@@ -109,7 +109,7 @@ export function AgencyJobCard({
               {job.verified ? "Payment verified" : "Payment not verified"}
             </span>
           </div>
-          <p className="mt-2 text-xs text-[#858a82]">
+          <p className="mt-2 text-xs text-[#8a8682]">
             {formatProposalCount(job.proposals)} · {job.hires ?? 0} hired
           </p>
         </div>
@@ -117,9 +117,9 @@ export function AgencyJobCard({
           type="button"
           onClick={onPropose}
           disabled={proposalMetadataLoading || hasApplied}
-          className="cursor-pointer disabled:cursor-no-drop rounded-xl bg-[#252724] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#3b3e39] disabled:opacity-50"
+          className="cursor-pointer disabled:cursor-no-drop rounded-xl bg-[#272624] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#3e3c39] disabled:opacity-50"
         >
-          {hasApplied ? "Proposal submitted" : "Submit agency proposal"}
+          {hasApplied ? "Proposal submitted" : "Submit company proposal"}
         </button>
       </div>
     </article>

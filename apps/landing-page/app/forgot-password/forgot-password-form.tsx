@@ -118,7 +118,7 @@ export function ForgotPasswordForm() {
 
     return (
       <div className="w-full max-w-md text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e5f2e2] text-[#477244]">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#fce5d8] text-[#ca5419]">
           <svg
             viewBox="0 0 24 24"
             className="h-7 w-7"
@@ -144,7 +144,7 @@ export function ForgotPasswordForm() {
           </svg>
         </div>
 
-        <h1 className={`${styles.formTitle} mt-6 text-[#171916]`}>
+        <h1 className={`${styles.formTitle} mt-6 text-[#191816]`}>
           {isDone
             ? "Password updated"
             : step === "password"
@@ -152,7 +152,7 @@ export function ForgotPasswordForm() {
               : "Check your email"}
         </h1>
 
-        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#72766f]">
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#76736f]">
           {isDone ? (
             "Your password has been reseted successully."
           ) : step === "password" ? (
@@ -171,7 +171,7 @@ export function ForgotPasswordForm() {
             onSubmit={step === "code" ? handleCode : handlePassword}
           >
             {step === "code" ? (
-              <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+              <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
                 Verification code
                 <input
                   name="code"
@@ -179,13 +179,13 @@ export function ForgotPasswordForm() {
                   autoComplete="one-time-code"
                   required
                   autoFocus
-                  className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+                  className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
                   placeholder="Enter your code"
                 />
               </label>
             ) : (
               <>
-                <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+                <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
                   New password
                   <input
                     name="password"
@@ -194,10 +194,10 @@ export function ForgotPasswordForm() {
                     minLength={8}
                     required
                     autoFocus
-                    className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+                    className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
                   />
                 </label>
-                <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+                <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
                   Confirm password
                   <input
                     name="confirmation"
@@ -206,7 +206,7 @@ export function ForgotPasswordForm() {
                     minLength={8}
                     required
                     autoFocus
-                    className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+                    className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
                   />
                 </label>
               </>
@@ -215,7 +215,7 @@ export function ForgotPasswordForm() {
             <button
               type="submit"
               disabled={isLoading}
-              className="h-12 cursor-pointer rounded-xl bg-[#252724] text-sm font-semibold text-white disabled:opacity-50"
+              className="h-12 cursor-pointer rounded-xl bg-[#272624] text-sm font-semibold text-white disabled:opacity-50"
             >
               {isLoading
                 ? "Please wait…"
@@ -228,11 +228,11 @@ export function ForgotPasswordForm() {
 
         {status && (
           <p
-            className={`rounded-xl bg-[#edf5eb] px-4 py-3 text-center text-xs font-medium text-[#4e704b]
+            className={`rounded-xl bg-[#fbede5] px-4 py-3 text-center text-xs font-medium text-[#d0561a]
               ${
                 isError
                   ? "bg-[#fff0ee] text-[#914d45]"
-                  : "bg-[#edf5eb] text-[#3e704b]"
+                  : "bg-[#fbede5] text-[#c25018]"
               }
               `}
             role={isError ? "alert" : "status"}
@@ -242,7 +242,7 @@ export function ForgotPasswordForm() {
         )}
 
         {step === "code" && (
-          <div className="mt-4 flex justify-center gap-4 text-sm font-semibold text-[#477445]">
+          <div className="mt-4 flex justify-center gap-4 text-sm font-semibold text-[#ce5619]">
             <button
               type="button"
               onClick={() => void handleResend()}
@@ -262,7 +262,7 @@ export function ForgotPasswordForm() {
 
         <Link
           href="/login"
-          className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#477445] hover:underline!"
+          className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#ce5619] hover:underline!"
         >
           <span aria-hidden="true">←</span>
           {isDone ? "Continue to login" : "Back to login"}
@@ -275,27 +275,27 @@ export function ForgotPasswordForm() {
     <div className="w-full max-w-md text-left">
       <Link
         href="/login"
-        className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#5e625c] transition hover:text-[#252724]"
+        className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#625f5c] transition hover:text-[#272624]"
       >
         <span aria-hidden="true">←</span>
         Back to login
       </Link>
 
       <div className="text-center">
-        <span className="inline-flex rounded-full bg-[#e9f4e6] px-3 py-1.5 text-xs font-semibold text-[#4f754d]">
+        <span className="inline-flex rounded-full bg-[#fce9de] px-3 py-1.5 text-xs font-semibold text-[#d85a1b]">
           Account recovery
         </span>
-        <h1 className={`${styles.formTitle} mt-4 text-[#171916]`}>
+        <h1 className={`${styles.formTitle} mt-4 text-[#191816]`}>
           Forgot your password?
         </h1>
-        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#72766f]">
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#76736f]">
           Enter the email associated with your account and we’ll send you a
           secure reset link.
         </p>
       </div>
 
       <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
-        <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+        <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
           Email address
           <input
             name="email"
@@ -304,7 +304,7 @@ export function ForgotPasswordForm() {
             defaultValue={email}
             required
             autoFocus
-            className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a2a59f] focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+            className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a5a29f] focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
             placeholder="you@example.com"
           />
         </label>
@@ -312,7 +312,7 @@ export function ForgotPasswordForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="h-12 w-full cursor-pointer rounded-xl bg-[#252724] text-sm font-semibold text-white shadow-sm transition hover:bg-[#3b3e39] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#4c7849]"
+          className="h-12 w-full cursor-pointer rounded-xl bg-[#272624] text-sm font-semibold text-white shadow-sm transition hover:bg-[#3e3c39] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#d7591b]"
         >
           {isLoading ? "Sending…" : "Send reset code"}
         </button>
@@ -327,11 +327,11 @@ export function ForgotPasswordForm() {
         </p>
       )}
 
-      <p className="mt-7 text-center text-sm text-[#555952]">
+      <p className="mt-7 text-center text-sm text-[#595652]">
         Don’t have an account?{" "}
         <Link
           href="/signup"
-          className="font-semibold text-[#397236] hover:underline!"
+          className="font-semibold text-[#bb4e17] hover:underline!"
         >
           Sign up
         </Link>

@@ -11,8 +11,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 :root {
-  --background: #f4f6f2;
-  --foreground: #242724;
+  --background: #faf3ee;
+  --foreground: #272624;
 }
 
 @theme inline {

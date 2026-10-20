@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { countries } from "@/utils/countries";
+import { isProvince, provinces, SOUTH_AFRICA_CODE } from "@/utils/provinces";
 import { toast } from "sonner";
 import { UserResource } from "@clerk/nextjs/types";
 
@@ -32,7 +33,7 @@ interface ClientCompletedContract {
 }
 
 const formatCompactCurrency = (value: number) =>
-  `$${new Intl.NumberFormat("en-US", {
+  `R${new Intl.NumberFormat("en-US", {
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(value)}`;
@@ -66,16 +67,16 @@ interface ClientProfileMetadataResponse extends SaveClientProfileResponse {
 }
 
 const industryOptions = [
-  "Healthcare technology",
-  "Software & technology",
-  "Financial services",
-  "Retail & e-commerce",
-  "Education",
-  "Media & entertainment",
-  "Professional services",
-  "Manufacturing",
+  "Homeowner (private residence)",
+  "Landlord / rental property",
+  "Property development",
+  "Property management",
+  "Body corporate / HOA",
   "Real estate",
-  "Nonprofit",
+  "Hospitality",
+  "Retail & shops",
+  "Offices & commercial",
+  "Farming & agriculture",
 ] as const;
 
 export function ClientProfile({ editing = false }: { editing?: boolean }) {
@@ -133,7 +134,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
       ? industryOptions.some((option) => option === savedIndustry)
         ? savedIndustry
         : "Other"
-      : "Software & technology");
+      : "Homeowner (private residence)");
 
   const saveClientProfileMutation = useMutation({
     mutationFn: async (payload: ClientProfilePayload) => {
@@ -273,9 +274,12 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
     const lastName = isIdentityVerified
       ? (user.lastName ?? "")
       : String(formData.get("lastName") ?? "").trim();
-    const location = isIdentityVerified
-      ? String(user.unsafeMetadata?.country ?? "")
+    const province = isIdentityVerified
+      ? String(user.unsafeMetadata?.province ?? "")
       : String(formData.get("location") ?? "").trim();
+    const country = isIdentityVerified
+      ? String(user.unsafeMetadata?.country ?? SOUTH_AFRICA_CODE)
+      : SOUTH_AFRICA_CODE;
     const selectedIndustry = String(formData.get("industry") ?? "").trim();
     const customIndustry = String(formData.get("customIndustry") ?? "").trim();
     const profilePayload: ClientProfilePayload = {
@@ -302,7 +306,8 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
         lastName,
         unsafeMetadata: {
           ...user.unsafeMetadata,
-          country: location,
+          country,
+          province,
         },
       });
 
@@ -331,16 +336,16 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
     <>
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+          <p className="text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
             Client account
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
             {editing ? "Edit profile" : "My profile"}
           </h1>
-          <p className="mt-2 text-sm text-[#72776f]">
+          <p className="mt-2 text-sm text-[#77736f]">
             {editing
-              ? "Update the information talent sees on your jobs and contracts."
-              : "Preview the client identity freelancers and agencies see."}
+              ? "Update the information pros see on your jobs and contracts."
+              : "Preview the client identity pros and companies see."}
           </p>
         </div>
         <Link
@@ -348,7 +353,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
           className={`inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl px-5 text-sm font-semibold ${
             editing
               ? "border border-black/10 bg-white"
-              : "bg-[#252724] text-white"
+              : "bg-[#272624] text-white"
           }`}
         >
           <Icon
@@ -362,7 +367,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
       {saved && (
         <p
           role="status"
-          className="mt-5 rounded-xl bg-[#e7f2e4] p-3 text-xs font-semibold text-[#4d784a]"
+          className="mt-5 rounded-xl bg-[#fae7dc] p-3 text-xs font-semibold text-[#d85a1b]"
         >
           Client profile changes saved.
         </p>
@@ -381,11 +386,11 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
         >
           <section className="rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
             <h2 className="font-semibold">Profile identity</h2>
-            <p className="mt-1 text-xs text-[#7b8078]">
+            <p className="mt-1 text-xs text-[#807c78]">
               Your photo and personal details identify the owner of the client
               account.
             </p>
-            <div className="mt-5 flex flex-col gap-4 rounded-xl bg-[#f4f6f2] p-4 sm:flex-row sm:items-center">
+            <div className="mt-5 flex flex-col gap-4 rounded-xl bg-[#faf3ee] p-4 sm:flex-row sm:items-center">
               <Image
                 src={avatarUrl || user.imageUrl}
                 width={90}
@@ -395,7 +400,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
               />
               <div>
                 <h3 className="text-sm font-semibold">Profile photo</h3>
-                <p className="mt-1 text-xs text-[#7b8078]">
+                <p className="mt-1 text-xs text-[#807c78]">
                   Upload a square JPG, PNG, or WebP image.
                 </p>
                 <label className="mt-3 inline-flex h-9 cursor-pointer items-center gap-2 rounded-lg border border-black/10 bg-white px-3 text-xs font-semibold">
@@ -410,11 +415,11 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
                     }}
                   />
                 </label>
-                <p className="inline-flex pl-2 items-center gap-1.5 text-xs text-[#6f756d]">
+                <p className="inline-flex pl-2 items-center gap-1.5 text-xs text-[#75716d]">
                   <Icon
                     icon="solar:shield-check-linear"
                     width="15"
-                    className="shrink-0 text-[#5b8658]"
+                    className="shrink-0 text-[#e56d30]"
                   />
                   Please use your real photo to avoid unnecessary account
                   restrictions.
@@ -427,7 +432,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
               )}
             </div>
             {isIdentityVerified && (
-              <div className="mt-5 flex items-center gap-2 rounded-xl border border-[#d2dfcf] bg-[#edf4ea] px-4 py-3 text-xs text-[#476f44]">
+              <div className="mt-5 flex items-center gap-2 rounded-xl border border-[#ebd2c3] bg-[#faece4] px-4 py-3 text-xs text-[#c75319]">
                 <Icon icon="solar:lock-keyhole-bold" width="16" />
                 Your name and location are locked because your identity is
                 verified.
@@ -458,36 +463,28 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
                 error={hasAttemptedSubmit ? fieldErrors.jobRole : undefined}
               />
               <label className="text-xs font-semibold">
-                Location *
+                Province *
                 <select
                   name="location"
                   required
                   disabled={isIdentityVerified}
-                  defaultValue={(() => {
-                    const savedCountry = user?.unsafeMetadata?.country;
-
-                    if (typeof savedCountry !== "string") return "";
-
-                    return (
-                      countries.find(
-                        (country) =>
-                          country.code === savedCountry ||
-                          country.name === savedCountry,
-                      )?.code ?? ""
-                    );
-                  })()}
-                  className={`mt-2 h-11 w-full rounded-xl border bg-white px-3 text-sm font-normal outline-none disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8a8f87] ${
+                  defaultValue={
+                    isProvince(user?.unsafeMetadata?.province)
+                      ? user.unsafeMetadata.province
+                      : ""
+                  }
+                  className={`mt-2 h-11 w-full rounded-xl border bg-white px-3 text-sm font-normal outline-none disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8f8b87] ${
                     hasAttemptedSubmit && fieldErrors.location
                       ? "border-[#cf827c] focus:border-[#cf827c]"
-                      : "border-black/10 focus:border-[#6e916a]"
+                      : "border-black/10 focus:border-[#e77840]"
                   }`}
                 >
                   <option value="" disabled>
-                    Select your country
+                    Select your province
                   </option>
-                  {countries.map((country) => (
-                    <option value={country.code} key={country.code}>
-                      {country.name}
+                  {provinces.map((province) => (
+                    <option value={province} key={province}>
+                      {province}
                     </option>
                   ))}
                 </select>
@@ -505,7 +502,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
 
           <section className="rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
             <h2 className="font-semibold">Company information</h2>
-            <p className="mt-1 text-xs text-[#7b8078]">
+            <p className="mt-1 text-xs text-[#807c78]">
               This information is attached to public job posts and proposals.
             </p>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -513,7 +510,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
                 label="Company name *"
                 name="companyName"
                 defaultValue={profileMetaData?.companyName ?? ""}
-                placeholder="Acme Ltd."
+                placeholder="Ubuntu Properties (Pty) Ltd"
                 error={hasAttemptedSubmit ? fieldErrors.companyName : undefined}
               />
               <Field
@@ -548,7 +545,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
                   required
                   value={industry}
                   onChange={(event) => setSelectedIndustry(event.target.value)}
-                  className="mt-2 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+                  className="mt-2 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-normal outline-none focus:border-[#e77840]"
                 >
                   {[...industryOptions, "Other"].map((option) => (
                     <option key={option}>{option}</option>
@@ -588,7 +585,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
                 className={`mt-2 w-full resize-none rounded-xl border p-3 text-sm font-normal outline-none ${
                   hasAttemptedSubmit && fieldErrors.companyDescription
                     ? "border-[#cf827c] focus:border-[#cf827c]"
-                    : "border-black/10 focus:border-[#6e916a]"
+                    : "border-black/10 focus:border-[#e77840]"
                 }`}
               />
               {hasAttemptedSubmit && fieldErrors.companyDescription && (
@@ -619,7 +616,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
             <button
               type="submit"
               disabled={isSubmitting || saveClientProfileMutation.isPending}
-              className="h-11 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white disabled:opacity-40"
+              className="h-11 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white disabled:opacity-40"
             >
               {isSubmitting ? "Saving..." : "Save profile"}
             </button>
@@ -726,14 +723,14 @@ function ProfilePreview({
               <Icon
                 icon="solar:verified-check-bold"
                 width="19"
-                className="text-[#5b8658]"
+                className="text-[#e56d30]"
               />
             )}
           </h2>
-          <p className="mt-1 text-sm text-[#747a72]">
+          <p className="mt-1 text-sm text-[#7a7672]">
             {profileMetadata?.professionalRole} · {profileMetadata?.companyName}
           </p>
-          <div className="mt-3 flex justify-center text-xs text-[#858a82]">
+          <div className="mt-3 flex justify-center text-xs text-[#8a8682]">
             <span className="inline-flex max-w-56 items-start gap-1.5 text-center">
               <Icon
                 icon="solar:map-point-linear"
@@ -741,15 +738,17 @@ function ProfilePreview({
                 className="mt-px shrink-0"
               />
               <span>
-                {countries.find(
-                  (country) => country.code === user?.unsafeMetadata.country,
-                )?.name ?? ""}
+                {isProvince(user?.unsafeMetadata.province)
+                  ? `${user.unsafeMetadata.province}, South Africa`
+                  : (countries.find(
+                      (country) => country.code === user?.unsafeMetadata.country,
+                    )?.name ?? "")}
               </span>
             </span>
           </div>
           <div className="mt-5 border-t border-black/7 pt-5">
             {profileMetadata?.paymentMethodVerified ? (
-              <span className="inline-flex items-center gap-2 rounded-full bg-[#e8f3e5] px-3 py-2 text-xs font-semibold text-[#4d784a]">
+              <span className="inline-flex items-center gap-2 rounded-full bg-[#fbe8dd] px-3 py-2 text-xs font-semibold text-[#d85a1b]">
                 <Icon icon="solar:verified-check-bold" width="17" />
                 Payment method verified
               </span>
@@ -819,7 +818,7 @@ function ProfilePreview({
             href={profileMetadata?.companyWebsite}
             target="_blank"
             rel="noreferrer"
-            className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-[#52784f] hover:underline"
+            className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b] hover:underline"
           >
             {profileMetadata?.companyWebsite}
             <Icon icon="solar:arrow-right-up-linear" width="14" />
@@ -829,13 +828,13 @@ function ProfilePreview({
 
       <div className="grid gap-6">
         <section className="rounded-2xl border border-black/8 bg-white p-6 sm:p-8">
-          <p className="text-xs font-semibold tracking-[.13em] text-[#62805f] uppercase">
+          <p className="text-xs font-semibold tracking-[.13em] text-[#e66d31] uppercase">
             About the company
           </p>
           <h2 className="mt-3 text-2xl font-semibold">
             {profileMetadata?.companyName}
           </h2>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-[#676e66]">
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-[#6e6a66]">
             {profileMetadata?.companyDescription}
           </p>
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -880,17 +879,17 @@ function ProfilePreview({
         </section>
         <section className="overflow-hidden rounded-2xl border border-black/8 bg-white">
           <header className="border-b border-black/7 p-5 sm:p-6">
-            <p className="text-[10px] font-semibold tracking-[.13em] text-[#62805f] uppercase">
+            <p className="text-[10px] font-semibold tracking-[.13em] text-[#e66d31] uppercase">
               Work history
             </p>
             <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
               <div>
                 <h2 className="text-xl font-semibold">Completed contracts</h2>
-                <p className="mt-1 text-xs text-[#7b8078]">
+                <p className="mt-1 text-xs text-[#807c78]">
                   Contract outcomes and feedback shared by both sides.
                 </p>
               </div>
-              <p className="text-xs text-[#8a8f87]">
+              <p className="text-xs text-[#8f8b87]">
                 {contracts.length} completed contracts
               </p>
             </div>
@@ -899,17 +898,17 @@ function ProfilePreview({
             <div className="divide-y divide-black/7">
               {[0, 1].map((item) => (
                 <div key={item} className="animate-pulse p-5 sm:p-6">
-                  <div className="h-4 w-52 rounded-full bg-[#e4e7e1]" />
-                  <div className="mt-2 h-3 w-32 rounded-full bg-[#eef0ec]" />
+                  <div className="h-4 w-52 rounded-full bg-[#e7e4e1]" />
+                  <div className="mt-2 h-3 w-32 rounded-full bg-[#f0eeec]" />
                   <div className="mt-5 grid gap-3 lg:grid-cols-2">
-                    <div className="h-20 rounded-xl bg-[#f4f6f2]" />
-                    <div className="h-20 rounded-xl bg-[#f4f6f2]" />
+                    <div className="h-20 rounded-xl bg-[#faf3ee]" />
+                    <div className="h-20 rounded-xl bg-[#faf3ee]" />
                   </div>
                 </div>
               ))}
             </div>
           ) : contracts.length === 0 ? (
-            <p className="px-5 py-10 text-center text-sm text-[#858a82] sm:px-6">
+            <p className="px-5 py-10 text-center text-sm text-[#8a8682] sm:px-6">
               No completed contracts yet.
             </p>
           ) : (
@@ -921,15 +920,15 @@ function ProfilePreview({
                       <h3 className="text-base font-semibold">
                         {contract.title}
                       </h3>
-                      <p className="mt-1 text-xs text-[#737970]">
+                      <p className="mt-1 text-xs text-[#797570]">
                         {contract.talent}
                       </p>
                     </div>
                     <div className="text-left sm:text-right">
                       <p className="text-sm font-semibold">
-                        ${contract.budget.toLocaleString()}
+                        R{contract.budget.toLocaleString()}
                       </p>
-                      <p className="mt-1 text-[10px] text-[#8a8f87]">
+                      <p className="mt-1 text-[10px] text-[#8f8b87]">
                         {contract.completedAt
                           ? `Completed ${new Date(
                               contract.completedAt,
@@ -958,8 +957,8 @@ function ProfilePreview({
             </div>
           )}
           {contracts.length > 0 && (
-            <footer className="flex flex-col gap-3 border-t border-black/7 bg-[#fafbf9] p-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-              <p className="text-xs text-[#858a82]">
+            <footer className="flex flex-col gap-3 border-t border-black/7 bg-[#fdf9f7] p-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+              <p className="text-xs text-[#8a8682]">
                 Showing {contractStart + 1}–
                 {Math.min(contractStart + contractsPerPage, contracts.length)}{" "}
                 of {contracts.length} contracts
@@ -969,7 +968,7 @@ function ProfilePreview({
                   <button
                     type="button"
                     onClick={() => openContractPage(contractPage - 1)}
-                    className="inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-xl border border-black/10 bg-white px-3 text-xs font-semibold hover:bg-[#f6f8f4]"
+                    className="inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-xl border border-black/10 bg-white px-3 text-xs font-semibold hover:bg-[#fbf5f2]"
                   >
                     <Icon icon="solar:alt-arrow-left-linear" width="15" />
                     Previous
@@ -990,7 +989,7 @@ function ProfilePreview({
                       onClick={() => openContractPage(pageNumber)}
                       className={`flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg text-xs font-semibold ${
                         contractPage === pageNumber
-                          ? "bg-[#edf4ea] text-[#4e774b]"
+                          ? "bg-[#faece4] text-[#d85a1b]"
                           : "hover:bg-black/4"
                       }`}
                     >
@@ -1002,7 +1001,7 @@ function ProfilePreview({
                   <button
                     type="button"
                     onClick={() => openContractPage(contractPage + 1)}
-                    className="inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+                    className="inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
                   >
                     See more contracts
                     <Icon icon="solar:alt-arrow-right-linear" width="15" />
@@ -1045,10 +1044,10 @@ function Field({
         placeholder={placeholder}
         disabled={disabled}
         aria-invalid={Boolean(error)}
-        className={`mt-2 h-11 w-full rounded-xl border px-3 text-sm font-normal outline-none disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8a8f87] ${
+        className={`mt-2 h-11 w-full rounded-xl border px-3 text-sm font-normal outline-none disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8f8b87] ${
           error
             ? "border-[#cf827c] focus:border-[#cf827c]"
-            : "border-black/10 focus:border-[#6e916a]"
+            : "border-black/10 focus:border-[#e77840]"
         }`}
       />
       {error && (
@@ -1073,11 +1072,11 @@ function ProfileSkeleton({ editing }: { editing: boolean }) {
     >
       <header className="flex items-end justify-between gap-4">
         <div>
-          <div className="h-3 w-28 rounded-full bg-[#dfe5dc]" />
-          <div className="mt-3 h-9 w-48 rounded-lg bg-[#e3e8e0]" />
-          <div className="mt-3 h-4 w-72 max-w-[70vw] rounded-full bg-[#e9ede7]" />
+          <div className="h-3 w-28 rounded-full bg-[#f0dcd1]" />
+          <div className="mt-3 h-9 w-48 rounded-lg bg-[#f2e0d6]" />
+          <div className="mt-3 h-4 w-72 max-w-[70vw] rounded-full bg-[#f5e7e0]" />
         </div>
-        <div className="hidden h-11 w-36 rounded-xl bg-[#e3e8e0] sm:block" />
+        <div className="hidden h-11 w-36 rounded-xl bg-[#f2e0d6] sm:block" />
       </header>
 
       {editing ? (
@@ -1089,21 +1088,21 @@ function ProfileSkeleton({ editing }: { editing: boolean }) {
         <div className="mt-8 grid items-start gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
           <aside className="grid gap-4">
             <section className="rounded-2xl border border-black/6 bg-white p-6">
-              <div className="mx-auto h-28 w-28 rounded-full bg-[#dce4d9]" />
-              <div className="mx-auto mt-5 h-6 w-40 rounded-md bg-[#dfe5dc]" />
-              <div className="mx-auto mt-3 h-3 w-48 rounded-full bg-[#e9ede7]" />
-              <div className="mx-auto mt-3 h-3 w-32 rounded-full bg-[#e9ede7]" />
+              <div className="mx-auto h-28 w-28 rounded-full bg-[#efdace]" />
+              <div className="mx-auto mt-5 h-6 w-40 rounded-md bg-[#f0dcd1]" />
+              <div className="mx-auto mt-3 h-3 w-48 rounded-full bg-[#f5e7e0]" />
+              <div className="mx-auto mt-3 h-3 w-32 rounded-full bg-[#f5e7e0]" />
               <div className="mt-5 border-t border-black/6 pt-5">
-                <div className="mx-auto h-8 w-44 rounded-full bg-[#e4ebe1]" />
+                <div className="mx-auto h-8 w-44 rounded-full bg-[#f3e3d9]" />
               </div>
             </section>
             <section className="rounded-2xl border border-black/6 bg-white p-5">
-              <div className="h-4 w-28 rounded bg-[#dfe5dc]" />
+              <div className="h-4 w-28 rounded bg-[#f0dcd1]" />
               <div className="mt-5 grid gap-4">
                 {[0, 1, 2, 3].map((item) => (
                   <div key={item} className="flex justify-between gap-5">
-                    <div className="h-3 w-20 rounded-full bg-[#e9ede7]" />
-                    <div className="h-3 w-14 rounded-full bg-[#dfe5dc]" />
+                    <div className="h-3 w-20 rounded-full bg-[#f5e7e0]" />
+                    <div className="h-3 w-14 rounded-full bg-[#f0dcd1]" />
                   </div>
                 ))}
               </div>
@@ -1112,13 +1111,13 @@ function ProfileSkeleton({ editing }: { editing: boolean }) {
 
           <main className="grid gap-6">
             <section className="rounded-2xl border border-black/6 bg-white p-6 sm:p-8">
-              <div className="h-3 w-28 rounded-full bg-[#dfe5dc]" />
-              <div className="mt-4 h-7 w-64 rounded-lg bg-[#dfe5dc]" />
-              <div className="mt-5 h-3 w-full rounded-full bg-[#e9ede7]" />
-              <div className="mt-3 h-3 w-4/5 rounded-full bg-[#e9ede7]" />
+              <div className="h-3 w-28 rounded-full bg-[#f0dcd1]" />
+              <div className="mt-4 h-7 w-64 rounded-lg bg-[#f0dcd1]" />
+              <div className="mt-5 h-3 w-full rounded-full bg-[#f5e7e0]" />
+              <div className="mt-3 h-3 w-4/5 rounded-full bg-[#f5e7e0]" />
               <div className="mt-7 grid gap-3 sm:grid-cols-3">
                 {[0, 1, 2].map((item) => (
-                  <div key={item} className="h-16 rounded-xl bg-[#f0f3ee]" />
+                  <div key={item} className="h-16 rounded-xl bg-[#f8efe9]" />
                 ))}
               </div>
             </section>
@@ -1128,15 +1127,15 @@ function ProfileSkeleton({ editing }: { editing: boolean }) {
                   key={item}
                   className="h-24 rounded-2xl border border-black/6 bg-white p-5"
                 >
-                  <div className="h-6 w-20 rounded bg-[#dfe5dc]" />
-                  <div className="mt-3 h-3 w-28 rounded-full bg-[#e9ede7]" />
+                  <div className="h-6 w-20 rounded bg-[#f0dcd1]" />
+                  <div className="mt-3 h-3 w-28 rounded-full bg-[#f5e7e0]" />
                 </div>
               ))}
             </section>
             <section className="h-72 rounded-2xl border border-black/6 bg-white p-6">
-              <div className="h-5 w-44 rounded bg-[#dfe5dc]" />
-              <div className="mt-3 h-3 w-64 rounded-full bg-[#e9ede7]" />
-              <div className="mt-8 h-28 rounded-xl bg-[#f0f3ee]" />
+              <div className="h-5 w-44 rounded bg-[#f0dcd1]" />
+              <div className="mt-3 h-3 w-64 rounded-full bg-[#f5e7e0]" />
+              <div className="mt-8 h-28 rounded-xl bg-[#f8efe9]" />
             </section>
           </main>
         </div>
@@ -1153,14 +1152,14 @@ function EditSectionSkeleton({
 }) {
   return (
     <section className="rounded-2xl border border-black/6 bg-white p-5 sm:p-6">
-      <div className="h-5 w-40 rounded-md bg-[#dfe5dc]" />
-      <div className="mt-2 h-3 w-72 max-w-full rounded-full bg-[#e9ede7]" />
+      <div className="h-5 w-40 rounded-md bg-[#f0dcd1]" />
+      <div className="mt-2 h-3 w-72 max-w-full rounded-full bg-[#f5e7e0]" />
       {includeAvatar && (
-        <div className="mt-5 flex items-center gap-4 rounded-xl bg-[#f4f6f2] p-4">
-          <div className="h-20 w-20 shrink-0 rounded-full bg-[#dce4d9]" />
+        <div className="mt-5 flex items-center gap-4 rounded-xl bg-[#faf3ee] p-4">
+          <div className="h-20 w-20 shrink-0 rounded-full bg-[#efdace]" />
           <div className="w-full max-w-sm">
-            <div className="h-4 w-28 rounded bg-[#dfe5dc]" />
-            <div className="mt-2 h-3 w-52 rounded-full bg-[#e5eae2]" />
+            <div className="h-4 w-28 rounded bg-[#f0dcd1]" />
+            <div className="mt-2 h-3 w-52 rounded-full bg-[#f3e3d9]" />
             <div className="mt-3 h-9 w-28 rounded-lg bg-white" />
           </div>
         </div>
@@ -1168,12 +1167,12 @@ function EditSectionSkeleton({
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         {[0, 1, 2, 3].map((item) => (
           <div key={item}>
-            <div className="h-3 w-20 rounded-full bg-[#dfe5dc]" />
-            <div className="mt-2 h-11 rounded-xl bg-[#f0f3ee]" />
+            <div className="h-3 w-20 rounded-full bg-[#f0dcd1]" />
+            <div className="mt-2 h-11 rounded-xl bg-[#f8efe9]" />
           </div>
         ))}
       </div>
-      {!includeAvatar && <div className="mt-4 h-28 rounded-xl bg-[#f0f3ee]" />}
+      {!includeAvatar && <div className="mt-4 h-28 rounded-xl bg-[#f8efe9]" />}
     </section>
   );
 }
@@ -1195,7 +1194,7 @@ function SelectField({
       <select
         name={name}
         defaultValue={defaultValue}
-        className="mt-2 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+        className="mt-2 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-normal outline-none focus:border-[#e77840]"
       >
         {options.map((option) => (
           <option key={option}>{option}</option>
@@ -1207,8 +1206,8 @@ function SelectField({
 
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-[#f3f5f1] p-4">
-      <p className="text-[10px] text-[#858a82]">{label}</p>
+    <div className="rounded-xl bg-[#f9f1ed] p-4">
+      <p className="text-[10px] text-[#8a8682]">{label}</p>
       <p className="mt-1 text-xs font-semibold">{value}</p>
     </div>
   );
@@ -1218,7 +1217,7 @@ function InfoCard({ value, label }: { value: string; label: string }) {
   return (
     <article className="rounded-2xl border border-black/8 bg-white p-5">
       <p className="text-2xl font-semibold">{value}</p>
-      <p className="mt-1 text-xs text-[#7b8078]">{label}</p>
+      <p className="mt-1 text-xs text-[#807c78]">{label}</p>
     </article>
   );
 }
@@ -1226,8 +1225,8 @@ function InfoCard({ value, label }: { value: string; label: string }) {
 function SidebarDetail({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-start justify-between gap-4 text-xs">
-      <dt className="text-[#898e86]">{label}</dt>
-      <dd className="text-right font-semibold text-[#414640]">{value}</dd>
+      <dt className="text-[#8e8a86]">{label}</dt>
+      <dd className="text-right font-semibold text-[#464340]">{value}</dd>
     </div>
   );
 }
@@ -1240,8 +1239,8 @@ function ReviewCard({
   review?: { rating: number; text: string };
 }) {
   return (
-    <div className="rounded-xl bg-[#f4f6f2] p-4">
-      <p className="text-[10px] font-semibold text-[#71776f]">{label}</p>
+    <div className="rounded-xl bg-[#faf3ee] p-4">
+      <p className="text-[10px] font-semibold text-[#77736f]">{label}</p>
       {review ? (
         <>
           <p className="mt-2 flex items-center gap-1 text-xs font-semibold">
@@ -1252,12 +1251,12 @@ function ReviewCard({
             />
             {review.rating.toFixed(1)}
           </p>
-          <p className="mt-2 text-xs leading-6 text-[#656b64]">
+          <p className="mt-2 text-xs leading-6 text-[#6b6864]">
             “{review.text}”
           </p>
         </>
       ) : (
-        <p className="mt-3 text-xs text-[#969a93]">No review available.</p>
+        <p className="mt-3 text-xs text-[#9a9693]">No review available.</p>
       )}
     </div>
   );

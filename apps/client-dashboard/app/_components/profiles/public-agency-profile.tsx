@@ -72,13 +72,13 @@ export function PublicAgencyProfile({
         <div>
           <Link
             href="/proposals"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#52784f]"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b]"
           >
             <Icon icon="solar:arrow-left-linear" width="15" />
             Back to proposals
           </Link>
-          <p className="mt-5 text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
-            Public agency profile
+          <p className="mt-5 text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
+            Public company profile
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
             {agency.name}
@@ -97,15 +97,15 @@ export function PublicAgencyProfile({
                 className="mx-auto h-28 w-28 rounded-3xl object-cover"
               />
             ) : (
-              <span className="mx-auto flex h-28 w-28 items-center justify-center rounded-3xl bg-[#496e67] text-3xl font-semibold text-white">
+              <span className="mx-auto flex h-28 w-28 items-center justify-center rounded-3xl bg-[#cc5519] text-3xl font-semibold text-white">
                 {getInitials(agency.name)}
               </span>
             )}
             <h2 className="mt-5 text-xl font-semibold">{agency.name}</h2>
-            <p className="mt-2 text-sm leading-6 text-[#656b63]">
+            <p className="mt-2 text-sm leading-6 text-[#6b6763]">
               {agency.specialty}
             </p>
-            <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-[#777c74]">
+            <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-[#7c7874]">
               <Icon icon="solar:map-point-linear" width="16" />
               {agency.ownerLocation ?? NOT_AVAILABLE}
             </p>
@@ -138,10 +138,10 @@ export function PublicAgencyProfile({
                 />
               </div>
               <div className="mt-4">
-                <p className="text-xs font-semibold tracking-wide text-[#858a82] uppercase">
+                <p className="text-xs font-semibold tracking-wide text-[#8a8682] uppercase">
                   Languages
                 </p>
-                <div className="mt-3 grid gap-2 text-sm text-[#656b63]">
+                <div className="mt-3 grid gap-2 text-sm text-[#6b6763]">
                   {agency.ownerLanguageDetails.length > 0 ? (
                     agency.ownerLanguageDetails.map(
                       ({ language, proficiency }) => (
@@ -161,14 +161,14 @@ export function PublicAgencyProfile({
 
         <div className="grid min-w-0 gap-6">
           <section className="overflow-hidden rounded-3xl border border-black/8 bg-white">
-            <div className="bg-[radial-gradient(circle_at_82%_18%,rgba(151,195,145,.32),transparent_34%),linear-gradient(135deg,#e5efe2,#f8faf6)] p-6 sm:p-8">
-              <p className="text-xs font-semibold tracking-[.14em] text-[#5c8159] uppercase">
+            <div className="bg-[radial-gradient(circle_at_82%_18%,rgba(220,157,120,.32),transparent_34%),linear-gradient(135deg,#f7e5da,#fcf7f4)] p-6 sm:p-8">
+              <p className="text-xs font-semibold tracking-[.14em] text-[#e5692c] uppercase">
                 Available for selected projects
               </p>
               <h2 className="mt-3 max-w-2xl text-3xl leading-tight font-semibold tracking-[-.04em]">
                 {agency.professionalTitle || NOT_AVAILABLE}
               </h2>
-              <p className="mt-6 max-w-3xl text-sm leading-7 text-[#626860]">
+              <p className="mt-6 max-w-3xl text-sm leading-7 text-[#686460]">
                 {agency.overview}
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
@@ -176,13 +176,13 @@ export function PublicAgencyProfile({
                   agency.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-xl bg-white/85 px-3 py-2 text-xs font-medium text-[#4f584d]"
+                      className="rounded-xl bg-white/85 px-3 py-2 text-xs font-medium text-[#58524d]"
                     >
                       {tag}
                     </span>
                   ))
                 ) : (
-                  <span className="rounded-xl bg-white/85 px-3 py-2 text-xs font-medium text-[#4f584d]">
+                  <span className="rounded-xl bg-white/85 px-3 py-2 text-xs font-medium text-[#58524d]">
                     {NOT_AVAILABLE}
                   </span>
                 )}
@@ -192,11 +192,11 @@ export function PublicAgencyProfile({
 
           <ProfileSection
             eyebrow="Selected work"
-            title="Agency portfolio"
+            title="Company portfolio"
             detail={`${agency.portfolio.length} featured project${agency.portfolio.length === 1 ? "" : "s"}`}
           >
             {agency.portfolio.length === 0 ? (
-              <p className="py-8 text-center text-sm text-[#858a82]">
+              <p className="py-8 text-center text-sm text-[#8a8682]">
                 No portfolio projects added yet.
               </p>
             ) : (
@@ -207,19 +207,19 @@ export function PublicAgencyProfile({
                     className="overflow-hidden rounded-xl border border-black/10 bg-white"
                   >
                     <div
-                      className="relative h-44 bg-[#e4ead8] bg-cover bg-center"
+                      className="relative h-44 bg-[#f5dccd] bg-cover bg-center"
                       style={{
                         backgroundImage: `url(${project.coverImage.url})`,
                       }}
                     />
                     <div className="p-4 sm:p-5">
-                      <p className="text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+                      <p className="text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
                         {project.category}
                       </p>
                       <h3 className="mt-3 text-xl font-semibold tracking-[-.03em]">
                         {project.title}
                       </h3>
-                      <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#777d75]">
+                      <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#7d7975]">
                         {project.description}
                       </p>
                       {project.liveUrl && (
@@ -228,7 +228,7 @@ export function PublicAgencyProfile({
                             href={project.liveUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-2 text-sm font-semibold text-[#52784f]"
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-[#dd5c1b]"
                           >
                             View live project
                             <Icon icon="solar:arrow-right-up-linear" width="18" />
@@ -244,8 +244,8 @@ export function PublicAgencyProfile({
 
           <ProfileSection
             eyebrow="Our specialists"
-            title="Agency team"
-            detail={`${agency.members.length} agency member${agency.members.length === 1 ? "" : "s"}`}
+            title="Company team"
+            detail={`${agency.members.length} company member${agency.members.length === 1 ? "" : "s"}`}
           >
             <AgencyFeaturedMembers members={agency.members} />
           </ProfileSection>
@@ -275,12 +275,12 @@ function ProfileSection({
     <section className="rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-[10px] font-semibold tracking-[.13em] text-[#62805f] uppercase">
+          <p className="text-[10px] font-semibold tracking-[.13em] text-[#e66d31] uppercase">
             {eyebrow}
           </p>
           <h2 className="mt-2 text-xl font-semibold">{title}</h2>
         </div>
-        <p className="text-xs text-[#8a8f87]">{detail}</p>
+        <p className="text-xs text-[#8f8b87]">{detail}</p>
       </div>
       {children}
     </section>
@@ -299,7 +299,7 @@ function Stat({
   return (
     <div className={bordered ? "border-x border-black/7" : ""}>
       <strong className="block">{value}</strong>
-      <span className="mt-1 block text-[10px] text-[#858a82]">{label}</span>
+      <span className="mt-1 block text-[10px] text-[#8a8682]">{label}</span>
     </div>
   );
 }
@@ -307,7 +307,7 @@ function Stat({
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between gap-3 text-xs">
-      <span className="text-[#858a82]">{label}</span>
+      <span className="text-[#8a8682]">{label}</span>
       <span className="text-right font-semibold">{value}</span>
     </div>
   );

@@ -11,6 +11,13 @@ import Image from "next/image";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ProfileSkeleton } from "./profile-skelton";
 import { countries } from "@/utils/countries";
+import {
+  isProvince,
+  joinTownProvince,
+  provinces,
+  SOUTH_AFRICA_CODE,
+  splitTownProvince,
+} from "@/utils/provinces";
 import { UserResource } from "@clerk/nextjs/types";
 
 type PreviewPortfolio = {
@@ -44,6 +51,7 @@ type FreelancerProfileFormValues = {
   firstName: string;
   lastName: string;
   country: string;
+  province: string;
   city: string;
   professional_title: string;
   professional_description: string;
@@ -56,27 +64,20 @@ type FreelancerProfileFormValues = {
   portfolios: FreelancerPortfolioValue[];
 };
 
+// South Africa's official languages.
 const languageOptions = [
-  "Arabic",
-  "Bengali",
-  "Chinese",
-  "Dutch",
   "English",
-  "French",
-  "German",
-  "Hindi",
-  "Indonesian",
-  "Italian",
-  "Japanese",
-  "Korean",
-  "Malay",
-  "Portuguese",
-  "Russian",
-  "Spanish",
-  "Thai",
-  "Turkish",
-  "Ukrainian",
-  "Vietnamese",
+  "Afrikaans",
+  "isiZulu",
+  "isiXhosa",
+  "Sepedi",
+  "Setswana",
+  "Sesotho",
+  "Xitsonga",
+  "siSwati",
+  "Tshivenda",
+  "isiNdebele",
+  "South African Sign Language",
 ];
 
 const initialLanguages: Language[] = [
@@ -84,8 +85,8 @@ const initialLanguages: Language[] = [
 ];
 
 const inputClass =
-  "h-12 w-full rounded-xl border border-black/10 bg-white px-3.5 text-sm outline-none transition placeholder:text-[#a1a59e] focus:border-[#71936e] focus:ring-3 focus:ring-[#71936e]/10";
-const labelClass = "grid gap-2 text-sm font-semibold text-[#343833]";
+  "h-12 w-full rounded-xl border border-black/10 bg-white px-3.5 text-sm outline-none transition placeholder:text-[#a5a29e] focus:border-[#e77840] focus:ring-3 focus:ring-[#e77840]/10";
+const labelClass = "grid gap-2 text-sm font-semibold text-[#383633]";
 
 const readFileAsDataUrl = (file: File) =>
   new Promise<string>((resolve, reject) => {
@@ -113,7 +114,7 @@ function SectionCard({
     >
       <div className="border-b border-black/7 pb-5">
         <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
-        <p className="mt-1.5 text-sm leading-6 text-[#747a72]">{description}</p>
+        <p className="mt-1.5 text-sm leading-6 text-[#7a7672]">{description}</p>
       </div>
       <div className="pt-6">{children}</div>
     </section>
@@ -137,25 +138,25 @@ function ProfilePreview({
   ).length;
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] font-(family-name:--font-dm-sans) text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] font-(family-name:--font-dm-sans) text-[#272624]">
       <DashboardHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#587855] hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#e35f1d] hover:underline"
             >
               <Icon icon="solar:arrow-left-linear" width="18" />
               Back to dashboard
             </Link>
-            <p className="mt-3 text-xs font-semibold tracking-[0.14em] text-[#6f766d] uppercase">
+            <p className="mt-3 text-xs font-semibold tracking-[0.14em] text-[#76726d] uppercase">
               My public profile
             </p>
           </div>
           <Link
             href="/profile/edit"
-            className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white hover:bg-[#3b3e39]"
+            className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white hover:bg-[#3e3c39]"
           >
             <Icon icon="solar:pen-new-square-linear" width="18" />
             Edit profile
@@ -180,14 +181,14 @@ function ProfilePreview({
                   <Icon
                     icon="solar:verified-check-bold"
                     width="21"
-                    className="text-[#5d895a]"
+                    className="text-[#e67036]"
                   />
                 )}
               </h1>
-              <p className="mt-2 text-sm leading-6 text-[#656b63]">
+              <p className="mt-2 text-sm leading-6 text-[#6b6763]">
                 {profileMetaData?.professional_title}
               </p>
-              <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-[#777c74]">
+              <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-[#7c7874]">
                 <Icon icon="solar:map-point-linear" width="16" />
                 {profileMetaData?.city},{" "}
                 {countries.find(
@@ -203,7 +204,7 @@ function ProfilePreview({
                       ? `${profileMetaData.stats.jobSuccessScore}%`
                       : "0"}
                   </strong>
-                  <span className="mt-1 block text-[10px] text-[#858a82]">
+                  <span className="mt-1 block text-[10px] text-[#8a8682]">
                     Job success
                   </span>
                 </div>
@@ -214,7 +215,7 @@ function ProfilePreview({
                       ? Number(profileMetaData.stats.rating).toFixed(1)
                       : "0"}
                   </strong>
-                  <span className="mt-1 block text-[10px] text-[#858a82]">
+                  <span className="mt-1 block text-[10px] text-[#8a8682]">
                     Rating
                   </span>
                 </div>
@@ -225,27 +226,27 @@ function ProfilePreview({
                       : (profileMetaData?.stats?.completedJobs ?? 0) +
                         (profileMetaData?.stats?.ongoingJobs ?? 0)}
                   </strong>
-                  <span className="mt-1 block text-[10px] text-[#858a82]">
+                  <span className="mt-1 block text-[10px] text-[#8a8682]">
                     Projects
                   </span>
                 </div>
               </div>
 
               <div className="mt-5 text-left">
-                <p className="text-xs font-semibold tracking-wide text-[#7b8078] uppercase">
+                <p className="text-xs font-semibold tracking-wide text-[#807c78] uppercase">
                   Availability
                 </p>
                 <p className="mt-2 flex items-center gap-2 text-sm font-medium">
-                  <span className="h-2 w-2 rounded-full bg-[#59a05d]" />
+                  <span className="h-2 w-2 rounded-full bg-[#e77840]" />
                   {profileMetaData?.weekly_availability}
                 </p>
-                <p className="mt-4 text-xs font-semibold tracking-wide text-[#7b8078] uppercase">
+                <p className="mt-4 text-xs font-semibold tracking-wide text-[#807c78] uppercase">
                   Languages
                 </p>
                 {profileMetaData.languages.map((language: any) => (
                   <p
                     key={language.language}
-                    className="mt-2 text-sm text-[#656b63]"
+                    className="mt-2 text-sm text-[#6b6763]"
                   >
                     {language.language} - {language.proficiency}
                   </p>
@@ -253,17 +254,17 @@ function ProfilePreview({
               </div>
             </section>
 
-            <section className="rounded-2xl border border-[#d2dfcf] bg-[#edf4ea] p-5">
-              <div className="flex items-center gap-2 text-sm font-semibold text-[#476f44]">
+            <section className="rounded-2xl border border-[#ebd2c3] bg-[#faece4] p-5">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[#c75319]">
                 <Icon icon="solar:shield-check-bold" width="20" />
                 Account Verification Status
               </div>
-              <div className="mt-4 grid gap-3 text-xs text-[#657063]">
+              <div className="mt-4 grid gap-3 text-xs text-[#706a63]">
                 <p className="flex items-center gap-2">
                   <Icon
                     icon="solar:check-circle-bold"
                     width="15"
-                    className="text-[#5d895a]"
+                    className="text-[#e67036]"
                   />
                   Email verified
                 </p>
@@ -273,7 +274,7 @@ function ProfilePreview({
                     <Icon
                       icon="solar:check-circle-bold"
                       width="15"
-                      className="text-[#5d895a]"
+                      className="text-[#e67036]"
                     />
                     Personal Identity Verified
                   </p>
@@ -286,7 +287,7 @@ function ProfilePreview({
             <section className="rounded-3xl border border-black/8 bg-white p-6 sm:p-8">
               <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
                 <div>
-                  <p className="text-xs font-semibold tracking-[0.14em] text-[#5c8159] uppercase">
+                  <p className="text-xs font-semibold tracking-[0.14em] text-[#e5692c] uppercase">
                     {profileMetaData?.availability_status} for selected projects
                   </p>
                   <h2 className="mt-3 max-w-2xl text-3xl leading-tight font-semibold tracking-[-0.04em]">
@@ -294,23 +295,23 @@ function ProfilePreview({
                   </h2>
                 </div>
                 <div className="shrink-0 text-left sm:text-right">
-                  <p className="text-xs text-[#7c8179]">Hourly rate</p>
+                  <p className="text-xs text-[#817d79]">Hourly rate</p>
                   <p className="mt-1 text-xl font-semibold">
-                    ${parseInt(profileMetaData?.hourly_rate)}
-                    <span className="text-sm font-medium text-[#7c8179]">
+                    R{parseInt(profileMetaData?.hourly_rate)}
+                    <span className="text-sm font-medium text-[#817d79]">
                       /hr
                     </span>
                   </p>
                 </div>
               </div>
-              <div className="mt-6 space-y-4 text-sm leading-7 text-[#626860]">
+              <div className="mt-6 space-y-4 text-sm leading-7 text-[#686460]">
                 <p>{profileMetaData?.professional_description}</p>
               </div>
               <div className="mt-6 flex flex-wrap gap-2">
                 {profileMetaData?.skills.map((skill: string) => (
                   <span
                     key={skill}
-                    className="rounded-xl bg-[#edf2eb] px-3 py-2 text-xs font-medium text-[#4f584d]"
+                    className="rounded-xl bg-[#f7ece6] px-3 py-2 text-xs font-medium text-[#58524d]"
                   >
                     {skill}
                   </span>
@@ -321,14 +322,14 @@ function ProfilePreview({
             <section className="rounded-3xl border border-black/8 bg-white p-6 sm:p-8">
               <div className="flex items-end justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold tracking-[0.14em] text-[#6e756c] uppercase">
+                  <p className="text-xs font-semibold tracking-[0.14em] text-[#75716c] uppercase">
                     Selected work
                   </p>
                   <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em]">
                     Portfolio
                   </h2>
                 </div>
-                <span className="text-xs text-[#838880]">
+                <span className="text-xs text-[#888480]">
                   {profileMetaData?.portfolios?.length} projects
                 </span>
               </div>
@@ -339,7 +340,7 @@ function ProfilePreview({
                     className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-black/9 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-black/14 hover:shadow hover:shadow-black/2"
                   >
                     <div
-                      className="relative aspect-video overflow-hidden bg-[#e4ead8] bg-cover bg-center"
+                      className="relative aspect-video overflow-hidden bg-[#f5dccd] bg-cover bg-center"
                       style={{
                         backgroundImage: `url(${project.cover_image.url})`,
                       }}
@@ -347,13 +348,13 @@ function ProfilePreview({
                       <div className="absolute inset-0 bg-linear-to-t from-black/28 via-transparent to-transparent opacity-70" />
                     </div>
                     <div className="flex flex-1 flex-col p-5">
-                      <p className="text-[10px] font-semibold tracking-[0.12em] text-[#62805f] uppercase">
+                      <p className="text-[10px] font-semibold tracking-[0.12em] text-[#e66d31] uppercase">
                         {project.category}
                       </p>
-                      <h3 className="mt-2 line-clamp-2 text-base font-semibold tracking-[-0.015em] text-[#292d28]">
+                      <h3 className="mt-2 line-clamp-2 text-base font-semibold tracking-[-0.015em] text-[#2d2b28]">
                         {project.title}
                       </h3>
-                      <p className="mt-2 line-clamp-3 text-xs leading-5 text-[#777c74]">
+                      <p className="mt-2 line-clamp-3 text-xs leading-5 text-[#7c7874]">
                         {project.description}
                       </p>
                       <div className="mt-5 border-t border-black/7 pt-4">
@@ -362,7 +363,7 @@ function ProfilePreview({
                             href={project.live_url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#52784f] transition hover:text-[#365f34]"
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b] transition hover:text-[#a44414]"
                           >
                             View live project
                             <Icon
@@ -371,7 +372,7 @@ function ProfilePreview({
                             />
                           </a>
                         ) : (
-                          <span className="text-xs text-[#969b94]">
+                          <span className="text-xs text-[#9b9894]">
                             Portfolio case study
                           </span>
                         )}
@@ -385,20 +386,20 @@ function ProfilePreview({
             <section className="rounded-3xl border border-black/8 bg-white p-6 sm:p-8">
               <div className="flex items-end justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold tracking-[0.14em] text-[#6e756c] uppercase">
+                  <p className="text-xs font-semibold tracking-[0.14em] text-[#75716c] uppercase">
                     Work history
                   </p>
                   <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em]">
                     Completed & ongoing jobs
                   </h2>
                 </div>
-                <span className="text-xs text-[#838880]">
+                <span className="text-xs text-[#888480]">
                   {completedCount} completed · {ongoingCount} in progress
                 </span>
               </div>
               <div className="mt-6 overflow-hidden rounded-2xl border border-black/8">
                 {jobsList.length === 0 && (
-                  <p className="p-8 text-center text-sm text-[#838980]">
+                  <p className="p-8 text-center text-sm text-[#898480]">
                     No completed work yet.
                   </p>
                 )}
@@ -425,12 +426,12 @@ function ProfilePreview({
                           <div className="flex items-center gap-2">
                             <h3 className="font-semibold">{job.title}</h3>
                             {isOngoing && (
-                              <span className="rounded-md bg-[#edf4ea] px-2 py-0.5 text-[10px] font-semibold text-[#52784f]">
+                              <span className="rounded-md bg-[#faece4] px-2 py-0.5 text-[10px] font-semibold text-[#dd5c1b]">
                                 In progress
                               </span>
                             )}
                           </div>
-                          <p className="mt-1.5 text-xs text-[#7b8078]">
+                          <p className="mt-1.5 text-xs text-[#807c78]">
                             {job.client} ·{" "}
                             {isOngoing
                               ? "Ongoing project"
@@ -444,25 +445,25 @@ function ProfilePreview({
                             job.rating && (
                               <span className="text-sm font-semibold text-[#d1a238]">
                                 ★{" "}
-                                <span className="text-[#30342f]">
+                                <span className="text-[#34322f]">
                                   {Number(job.rating).toFixed(1)}
                                 </span>
                               </span>
                             )}
                           <span className="text-sm font-semibold">
-                            ${job.amount ? job.amount.toLocaleString() : "0"}
+                            R{job.amount ? job.amount.toLocaleString() : "0"}
                           </span>
                         </div>
                       </div>
 
                       {isOngoing ? (
-                        <p className="mt-3 text-xs italic text-[#7b8078]">
+                        <p className="mt-3 text-xs italic text-[#807c78]">
                           Job is currently in progress.
                         </p>
                       ) : isCompleted &&
                         job.clientHasReviewed &&
                         job.freelancerHasReviewed ? (
-                        <blockquote className="mt-4 border-l-2 border-[#b8ceb4] pl-4 text-sm leading-6 text-[#687067]">
+                        <blockquote className="mt-4 border-l-2 border-[#ddbaa5] pl-4 text-sm leading-6 text-[#706c67]">
                           “{job.review}”
                         </blockquote>
                       ) : isCompleted &&
@@ -482,18 +483,18 @@ function ProfilePreview({
                           </div>
                           <Link
                             href={`/contracts?contractId=${job.id}`}
-                            className="inline-flex h-8 items-center rounded-lg bg-[#252724] px-3 font-semibold text-white transition hover:bg-[#3b3e39] shrink-0"
+                            className="inline-flex h-8 items-center rounded-lg bg-[#272624] px-3 font-semibold text-white transition hover:bg-[#3e3c39] shrink-0"
                           >
                             Leave review
                           </Link>
                         </div>
                       ) : isCompleted && !job.clientHasReviewed ? (
-                        <div className="mt-3 flex items-center justify-between gap-2 text-xs text-[#838880]">
+                        <div className="mt-3 flex items-center justify-between gap-2 text-xs text-[#888480]">
                           <span>No review left by client yet.</span>
                           {!job.freelancerHasReviewed && (
                             <Link
                               href={`/contracts?contractId=${job.id}`}
-                              className="font-semibold text-[#52784f] underline"
+                              className="font-semibold text-[#dd5c1b] underline"
                             >
                               Leave review for client
                             </Link>
@@ -506,7 +507,7 @@ function ProfilePreview({
                           {job.skills.map((skill: string) => (
                             <span
                               key={skill}
-                              className="rounded-lg bg-[#f0f2ee] px-2.5 py-1.5 text-[11px] font-medium text-[#656b63]"
+                              className="rounded-lg bg-[#f8eee9] px-2.5 py-1.5 text-[11px] font-medium text-[#6b6763]"
                             >
                               {skill}
                             </span>
@@ -519,7 +520,7 @@ function ProfilePreview({
               </div>
               <Link
                 href={"/contracts"}
-                className="mt-5 inline-block cursor-pointer text-sm font-semibold text-[#52784f] hover:underline"
+                className="mt-5 inline-block cursor-pointer text-sm font-semibold text-[#dd5c1b] hover:underline"
               >
                 View all contracts
               </Link>
@@ -552,7 +553,8 @@ export function ProfileEditor({
     defaultValues: {
       firstName: "",
       lastName: "",
-      country: "",
+      country: SOUTH_AFRICA_CODE,
+      province: "",
       city: "",
       professional_title: "",
       professional_description: "",
@@ -629,14 +631,21 @@ export function ProfileEditor({
       }),
     );
 
+    const savedLocation = splitTownProvince(profileMetaData?.city);
+
     reset({
       firstName: user.firstName ?? "",
       lastName: user.lastName ?? "",
       country:
         countries.find(
           (country) => country.code === user?.unsafeMetadata?.country,
-        )?.code ?? "",
-      city: profileMetaData?.city ?? "",
+        )?.code ?? SOUTH_AFRICA_CODE,
+      province:
+        savedLocation.province ||
+        (isProvince(user?.unsafeMetadata?.province)
+          ? user.unsafeMetadata.province
+          : ""),
+      city: savedLocation.town,
       professional_title: profileMetaData?.professional_title ?? "",
       professional_description: profileMetaData?.professional_description ?? "",
       hourly_rate: Number(profileMetaData?.hourly_rate ?? 20),
@@ -750,17 +759,26 @@ export function ProfileEditor({
       const token = await getToken();
       if (!token) throw new Error("Your session has expired.");
 
-      const { firstName, lastName, portfolios, ...freelancer_metadata } =
+      const { firstName, lastName, portfolios, province, ...profileValues } =
         values;
+      const country = isIdentityVerified
+        ? String(user.unsafeMetadata?.country ?? values.country)
+        : SOUTH_AFRICA_CODE;
+      // The backend only stores country + city, so the province travels in
+      // the city value ("Mbombela, Mpumalanga").
+      const freelancer_metadata = {
+        ...profileValues,
+        country,
+        city: joinTownProvince(profileValues.city, province),
+      };
 
       await user.update({
         firstName: isIdentityVerified ? (user.firstName ?? "") : firstName,
         lastName: isIdentityVerified ? (user.lastName ?? "") : lastName,
         unsafeMetadata: {
           ...user.unsafeMetadata,
-          country: isIdentityVerified
-            ? user.unsafeMetadata?.country
-            : values.country,
+          country,
+          province,
         },
       });
 
@@ -908,7 +926,7 @@ export function ProfileEditor({
   const personalFields = [
     formValues.firstName,
     formValues.lastName,
-    formValues.country,
+    formValues.province,
     formValues.city,
   ];
 
@@ -985,14 +1003,14 @@ export function ProfileEditor({
   }
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] font-(family-name:--font-dm-sans) text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] font-(family-name:--font-dm-sans) text-[#272624]">
       <DashboardHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#587855] hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#e35f1d] hover:underline"
             >
               <Icon icon="solar:arrow-left-linear" width="18" />
               Back to dashboard
@@ -1000,7 +1018,7 @@ export function ProfileEditor({
             <h1 className="mt-4 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
               My profile
             </h1>
-            <p className="mt-2 text-sm text-[#72776f]">
+            <p className="mt-2 text-sm text-[#77736f]">
               Keep your profile complete, credible, and ready for the right
               clients.
             </p>
@@ -1027,7 +1045,7 @@ export function ProfileEditor({
                 />
                 <label
                   aria-label="Change profile photo"
-                  className="absolute right-0 bottom-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-[#252724] text-white"
+                  className="absolute right-0 bottom-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-[#272624] text-white"
                 >
                   <Icon icon="solar:camera-linear" width="16" />
                   <input
@@ -1044,27 +1062,27 @@ export function ProfileEditor({
                   <Icon
                     icon="solar:verified-check-bold"
                     width="18"
-                    className="text-[#5d895a]"
+                    className="text-[#e67036]"
                   />
                 )}
               </h2>
-              <p className="mt-1 text-xs text-[#777c74]">
+              <p className="mt-1 text-xs text-[#7c7874]">
                 {profileMetaData?.professional_title}
               </p>
               <div className="mt-5 flex items-center justify-between text-xs">
                 <span className="font-medium">Profile strength</span>
                 <span className="flex items-center gap-1.5">
-                  <strong className="text-[#52784f]">{strength}%</strong>
+                  <strong className="text-[#dd5c1b]">{strength}%</strong>
                   {parseInt(strength) < 100 && (
                     <span className="group relative">
                       <button
                         type="button"
                         aria-label="How to complete your profile"
-                        className="flex h-4 w-4 cursor-help items-center justify-center rounded-full border border-[#789075] text-[10px] font-bold text-[#52784f]"
+                        className="flex h-4 w-4 cursor-help items-center justify-center rounded-full border border-[#908375] text-[10px] font-bold text-[#dd5c1b]"
                       >
                         ?
                       </button>
-                      <span className="pointer-events-none absolute right-0 bottom-6 z-20 hidden w-56 rounded-xl bg-[#252724] p-3 text-left text-[11px] leading-5 font-normal text-white shadow-xl group-hover:block group-focus-within:block">
+                      <span className="pointer-events-none absolute right-0 bottom-6 z-20 hidden w-56 rounded-xl bg-[#272624] p-3 text-left text-[11px] leading-5 font-normal text-white shadow-xl group-hover:block group-focus-within:block">
                         <strong className="mb-1 block font-semibold">
                           Reach 100%
                         </strong>
@@ -1081,9 +1099,9 @@ export function ProfileEditor({
                   )}
                 </span>
               </div>
-              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#e6e9e3]">
+              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#f3e3d9]">
                 <div
-                  className="h-full rounded-full bg-[#648b61] transition-all"
+                  className="h-full rounded-full bg-[#e77840] transition-all"
                   style={{ width: `${strength}%` }}
                 />
               </div>
@@ -1103,8 +1121,8 @@ export function ProfileEditor({
                   onClick={() => setActiveSection(href)}
                   className={`flex items-center gap-3 rounded-xl px-3 py-3 font-medium transition ${
                     activeSection === href
-                      ? "bg-[#edf4ea] text-[#4e774b]"
-                      : "text-[#686d65] hover:bg-[#f0f4ee] hover:text-[#4e774b]"
+                      ? "bg-[#faece4] text-[#d85a1b]"
+                      : "text-[#6d6965] hover:bg-[#f8efea] hover:text-[#d85a1b]"
                   }`}
                 >
                   <Icon icon={icon} width="19" />
@@ -1125,9 +1143,9 @@ export function ProfileEditor({
               description="The personal information clients see when reviewing your profile."
             >
               {isIdentityVerified && (
-                <div className="mb-5 flex items-center gap-2 rounded-xl border border-[#d2dfcf] bg-[#edf4ea] px-4 py-3 text-xs text-[#476f44]">
+                <div className="mb-5 flex items-center gap-2 rounded-xl border border-[#ebd2c3] bg-[#faece4] px-4 py-3 text-xs text-[#c75319]">
                   <Icon icon="solar:lock-keyhole-bold" width="16" />
-                  Your name, country, and city are locked because your identity
+                  Your name, province, and town are locked because your identity
                   is verified.
                 </div>
               )}
@@ -1135,7 +1153,7 @@ export function ProfileEditor({
                 <label className={labelClass}>
                   First name *
                   <input
-                    className={`${inputClass} disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8a8f87]`}
+                    className={`${inputClass} disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8f8b87]`}
                     disabled={isIdentityVerified}
                     {...register("firstName", {
                       required: "First name is required.",
@@ -1150,7 +1168,7 @@ export function ProfileEditor({
                 <label className={labelClass}>
                   Last name *
                   <input
-                    className={`${inputClass} disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8a8f87]`}
+                    className={`${inputClass} disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8f8b87]`}
                     disabled={isIdentityVerified}
                     {...register("lastName", {
                       required: "Last name is required.",
@@ -1163,49 +1181,36 @@ export function ProfileEditor({
                   )}
                 </label>
                 <label className={labelClass}>
-                  Country *
+                  Province *
                   <select
-                    {...register("country", {
-                      required: "Country is required.",
+                    {...register("province", {
+                      required: "Province is required.",
                     })}
                     disabled={isIdentityVerified}
-                    defaultValue={(() => {
-                      const savedCountry = user?.unsafeMetadata?.country;
-
-                      if (typeof savedCountry !== "string") return "";
-
-                      return (
-                        countries.find(
-                          (country) =>
-                            country.code === savedCountry ||
-                            country.name === savedCountry,
-                        )?.code ?? ""
-                      );
-                    })()}
-                    className="mt-2 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-normal outline-none focus:border-[#6e916a] disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8a8f87]"
+                    className="mt-2 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-normal outline-none focus:border-[#e77840] disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8f8b87]"
                   >
                     <option value="" disabled>
-                      Select your country
+                      Select your province
                     </option>
-                    {countries.map((country) => (
-                      <option value={country.code} key={country.code}>
-                        {country.name}
+                    {provinces.map((province) => (
+                      <option value={province} key={province}>
+                        {province}
                       </option>
                     ))}
                   </select>
-                  {errors.country && (
+                  {errors.province && (
                     <span className="text-xs font-medium text-[#a44c4c]">
-                      {errors.country.message}
+                      {errors.province.message}
                     </span>
                   )}
                 </label>
                 <label className={labelClass}>
-                  City *
+                  Town / city *
                   <input
-                    className={`${inputClass} disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8a8f87]`}
-                    placeholder="New York"
+                    className={`${inputClass} disabled:cursor-not-allowed disabled:bg-black/3 disabled:text-[#8f8b87]`}
+                    placeholder="Mbombela"
                     disabled={isIdentityVerified}
-                    {...register("city", { required: "City is required." })}
+                    {...register("city", { required: "Town is required." })}
                   />
                   {errors.city && (
                     <span className="text-xs font-medium text-[#a44c4c]">
@@ -1215,10 +1220,10 @@ export function ProfileEditor({
                 </label>
                 <div className="grid gap-3 sm:col-span-2">
                   <div className="flex items-center justify-between gap-4">
-                    <span className="text-sm font-semibold text-[#343833]">
+                    <span className="text-sm font-semibold text-[#383633]">
                       Languages *
                     </span>
-                    <span className="text-xs text-[#777c74]">
+                    <span className="text-xs text-[#7c7874]">
                       {languages.length}/5 languages
                     </span>
                   </div>
@@ -1240,7 +1245,13 @@ export function ProfileEditor({
                         className={inputClass}
                       >
                         <option value="">Select language</option>
-                        {languageOptions.map((language) => (
+                        {[
+                          ...languageOptions,
+                          ...(item.language &&
+                          !languageOptions.includes(item.language)
+                            ? [item.language]
+                            : []),
+                        ].map((language) => (
                           <option
                             key={language}
                             value={language}
@@ -1282,7 +1293,7 @@ export function ProfileEditor({
                             );
                           })
                         }
-                        className="flex h-12 cursor-pointer items-center justify-center rounded-xl border border-black/10 text-[#767b73] transition hover:bg-[#f4f6f2] hover:text-[#9a4d45] disabled:cursor-not-allowed disabled:opacity-35"
+                        className="flex h-12 cursor-pointer items-center justify-center rounded-xl border border-black/10 text-[#7b7773] transition hover:bg-[#faf3ee] hover:text-[#9a4d45] disabled:cursor-not-allowed disabled:opacity-35"
                       >
                         <Icon icon="solar:trash-bin-trash-linear" width="18" />
                       </button>
@@ -1296,7 +1307,7 @@ export function ProfileEditor({
                       languages.length >= 5 ||
                       languages.some((item) => !item.language)
                     }
-                    className="inline-flex h-11 w-fit cursor-pointer items-center gap-2 rounded-xl border border-black/10 bg-white px-4 text-sm font-semibold transition hover:bg-[#f4f6f2] disabled:cursor-not-allowed disabled:opacity-45"
+                    className="inline-flex h-11 w-fit cursor-pointer items-center gap-2 rounded-xl border border-black/10 bg-white px-4 text-sm font-semibold transition hover:bg-[#faf3ee] disabled:cursor-not-allowed disabled:opacity-45"
                   >
                     <Icon icon="solar:add-circle-linear" width="18" />
                     Add language
@@ -1320,7 +1331,7 @@ export function ProfileEditor({
                   Professional title *
                   <input
                     className={inputClass}
-                    placeholder="Software Engineer"
+                    placeholder="Master tiler"
                     {...register("professional_title", {
                       required: "Professional title is required.",
                     })}
@@ -1344,7 +1355,7 @@ export function ProfileEditor({
                           "Professional description must be at least 80 characters.",
                       },
                     })}
-                    className="w-full resize-none rounded-xl border border-black/10 bg-white p-3.5 text-sm leading-6 outline-none focus:border-[#71936e] focus:ring-3 focus:ring-[#71936e]/10"
+                    className="w-full resize-none rounded-xl border border-black/10 bg-white p-3.5 text-sm leading-6 outline-none focus:border-[#e77840] focus:ring-3 focus:ring-[#e77840]/10"
                   />
                   {errors.professional_description && (
                     <span className="text-xs font-medium text-[#a44c4c]">
@@ -1356,7 +1367,7 @@ export function ProfileEditor({
                   <label className={labelClass}>
                     Hourly rate *
                     <span className="relative">
-                      <span className="absolute inset-y-0 left-3.5 flex items-center text-[#777c74]">
+                      <span className="absolute inset-y-0 left-3.5 flex items-center text-[#7c7874]">
                         $
                       </span>
                       <input
@@ -1369,15 +1380,15 @@ export function ProfileEditor({
                           valueAsNumber: true,
                           min: {
                             value: 5,
-                            message: "Hourly rate must be at least $5.",
+                            message: "Hourly rate must be at least R5.",
                           },
                           max: {
                             value: 1000,
-                            message: "Hourly rate cannot exceed $1,000.",
+                            message: "Hourly rate cannot exceed R1,000.",
                           },
                         })}
                       />
-                      <span className="absolute inset-y-0 right-3.5 flex items-center text-xs text-[#777c74]">
+                      <span className="absolute inset-y-0 right-3.5 flex items-center text-xs text-[#7c7874]">
                         / hour
                       </span>
                     </span>
@@ -1450,14 +1461,14 @@ export function ProfileEditor({
               title="Skills and expertise"
               description="Add at least 3 of your strongest skills. You can include up to 15."
             >
-              <p className="mb-3 text-sm font-semibold text-[#343833]">
+              <p className="mb-3 text-sm font-semibold text-[#383633]">
                 Skills and expertise *
               </p>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
                   <span
                     key={skill}
-                    className="inline-flex items-center gap-2 rounded-xl bg-[#edf2eb] px-3 py-2 text-sm font-medium text-[#4f584d]"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#f7ece6] px-3 py-2 text-sm font-medium text-[#58524d]"
                   >
                     {skill}
                     <button
@@ -1474,7 +1485,7 @@ export function ProfileEditor({
                         }
                       }}
                       aria-label={`Remove ${skill}`}
-                      className="cursor-pointer text-[#858b83] hover:text-[#a44c4c]"
+                      className="cursor-pointer text-[#8b8783] hover:text-[#a44c4c]"
                     >
                       <Icon icon="solar:close-circle-linear" width="16" />
                     </button>
@@ -1505,7 +1516,7 @@ export function ProfileEditor({
                   Add
                 </button>
               </div>
-              <p className="mt-2 text-xs text-[#858a82]">
+              <p className="mt-2 text-xs text-[#8a8682]">
                 {skills.length} of 15 skills added · 20 characters maximum per
                 skill
               </p>
@@ -1521,7 +1532,7 @@ export function ProfileEditor({
               title="Portfolio"
               description="Add at least 1 project that best represents your skills and results."
             >
-              <p className="mb-3 text-sm font-semibold text-[#343833]">
+              <p className="mb-3 text-sm font-semibold text-[#383633]">
                 Portfolio projects *
               </p>
               <div className="grid gap-5 md:grid-cols-2 2xl:grid-cols-3">
@@ -1531,7 +1542,7 @@ export function ProfileEditor({
                     className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-black/9 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-black/14 hover:shadow hover:shadow-black/2"
                   >
                     <div
-                      className="relative aspect-video overflow-hidden bg-[#e4ead8] bg-cover bg-center"
+                      className="relative aspect-video overflow-hidden bg-[#f5dccd] bg-cover bg-center"
                       style={{
                         backgroundImage: `url(${project.cover_image.url})`,
                       }}
@@ -1553,19 +1564,19 @@ export function ProfileEditor({
                           })
                         }
                         aria-label={`Remove ${project.title}`}
-                        className="absolute top-3 right-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-white/65 bg-white/92 text-[#565d54] shadow-md transition hover:bg-white hover:text-[#a44c4c] focus-visible:opacity-100 group-hover:opacity-100 md:opacity-0"
+                        className="absolute top-3 right-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-white/65 bg-white/92 text-[#5d5954] shadow-md transition hover:bg-white hover:text-[#a44c4c] focus-visible:opacity-100 group-hover:opacity-100 md:opacity-0"
                       >
                         <Icon icon="solar:trash-bin-trash-linear" width="17" />
                       </button>
                     </div>
                     <div className="flex flex-1 flex-col p-5">
-                      <p className="text-[10px] font-semibold tracking-[0.12em] text-[#62805f] uppercase">
+                      <p className="text-[10px] font-semibold tracking-[0.12em] text-[#e66d31] uppercase">
                         {project.category}
                       </p>
-                      <h3 className="mt-2 line-clamp-2 text-base font-semibold tracking-[-0.015em] text-[#292d28]">
+                      <h3 className="mt-2 line-clamp-2 text-base font-semibold tracking-[-0.015em] text-[#2d2b28]">
                         {project.title}
                       </h3>
-                      <p className="mt-2 line-clamp-3 text-xs leading-5 text-[#777c74]">
+                      <p className="mt-2 line-clamp-3 text-xs leading-5 text-[#7c7874]">
                         {project.description}
                       </p>
                       <div className="mt-5 border-t border-black/7 pt-4">
@@ -1574,7 +1585,7 @@ export function ProfileEditor({
                             href={project.live_url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#52784f] transition hover:text-[#365f34]"
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b] transition hover:text-[#a44414]"
                           >
                             View live project
                             <Icon
@@ -1583,7 +1594,7 @@ export function ProfileEditor({
                             />
                           </a>
                         ) : (
-                          <span className="text-xs text-[#969b94]">
+                          <span className="text-xs text-[#9b9894]">
                             Portfolio case study
                           </span>
                         )}
@@ -1594,15 +1605,15 @@ export function ProfileEditor({
                 <button
                   type="button"
                   onClick={() => setShowPortfolioForm(true)}
-                  className="flex min-h-72 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-black/16 bg-[#fafbf9] p-6 text-center transition hover:border-[#8faa8c] hover:bg-[#f4f8f2]"
+                  className="flex min-h-72 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-black/16 bg-[#fdf9f7] p-6 text-center transition hover:border-[#e77840] hover:bg-[#fcf3ee]"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e7f1e4] text-[#52784f]">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f9e7dc] text-[#dd5c1b]">
                     <Icon icon="solar:add-circle-linear" width="24" />
                   </span>
                   <span className="mt-4 text-sm font-semibold">
                     Add portfolio project
                   </span>
-                  <span className="mt-1.5 max-w-48 text-xs leading-5 text-[#858a82]">
+                  <span className="mt-1.5 max-w-48 text-xs leading-5 text-[#8a8682]">
                     Add a cover image, project details, and an optional live
                     link
                   </span>
@@ -1616,13 +1627,13 @@ export function ProfileEditor({
             </SectionCard>
 
             <div className="sticky bottom-4 z-20 flex items-center justify-between gap-4 rounded-2xl border border-black/9 bg-white/95 p-4 shadow-xl shadow-black/8 backdrop-blur">
-              <p className="hidden text-xs text-[#777c74] sm:block">
+              <p className="hidden text-xs text-[#7c7874] sm:block">
                 Review your changes before saving.
               </p>
               <button
                 type="submit"
                 disabled={!canSave}
-                className="ml-auto cursor-pointer rounded-xl bg-[#252724] px-6 py-3 text-sm font-semibold text-white hover:bg-[#3b3e39] disabled:cursor-not-allowed disabled:opacity-45"
+                className="ml-auto cursor-pointer rounded-xl bg-[#272624] px-6 py-3 text-sm font-semibold text-white hover:bg-[#3e3c39] disabled:cursor-not-allowed disabled:opacity-45"
               >
                 {profileMutation.isPending ? "Saving..." : "Save profile"}
               </button>
@@ -1636,7 +1647,7 @@ export function ProfileEditor({
           role="dialog"
           aria-modal="true"
           aria-labelledby="portfolio-title"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#172018]/55 p-4 backdrop-blur-[2px]"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#201a17]/55 p-4 backdrop-blur-[2px]"
         >
           <form
             onSubmit={addPortfolio}
@@ -1644,7 +1655,7 @@ export function ProfileEditor({
           >
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs font-semibold tracking-[0.12em] text-[#5d815a] uppercase">
+                <p className="text-xs font-semibold tracking-[0.12em] text-[#e56a2d] uppercase">
                   Portfolio
                 </p>
                 <h2
@@ -1670,7 +1681,7 @@ export function ProfileEditor({
                   name="title"
                   required
                   className={inputClass}
-                  placeholder="e.g. Fintech mobile experience"
+                  placeholder="e.g. Full bathroom renovation in Sandton"
                 />
               </label>
               <label className={labelClass}>
@@ -1679,7 +1690,7 @@ export function ProfileEditor({
                   name="category"
                   required
                   className={inputClass}
-                  placeholder="e.g. Web application"
+                  placeholder="e.g. Tiling &amp; waterproofing"
                 />
               </label>
               <label className={labelClass}>
@@ -1689,20 +1700,20 @@ export function ProfileEditor({
                   required
                   minLength={40}
                   rows={4}
-                  className="resize-none rounded-xl border border-black/10 p-3.5 text-sm leading-6 outline-none focus:border-[#71936e]"
-                  placeholder="What did you build, what was your role, and what changed?"
+                  className="resize-none rounded-xl border border-black/10 p-3.5 text-sm leading-6 outline-none focus:border-[#e77840]"
+                  placeholder="What was the job, what did you do, and how did it turn out?"
                 />
               </label>
               <label className={labelClass}>
                 <span>
                   Live link{" "}
-                  <span className="font-normal text-[#8a8f87]">(optional)</span>
+                  <span className="font-normal text-[#8f8b87]">(optional)</span>
                 </span>
                 <span className="relative">
                   <Icon
                     icon="solar:link-linear"
                     width="18"
-                    className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-[#858a82]"
+                    className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-[#8a8682]"
                   />
                   <input
                     name="live_url"
@@ -1716,7 +1727,7 @@ export function ProfileEditor({
                 className={
                   coverImagePreview
                     ? "relative flex cursor-pointer items-center justify-center overflow-hidden rounded-xl border border-black/15"
-                    : "flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-black/15 bg-[#f8f9f6] px-4 py-6 text-sm font-semibold text-[#5e655d]"
+                    : "flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-black/15 bg-[#fbf7f4] px-4 py-6 text-sm font-semibold text-[#65615d]"
                 }
               >
                 {coverImagePreview ? (
@@ -1765,7 +1776,7 @@ export function ProfileEditor({
               </button>
               <button
                 type="submit"
-                className="cursor-pointer rounded-xl bg-[#252724] px-5 py-2.5 text-sm font-semibold text-white"
+                className="cursor-pointer rounded-xl bg-[#272624] px-5 py-2.5 text-sm font-semibold text-white"
               >
                 Add project
               </button>
@@ -1777,12 +1788,12 @@ export function ProfileEditor({
       {saved && (
         <div
           role="status"
-          className="fixed right-5 bottom-5 z-60 flex items-center gap-3 rounded-xl bg-[#252724] px-5 py-3.5 text-sm font-semibold text-white shadow-xl"
+          className="fixed right-5 bottom-5 z-60 flex items-center gap-3 rounded-xl bg-[#272624] px-5 py-3.5 text-sm font-semibold text-white shadow-xl"
         >
           <Icon
             icon="solar:check-circle-bold"
             width="20"
-            className="text-[#9ac296]"
+            className="text-[#d8a080]"
           />
           Profile saved successfully
         </div>

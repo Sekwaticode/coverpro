@@ -61,25 +61,25 @@ export function ProposalModal({ job, onClose }: ProposalModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="proposal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#182019]/55 p-4 backdrop-blur-[2px]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#201b18]/55 p-4 backdrop-blur-[2px]"
     >
       <div className="max-h-[calc(100svh-2rem)] w-full max-w-xl overflow-y-auto rounded-3xl bg-white shadow-2xl">
         {submitted ? (
           <div className="px-7 py-12 text-center sm:px-10">
-            <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#e8f3e5] text-[#4f7b4c]">
+            <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#fbe8dd] text-[#dd5c1b]">
               <Icon icon="solar:check-circle-bold" width="34" />
             </span>
             <h2 className="mt-6 text-2xl font-semibold tracking-[-0.035em]">
               Proposal submitted
             </h2>
-            <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#686e66]">
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#6e6a66]">
               Your proposal for “{job.title}” is ready for {job.company} to
               review.
             </p>
             <button
               type="button"
               onClick={onClose}
-              className="mt-7 cursor-pointer rounded-xl bg-[#252724] px-6 py-3 text-sm font-semibold text-white"
+              className="mt-7 cursor-pointer rounded-xl bg-[#272624] px-6 py-3 text-sm font-semibold text-white"
             >
               Back to jobs
             </button>
@@ -88,7 +88,7 @@ export function ProposalModal({ job, onClose }: ProposalModalProps) {
           <>
             <div className="flex items-start justify-between border-b border-black/8 px-6 py-5 sm:px-8">
               <div>
-                <p className="text-xs font-semibold tracking-[0.12em] text-[#5c8159] uppercase">
+                <p className="text-xs font-semibold tracking-[0.12em] text-[#e5692c] uppercase">
                   Submit proposal
                 </p>
                 <h2
@@ -97,7 +97,7 @@ export function ProposalModal({ job, onClose }: ProposalModalProps) {
                 >
                   {job.title}
                 </h2>
-                <p className="mt-1 text-sm text-[#777c74]">{job.company}</p>
+                <p className="mt-1 text-sm text-[#7c7874]">{job.company}</p>
               </div>
               <button
                 type="button"
@@ -116,8 +116,8 @@ export function ProposalModal({ job, onClose }: ProposalModalProps) {
                 <label className="grid gap-2 text-sm font-semibold">
                   Your bid
                   <span className="relative">
-                    <span className="absolute inset-y-0 left-3.5 flex items-center text-[#777c74]">
-                      $
+                    <span className="absolute inset-y-0 left-3.5 flex items-center text-[#7c7874]">
+                      R
                     </span>
                     <input
                       required
@@ -127,12 +127,12 @@ export function ProposalModal({ job, onClose }: ProposalModalProps) {
                       defaultValue={
                         job.type === "Hourly"
                           ? "85"
-                          : job.budget.replace(/[$,]/g, "")
+                          : job.budget.replace(/[^0-9.]/g, "")
                       }
-                      className="h-12 w-full rounded-xl border border-black/11 bg-white pr-14 pl-8 font-normal outline-none focus:border-[#70966d]"
+                      className="h-12 w-full rounded-xl border border-black/11 bg-white pr-14 pl-8 font-normal outline-none focus:border-[#e77840]"
                     />
-                    <span className="absolute inset-y-0 right-3.5 flex items-center text-xs text-[#858a82]">
-                      {job.type === "Hourly" ? "/ hour" : "USD"}
+                    <span className="absolute inset-y-0 right-3.5 flex items-center text-xs text-[#8a8682]">
+                      {job.type === "Hourly" ? "/ hour" : "ZAR"}
                     </span>
                   </span>
                 </label>
@@ -141,7 +141,7 @@ export function ProposalModal({ job, onClose }: ProposalModalProps) {
                   <select
                     name="duration"
                     required
-                    className="h-12 rounded-xl border border-black/11 bg-white px-3.5 font-normal outline-none focus:border-[#70966d]"
+                    className="h-12 rounded-xl border border-black/11 bg-white px-3.5 font-normal outline-none focus:border-[#e77840]"
                   >
                     <option>Less than 1 month</option>
                     <option>1–2 months</option>
@@ -160,9 +160,9 @@ export function ProposalModal({ job, onClose }: ProposalModalProps) {
                   minLength={80}
                   rows={6}
                   placeholder="Introduce yourself, explain your relevant experience, and describe how you would approach this project..."
-                  className="resize-none rounded-xl border border-black/11 bg-white p-3.5 font-normal leading-6 outline-none placeholder:text-[#a1a59e] focus:border-[#70966d]"
+                  className="resize-none rounded-xl border border-black/11 bg-white p-3.5 font-normal leading-6 outline-none placeholder:text-[#a5a29e] focus:border-[#e77840]"
                 />
-                <span className="text-right text-[11px] font-normal text-[#8a8e87]">
+                <span className="text-right text-[11px] font-normal text-[#8e8b87]">
                   Minimum 80 characters
                 </span>
               </label>
@@ -182,15 +182,15 @@ export function ProposalModal({ job, onClose }: ProposalModalProps) {
                         name={`screening-${index}`}
                         required
                         rows={3}
-                        className="resize-none rounded-xl border border-black/11 bg-white p-3.5 font-normal leading-6 outline-none focus:border-[#70966d]"
+                        className="resize-none rounded-xl border border-black/11 bg-white p-3.5 font-normal leading-6 outline-none focus:border-[#e77840]"
                       />
                     </label>
                   ))}
                 </div>
               )}
 
-              <div className="rounded-xl bg-[#eff4ed] p-4 text-xs leading-5 text-[#626960]">
-                <strong className="text-[#333832]">
+              <div className="rounded-xl bg-[#f8eee9] p-4 text-xs leading-5 text-[#696560]">
+                <strong className="text-[#383532]">
                   You’ll use 6 Connects.
                 </strong>
               </div>
@@ -206,7 +206,7 @@ export function ProposalModal({ job, onClose }: ProposalModalProps) {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="cursor-pointer rounded-xl bg-[#252724] px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                  className="cursor-pointer rounded-xl bg-[#272624] px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
                 >
                   {submitting ? "Submitting..." : "Send proposal"}
                 </button>

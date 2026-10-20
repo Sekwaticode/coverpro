@@ -30,10 +30,12 @@ const SEARCH_DEBOUNCE_MS = 700;
 const RATE_CEILING = 500;
 
 const specialties = [
-  "Web & software development",
-  "Design & creative",
-  "Data & AI",
-  "Marketing",
+  "General construction",
+  "Roofing & waterproofing",
+  "Tiling & flooring",
+  "Ceilings & drywall",
+  "Plumbing & electrical",
+  "Painting & renovations",
 ];
 const teamSizes = [
   "2–5 members",
@@ -43,11 +45,11 @@ const teamSizes = [
 ];
 
 const AVATAR_COLORS = [
-  "#577d73",
+  "#e46525",
   "#466a7b",
   "#88715b",
   "#685f82",
-  "#74805d",
+  "#e56c2f",
   "#8b625e",
 ];
 
@@ -109,19 +111,19 @@ function AgencyCard({ agency }: { agency: Agency }) {
         )}
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className={`${styles.uiHeading} text-xl text-[#252824]`}>
+            <h2 className={`${styles.uiHeading} text-xl text-[#282624]`}>
               {agency.name}
             </h2>
             {agency.verified && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#e7f2e4] px-2 py-1 text-[11px] font-semibold text-[#4c7649]">
-                <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#5a8357] text-white">
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#fae7dc] px-2 py-1 text-[11px] font-semibold text-[#d4581a]">
+                <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#e5692c] text-white">
                   <CheckIcon />
                 </span>
                 Verified
               </span>
             )}
           </div>
-          <p className="mt-1 text-sm text-[#737870]">
+          <p className="mt-1 text-sm text-[#787470]">
             {agency.location && `${agency.location} · `}
             {agency.memberCount} team member
             {agency.memberCount === 1 ? "" : "s"}
@@ -134,7 +136,7 @@ function AgencyCard({ agency }: { agency: Agency }) {
           {agency.tagline}
         </h3>
       )}
-      <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#686d66]">
+      <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#6d6a66]">
         {agency.description}
       </p>
 
@@ -142,7 +144,7 @@ function AgencyCard({ agency }: { agency: Agency }) {
         {agency.skills.map((skill) => (
           <span
             key={skill}
-            className="rounded-lg bg-[#eef2ec] px-2.5 py-1.5 text-xs font-medium text-[#596057]"
+            className="rounded-lg bg-[#f7ede7] px-2.5 py-1.5 text-xs font-medium text-[#605c57]"
           >
             {skill}
           </span>
@@ -152,29 +154,29 @@ function AgencyCard({ agency }: { agency: Agency }) {
       <div className="mt-6 grid grid-cols-3 gap-3 border-y border-black/7 py-4 text-center">
         <div>
           <p className="text-base font-semibold">{agency.success}%</p>
-          <p className="mt-1 text-[11px] text-[#858a82]">Job success</p>
+          <p className="mt-1 text-[11px] text-[#8a8682]">Job success</p>
         </div>
         <div className="border-x border-black/7">
           <p className="text-base font-semibold">{agency.projects}</p>
-          <p className="mt-1 text-[11px] text-[#858a82]">Projects</p>
+          <p className="mt-1 text-[11px] text-[#8a8682]">Projects</p>
         </div>
         <div>
           <p className="text-base font-semibold text-[#d4a334]">
-            ★ <span className="text-[#252824]">{agency.rating.toFixed(1)}</span>
+            ★ <span className="text-[#282624]">{agency.rating.toFixed(1)}</span>
           </p>
-          <p className="mt-1 text-[11px] text-[#858a82]">
+          <p className="mt-1 text-[11px] text-[#8a8682]">
             {agency.reviews} review{agency.reviews === 1 ? "" : "s"}
           </p>
         </div>
       </div>
 
       <div className="mt-5 flex items-center justify-between gap-4">
-        <p className="text-sm text-[#7a7f77]">
+        <p className="text-sm text-[#7f7b77]">
           {agency.minHourlyRate ? (
             <>
               From{" "}
-              <strong className="text-base text-[#252824]">
-                ${agency.minHourlyRate}
+              <strong className="text-base text-[#282624]">
+                R{agency.minHourlyRate}
               </strong>
               /hr
             </>
@@ -184,9 +186,9 @@ function AgencyCard({ agency }: { agency: Agency }) {
         </p>
         <Link
           href={`/agency/${agency.id}`}
-          className="rounded-xl bg-[#252724] px-4 py-2.5 text-sm font-semibold text-white! transition group-hover:bg-[#3b3e39]"
+          className="rounded-xl bg-[#272624] px-4 py-2.5 text-sm font-semibold text-white! transition group-hover:bg-[#3e3c39]"
         >
-          View agency
+          View company
         </Link>
       </div>
     </article>
@@ -296,7 +298,7 @@ export function AgenciesDirectory() {
       );
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || "Agency search failed.");
+        throw new Error(result.message || "Company search failed.");
       }
       return result.data as { results: Agency[]; hasMore: boolean };
     },
@@ -376,22 +378,22 @@ export function AgenciesDirectory() {
 
   return (
     <main>
-      <section className="border-b border-[#cdd7ca] bg-[#e9f2e6]">
+      <section className="border-b border-[#e5cbbc] bg-[#f9e8df]">
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-10">
-          <p className="text-xs font-semibold tracking-[0.18em] text-[#5d825a] uppercase">
-            Specialized teams, exceptional work
+          <p className="text-xs font-semibold tracking-[0.18em] text-[#e56b2e] uppercase">
+            Construction companies &amp; crews
           </p>
           <h1 className={styles.pageTitle}>
-            Find the right agency for your next big move.
+            Find the right building company for bigger jobs.
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-[#697068] sm:text-lg">
-            Discover trusted studios and expert teams with the capabilities to
-            take your project from first idea to measurable impact.
+          <p className="mt-6 max-w-2xl text-base leading-7 text-[#706c68] sm:text-lg">
+            Hire established contractors with full crews for new builds,
+            extensions, roofing and complete home renovations.
           </p>
-          <label className="mt-10 flex h-16 max-w-3xl items-center gap-4 rounded-2xl border border-black/8 bg-white px-5 focus-within:border-[#789b74]">
+          <label className="mt-10 flex h-16 max-w-3xl items-center gap-4 rounded-2xl border border-black/8 bg-white px-5 focus-within:border-[#e77840]">
             <svg
               viewBox="0 0 24 24"
-              className="h-5 w-5 shrink-0 text-[#7b8178]"
+              className="h-5 w-5 shrink-0 text-[#817d78]"
               fill="none"
               aria-hidden="true"
             >
@@ -412,8 +414,8 @@ export function AgenciesDirectory() {
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search by expertise, agency name, or location"
-              className="h-full w-full bg-transparent text-base outline-none placeholder:text-[#a0a59d]"
+              placeholder="Search by trade, company name, town or province"
+              className="h-full w-full bg-transparent text-base outline-none placeholder:text-[#a5a19d]"
             />
           </label>
         </div>
@@ -426,7 +428,7 @@ export function AgenciesDirectory() {
               <h2 className={`${styles.uiHeading} text-lg`}>Filters</h2>
               <button
                 onClick={reset}
-                className="cursor-pointer text-xs font-semibold text-[#52784f] hover:underline"
+                className="cursor-pointer text-xs font-semibold text-[#dd5c1b] hover:underline"
               >
                 Reset
               </button>
@@ -438,14 +440,14 @@ export function AgenciesDirectory() {
                 {["All", ...specialties].map((item) => (
                   <label
                     key={item}
-                    className="flex cursor-pointer items-center gap-3 text-sm text-[#656a63]"
+                    className="flex cursor-pointer items-center gap-3 text-sm text-[#6a6763]"
                   >
                     <input
                       type="radio"
                       name="specialty"
                       checked={specialty === item}
                       onChange={() => setSpecialty(item)}
-                      className="h-4 w-4 accent-[#52784f]"
+                      className="h-4 w-4 accent-[#dd5c1b]"
                     />
                     {item}
                   </label>
@@ -459,13 +461,13 @@ export function AgenciesDirectory() {
                 {teamSizes.map((item) => (
                   <label
                     key={item}
-                    className="flex cursor-pointer items-center gap-3 text-sm text-[#656a63]"
+                    className="flex cursor-pointer items-center gap-3 text-sm text-[#6a6763]"
                   >
                     <input
                       type="checkbox"
                       checked={sizes.includes(item)}
                       onChange={() => toggleSize(item)}
-                      className="h-4 w-4 rounded accent-[#52784f]"
+                      className="h-4 w-4 rounded accent-[#dd5c1b]"
                     />
                     {item}
                   </label>
@@ -476,8 +478,8 @@ export function AgenciesDirectory() {
             <div className="mt-7 border-t border-black/7 pt-6">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-semibold">Hourly rate</p>
-                <span className="text-xs font-semibold text-[#52784f]">
-                  {maxRate >= RATE_CEILING ? "Any rate" : `Up to $${maxRate}`}
+                <span className="text-xs font-semibold text-[#dd5c1b]">
+                  {maxRate >= RATE_CEILING ? "Any rate" : `Up to R${maxRate}`}
                 </span>
               </div>
               <input
@@ -487,44 +489,44 @@ export function AgenciesDirectory() {
                 step="5"
                 value={maxRate}
                 onChange={(event) => setMaxRate(Number(event.target.value))}
-                className="mt-4 w-full accent-[#52784f]"
+                className="mt-4 w-full accent-[#dd5c1b]"
               />
-              <div className="mt-1 flex justify-between text-[11px] text-[#92968f]">
-                <span>$25/hr</span>
-                <span>$500+/hr</span>
+              <div className="mt-1 flex justify-between text-[11px] text-[#96938f]">
+                <span>R25/hr</span>
+                <span>R500+/hr</span>
               </div>
             </div>
 
-            <label className="mt-7 flex cursor-pointer items-center gap-3 border-t border-black/7 pt-6 text-sm text-[#656a63]">
+            <label className="mt-7 flex cursor-pointer items-center gap-3 border-t border-black/7 pt-6 text-sm text-[#6a6763]">
               <input
                 type="checkbox"
                 checked={verifiedOnly}
                 onChange={(event) => setVerifiedOnly(event.target.checked)}
-                className="h-4 w-4 rounded accent-[#52784f]"
+                className="h-4 w-4 rounded accent-[#dd5c1b]"
               />
-              Verified agencies only
+              Verified companies only
             </label>
           </div>
         </aside>
 
         <div>
           <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-            <p className="text-sm text-[#777c75]">
+            <p className="text-sm text-[#7c7975]">
               {isLoading ? (
                 "Searching…"
               ) : (
                 <>
-                  <strong className="text-[#252824]">{results.length}</strong>{" "}
-                  agencies ready to collaborate
+                  <strong className="text-[#282624]">{results.length}</strong>{" "}
+                  companies ready to collaborate
                 </>
               )}
             </p>
-            <label className="flex items-center gap-3 text-sm text-[#777c75]">
+            <label className="flex items-center gap-3 text-sm text-[#7c7975]">
               Sort by
               <select
                 value={sort}
                 onChange={(event) => setSort(event.target.value as Sort)}
-                className="h-11 rounded-xl border border-black/10 bg-white px-4 font-medium text-[#373a36] outline-none"
+                className="h-11 rounded-xl border border-black/10 bg-white px-4 font-medium text-[#3a3836] outline-none"
               >
                 <option value="recommended">Recommended</option>
                 <option value="rating">Top rated</option>
@@ -549,22 +551,22 @@ export function AgenciesDirectory() {
               </div>
               <div ref={sentinelRef} className="h-1" />
               {isFetchingMore && (
-                <p className="mt-6 text-center text-sm text-[#777c75]">
-                  Loading more agencies…
+                <p className="mt-6 text-center text-sm text-[#7c7975]">
+                  Loading more companies…
                 </p>
               )}
             </>
           ) : (
             <div className="rounded-2xl border border-dashed border-black/12 bg-white px-6 py-16 text-center">
               <h2 className={`${styles.uiHeading} text-xl`}>
-                No agencies match those filters
+                No companies match those filters
               </h2>
-              <p className="mt-2 text-sm text-[#777c75]">
+              <p className="mt-2 text-sm text-[#7c7975]">
                 Try broadening your search or resetting the filters.
               </p>
               <button
                 onClick={reset}
-                className="mt-5 cursor-pointer text-sm font-semibold text-[#52784f] hover:underline"
+                className="mt-5 cursor-pointer text-sm font-semibold text-[#dd5c1b] hover:underline"
               >
                 Reset filters
               </button>

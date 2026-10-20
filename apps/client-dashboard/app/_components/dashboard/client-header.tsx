@@ -78,7 +78,7 @@ export function ClientHeader() {
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
             <BrandMark />
             <span className="hidden text-lg font-semibold tracking-tight sm:block">
-              OneMarketplace.io
+              Cover<span className="text-[#ee6c2b]">Pro</span>
             </span>
           </Link>
           <nav className="ml-4 hidden items-center gap-1 lg:flex">
@@ -88,7 +88,7 @@ export function ClientHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-lg px-3 py-2 text-sm transition ${active ? "bg-[#edf4ea] font-semibold text-[#4e774b]" : "font-medium text-[#62675f] hover:bg-black/4"}`}
+                  className={`rounded-lg px-3 py-2 text-sm transition ${active ? "bg-[#faece4] font-semibold text-[#d85a1b]" : "font-medium text-[#67635f] hover:bg-black/4"}`}
                 >
                   {item.label}
                 </Link>
@@ -100,7 +100,7 @@ export function ClientHeader() {
             <Link
               href="/messages"
               aria-label={`${unreadMessages} unread messages`}
-              className={`relative hidden h-10 w-10 items-center justify-center rounded-full sm:flex ${pathname === "/messages" ? "bg-[#edf4ea] text-[#4e774b]" : "text-[#60655e] hover:bg-black/5"}`}
+              className={`relative hidden h-10 w-10 items-center justify-center rounded-full sm:flex ${pathname === "/messages" ? "bg-[#faece4] text-[#d85a1b]" : "text-[#65625e] hover:bg-black/5"}`}
             >
               <Icon
                 icon={
@@ -123,7 +123,7 @@ export function ClientHeader() {
 
 function Badge({ count }: { count: number }) {
   return (
-    <span className="absolute top-1.5 right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full border-2 border-white bg-[#5f8d5c] px-1 text-[8px] font-bold text-white">
+    <span className="absolute top-1.5 right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full border-2 border-white bg-[#e7753c] px-1 text-[8px] font-bold text-white">
       {count}
     </span>
   );
@@ -164,7 +164,7 @@ function Notifications() {
         type="button"
         onClick={() => setOpen((value) => !value)}
         aria-label={`${unreadCount} unread notifications`}
-        className={`relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full ${open ? "bg-[#edf4ea] text-[#4e774b]" : "text-[#60655e] hover:bg-black/5"}`}
+        className={`relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full ${open ? "bg-[#faece4] text-[#d85a1b]" : "text-[#65625e] hover:bg-black/5"}`}
       >
         <Icon
           icon={open ? "solar:bell-bold" : "solar:bell-linear"}
@@ -173,11 +173,11 @@ function Notifications() {
         {unreadCount > 0 && <Badge count={unreadCount} />}
       </button>
       {open && (
-        <section className="fixed top-18 right-3 left-3 overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_24px_70px_rgba(26,34,26,.18)] sm:absolute sm:top-12 sm:right-0 sm:left-auto sm:w-100">
+        <section className="fixed top-18 right-3 left-3 overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_24px_70px_rgba(34,29,26,.18)] sm:absolute sm:top-12 sm:right-0 sm:left-auto sm:w-100">
           <header className="flex items-center justify-between border-b border-black/7 p-4">
             <div>
               <h2 className="text-sm font-semibold">Notifications</h2>
-              <p className="mt-1 text-[10px] text-[#858a82]">
+              <p className="mt-1 text-[10px] text-[#8a8682]">
                 {unreadCount} unread client updates
               </p>
             </div>
@@ -185,7 +185,7 @@ function Notifications() {
               <button
                 type="button"
                 onClick={() => markAllRead()}
-                className="cursor-pointer text-xs font-semibold text-[#52784f]"
+                className="cursor-pointer text-xs font-semibold text-[#dd5c1b]"
               >
                 Mark all read
               </button>
@@ -198,10 +198,10 @@ function Notifications() {
                   key={index}
                   className="flex animate-pulse gap-3.5 px-5 py-5"
                 >
-                  <span className="h-10 w-10 rounded-xl bg-[#e8ece6]" />
+                  <span className="h-10 w-10 rounded-xl bg-[#f4e6de]" />
                   <span className="flex-1">
-                    <span className="block h-3 w-36 rounded bg-[#e3e7e1]" />
-                    <span className="mt-3 block h-3 w-full rounded bg-[#edf0eb]" />
+                    <span className="block h-3 w-36 rounded bg-[#e7e4e1]" />
+                    <span className="mt-3 block h-3 w-full rounded bg-[#f6ebe5]" />
                   </span>
                 </div>
               ))}
@@ -214,26 +214,26 @@ function Notifications() {
                   markRead(notification.id);
                   setOpen(false);
                 }}
-                className={`relative flex gap-3.5 px-5 py-4 transition hover:bg-[#f7f8f5] ${
+                className={`relative flex gap-3.5 px-5 py-4 transition hover:bg-[#fbf5f2] ${
                   index ? "border-t border-black/6" : ""
-                } ${notification.unread ? "bg-[#f3f7f1]" : "bg-white"}`}
+                } ${notification.unread ? "bg-[#fbf2ed]" : "bg-white"}`}
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#52784f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.06)]">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#dd5c1b] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.06)]">
                   <Icon icon={notification.icon} width="20" />
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-sm font-semibold">
                     {notification.title}
                   </span>
-                  <span className="mt-1 block text-xs leading-5 text-[#737870]">
+                  <span className="mt-1 block text-xs leading-5 text-[#787470]">
                     {notification.description}
                   </span>
-                  <span className="mt-1.5 block text-[11px] text-[#93978f]">
+                  <span className="mt-1.5 block text-[11px] text-[#97938f]">
                     {notification.time}
                   </span>
                 </span>
                 {notification.unread && (
-                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#5f8d5c]" />
+                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#e7753c]" />
                 )}
               </Link>
             ))}
@@ -241,22 +241,22 @@ function Notifications() {
 
           {!isLoading && notifications.length === 0 && (
             <div className="px-6 py-10 text-center">
-              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#edf4ea] text-[#52784f]">
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#faece4] text-[#dd5c1b]">
                 <Icon icon="solar:bell-off-linear" width="24" />
               </span>
               <p className="mt-3 text-sm font-semibold">No notifications yet</p>
-              <p className="mt-1 text-xs text-[#81867e]">
+              <p className="mt-1 text-xs text-[#86827e]">
                 New account and project updates will appear here.
               </p>
             </div>
           )}
           {isLoading ||
             (notifications.length !== 0 && (
-              <footer className="border-t border-black/7 bg-[#fafbf9] p-3">
+              <footer className="border-t border-black/7 bg-[#fdf9f7] p-3">
                 <Link
                   href="/notifications"
                   onClick={() => setOpen(false)}
-                  className="flex h-10 w-full items-center justify-center rounded-xl text-xs font-semibold text-[#4e774b] hover:bg-[#edf4ea]"
+                  className="flex h-10 w-full items-center justify-center rounded-xl text-xs font-semibold text-[#d85a1b] hover:bg-[#faece4]"
                 >
                   View all notifications
                 </Link>
@@ -331,7 +331,7 @@ function AccountMenu() {
             className="h-8 w-8 rounded-full object-cover"
           />
         ) : (
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#496e67] text-sm font-semibold text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#cc5519] text-sm font-semibold text-white">
             ...
           </span>
         )}
@@ -342,7 +342,7 @@ function AccountMenu() {
         />
       </button>
       {open && (
-        <div className="absolute top-12 right-0 w-80 overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_24px_70px_rgba(26,34,26,.18)]">
+        <div className="absolute top-12 right-0 w-80 overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_24px_70px_rgba(34,29,26,.18)]">
           <div className="flex items-center gap-3 border-b border-black/7 p-4">
             <Image
               src={user?.imageUrl!}
@@ -356,11 +356,11 @@ function AccountMenu() {
                 <p className="truncate text-sm font-semibold">
                   {user?.fullName}
                 </p>
-                <span className="rounded-full bg-[#edf4ea] px-2 py-0.5 text-[8px] font-semibold text-[#52784f]">
+                <span className="rounded-full bg-[#faece4] px-2 py-0.5 text-[8px] font-semibold text-[#dd5c1b]">
                   Client
                 </span>
               </div>
-              <p className="mt-1 truncate text-[10px] text-[#7b8078]">
+              <p className="mt-1 truncate text-[10px] text-[#807c78]">
                 {profileMetaData?.companyName}
               </p>
             </div>
@@ -403,21 +403,21 @@ function AccountMenu() {
                 setOpen(false);
                 window.location.assign("/settings?section=account");
               }}
-              className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-left hover:bg-[#f4f6f2]"
+              className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-left hover:bg-[#faf3ee]"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f0f3ee] text-[#5d765a]">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f8efe9] text-[#e36221]">
                 <Icon icon="solar:user-id-linear" width="18" />
               </span>
               <span className="min-w-0 flex-1">
                 <strong className="block text-xs">Manage account</strong>
-                <span className="mt-1 block text-[9px] font-normal text-[#858a82]">
+                <span className="mt-1 block text-[9px] font-normal text-[#8a8682]">
                   Email, password, and sign-in security
                 </span>
               </span>
               <Icon
                 icon="solar:alt-arrow-right-linear"
                 width="14"
-                className="text-[#8a8f87]"
+                className="text-[#8f8b87]"
               />
             </button>
             <button
@@ -451,21 +451,21 @@ function MenuLink({
     <Link
       href={href}
       onClick={onNavigate}
-      className="flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-[#f4f6f2]"
+      className="flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-[#faf3ee]"
     >
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f0f3ee] text-[#5d765a]">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f8efe9] text-[#e36221]">
         <Icon icon={icon} width="18" />
       </span>
       <span className="min-w-0 flex-1">
         <strong className="block text-xs">{label}</strong>
-        <span className="mt-1 block truncate text-[9px] font-normal text-[#858a82]">
+        <span className="mt-1 block truncate text-[9px] font-normal text-[#8a8682]">
           {description}
         </span>
       </span>
       <Icon
         icon="solar:alt-arrow-right-linear"
         width="14"
-        className="text-[#8a8f87]"
+        className="text-[#8f8b87]"
       />
     </Link>
   );

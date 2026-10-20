@@ -3,9 +3,9 @@ import { TeamDashboard } from "./team-dashboard";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Agency Team | OneMarketplace.io",
+  title: "Company Team | CoverPro",
   description:
-    "Manage agency membership, freelancer profiles, roles, and account permissions.",
+    "Manage company membership, pro profiles, roles, and account permissions.",
 };
 
 export default function AgencyTeamPage() {

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f6f2;
-  --foreground: #242724;
+  --background: #faf3ee;
+  --foreground: #272624;
 }
 
 * {
@@ -33,11 +33,11 @@ button {
 }
 
 .rdp-root {
-  --rdp-accent-color: #52784f;
-  --rdp-accent-background-color: #edf4ea;
+  --rdp-accent-color: #dd5c1b;
+  --rdp-accent-background-color: #faece4;
   --rdp-day_button-border-radius: 0.65rem;
   --rdp-selected-border: 0;
-  --rdp-today-color: #52784f;
+  --rdp-today-color: #dd5c1b;
   margin: 0;
   font-size: 0.75rem;
 }
@@ -50,5 +50,5 @@ button {
 .rdp-button_previous:hover,
 .rdp-button_next:hover,
 .rdp-day_button:hover {
-  background: #f1f4ef;
+  background: #f8f0eb;
 }

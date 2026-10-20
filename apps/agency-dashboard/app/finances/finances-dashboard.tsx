@@ -38,7 +38,7 @@ type AgencyEarningsOverview = {
 };
 
 const formatCurrency = (value: number) =>
-  `$${value.toLocaleString(undefined, {
+  `R${value.toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
@@ -92,7 +92,7 @@ export function FinancesDashboard({
       );
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || "Agency Connects could not be loaded.");
+        throw new Error(result.message || "Company Connects could not be loaded.");
       }
       return result.data as { connects: number };
     },
@@ -132,7 +132,7 @@ export function FinancesDashboard({
       );
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || "Agency earnings could not be loaded.");
+        throw new Error(result.message || "Company earnings could not be loaded.");
       }
       return result.data as AgencyEarningsOverview;
     },
@@ -212,14 +212,14 @@ export function FinancesDashboard({
   return (
     <AgencyShell>
       <div>
-        <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
-          Agency finances
+        <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
+          Company finances
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
           Earnings & finances
         </h1>
-        <p className="mt-2 text-sm text-[#72776f]">
-          Manage client payments, Agency Connects, and withdrawals.
+        <p className="mt-2 text-sm text-[#77736f]">
+          Manage client payments, Company Connects, and withdrawals.
         </p>
       </div>
 
@@ -231,9 +231,9 @@ export function FinancesDashboard({
           {section === "overview" && (
             <div className="grid gap-5">
               <section className="grid gap-4 md:grid-cols-3">
-                <article className="rounded-2xl bg-[#252724] p-5 text-white">
+                <article className="rounded-2xl bg-[#272624] p-5 text-white">
                   <div className="flex items-start justify-between">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-[#a8c5a1]">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-[#d7a98f]">
                       <Icon name="wallet" size={21} />
                     </span>
                     <span className="text-[11px] text-white/55">Available</span>
@@ -250,7 +250,7 @@ export function FinancesDashboard({
                     type="button"
                     onClick={() => void manageOnStripe()}
                     disabled={redirecting || !overview || overview.available <= 0}
-                    className="mt-5 h-10 w-full cursor-pointer rounded-xl bg-white text-xs font-semibold text-[#252724] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="mt-5 h-10 w-full cursor-pointer rounded-xl bg-white text-xs font-semibold text-[#272624] disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {redirecting
                       ? "Redirecting..."
@@ -267,7 +267,7 @@ export function FinancesDashboard({
                     <button
                       type="button"
                       onClick={() => openSection("connects")}
-                      className="cursor-pointer text-[11px] font-semibold text-[#52784f] hover:underline"
+                      className="cursor-pointer text-[11px] font-semibold text-[#dd5c1b] hover:underline"
                     >
                       View history
                     </button>
@@ -275,7 +275,7 @@ export function FinancesDashboard({
                   <p className="mt-6 text-3xl font-semibold tracking-[-0.045em]">
                     {connectsBalance?.connects ?? "..."}
                   </p>
-                  <p className="mt-1 text-xs text-[#7b8078]">
+                  <p className="mt-1 text-xs text-[#807c78]">
                     {connectsUsedThisMonth
                       ? `${connectsUsedThisMonth} used this month`
                       : "No usage yet this month"}
@@ -290,13 +290,13 @@ export function FinancesDashboard({
                 </article>
                 <article className="rounded-2xl border border-black/8 bg-white p-5">
                   <div className="flex items-start justify-between">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e7f2e4] text-[#4d784a]">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#fae7dc] text-[#d85a1b]">
                       <Icon name="chart" size={21} />
                     </span>
                     <button
                       type="button"
                       onClick={() => openSection("earnings")}
-                      className="cursor-pointer text-[11px] font-semibold text-[#52784f] hover:underline"
+                      className="cursor-pointer text-[11px] font-semibold text-[#dd5c1b] hover:underline"
                     >
                       View report
                     </button>
@@ -304,20 +304,20 @@ export function FinancesDashboard({
                   <p className="mt-6 text-3xl font-semibold tracking-[-0.045em]">
                     {overview ? formatCurrency(overview.lifetime) : "..."}
                   </p>
-                  <p className="mt-1 text-xs text-[#7b8078]">Lifetime earnings</p>
+                  <p className="mt-1 text-xs text-[#807c78]">Lifetime earnings</p>
                   <div className="mt-5 flex h-10 items-end gap-1.5">
                     {series.length ? (
                       series.map((item) => (
                         <span
                           key={item.month}
-                          className="flex-1 rounded-t bg-[#8ba487]"
+                          className="flex-1 rounded-t bg-[#e77840]"
                           style={{
                             height: `${Math.max(4, Math.round((item.total / chartMax) * 100))}%`,
                           }}
                         />
                       ))
                     ) : (
-                      <span className="w-full text-center text-[11px] text-[#a3a89e]">
+                      <span className="w-full text-center text-[11px] text-[#a8a39e]">
                         No earnings yet
                       </span>
                     )}
@@ -326,8 +326,8 @@ export function FinancesDashboard({
               </section>
               <section className="overflow-hidden rounded-2xl border border-black/8 bg-white">
                 <PanelHeader
-                  title="Recent agency earnings"
-                  description={`Milestone payments received by ${agency?.name ?? "your agency"}`}
+                  title="Recent company earnings"
+                  description={`Milestone payments received by ${agency?.name ?? "your company"}`}
                   action="View all"
                   onAction={() => openSection("earnings")}
                 />
@@ -339,8 +339,8 @@ export function FinancesDashboard({
           {section === "earnings" && (
             <section className="overflow-hidden rounded-2xl border border-black/8 bg-white">
               <PanelHeader
-                title="Agency earnings"
-                description="Payments earned through agency contracts"
+                title="Company earnings"
+                description="Payments earned through company contracts"
               />
               <div className="grid gap-3 border-b border-black/7 p-5 sm:grid-cols-3">
                 {[
@@ -348,8 +348,8 @@ export function FinancesDashboard({
                   ["Pending", overview?.pending],
                   ["Lifetime", overview?.lifetime],
                 ].map(([label, value]) => (
-                  <div key={label as string} className="rounded-xl bg-[#f3f5f1] p-4">
-                    <p className="text-[11px] text-[#7b8078]">{label}</p>
+                  <div key={label as string} className="rounded-xl bg-[#f9f1ed] p-4">
+                    <p className="text-[11px] text-[#807c78]">{label}</p>
                     <p className="mt-1 text-xl font-semibold">
                       {typeof value === "number" ? formatCurrency(value) : "..."}
                     </p>
@@ -368,7 +368,7 @@ export function FinancesDashboard({
                 </label>
               </div>
               {overview && !filteredEarnings.length ? (
-                <p className="px-5 py-10 text-center text-xs text-[#8a8f87] sm:px-6">
+                <p className="px-5 py-10 text-center text-xs text-[#8f8b87] sm:px-6">
                   No earnings yet.
                 </p>
               ) : (
@@ -381,19 +381,19 @@ export function FinancesDashboard({
             <section className="overflow-hidden rounded-2xl border border-black/8 bg-white">
               <PanelHeader
                 title="Withdrawals"
-                description="Manage where the agency's available earnings are sent through Stripe."
+                description="Manage where the company's available earnings are sent through Stripe."
               />
               <div className="grid gap-4 p-5 sm:p-6">
-                <article className="flex flex-col justify-between gap-4 rounded-2xl border border-black/8 bg-[#f8f9f6] p-5 sm:flex-row sm:items-center">
+                <article className="flex flex-col justify-between gap-4 rounded-2xl border border-black/8 bg-[#fbf7f4] p-5 sm:flex-row sm:items-center">
                   <div className="flex items-center gap-4">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#52784f]">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#dd5c1b]">
                       <Icon name="wallet" size={23} />
                     </span>
                     <div>
                       <h3 className="text-sm font-semibold">Payout account</h3>
-                      <p className="mt-1 text-xs text-[#7b8078]">
-                        Add the agency&apos;s bank details, view payouts, and
-                        manage how the agency gets paid on Stripe.
+                      <p className="mt-1 text-xs text-[#807c78]">
+                        Add the company&apos;s bank details, view payouts, and
+                        manage how the company gets paid on Stripe.
                       </p>
                     </div>
                   </div>
@@ -401,18 +401,18 @@ export function FinancesDashboard({
                     type="button"
                     onClick={() => void manageOnStripe()}
                     disabled={redirecting}
-                    className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+                    className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {redirecting ? "Redirecting..." : "Manage on Stripe"}
                   </button>
                 </article>
                 {error && <p className="text-xs text-red-600">{error}</p>}
                 <p className="rounded-xl bg-[#fbeceb] px-4 py-3 text-xs leading-5 text-[#a4453d]">
-                  Payouts are currently only available for agencies whose owner
+                  Payouts are currently only available for companies whose owner
                   is based in the United States, United Kingdom, Canada,
                   Switzerland, and the European Economic Area (EEA). Support
                   for more countries is coming soon — earnings stay safely on
-                  the agency balance until then.
+                  the company balance until then.
                 </p>
               </div>
             </section>
@@ -421,22 +421,22 @@ export function FinancesDashboard({
           {section === "connects" && (
             <section className="overflow-hidden rounded-2xl border border-black/8 bg-white">
               <PanelHeader
-                title="Agency Connects"
-                description="Track proposal credits owned by the agency"
+                title="Company Connects"
+                description="Track proposal credits owned by the company"
                 action="Buy Connects"
                 onAction={() => setConnectsModalOpen(true)}
               />
               <div className="border-b border-black/7 p-5 sm:p-6">
-                <p className="text-xs text-[#7b8078]">Available balance</p>
+                <p className="text-xs text-[#807c78]">Available balance</p>
                 <p className="mt-1 text-3xl font-semibold">
                   {connectsBalance?.connects ?? 0}{" "}
-                  <span className="text-sm font-normal text-[#7b8078]">
-                    Agency Connects
+                  <span className="text-sm font-normal text-[#807c78]">
+                    Company Connects
                   </span>
                 </p>
               </div>
               {connectsHistory.length === 0 && (
-                <p className="px-5 py-10 text-center text-xs text-[#8a8f87] sm:px-6">
+                <p className="px-5 py-10 text-center text-xs text-[#8f8b87] sm:px-6">
                   No Connects activity yet.
                 </p>
               )}
@@ -450,7 +450,7 @@ export function FinancesDashboard({
                   <span
                     className={`flex h-9 w-9 items-center justify-center rounded-full ${
                       item.amount > 0
-                        ? "bg-[#e7f2e4] text-[#4d784a]"
+                        ? "bg-[#fae7dc] text-[#d85a1b]"
                         : "bg-[#f1f0e7] text-[#766f47]"
                     }`}
                   >
@@ -458,14 +458,14 @@ export function FinancesDashboard({
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold">{item.type}</p>
-                    <p className="mt-1 truncate text-xs text-[#858a82]">
+                    <p className="mt-1 truncate text-xs text-[#8a8682]">
                       {item.description} ·{" "}
                       {new Date(item.created_at).toLocaleDateString()}
                     </p>
                   </div>
                   <strong
                     className={`text-sm ${
-                      item.amount > 0 ? "text-[#4d784a]" : ""
+                      item.amount > 0 ? "text-[#d85a1b]" : ""
                     }`}
                   >
                     {item.amount > 0 ? "+" : ""}
@@ -501,13 +501,13 @@ function PanelHeader({
     <header className="flex items-center justify-between gap-4 border-b border-black/7 px-5 py-5 sm:px-6">
       <div>
         <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="mt-1 text-xs text-[#7b8078]">{description}</p>
+        <p className="mt-1 text-xs text-[#807c78]">{description}</p>
       </div>
       {action && (
         <button
           type="button"
           onClick={onAction}
-          className="shrink-0 text-xs font-semibold text-[#52784f] hover:underline"
+          className="shrink-0 text-xs font-semibold text-[#dd5c1b] hover:underline"
         >
           {action}
         </button>
@@ -528,7 +528,7 @@ function EarningsRows({ items }: { items: AgencyEarningItem[] }) {
         >
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-semibold">{item.title}</p>
-            <p className="mt-1 truncate text-xs text-[#858a82]">
+            <p className="mt-1 truncate text-xs text-[#8a8682]">
               {item.client} · {new Date(item.date).toLocaleDateString()}
             </p>
           </div>
@@ -537,9 +537,9 @@ function EarningsRows({ items }: { items: AgencyEarningItem[] }) {
             <p
               className={`mt-1 text-[10px] ${
                 item.status === "AVAILABLE"
-                  ? "text-[#52784f]"
+                  ? "text-[#dd5c1b]"
                   : item.status === "WITHDRAWN"
-                    ? "text-[#7b8078]"
+                    ? "text-[#807c78]"
                     : "text-[#8a7a3a]"
               }`}
             >

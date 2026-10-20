@@ -12,18 +12,18 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Client Dashboard | OneMarketplace.io",
-    template: "%s | OneMarketplace.io",
+    default: "Client Dashboard | CoverPro",
+    template: "%s | CoverPro",
   },
   description:
-    "Post fixed-price projects, review proposals, manage contracts, and work with exceptional independent talent.",
+    "Post building and renovation projects, compare quotes from verified pros, and pay safely through milestone escrow.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} antialiased`}>
+    <html lang="en-ZA" className={`${dmSans.variable} antialiased`}>
       <body>
         <ClerkProvider>
           <Provider>{children}</Provider>

@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import JobDetails from "./job-details";
 
 export const metadata: Metadata = {
-  title: "Job details | OneMarketplace.io",
+  title: "Job details | CoverPro",
   description: "Review the project scope, skills, and milestones.",
 };
 

@@ -85,7 +85,7 @@ export function TeamDashboard() {
     },
   });
 
-  const agencyName = agency?.name ?? "your agency";
+  const agencyName = agency?.name ?? "your company";
   const isLoading = agencyLoading || invitationsLoading;
 
   const members: ActiveTeamMember[] = useMemo(
@@ -232,29 +232,29 @@ export function TeamDashboard() {
     <AgencyShell>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
-            Agency membership
+          <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
+            Company membership
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
-            Agency team
+            Company team
           </h1>
-          <p className="mt-2 text-sm text-[#72776f]">
-            Manage the freelancers displayed on your agency profile and their
+          <p className="mt-2 text-sm text-[#77736f]">
+            Manage the pros displayed on your company profile and their
             account permissions.
           </p>
         </div>
         <button
           type="button"
           onClick={() => setInviteOpen(true)}
-          className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white"
+          className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white"
         >
-          <Icon name="plus" size={18} /> Invite freelancer
+          <Icon name="plus" size={18} /> Invite pro
         </button>
       </div>
 
       <section className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          ["Total members", members.length, "team", "bg-[#e7f2e4] text-[#4d784a]"],
+          ["Total members", members.length, "team", "bg-[#fae7dc] text-[#d85a1b]"],
           [
             "Business managers",
             members.filter((member) => member.role === "Business manager")
@@ -300,14 +300,14 @@ export function TeamDashboard() {
               <p className="text-2xl font-semibold tracking-[-0.04em]">
                 {value}
               </p>
-              <p className="mt-0.5 text-xs text-[#7c8179]">{label}</p>
+              <p className="mt-0.5 text-xs text-[#817d79]">{label}</p>
             </div>
           </div>
         ))}
       </section>
 
       {notice && (
-        <div className="mt-5 flex items-center justify-between rounded-xl border border-[#cfdfcb] bg-[#edf4ea] px-4 py-3 text-xs font-medium text-[#4e774b]">
+        <div className="mt-5 flex items-center justify-between rounded-xl border border-[#ebcfbf] bg-[#faece4] px-4 py-3 text-xs font-medium text-[#d85a1b]">
           <span className="inline-flex items-center gap-2">
             <Icon name="verified" size={17} /> {notice}
           </span>
@@ -331,8 +331,8 @@ export function TeamDashboard() {
               onClick={() => setFilter(item)}
               className={`shrink-0 cursor-pointer rounded-lg px-3 py-2 text-xs font-semibold ${
                 filter === item
-                  ? "bg-[#edf4ea] text-[#4e774b]"
-                  : "text-[#747971] hover:bg-black/3"
+                  ? "bg-[#faece4] text-[#d85a1b]"
+                  : "text-[#797571] hover:bg-black/3"
               }`}
             >
               {item}
@@ -346,12 +346,12 @@ export function TeamDashboard() {
             className="h-10 rounded-xl border border-black/9 bg-white px-3 text-xs font-semibold outline-none"
           >
             <option>All roles</option>
-            <option>Agency owner</option>
+            <option value="Agency owner">Company owner</option>
             <option>Business manager</option>
-            <option>Agency member</option>
+            <option value="Agency member">Company member</option>
           </select>
           <label className="flex h-10 items-center gap-2 rounded-xl border border-black/9 px-3 sm:w-72">
-            <Icon name="search" size={18} className="text-[#7b8078]" />
+            <Icon name="search" size={18} className="text-[#807c78]" />
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
@@ -375,9 +375,9 @@ export function TeamDashboard() {
 
       {!isLoading && !visibleRows.length && (
         <div className="mt-4 rounded-2xl border border-dashed border-black/12 bg-white px-6 py-16 text-center">
-          <Icon name="team" size={35} className="mx-auto text-[#858a82]" />
+          <Icon name="team" size={35} className="mx-auto text-[#8a8682]" />
           <h2 className="mt-4 font-semibold">No team members found</h2>
-          <p className="mt-2 text-sm text-[#7c8179]">
+          <p className="mt-2 text-sm text-[#817d79]">
             Try another role, status, or search term.
           </p>
         </div>
@@ -406,18 +406,18 @@ export function TeamDashboard() {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/45 p-5 backdrop-blur-[2px]"
+          className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/45 p-5 backdrop-blur-[2px]"
         >
           <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
             <h2 className="text-lg font-semibold">
               {removeTarget.kind === "invitation"
                 ? "Cancel this invitation?"
-                : "Remove this agency member?"}
+                : "Remove this company member?"}
             </h2>
-            <p className="mt-2 text-sm leading-6 text-[#737870]">
+            <p className="mt-2 text-sm leading-6 text-[#787470]">
               {removeTarget.kind === "invitation"
                 ? `${removeTarget.email} will no longer be able to accept this invitation.`
-                : `${removeTarget.name} will lose access to ${agencyName} and will no longer appear on its public roster. Their personal freelancer account will not be affected.`}
+                : `${removeTarget.name} will lose access to ${agencyName} and will no longer appear on its public roster. Their personal pro account will not be affected.`}
             </p>
             <div className="mt-6 flex justify-end gap-2">
               <button
@@ -451,22 +451,22 @@ function MemberCardSkeleton() {
       className="animate-pulse rounded-2xl border border-black/8 bg-white p-5"
     >
       <div className="flex items-start gap-3">
-        <div className="h-12 w-12 shrink-0 rounded-full bg-[#e8ebe6]" />
+        <div className="h-12 w-12 shrink-0 rounded-full bg-[#ebe9e6]" />
         <div className="min-w-0 flex-1">
-          <div className="h-4 w-2/3 rounded bg-[#e8ebe6]" />
-          <div className="mt-2 h-3 w-1/2 rounded bg-[#eef1ec]" />
+          <div className="h-4 w-2/3 rounded bg-[#ebe9e6]" />
+          <div className="mt-2 h-3 w-1/2 rounded bg-[#f7ece6]" />
         </div>
       </div>
       <div className="mt-5 flex items-center justify-between">
-        <div className="h-5 w-20 rounded-full bg-[#eef1ec]" />
-        <div className="h-3 w-16 rounded bg-[#eef1ec]" />
+        <div className="h-5 w-20 rounded-full bg-[#f7ece6]" />
+        <div className="h-3 w-16 rounded bg-[#f7ece6]" />
       </div>
       <div className="mt-5 flex gap-1.5">
-        <div className="h-6 w-14 rounded-lg bg-[#eef1ec]" />
-        <div className="h-6 w-14 rounded-lg bg-[#eef1ec]" />
-        <div className="h-6 w-10 rounded-lg bg-[#eef1ec]" />
+        <div className="h-6 w-14 rounded-lg bg-[#f7ece6]" />
+        <div className="h-6 w-14 rounded-lg bg-[#f7ece6]" />
+        <div className="h-6 w-10 rounded-lg bg-[#f7ece6]" />
       </div>
-      <div className="mt-5 h-10 w-full rounded-xl bg-[#f0f2ee]" />
+      <div className="mt-5 h-10 w-full rounded-xl bg-[#f8eee9]" />
     </div>
   );
 }

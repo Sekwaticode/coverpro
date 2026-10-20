@@ -81,12 +81,12 @@ export function LogsStream() {
         <span
           className={`inline-flex h-9 shrink-0 items-center gap-2 rounded-xl px-3 text-xs font-semibold ${
             connected
-              ? "bg-[#edf4ea] text-[#52784f]"
+              ? "bg-[#faece4] text-[#dd5c1b]"
               : "bg-[#f5f0de] text-[#82723f]"
           }`}
         >
           <span
-            className={`h-2 w-2 rounded-full ${connected ? "bg-[#5f8d5c]" : "bg-[#c48b48]"}`}
+            className={`h-2 w-2 rounded-full ${connected ? "bg-[#e7753c]" : "bg-[#c48b48]"}`}
           />
           {connected ? "Live" : "Connecting…"}
         </span>
@@ -97,7 +97,7 @@ export function LogsStream() {
       <section className="mt-8 overflow-hidden rounded-2xl border border-black/8 bg-white">
         <header className="border-b border-black/7 p-5">
           <h2 className="font-semibold">Live stream</h2>
-          <p className="mt-1 text-xs text-[#7c8179]">
+          <p className="mt-1 text-xs text-[#817d79]">
             Showing the last {MAX_ENTRIES} events received this session
           </p>
         </header>
@@ -107,22 +107,22 @@ export function LogsStream() {
               key={entry.id}
               type="button"
               onClick={() => setSelected(entry)}
-              className="flex w-full flex-wrap items-start gap-3 border-t border-black/6 px-5 py-3 text-left first:border-t-0 hover:bg-[#fafbf9]"
+              className="flex w-full flex-wrap items-start gap-3 border-t border-black/6 px-5 py-3 text-left first:border-t-0 hover:bg-[#fdf9f7]"
             >
-              <span className="shrink-0 text-[#969b94]">
+              <span className="shrink-0 text-[#9b9894]">
                 {new Date(entry.timestamp).toLocaleTimeString()}
               </span>
               <Badge label={entry.level.toUpperCase()} tone={LEVEL_TONE[entry.level]} />
               {entry.eventName && (
-                <span className="shrink-0 text-[#7c8179]">{entry.eventName}</span>
+                <span className="shrink-0 text-[#817d79]">{entry.eventName}</span>
               )}
-              <span className="min-w-0 flex-1 wrap-break-word text-[#2c2f2a]">
+              <span className="min-w-0 flex-1 wrap-break-word text-[#2f2d2a]">
                 {entry.message}
               </span>
             </button>
           ))}
           {!entries.length && (
-            <div className="p-10 text-center text-sm text-[#7c8179]">
+            <div className="p-10 text-center text-sm text-[#817d79]">
               Waiting for log events…
             </div>
           )}
@@ -146,7 +146,7 @@ export function LogsStream() {
                     tone={LEVEL_TONE[selected.level]}
                   />
                   {selected.eventName && (
-                    <span className="text-xs text-[#7c8179]">
+                    <span className="text-xs text-[#817d79]">
                       {selected.eventName}
                     </span>
                   )}
@@ -164,7 +164,7 @@ export function LogsStream() {
                 <AdminIcon name="close" size={16} />
               </button>
             </header>
-            <pre className="overflow-auto p-5 font-mono text-[11px] leading-5 whitespace-pre-wrap text-[#2c2f2a]">
+            <pre className="overflow-auto p-5 font-mono text-[11px] leading-5 whitespace-pre-wrap text-[#2f2d2a]">
               {JSON.stringify(selected, null, 2)}
             </pre>
           </div>

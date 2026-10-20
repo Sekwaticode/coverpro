@@ -62,8 +62,8 @@ const presentProposal = (proposal: ApiProposal): AgencyProposal => {
           day: "numeric",
         })
       : "recently",
-    clientBudget: `$${Number(proposal.budget).toLocaleString()} fixed`,
-    agencyBid: `$${Number(proposal.bidAmount).toLocaleString()}`,
+    clientBudget: `R${Number(proposal.budget).toLocaleString()} fixed`,
+    agencyBid: `R${Number(proposal.bidAmount).toLocaleString()}`,
     duration: proposal.duration,
     connects: 6,
     clientRating:
@@ -72,7 +72,7 @@ const presentProposal = (proposal: ApiProposal): AgencyProposal => {
         : "Not rated",
     clientSpent:
       proposal.clientTotalSpent && Number(proposal.clientTotalSpent) > 0
-        ? `$${Number(proposal.clientTotalSpent).toLocaleString()} spent`
+        ? `R${Number(proposal.clientTotalSpent).toLocaleString()} spent`
         : "No spend yet",
     activity: activityFor(status),
     coverLetter: proposal.coverLetter,
@@ -110,7 +110,7 @@ export function ProposalsDashboard() {
       return result.data;
     },
   });
-  const agencyName = agency?.name ?? "your agency";
+  const agencyName = agency?.name ?? "your company";
   const agencyAvatarUrl = agency?.avatarImage?.url ?? null;
 
   const { data: proposalData = emptyProposals, isLoading } = useQuery<
@@ -163,19 +163,19 @@ export function ProposalsDashboard() {
     <AgencyShell>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
+          <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
             Opportunity pipeline
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
-            Agency proposals
+            Company proposals
           </h1>
-          <p className="mt-2 text-sm text-[#72776f]">
+          <p className="mt-2 text-sm text-[#77736f]">
             Track client activity and every proposal submitted as {agencyName}.
           </p>
         </div>
         <Link
           href="/"
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white"
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white"
         >
           <Icon name="search" size={18} /> Find more work
         </Link>
@@ -187,7 +187,7 @@ export function ProposalsDashboard() {
             "Interview",
             count("Interview"),
             "message",
-            "bg-[#e7f2e4] text-[#4d784a]",
+            "bg-[#fae7dc] text-[#d85a1b]",
           ],
           [
             "Viewed",
@@ -202,7 +202,7 @@ export function ProposalsDashboard() {
             "bg-[#f1f0e6] text-[#766f47]",
           ],
           [
-            "Agency Connects used",
+            "Company Connects used",
             proposals.length * 6,
             "wallet",
             "bg-[#eeeaf5] text-[#6b5d82]",
@@ -221,7 +221,7 @@ export function ProposalsDashboard() {
               <p className="text-2xl font-semibold tracking-[-0.04em]">
                 {value}
               </p>
-              <p className="mt-0.5 text-xs text-[#7c8179]">{label}</p>
+              <p className="mt-0.5 text-xs text-[#817d79]">{label}</p>
             </div>
           </div>
         ))}
@@ -240,8 +240,8 @@ export function ProposalsDashboard() {
                 }}
                 className={`shrink-0 cursor-pointer rounded-lg px-3 py-2 text-xs font-semibold ${
                   activeTab === tab
-                    ? "bg-[#edf4ea] text-[#4e774b]"
-                    : "text-[#747971] hover:bg-black/3"
+                    ? "bg-[#faece4] text-[#d85a1b]"
+                    : "text-[#797571] hover:bg-black/3"
                 }`}
               >
                 {tab}
@@ -249,14 +249,14 @@ export function ProposalsDashboard() {
             ))}
           </div>
           <label className="flex h-10 items-center gap-2 rounded-xl border border-black/9 px-3 sm:w-72">
-            <Icon name="search" size={18} className="text-[#7b8078]" />
+            <Icon name="search" size={18} className="text-[#807c78]" />
             <input
               value={search}
               onChange={(event) => {
                 setSearch(event.target.value);
                 setPage(1);
               }}
-              placeholder="Search agency proposals"
+              placeholder="Search company proposals"
               className="min-w-0 flex-1 bg-transparent text-sm outline-none"
             />
           </label>
@@ -277,15 +277,15 @@ export function ProposalsDashboard() {
                   >
                     {proposal.status}
                   </span>
-                  <span className="text-xs text-[#858a82]">
+                  <span className="text-xs text-[#8a8682]">
                     Submitted {proposal.submitted}
                   </span>
                 </div>
                 <h2 className="mt-3 text-lg font-semibold tracking-[-0.02em]">
                   {proposal.title}
                 </h2>
-                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#737870]">
-                  <strong className="text-[#343833]">{proposal.client}</strong>
+                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#787470]">
+                  <strong className="text-[#383633]">{proposal.client}</strong>
                   <span className="text-[#d1a238]">
                     ★ {proposal.clientRating}
                   </span>
@@ -294,8 +294,8 @@ export function ProposalsDashboard() {
                 <p
                   className={`mt-4 text-xs font-medium ${
                     proposal.status === "Interview"
-                      ? "text-[#4d784a]"
-                      : "text-[#737870]"
+                      ? "text-[#d85a1b]"
+                      : "text-[#787470]"
                   }`}
                 >
                   {proposal.activity}
@@ -304,8 +304,8 @@ export function ProposalsDashboard() {
               <div className="flex flex-wrap items-center gap-4 lg:justify-end">
                 <div>
                   <p className="text-sm font-semibold">{proposal.agencyBid}</p>
-                  <p className="mt-1 text-[11px] text-[#858a82]">
-                    Agency bid · {proposal.duration}
+                  <p className="mt-1 text-[11px] text-[#8a8682]">
+                    Company bid · {proposal.duration}
                   </p>
                 </div>
                 <button
@@ -318,7 +318,7 @@ export function ProposalsDashboard() {
                 {proposal.status === "Interview" && proposal.conversationId && (
                   <Link
                     href={`/messages?conversationId=${proposal.conversationId}`}
-                    className="inline-flex h-10 items-center rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+                    className="inline-flex h-10 items-center rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
                   >
                     Message client
                   </Link>
@@ -330,22 +330,22 @@ export function ProposalsDashboard() {
 
         {userLoaded && !isLoading && !filtered.length && (
           <div className="px-6 py-16 text-center">
-            <Icon name="proposal" size={34} className="mx-auto text-[#858a82]" />
+            <Icon name="proposal" size={34} className="mx-auto text-[#8a8682]" />
             <h2 className="mt-4 font-semibold">No proposals found</h2>
-            <p className="mt-2 text-sm text-[#7c8179]">
+            <p className="mt-2 text-sm text-[#817d79]">
               Try another status or search term.
             </p>
           </div>
         )}
         {userLoaded && isLoading && (
-          <div className="px-6 py-16 text-center text-sm text-[#7c8179]">
+          <div className="px-6 py-16 text-center text-sm text-[#817d79]">
             Loading proposals...
           </div>
         )}
 
         {filtered.length > 0 && (
-          <footer className="flex flex-col gap-3 border-t border-black/7 bg-[#fafbf9] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-[#7c8179]">
+          <footer className="flex flex-col gap-3 border-t border-black/7 bg-[#fdf9f7] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-[#817d79]">
               Showing {pageStart + 1}–
               {Math.min(pageStart + proposalsPerPage, filtered.length)} of{" "}
               {filtered.length} proposals
@@ -372,8 +372,8 @@ export function ProposalsDashboard() {
                     }
                     className={`h-9 min-w-9 rounded-xl px-2 text-xs font-semibold ${
                       currentPage === pageNumber
-                        ? "bg-[#252724] text-white"
-                        : "border border-black/9 bg-white text-[#6e736c]"
+                        ? "bg-[#272624] text-white"
+                        : "border border-black/9 bg-white text-[#73706c]"
                     }`}
                   >
                     {pageNumber}

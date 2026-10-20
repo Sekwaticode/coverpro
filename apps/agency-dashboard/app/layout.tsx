@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Agency Dashboard | OneMarketplace.io",
-  description: "Manage your OneMarketplace.io agency team and client work.",
+  title: "Company Dashboard | CoverPro",
+  description: "Manage your construction company, crew and client projects on CoverPro.",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-ZA"
       className={`${dmSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">

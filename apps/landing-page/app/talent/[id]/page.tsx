@@ -60,7 +60,7 @@ const AVATAR_BACKGROUNDS = [
   "linear-gradient(135deg, #466b72, #73a2a8)",
   "linear-gradient(135deg, #6f668e, #a095bd)",
   "linear-gradient(135deg, #8b6f48, #bea071)",
-  "linear-gradient(135deg, #46634b, #7ca181)",
+  "linear-gradient(135deg, #bc4e17, #e77840)",
   "linear-gradient(135deg, #566f8c, #87a5c4)",
   "linear-gradient(135deg, #8c5366, #bd8094)",
   "linear-gradient(135deg, #5b6d91, #8d9dc0)",
@@ -96,9 +96,9 @@ function locationFor(profile: TalentProfile) {
 }
 
 function earningsTierFor(totalEarning: number) {
-  if (totalEarning <= 0) return "New on OneMarketplace";
-  if (totalEarning < 1000) return `$${Math.round(totalEarning)}`;
-  return `$${Math.floor(totalEarning / 1000)}k+`;
+  if (totalEarning <= 0) return "New on CoverPro";
+  if (totalEarning < 1000) return `R${Math.round(totalEarning)}`;
+  return `R${Math.floor(totalEarning / 1000)}k+`;
 }
 
 function periodFor(item: WorkHistoryItem) {
@@ -129,8 +129,8 @@ export async function generateMetadata({
   const profile = await getTalentProfile((await params).id);
   return {
     title: profile
-      ? `${profile.name} — ${profile.professional_title} | OneMarketplace.io`
-      : "Talent profile | OneMarketplace.io",
+      ? `${profile.name} — ${profile.professional_title} | CoverPro`
+      : "Pro profile | CoverPro",
   };
 }
 
@@ -150,26 +150,26 @@ export default async function TalentProfilePage({
     : null;
 
   return (
-    <div className="min-h-svh bg-[#f7f8f5] font-(family-name:--font-dm-sans) text-[#20231f]">
+    <div className="min-h-svh bg-[#fbf5f2] font-(family-name:--font-dm-sans) text-[#23211f]">
       <Header />
       <main>
         <div className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-10">
           <nav
-            className="flex items-center gap-2 text-sm text-[#747870]"
+            className="flex items-center gap-2 text-sm text-[#787470]"
             aria-label="Breadcrumb"
           >
-            <Link href="/talents" className="hover:text-[#3f683d]">
-              Talent
+            <Link href="/talents" className="hover:text-[#b84c17]">
+              Pros
             </Link>
             <span aria-hidden="true">/</span>
-            <span className="truncate text-[#3e423d]">{profile.name}</span>
+            <span className="truncate text-[#42403d]">{profile.name}</span>
           </nav>
         </div>
 
         <section className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-          <div className="relative overflow-hidden rounded-3xl border border-black/6 bg-[#e6efe3] p-6 sm:p-9 lg:p-11">
+          <div className="relative overflow-hidden rounded-3xl border border-black/6 bg-[#f6e5dc] p-6 sm:p-9 lg:p-11">
             <div
-              className="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(255,255,255,0.8),transparent_30%),radial-gradient(circle_at_82%_100%,rgba(159,196,154,0.48),transparent_36%)]"
+              className="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(255,255,255,0.8),transparent_30%),radial-gradient(circle_at_82%_100%,rgba(217,164,133,0.48),transparent_36%)]"
               aria-hidden="true"
             ></div>
             <div className="relative flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
@@ -192,12 +192,12 @@ export default async function TalentProfilePage({
                 )}
                 <div>
                   <div className="flex flex-wrap items-center gap-3">
-                    <h1 className={`${styles.profileTitle} text-[#182019]`}>
+                    <h1 className={`${styles.profileTitle} text-[#201b18]`}>
                       {profile.name}
                     </h1>
                     {profile.identityVerified && (
                       <span
-                        className="inline-flex items-center gap-1.5 rounded-full bg-white/75 px-2.5 py-1 text-xs font-semibold text-[#477344]"
+                        className="inline-flex items-center gap-1.5 rounded-full bg-white/75 px-2.5 py-1 text-xs font-semibold text-[#cc5519]"
                         title="Identity verified with Stripe"
                       >
                         <svg
@@ -218,16 +218,16 @@ export default async function TalentProfilePage({
                       </span>
                     )}
                   </div>
-                  <p className="mt-2 text-lg text-[#596358]">
+                  <p className="mt-2 text-lg text-[#635e58]">
                     {profile.professional_title}
                   </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[#677065]">
+                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[#706a65]">
                     <span className="inline-flex items-center gap-2">
                       <span
                         className={`h-2 w-2 rounded-full ${
                           profile.availability_status === "AVAILABLE"
-                            ? "bg-[#559856]"
-                            : "bg-[#b5b8b2]"
+                            ? "bg-[#e77840]"
+                            : "bg-[#b8b5b2]"
                         }`}
                       ></span>
                       {profile.availability_status === "AVAILABLE"
@@ -247,7 +247,7 @@ export default async function TalentProfilePage({
                 </Link>
                 <Link
                   href="/signup?role=client"
-                  className="rounded-xl bg-[#252724] px-5 py-3 text-sm font-semibold text-white! transition hover:bg-[#3b3e39]"
+                  className="rounded-xl bg-[#272624] px-5 py-3 text-sm font-semibold text-white! transition hover:bg-[#3e3c39]"
                 >
                   Invite to a job
                 </Link>
@@ -272,7 +272,7 @@ export default async function TalentProfilePage({
                 className={`px-4 py-5 text-center ${index > 0 ? "sm:border-l sm:border-black/7" : ""} ${index > 1 ? "border-t border-black/7 sm:border-t-0" : ""}`}
               >
                 <p className="text-lg font-semibold">{value}</p>
-                <p className="mt-1 text-xs text-[#81857e]">{label}</p>
+                <p className="mt-1 text-xs text-[#85827e]">{label}</p>
               </div>
             ))}
           </div>
@@ -282,14 +282,14 @@ export default async function TalentProfilePage({
           <div className="space-y-7">
             <section className="rounded-2xl border border-black/7 bg-white p-6 sm:p-8">
               <h2 className={styles.sectionTitle}>About</h2>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-[#646862] sm:text-base">
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-[#686562] sm:text-base">
                 {profile.professional_description}
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 {profile.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="rounded-lg bg-[#eef2ec] px-3 py-2 text-xs font-semibold text-[#596257]"
+                    className="rounded-lg bg-[#f7ede7] px-3 py-2 text-xs font-semibold text-[#625d57]"
                   >
                     {skill}
                   </span>
@@ -299,12 +299,12 @@ export default async function TalentProfilePage({
 
             {profile.agency && (
               <section className="rounded-2xl border border-black/7 bg-white p-6 sm:p-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#62805f]">
+                <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#e66d31]">
                   Associated with
                 </p>
                 <Link
                   href={`/agency/${profile.agency.id}`}
-                  className="mt-4 flex items-center gap-3 rounded-xl p-2 -m-2 transition hover:bg-[#f5f6f3]"
+                  className="mt-4 flex items-center gap-3 rounded-xl p-2 -m-2 transition hover:bg-[#faf3ef]"
                 >
                   {profile.agency.avatarUrl ? (
                     <Image
@@ -315,7 +315,7 @@ export default async function TalentProfilePage({
                       className="h-11 w-11 shrink-0 rounded-xl object-cover"
                     />
                   ) : (
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#496e67] text-sm font-semibold text-white">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#cc5519] text-sm font-semibold text-white">
                       {initialsFor(profile.agency.name)}
                     </span>
                   )}
@@ -323,8 +323,8 @@ export default async function TalentProfilePage({
                     <span className="block truncate text-sm font-semibold">
                       {profile.agency.name}
                     </span>
-                    <span className="block text-xs text-[#477344]">
-                      View agency profile
+                    <span className="block text-xs text-[#cc5519]">
+                      View company profile
                     </span>
                   </span>
                 </Link>
@@ -335,7 +335,7 @@ export default async function TalentProfilePage({
               <section className="rounded-2xl border border-black/7 bg-white p-6 sm:p-8">
                 <div className="flex items-end justify-between gap-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#62805f]">
+                    <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#e66d31]">
                       Selected work
                     </p>
                     <h2 className={`${styles.sectionTitle} mt-2`}>Portfolio</h2>
@@ -344,7 +344,7 @@ export default async function TalentProfilePage({
                 <div className="mt-6 grid gap-4 sm:grid-cols-3">
                   {profile.portfolios.map((project) => (
                     <article key={project.id}>
-                      <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-[#e9efe6]">
+                      <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-[#f5e8e0]">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={project.cover_image.url}
@@ -355,7 +355,7 @@ export default async function TalentProfilePage({
                       <h3 className={`${styles.itemTitle} mt-3`}>
                         {project.title}
                       </h3>
-                      <p className="mt-1 text-xs text-[#81857e]">
+                      <p className="mt-1 text-xs text-[#85827e]">
                         {project.category}
                       </p>
                     </article>
@@ -371,26 +371,26 @@ export default async function TalentProfilePage({
                   {reviews.map((item) => (
                     <article
                       key={item.id}
-                      className="rounded-xl bg-[#f5f7f3] p-5"
+                      className="rounded-xl bg-[#faf4f0] p-5"
                     >
                       <p className="text-sm tracking-widest text-[#d2a43b]">
                         {"★".repeat(item.rating ?? 0)}
                         {"☆".repeat(5 - (item.rating ?? 0))}
                       </p>
-                      <blockquote className="mt-3 text-sm leading-6 text-[#555a53]">
+                      <blockquote className="mt-3 text-sm leading-6 text-[#5a5753]">
                         &ldquo;{item.review}&rdquo;
                       </blockquote>
                       <p className="mt-5 text-sm font-semibold">
                         {item.client}
                       </p>
-                      <p className="mt-1 text-xs text-[#83877f]">
+                      <p className="mt-1 text-xs text-[#87837f]">
                         {item.title}
                       </p>
                     </article>
                   ))}
                 </div>
                 {profile.stats.rating !== null && (
-                  <p className="mt-5 text-sm text-[#6f746c]">
+                  <p className="mt-5 text-sm text-[#74706c]">
                     {profile.stats.rating.toFixed(1)} average from{" "}
                     {profile.stats.reviewCount} verified client reviews
                   </p>
@@ -405,15 +405,15 @@ export default async function TalentProfilePage({
                   {profile.workHistory.map((item) => (
                     <div
                       key={item.id}
-                      className="grid gap-2 border-l-2 border-[#c9ddc5] pl-5 sm:grid-cols-[1fr_auto]"
+                      className="grid gap-2 border-l-2 border-[#e9cbb9] pl-5 sm:grid-cols-[1fr_auto]"
                     >
                       <div>
                         <h3 className={styles.itemTitle}>{item.title}</h3>
-                        <p className="mt-1 text-sm text-[#73776f]">
+                        <p className="mt-1 text-sm text-[#77736f]">
                           {item.client}
                         </p>
                       </div>
-                      <p className="text-xs font-medium text-[#8a8e87]">
+                      <p className="text-xs font-medium text-[#8e8b87]">
                         {periodFor(item)}
                       </p>
                     </div>
@@ -424,34 +424,34 @@ export default async function TalentProfilePage({
           </div>
 
           <aside className="sticky top-24 rounded-2xl border border-black/7 bg-white p-6 shadow-lg shadow-black/3">
-            <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#688065]">
+            <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#807265]">
               Work with {profile.name.split(" ")[0]}
             </p>
             <p className="mt-4 text-3xl font-semibold tracking-tight">
-              ${Number(profile.hourly_rate)}
-              <span className="text-base font-normal text-[#7d817a]">/hr</span>
+              R{Number(profile.hourly_rate)}
+              <span className="text-base font-normal text-[#817e7a]">/hr</span>
             </p>
             <Link
               href="/signup?role=client"
-              className="mt-6 block rounded-xl bg-[#252724] px-4 py-3 text-center text-sm font-semibold text-white! transition hover:bg-[#3b3e39]"
+              className="mt-6 block rounded-xl bg-[#272624] px-4 py-3 text-center text-sm font-semibold text-white! transition hover:bg-[#3e3c39]"
             >
               Invite to a job
             </Link>
             <Link
               href="/signup?role=client"
-              className="mt-3 block rounded-xl text-center border border-black/10 px-4 py-3 text-sm font-semibold transition hover:bg-[#f5f6f3]"
+              className="mt-3 block rounded-xl text-center border border-black/10 px-4 py-3 text-sm font-semibold transition hover:bg-[#faf3ef]"
             >
               Send a message
             </Link>
             <div className="mt-6 space-y-4 border-t border-black/7 pt-6 text-sm">
               <div className="flex items-center justify-between gap-4">
-                <span className="text-[#7a7e77]">Weekly availability</span>
+                <span className="text-[#7e7b77]">Weekly availability</span>
                 <span className="font-semibold">
                   {profile.weekly_availability}
                 </span>
               </div>
               <div className="flex items-center justify-between gap-4">
-                <span className="text-[#7a7e77]">Experience level</span>
+                <span className="text-[#7e7b77]">Experience level</span>
                 <span className="font-semibold">
                   {profile.experience_level}
                 </span>
@@ -461,22 +461,22 @@ export default async function TalentProfilePage({
                   key={language}
                   className="flex items-center justify-between gap-4"
                 >
-                  <span className="text-[#7a7e77]">{language}</span>
+                  <span className="text-[#7e7b77]">{language}</span>
                   <span className="font-semibold">{proficiency}</span>
                 </div>
               ))}
               {memberSinceYear && (
                 <div className="flex items-center justify-between gap-4">
-                  <span className="text-[#7a7e77]">Member since</span>
+                  <span className="text-[#7e7b77]">Member since</span>
                   <span className="font-semibold">{memberSinceYear}</span>
                 </div>
               )}
             </div>
-            <div className="mt-6 rounded-xl bg-[#edf4ea] p-4">
-              <p className="text-xs font-semibold text-[#4a7047]">
-                OneMarketplace protected
+            <div className="mt-6 rounded-xl bg-[#faece4] p-4">
+              <p className="text-xs font-semibold text-[#cc5519]">
+                CoverPro protected
               </p>
-              <p className="mt-1 text-xs leading-5 text-[#6b7769]">
+              <p className="mt-1 text-xs leading-5 text-[#777069]">
                 Secure payments, verified work history, and dedicated support.
               </p>
             </div>

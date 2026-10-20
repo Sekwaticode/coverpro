@@ -26,18 +26,18 @@ const Page = async ({ searchParams }: ErrorPageProps) => {
   const message = errorMessages[reason ?? ""] ?? "";
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#fbfcfa] px-6">
-      <section className="w-full max-w-md rounded-3xl border border-black/8 bg-white p-8 text-center shadow-[0_24px_70px_rgba(31,38,29,0.08)]">
+    <main className="grid min-h-screen place-items-center bg-[#fdfaf9] px-6">
+      <section className="w-full max-w-md rounded-3xl border border-black/8 bg-white p-8 text-center shadow-[0_24px_70px_rgba(38,32,29,0.08)]">
         <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[#fff0ee] text-xl text-[#a04f47]">
           !
         </span>
-        <h1 className="mt-6 text-3xl font-semibold tracking-tight text-[#20231f]">
+        <h1 className="mt-6 text-3xl font-semibold tracking-tight text-[#23211f]">
           We couldn’t finish signup
         </h1>
-        <p className="mt-3 text-sm leading-6 text-[#747970]">{message}</p>
+        <p className="mt-3 text-sm leading-6 text-[#797570]">{message}</p>
         <Link
           href="/signup"
-          className="mt-7 inline-flex h-12 w-full items-center justify-center rounded-xl bg-[#252724] text-sm font-semibold text-white! transition hover:bg-[#3b3e39]"
+          className="mt-7 inline-flex h-12 w-full items-center justify-center rounded-xl bg-[#272624] text-sm font-semibold text-white! transition hover:bg-[#3e3c39]"
         >
           Return to signup
         </Link>

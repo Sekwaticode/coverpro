@@ -16,19 +16,19 @@ export default function JobsPage() {
       <ClientShell>
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+            <p className="text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
               Hiring
             </p>
             <h1 className="mt-2 text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
               Job posts
             </h1>
-            <p className="mt-2 text-sm text-[#72776f]">
+            <p className="mt-2 text-sm text-[#77736f]">
               Create fixed-price projects and review applicant activity.
             </p>
           </div>
           <Link
             href="/jobs/new"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white"
           >
             <Icon icon="solar:add-circle-linear" width="18" />
             Post a new job

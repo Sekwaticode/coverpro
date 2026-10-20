@@ -89,7 +89,7 @@ export function ConversationPanel({
         >
           <span className="text-lg">←</span>
         </button>
-        <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#496e67] text-xs font-semibold text-white">
+        <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#cc5519] text-xs font-semibold text-white">
           {conversation.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -101,14 +101,14 @@ export function ConversationPanel({
             conversation.initials
           )}
           {conversation.online && (
-            <span className="absolute right-0 bottom-0 h-3 w-3 rounded-full border-2 border-white bg-[#64a665]" />
+            <span className="absolute right-0 bottom-0 h-3 w-3 rounded-full border-2 border-white bg-[#e77840]" />
           )}
         </span>
         <div className="min-w-0 flex-1">
           <h2 className="truncate text-sm font-semibold">
             {conversation.client}
           </h2>
-          <p className="truncate text-[11px] text-[#777d75]">
+          <p className="truncate text-[11px] text-[#7d7975]">
             {otherPartyTyping
               ? "Typing…"
               : conversation.online
@@ -122,7 +122,7 @@ export function ConversationPanel({
           disabled={creatingMeeting}
           className={`inline-flex h-10 cursor-pointer items-center gap-2 rounded-xl border px-3 text-xs font-semibold hover:bg-black/3 disabled:cursor-not-allowed disabled:opacity-60 sm:px-4 ${
             conversation.activeMeeting
-              ? "border-[#9dbc99] bg-[#e9f3e6] text-[#477344]"
+              ? "border-[#d1a084] bg-[#fbe9de] text-[#cc5519]"
               : "border-black/9"
           }`}
         >
@@ -144,19 +144,19 @@ export function ConversationPanel({
       )}
 
       {conversation.activeMeeting && (
-        <div className="flex shrink-0 items-center gap-2 border-b border-black/7 bg-[#f2f7ef] px-5 py-2.5 text-xs font-medium text-[#52784f]">
+        <div className="flex shrink-0 items-center gap-2 border-b border-black/7 bg-[#fcf1ea] px-5 py-2.5 text-xs font-medium text-[#dd5c1b]">
           <Icon name="video" size={15} />
           Meeting in progress — chat is paused until it ends.
         </div>
       )}
 
-      <div className="flex items-center justify-between border-b border-black/6 bg-[#fafbf9] px-5 py-2.5 text-[11px]">
-        <span className="min-w-0 truncate text-[#737870]">
+      <div className="flex items-center justify-between border-b border-black/6 bg-[#fdf9f7] px-5 py-2.5 text-[11px]">
+        <span className="min-w-0 truncate text-[#787470]">
           {conversation.contextTitle}
         </span>
         <Link
           href={conversation.contextHref}
-          className="ml-3 shrink-0 font-semibold text-[#52784f] hover:underline"
+          className="ml-3 shrink-0 font-semibold text-[#dd5c1b] hover:underline"
         >
           {conversation.contextLabel}
         </Link>
@@ -179,22 +179,22 @@ export function ConversationPanel({
       >
         {loadingMore && (
           <div className="flex justify-center pb-3">
-            <span className="h-5 w-5 animate-spin rounded-full border-2 border-black/10 border-t-[#638b60]" />
+            <span className="h-5 w-5 animate-spin rounded-full border-2 border-black/10 border-t-[#e7773f]" />
           </div>
         )}
         {messagesLoading ? (
           <div className="flex flex-1 items-center justify-center">
-            <span className="h-6 w-6 animate-spin rounded-full border-2 border-black/10 border-t-[#638b60]" />
+            <span className="h-6 w-6 animate-spin rounded-full border-2 border-black/10 border-t-[#e7773f]" />
           </div>
         ) : conversation.messages.length === 0 ? (
-          <p className="flex flex-1 items-center justify-center text-center text-xs text-[#858a82]">
+          <p className="flex flex-1 items-center justify-center text-center text-xs text-[#8a8682]">
             This conversation is ready. Send the first message.
           </p>
         ) : (
           <>
             <div className="mb-5 flex items-center gap-3">
               <span className="h-px flex-1 bg-black/7" />
-              <span className="text-[10px] font-medium text-[#999d96]">
+              <span className="text-[10px] font-medium text-[#9d9a96]">
                 Conversation
               </span>
               <span className="h-px flex-1 bg-black/7" />
@@ -219,13 +219,13 @@ export function ConversationPanel({
       </div>
 
       <footer className="border-t border-black/7 p-3 sm:p-4">
-        <div className="flex items-end gap-2 rounded-2xl border border-black/9 bg-[#fbfcfa] p-2">
+        <div className="flex items-end gap-2 rounded-2xl border border-black/9 bg-[#fdfaf9] p-2">
           <button
             type="button"
             aria-label="Attach a file"
             onClick={() => setAttachmentOpen(true)}
             disabled={Boolean(conversation.activeMeeting)}
-            className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full text-[#686e66] hover:bg-black/4 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full text-[#6e6a66] hover:bg-black/4 disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Icon name="paperclip" size={20} />
           </button>
@@ -249,7 +249,7 @@ export function ConversationPanel({
                 ? "Chat is paused during the meeting…"
                 : `Write as ${agencyName}…`
             }
-            className="max-h-32 min-h-9 flex-1 resize-none bg-transparent px-1 py-2 text-sm outline-none disabled:cursor-not-allowed disabled:text-[#9a9e97]"
+            className="max-h-32 min-h-9 flex-1 resize-none bg-transparent px-1 py-2 text-sm outline-none disabled:cursor-not-allowed disabled:text-[#9e9b97]"
           />
           <button
             type="button"
@@ -258,7 +258,7 @@ export function ConversationPanel({
               !message.trim() || sending || Boolean(conversation.activeMeeting)
             }
             aria-label="Send message"
-            className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-[#252724] text-white disabled:cursor-not-allowed disabled:opacity-35"
+            className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-[#272624] text-white disabled:cursor-not-allowed disabled:opacity-35"
           >
             <Icon name="send" size={18} />
           </button>
@@ -307,23 +307,23 @@ function TransactionMessage({
           <div
             className={`rounded-2xl px-4 py-3 text-sm leading-6 ${
               message.sender === "agency"
-                ? "rounded-br-md bg-[#252724] text-white"
-                : "rounded-bl-md bg-[#eef2ec] text-[#343833]"
+                ? "rounded-br-md bg-[#272624] text-white"
+                : "rounded-bl-md bg-[#f7ede7] text-[#383633]"
             }`}
           >
             {repliedMessage && (
               <div
                 className={`mb-2 rounded-lg border-l-3 px-3 py-2 ${
                   message.sender === "agency"
-                    ? "border-[#9fbd9b] bg-white/10"
-                    : "border-[#6f966b] bg-white/65"
+                    ? "border-[#d1a287] bg-white/10"
+                    : "border-[#e77840] bg-white/65"
                 }`}
               >
                 <p
                   className={`text-[9px] font-semibold tracking-wide uppercase ${
                     message.sender === "agency"
                       ? "text-white/65"
-                      : "text-[#52784f]"
+                      : "text-[#dd5c1b]"
                   }`}
                 >
                   Replying to
@@ -367,7 +367,7 @@ function TransactionMessage({
             )}
           </div>
           <p
-            className={`mt-1 text-[10px] text-[#9a9e97] ${
+            className={`mt-1 text-[10px] text-[#9e9b97] ${
               message.sender === "agency" ? "text-right" : "text-left"
             }`}
           >
@@ -380,7 +380,7 @@ function TransactionMessage({
 
   if (message.kind === "meeting_ended") {
     return (
-      <div className="mx-auto flex items-center gap-2 text-[10px] font-medium text-[#8a8f87]">
+      <div className="mx-auto flex items-center gap-2 text-[10px] font-medium text-[#8f8b87]">
         <Icon name="video" size={14} />
         Meeting ended · {message.durationMinutes} min
       </div>
@@ -401,7 +401,7 @@ function TransactionMessage({
     contract_completed: {
       icon: "check-circle" as const,
       eyebrow: "Contract completed",
-      tone: "bg-[#edf4ea] text-[#52784f]",
+      tone: "bg-[#faece4] text-[#dd5c1b]",
     },
     milestone: {
       icon: "flag" as const,
@@ -424,10 +424,10 @@ function TransactionMessage({
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-[9px] font-semibold tracking-wide text-[#798077] uppercase">
+            <p className="text-[9px] font-semibold tracking-wide text-[#807c77] uppercase">
               {eventStyle.eyebrow}
             </p>
-            <span className="text-[9px] text-[#969b94]">{message.time}</span>
+            <span className="text-[9px] text-[#9b9894]">{message.time}</span>
           </div>
           <h3 className="mt-2 text-sm font-semibold">{message.title}</h3>
 
@@ -438,12 +438,12 @@ function TransactionMessage({
                   First milestone funded
                 </p>
                 <p className="mt-1 text-lg font-semibold text-[#29252d]">
-                  ${message.amount.toLocaleString()}
+                  R{message.amount.toLocaleString()}
                 </p>
               </div>
               {message.status === "Awaiting acceptance" ? (
                 <>
-                  <p className="mt-3 text-[10px] leading-5 text-[#747a72]">
+                  <p className="mt-3 text-[10px] leading-5 text-[#7a7672]">
                     Review the offer carefully. The contract becomes active
                     after you accept it.
                   </p>
@@ -451,7 +451,7 @@ function TransactionMessage({
                     <button
                       type="button"
                       disabled={accepting}
-                      className="h-9 cursor-pointer rounded-lg border border-black/10 px-4 text-[10px] font-semibold text-[#656b64] disabled:cursor-not-allowed disabled:opacity-45"
+                      className="h-9 cursor-pointer rounded-lg border border-black/10 px-4 text-[10px] font-semibold text-[#6b6864] disabled:cursor-not-allowed disabled:opacity-45"
                     >
                       Decline
                     </button>
@@ -459,14 +459,14 @@ function TransactionMessage({
                       type="button"
                       onClick={() => onAcceptOffer(message.contractId)}
                       disabled={!message.contractId || accepting}
-                      className="h-9 cursor-pointer rounded-lg bg-[#252724] px-4 text-[10px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-55"
+                      className="h-9 cursor-pointer rounded-lg bg-[#272624] px-4 text-[10px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-55"
                     >
                       {accepting ? "Accepting…" : "Accept offer"}
                     </button>
                   </div>
                 </>
               ) : (
-                <p className="mt-3 border-t border-black/6 pt-3 text-[10px] font-semibold text-[#52784f]">
+                <p className="mt-3 border-t border-black/6 pt-3 text-[10px] font-semibold text-[#dd5c1b]">
                   {message.status === "Active"
                     ? "Contract accepted · The contract is active"
                     : message.status === "Completed"
@@ -479,16 +479,16 @@ function TransactionMessage({
 
           {message.kind === "contract_completed" && (
             <>
-              <div className="mt-3 rounded-xl border border-[#d2e4ce] bg-[#edf4ea]/70 p-4">
-                <p className="flex items-center gap-2 text-xs font-semibold text-[#486d45]">
+              <div className="mt-3 rounded-xl border border-[#f1d3c1] bg-[#faece4]/70 p-4">
+                <p className="flex items-center gap-2 text-xs font-semibold text-[#c65218]">
                   <Icon
                     name="check-circle"
                     size={18}
-                    className="text-[#52784f]"
+                    className="text-[#dd5c1b]"
                   />
                   The contract “{message.title}” was completed.
                 </p>
-                <p className="mt-1.5 text-xs leading-5 text-[#5e695c]">
+                <p className="mt-1.5 text-xs leading-5 text-[#69625c]">
                   This contract has been completed. Feedback has been
                   recorded and all remaining payments have been settled.
                 </p>
@@ -503,7 +503,7 @@ function TransactionMessage({
 
           {message.kind === "meeting" &&
             (message.ended ? (
-              <p className="mt-3 border-t border-black/6 pt-3 text-[10px] font-semibold text-[#8a8f87]">
+              <p className="mt-3 border-t border-black/6 pt-3 text-[10px] font-semibold text-[#8f8b87]">
                 Meeting ended
               </p>
             ) : (
@@ -519,10 +519,10 @@ function TransactionMessage({
               <div
                 className={`mt-3 rounded-xl p-4 ${
                   message.status === "Approved" || message.status === "Funded"
-                    ? "bg-[#edf4ea]"
+                    ? "bg-[#faece4]"
                     : message.status === "Changes requested"
                       ? "bg-[#faf5e8]"
-                      : "bg-[#f4f6f2]"
+                      : "bg-[#faf3ee]"
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -542,10 +542,10 @@ function TransactionMessage({
                     className={
                       message.status === "Approved" ||
                       message.status === "Funded"
-                        ? "text-[#52784f]"
+                        ? "text-[#dd5c1b]"
                         : message.status === "Changes requested"
                           ? "text-[#8a6d30]"
-                          : "text-[#657064]"
+                          : "text-[#706a64]"
                     }
                   />
                   <p className="text-xs font-semibold">
@@ -563,12 +563,12 @@ function TransactionMessage({
                 {(message.status === "Submitted" ||
                   message.status === "Funded") &&
                   message.note && (
-                    <p className="mt-2 text-xs leading-5 text-[#697067]">
+                    <p className="mt-2 text-xs leading-5 text-[#706c67]">
                       {message.note}
                     </p>
                   )}
                 {message.status === "Added" && message.dueDate && (
-                  <p className="mt-2 text-[10px] text-[#697067]">
+                  <p className="mt-2 text-[10px] text-[#706c67]">
                     Due {message.dueDate}
                   </p>
                 )}
@@ -577,7 +577,7 @@ function TransactionMessage({
                     href={message.deliveryLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-2 inline-flex items-center gap-1 text-[10px] font-semibold text-[#52784f] underline"
+                    className="mt-2 inline-flex items-center gap-1 text-[10px] font-semibold text-[#dd5c1b] underline"
                   >
                     Open deliverable
                     <Icon name="arrow" size={12} />
@@ -587,7 +587,7 @@ function TransactionMessage({
               <EventFooter
                 detail={
                   message.amount
-                    ? `$${message.amount.toLocaleString()} · ${message.status}`
+                    ? `R${message.amount.toLocaleString()} · ${message.status}`
                     : message.status
                 }
                 href={message.href}
@@ -612,12 +612,12 @@ function EventFooter({
 }) {
   return (
     <div className="mt-3 flex items-center justify-between gap-3 border-t border-black/6 pt-3">
-      <span className="truncate text-[9px] font-medium text-[#747b72]">
+      <span className="truncate text-[9px] font-medium text-[#7b7772]">
         {detail}
       </span>
       <Link
         href={href}
-        className="inline-flex h-8 shrink-0 items-center gap-1 rounded-lg bg-[#252724] px-3 text-[9px] font-semibold text-white"
+        className="inline-flex h-8 shrink-0 items-center gap-1 rounded-lg bg-[#272624] px-3 text-[9px] font-semibold text-white"
       >
         {action}
         <Icon name="arrow" size={12} />
@@ -661,10 +661,10 @@ function AttachmentModal({
   };
 
   return (
-    <div className="fixed inset-0 z-90 grid place-items-center bg-[#1d221d]/45 p-5 backdrop-blur-sm">
+    <div className="fixed inset-0 z-90 grid place-items-center bg-[#221f1d]/45 p-5 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
         <div className="flex items-start justify-between gap-4">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
             <Icon name="paperclip" size={23} />
           </span>
           <button
@@ -677,13 +677,13 @@ function AttachmentModal({
           </button>
         </div>
         <h2 className="mt-4 text-xl font-semibold">Add an attachment</h2>
-        <p className="mt-2 text-sm leading-6 text-[#737970]">
+        <p className="mt-2 text-sm leading-6 text-[#797570]">
           Review the file before sharing it in this conversation.
         </p>
-        <label className="mt-5 flex cursor-pointer flex-col items-center rounded-2xl border border-dashed border-black/15 bg-[#fafbf9] px-5 py-8 text-center">
-          <Icon name="upload" size={25} className="text-[#52784f]" />
+        <label className="mt-5 flex cursor-pointer flex-col items-center rounded-2xl border border-dashed border-black/15 bg-[#fdf9f7] px-5 py-8 text-center">
+          <Icon name="upload" size={25} className="text-[#dd5c1b]" />
           <span className="mt-2 text-sm font-semibold">Choose a file</span>
-          <span className="mt-1 text-[11px] text-[#858a82]">
+          <span className="mt-1 text-[11px] text-[#8a8682]">
             PDF, DOCX, PNG, JPG, or TXT · Maximum 5 MB
           </span>
           <input
@@ -694,15 +694,15 @@ function AttachmentModal({
           />
         </label>
         {file && (
-          <div className="mt-4 flex items-center gap-3 rounded-xl bg-[#f0f3ee] p-3">
+          <div className="mt-4 flex items-center gap-3 rounded-xl bg-[#f8efe9] p-3">
             <Icon name="proposal" size={21} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-xs font-semibold">{file.name}</p>
-              <p className="mt-0.5 text-[10px] text-[#858a82]">
+              <p className="mt-0.5 text-[10px] text-[#8a8682]">
                 {(file.size / 1024 / 1024).toFixed(1)} MB
               </p>
             </div>
-            <Icon name="verified" size={19} className="text-[#5d8759]" />
+            <Icon name="verified" size={19} className="text-[#e66e32]" />
           </div>
         )}
         {error && (
@@ -722,7 +722,7 @@ function AttachmentModal({
             type="button"
             onClick={() => file && onAttach(file)}
             disabled={!file || sending}
-            className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-35"
+            className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-35"
           >
             {sending ? "Uploading…" : "Attach file"}
           </button>

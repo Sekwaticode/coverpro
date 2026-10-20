@@ -4,9 +4,9 @@ import { settingsSections } from "../_components/settings/settings-data";
 import { SettingsDashboard } from "./settings-dashboard";
 
 export const metadata: Metadata = {
-  title: "Settings | OneMarketplace.io",
+  title: "Settings | CoverPro",
   description:
-    "Manage your freelancer account, finances, Connects, and security.",
+    "Manage your pro account, finances, Connects, and security.",
 };
 
 export default async function SettingsPage({

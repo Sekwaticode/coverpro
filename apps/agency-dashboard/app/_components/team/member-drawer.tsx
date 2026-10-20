@@ -37,13 +37,13 @@ export function MemberDrawer({
       role="dialog"
       aria-modal="true"
       aria-labelledby="member-title"
-      className="fixed inset-0 z-50 flex justify-end bg-[#172018]/45 backdrop-blur-[2px]"
+      className="fixed inset-0 z-50 flex justify-end bg-[#201a17]/45 backdrop-blur-[2px]"
     >
       <div className="h-full w-full max-w-xl overflow-y-auto bg-white shadow-2xl">
         <header className="sticky top-0 z-10 flex items-start justify-between border-b border-black/8 bg-white px-6 py-5 sm:px-8">
           <div>
-            <p className="text-xs font-semibold tracking-wide text-[#62805f] uppercase">
-              Agency member
+            <p className="text-xs font-semibold tracking-wide text-[#e66d31] uppercase">
+              Company member
             </p>
             <h2 id="member-title" className="mt-2 text-xl font-semibold">
               {pending ? "Manage invitation" : "Member details"}
@@ -60,8 +60,8 @@ export function MemberDrawer({
         </header>
 
         <div className="grid gap-7 p-6 sm:p-8">
-          <section className="flex items-center gap-4 rounded-2xl bg-[#f1f5ef] p-5">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#496e67] text-sm font-semibold text-white">
+          <section className="flex items-center gap-4 rounded-2xl bg-[#f9f0eb] p-5">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#cc5519] text-sm font-semibold text-white">
               {row.avatarUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -75,7 +75,7 @@ export function MemberDrawer({
             </span>
             <div className="min-w-0">
               <h3 className="truncate font-semibold">{name}</h3>
-              <p className="mt-1 truncate text-xs text-[#858a82]">
+              <p className="mt-1 truncate text-xs text-[#8a8682]">
                 {pending ? row.email : `${row.jobSuccessScore}% job success`}
               </p>
             </div>
@@ -91,8 +91,8 @@ export function MemberDrawer({
                   </p>
                   <p className="mt-1 text-xs leading-5 text-[#7a745f]">
                     An invitation was sent to {row.email}. They must accept it
-                    from their freelancer dashboard before appearing on your
-                    public agency profile.
+                    from their pro dashboard before appearing on your
+                    public company profile.
                   </p>
                 </div>
               </section>
@@ -108,7 +108,7 @@ export function MemberDrawer({
                   }
                   className="mt-3 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm outline-none"
                 >
-                  <option>Agency member</option>
+                  <option value="Agency member">Company member</option>
                   <option>Business manager</option>
                 </select>
               </section>
@@ -120,7 +120,7 @@ export function MemberDrawer({
                     setResending(true);
                     onResend(row);
                   }}
-                  className="h-11 flex-1 cursor-pointer rounded-xl bg-[#252724] px-4 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+                  className="h-11 flex-1 cursor-pointer rounded-xl bg-[#272624] px-4 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {resending ? "Resending…" : "Resend invitation"}
                 </button>
@@ -136,7 +136,7 @@ export function MemberDrawer({
           ) : (
             <>
               <section>
-                <h3 className="text-sm font-semibold">Public agency profile</h3>
+                <h3 className="text-sm font-semibold">Public company profile</h3>
                 <div className="mt-3 grid grid-cols-2 gap-3">
                   {[
                     ["Rating", row.rating ? row.rating.toFixed(1) : "Not rated"],
@@ -147,7 +147,7 @@ export function MemberDrawer({
                       key={label}
                       className="rounded-xl border border-black/7 p-3"
                     >
-                      <p className="text-[10px] text-[#858a82]">{label}</p>
+                      <p className="text-[10px] text-[#8a8682]">{label}</p>
                       <p className="mt-1.5 text-xs font-semibold">{value}</p>
                     </div>
                   ))}
@@ -157,13 +157,13 @@ export function MemberDrawer({
                     row.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="rounded-lg bg-[#edf2eb] px-2.5 py-1.5 text-xs"
+                        className="rounded-lg bg-[#f7ece6] px-2.5 py-1.5 text-xs"
                       >
                         {skill}
                       </span>
                     ))
                   ) : (
-                    <p className="text-xs text-[#9a9f97]">
+                    <p className="text-xs text-[#9f9b97]">
                       No skills listed on their profile yet.
                     </p>
                   )}
@@ -171,7 +171,7 @@ export function MemberDrawer({
               </section>
 
               <section>
-                <h3 className="text-sm font-semibold">Agency account role</h3>
+                <h3 className="text-sm font-semibold">Company account role</h3>
                 <select
                   disabled={owner}
                   value={row.role}
@@ -181,16 +181,16 @@ export function MemberDrawer({
                       event.target.value as "Business manager" | "Agency member",
                     )
                   }
-                  className="mt-3 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm outline-none disabled:bg-[#f1f3ef] disabled:text-[#7b8078]"
+                  className="mt-3 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm outline-none disabled:bg-[#f8efea] disabled:text-[#807c78]"
                 >
-                  {owner && <option>Agency owner</option>}
+                  {owner && <option value="Agency owner">Company owner</option>}
                   <option>Business manager</option>
-                  <option>Agency member</option>
+                  <option value="Agency member">Company member</option>
                 </select>
-                <p className="mt-2 text-[11px] leading-5 text-[#858a82]">
+                <p className="mt-2 text-[11px] leading-5 text-[#8a8682]">
                   {owner
-                    ? "The agency owner cannot be reassigned or removed."
-                    : "Roles control access to the agency account, not internal project assignments."}
+                    ? "The company owner cannot be reassigned or removed."
+                    : "Roles control access to the company account, not internal project assignments."}
                 </p>
               </section>
 
@@ -201,7 +201,7 @@ export function MemberDrawer({
                     onClick={() => onRemove(row)}
                     className="cursor-pointer text-xs font-semibold text-[#8b5656] hover:underline"
                   >
-                    Remove from agency
+                    Remove from company
                   </button>
                 </section>
               )}

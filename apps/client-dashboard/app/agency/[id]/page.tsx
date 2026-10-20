@@ -5,8 +5,8 @@ import { ClientHeader } from "../../_components/dashboard/client-header";
 import { PublicAgencyProfile } from "../../_components/profiles/public-agency-profile";
 
 export const metadata: Metadata = {
-  title: "Agency Profile",
-  description: "Review an agency’s public marketplace profile, team, and work.",
+  title: "Company Profile",
+  description: "Review a company’s public marketplace profile, team, and work.",
 };
 
 export default async function AgencyProfilePage({
@@ -29,7 +29,7 @@ export default async function AgencyProfilePage({
   const { data } = await response.json();
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] text-[#272624]">
       <ClientHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <PublicAgencyProfile agency={data} />

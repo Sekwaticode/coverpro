@@ -3,8 +3,8 @@ import { SavedJobsDashboard } from "./saved-jobs-dashboard";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Saved Jobs | OneMarketplace.io",
-  description: "Review and manage your saved freelance opportunities.",
+  title: "Saved Jobs | CoverPro",
+  description: "Review and manage your saved trade opportunities.",
 };
 
 export default function SavedJobsPage() {

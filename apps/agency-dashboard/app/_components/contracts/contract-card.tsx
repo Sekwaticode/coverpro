@@ -37,15 +37,15 @@ export function ContractCard({
             >
               {contract.status}
             </span>
-            <span className="text-xs text-[#858a82]">
+            <span className="text-xs text-[#8a8682]">
               Started {contract.started}
             </span>
           </div>
           <h2 className="mt-3 text-xl font-semibold tracking-[-0.025em]">
             {contract.title}
           </h2>
-          <div className="mt-2 flex items-center gap-2 text-sm text-[#747a72]">
-            <span className="relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#e9efea] text-[10px] font-semibold text-[#4e716b]">
+          <div className="mt-2 flex items-center gap-2 text-sm text-[#7a7672]">
+            <span className="relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#f6e9e3] text-[10px] font-semibold text-[#d4581a]">
               {contract.clientAvatar ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -57,7 +57,7 @@ export function ContractCard({
                 contract.clientInitials
               )}
             </span>
-            <strong className="text-[#343833]">{contract.client}</strong>
+            <strong className="text-[#383633]">{contract.client}</strong>
             {contract.clientLocation && (
               <>
                 <span>·</span>
@@ -73,17 +73,17 @@ export function ContractCard({
             ["In escrow", contract.escrow],
           ].map(([label, value]) => (
             <div key={label}>
-              <p className="text-[11px] text-[#858a82]">{label}</p>
+              <p className="text-[11px] text-[#8a8682]">{label}</p>
               <p className="mt-1 text-sm font-semibold">{value}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="mt-6 rounded-xl bg-[#f4f6f2] p-4">
+      <div className="mt-6 rounded-xl bg-[#faf3ee] p-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <p className="text-[11px] font-semibold tracking-wide text-[#6e756c] uppercase">
+            <p className="text-[11px] font-semibold tracking-wide text-[#75716c] uppercase">
               Current milestone
             </p>
             <p className="mt-1.5 text-sm font-semibold">
@@ -91,27 +91,27 @@ export function ContractCard({
             </p>
           </div>
           <div className="text-left sm:text-right">
-            <p className="text-[11px] text-[#858a82]">Next deadline</p>
+            <p className="text-[11px] text-[#8a8682]">Next deadline</p>
             <p className="mt-1 text-sm font-semibold">
               {contract.nextDeadline}
             </p>
           </div>
         </div>
         <div className="mt-4 flex items-center gap-3">
-          <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#dfe5dc]">
+          <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#f0dcd1]">
             <div
-              className="h-full rounded-full bg-[#638b60]"
+              className="h-full rounded-full bg-[#e7773f]"
               style={{ width: `${contract.progress}%` }}
             />
           </div>
-          <span className="text-xs font-semibold text-[#52784f]">
+          <span className="text-xs font-semibold text-[#dd5c1b]">
             {contract.progress}%
           </span>
         </div>
       </div>
 
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-        <p className="inline-flex items-center gap-2 text-xs text-[#737870]">
+        <p className="inline-flex items-center gap-2 text-xs text-[#787470]">
           <Icon name={awaiting ? "clock" : "shield-check"} size={17} />
           {pending
             ? "Review and accept the funded contract offer"
@@ -139,7 +139,7 @@ export function ContractCard({
               <button
                 type="button"
                 onClick={() => onAccept(contract)}
-                className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white hover:bg-[#3b3e39]"
+                className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white hover:bg-[#3e3c39]"
               >
                 Accept contract
               </button>
@@ -150,7 +150,7 @@ export function ContractCard({
             <button
               type="button"
               onClick={() => onSubmit(contract)}
-              className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white hover:bg-[#3b3e39]"
+              className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white hover:bg-[#3e3c39]"
             >
               Submit work
             </button>
@@ -158,7 +158,7 @@ export function ContractCard({
             <button
               type="button"
               onClick={() => onFinish(contract)}
-              className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+              className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
             >
               Finish contract
             </button>
@@ -167,7 +167,7 @@ export function ContractCard({
             <button
               type="button"
               onClick={() => onFinish(contract)}
-              className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+              className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
             >
               Give review
             </button>

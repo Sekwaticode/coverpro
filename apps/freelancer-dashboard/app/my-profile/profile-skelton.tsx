@@ -1,7 +1,7 @@
 import { DashboardHeader } from "../_components/dashboard/dashboard-header";
 
 const Line = ({ className = "" }: { className?: string }) => (
-  <div className={`rounded-full bg-[#e1e5de] ${className}`} />
+  <div className={`rounded-full bg-[#e5e2de] ${className}`} />
 );
 
 const Card = ({
@@ -18,7 +18,7 @@ const Card = ({
 
 export function ProfileSkeleton({ editing }: { editing: boolean }) {
   return (
-    <div className="min-h-svh bg-[#f4f6f2] text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] text-[#272624]">
       <DashboardHeader />
       <main
         aria-label="Loading profile"
@@ -37,7 +37,7 @@ export function ProfileSkeleton({ editing }: { editing: boolean }) {
         <div className="mt-8 grid items-start gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
           <aside className="grid gap-5">
             <Card className="p-5">
-              <div className="mx-auto h-24 w-24 rounded-full bg-[#dce3d9]" />
+              <div className="mx-auto h-24 w-24 rounded-full bg-[#efdace]" />
               <Line className="mx-auto mt-5 h-5 w-36" />
               <Line className="mx-auto mt-3 h-3 w-28" />
               <Line className="mt-7 h-2 w-full" />
@@ -48,9 +48,9 @@ export function ProfileSkeleton({ editing }: { editing: boolean }) {
                 {[0, 1, 2, 3].map((item) => (
                   <div
                     key={item}
-                    className="flex h-11 items-center gap-3 rounded-xl bg-[#f1f3ef] px-3"
+                    className="flex h-11 items-center gap-3 rounded-xl bg-[#f8efea] px-3"
                   >
-                    <div className="h-5 w-5 rounded-md bg-[#dce2d9]" />
+                    <div className="h-5 w-5 rounded-md bg-[#eed9cd]" />
                     <Line className="h-3 w-28" />
                   </div>
                 ))}
@@ -73,7 +73,7 @@ export function ProfileSkeleton({ editing }: { editing: boolean }) {
                   {Array.from({ length: rows }).map((_, row) => (
                     <div key={row}>
                       <Line className="mb-2 h-3 w-24" />
-                      <div className="h-12 rounded-xl bg-[#eef1ec]" />
+                      <div className="h-12 rounded-xl bg-[#f7ece6]" />
                     </div>
                   ))}
                 </div>

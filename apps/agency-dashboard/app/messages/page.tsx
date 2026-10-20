@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { MessagesDashboard } from "./messages-dashboard";
 
 export const metadata: Metadata = {
-  title: "Agency Messages | OneMarketplace.io",
+  title: "Company Messages | CoverPro",
   description:
-    "Manage agency conversations with clients about proposals and contracts.",
+    "Manage company conversations with clients about proposals and contracts.",
 };
 
 export default async function AgencyMessagesPage({

@@ -56,20 +56,20 @@ export function SubmitWorkModal({
       <div
         role="dialog"
         aria-modal="true"
-        className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/45 p-5 backdrop-blur-[2px]"
+        className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/45 p-5 backdrop-blur-[2px]"
       >
         <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-2xl">
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#e6f2e3] text-[#4d784a]">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#fbe6da] text-[#d85a1b]">
             <Icon name="check-circle" size={30} />
           </span>
-          <h2 className="mt-5 text-xl font-semibold">Agency work submitted</h2>
-          <p className="mt-2 text-sm leading-6 text-[#737870]">
+          <h2 className="mt-5 text-xl font-semibold">Company work submitted</h2>
+          <p className="mt-2 text-sm leading-6 text-[#787470]">
             Your submission was sent to {contract.client} for review.
           </p>
           <button
             type="button"
             onClick={onClose}
-            className="mt-6 h-11 w-full cursor-pointer rounded-xl bg-[#252724] text-sm font-semibold text-white"
+            className="mt-6 h-11 w-full cursor-pointer rounded-xl bg-[#272624] text-sm font-semibold text-white"
           >
             Back to contracts
           </button>
@@ -83,7 +83,7 @@ export function SubmitWorkModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="submit-work-title"
-      className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/45 p-5 backdrop-blur-[2px]"
+      className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/45 p-5 backdrop-blur-[2px]"
     >
       <form
         onSubmit={submitWork}
@@ -91,8 +91,8 @@ export function SubmitWorkModal({
       >
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-xs font-semibold tracking-wide text-[#62805f] uppercase">
-              Agency milestone submission
+            <p className="text-xs font-semibold tracking-wide text-[#e66d31] uppercase">
+              Company milestone submission
             </p>
             <h2 id="submit-work-title" className="mt-2 text-xl font-semibold">
               Submit work for review
@@ -107,8 +107,8 @@ export function SubmitWorkModal({
             <Icon name="close" size={25} />
           </button>
         </div>
-        <div className="mt-5 rounded-xl bg-[#f2f5f0] p-4">
-          <p className="text-[11px] text-[#7b8078]">{contract.client}</p>
+        <div className="mt-5 rounded-xl bg-[#f9f1ec] p-4">
+          <p className="text-[11px] text-[#807c78]">{contract.client}</p>
           <p className="mt-1 text-sm font-semibold">
             {contract.currentMilestone}
           </p>
@@ -123,12 +123,12 @@ export function SubmitWorkModal({
               if (commentError) setCommentError("");
             }}
             rows={5}
-            placeholder="Summarize what the agency completed, how the client can review it, and anything else they should know…"
+            placeholder="Summarize what the company completed, how the client can review it, and anything else they should know…"
             aria-invalid={Boolean(commentError)}
             className={`mt-2 w-full resize-none rounded-xl border p-3 text-sm font-normal outline-none ${
               commentError
                 ? "border-[#c56b6b] focus:border-[#c56b6b]"
-                : "border-black/10 focus:border-[#6e916a]"
+                : "border-black/10 focus:border-[#e77840]"
             }`}
           />
         </label>
@@ -137,18 +137,18 @@ export function SubmitWorkModal({
             {commentError}
           </p>
         )}
-        <p className="mt-2 text-[10px] leading-5 text-[#7b8179]">
+        <p className="mt-2 text-[10px] leading-5 text-[#817d79]">
           Every milestone submission must include a clear review comment.
         </p>
         <label className="mt-4 block text-xs font-semibold">
           Deliverable link{" "}
-          <span className="font-normal text-[#8a8f87]">(optional)</span>
+          <span className="font-normal text-[#8f8b87]">(optional)</span>
           <input
             type="url"
             value={deliveryLink}
             onChange={(event) => setDeliveryLink(event.target.value)}
             placeholder="https://…"
-            className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+            className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#e77840]"
           />
         </label>
         {submitError && (
@@ -165,9 +165,9 @@ export function SubmitWorkModal({
           <button
             type="submit"
             disabled={!comment.trim() || submitting}
-            className="h-11 cursor-pointer rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
+            className="h-11 cursor-pointer rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
-            {submitting ? "Submitting…" : "Submit agency work"}
+            {submitting ? "Submitting…" : "Submit company work"}
           </button>
         </div>
       </form>

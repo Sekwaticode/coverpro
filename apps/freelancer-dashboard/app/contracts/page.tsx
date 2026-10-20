@@ -3,9 +3,9 @@ import { ContractsDashboard } from "./contracts-dashboard";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "My Contracts | OneMarketplace.io",
+  title: "My Contracts | CoverPro",
   description:
-    "Manage active freelance contracts, milestones, and submissions.",
+    "Manage active trade contracts, milestones, and submissions.",
 };
 
 export default function ContractsPage() {

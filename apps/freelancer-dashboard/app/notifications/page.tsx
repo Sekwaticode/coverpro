@@ -3,7 +3,7 @@ import { NotificationsDashboard } from "./notifications-dashboard";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Notifications | OneMarketplace.io",
+  title: "Notifications | CoverPro",
   description:
     "Review updates about contracts, proposals, payments, and messages.",
 };

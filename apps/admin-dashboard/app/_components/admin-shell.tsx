@@ -22,7 +22,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] text-[#272624]">
       <header className="sticky top-0 z-40 border-b border-black/7 bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-17 max-w-400 items-center gap-4 px-5 sm:px-8">
           <button
@@ -34,14 +34,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <AdminIcon name={menuOpen ? "close" : "menu"} />
           </button>
           <Link href="/" className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#252724] text-white">
-              <AdminIcon name="grid" size={18} />
-            </span>
+            <img src="/coverpro-logo.png" alt="" className="h-9 w-9 shrink-0 rounded-full" />
             <span className="hidden text-lg font-semibold sm:block">
-              OneMarketplace.io
+              Cover<span className="text-[#ee6c2b]">Pro</span>
             </span>
           </Link>
-          <span className="rounded-full bg-[#e8eee5] px-2.5 py-1 text-[9px] font-semibold tracking-[.08em] text-[#52784f] uppercase">
+          <span className="rounded-full bg-[#f4e7df] px-2.5 py-1 text-[9px] font-semibold tracking-[.08em] text-[#dd5c1b] uppercase">
             Admin
           </span>
           <button
@@ -50,7 +48,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               await fetch("/api/session", { method: "DELETE" });
               window.location.href = "/login";
             }}
-            className="ml-auto flex h-9 items-center gap-1.5 rounded-xl border border-black/8 px-3 text-xs font-semibold text-[#656b63] hover:bg-[#f5f6f3]"
+            className="ml-auto flex h-9 items-center gap-1.5 rounded-xl border border-black/8 px-3 text-xs font-semibold text-[#6b6763] hover:bg-[#faf3ef]"
           >
             Log out
           </button>
@@ -64,7 +62,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           } h-fit rounded-2xl border border-black/8 bg-white p-2 lg:sticky lg:top-21 lg:m-6 lg:block lg:shadow-none`}
         >
           <div className="border-b border-black/7 px-3 py-3">
-            <p className="text-[10px] font-semibold tracking-[.14em] text-[#7c8179] uppercase">
+            <p className="text-[10px] font-semibold tracking-[.14em] text-[#817d79] uppercase">
               Operations console
             </p>
           </div>
@@ -81,8 +79,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                   onClick={() => setMenuOpen(false)}
                   className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm ${
                     active
-                      ? "bg-[#edf4ea] font-semibold text-[#4e774b]"
-                      : "text-[#656b63] hover:bg-[#f5f6f3]"
+                      ? "bg-[#faece4] font-semibold text-[#d85a1b]"
+                      : "text-[#6b6763] hover:bg-[#faf3ef]"
                   }`}
                 >
                   <AdminIcon name={item.icon} size={18} />
@@ -112,13 +110,13 @@ export function PageHeader({
 }) {
   return (
     <div>
-      <p className="text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+      <p className="text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
         {eyebrow}
       </p>
       <h1 className="mt-2 text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
         {title}
       </h1>
-      <p className="mt-2 text-sm text-[#72776f]">{description}</p>
+      <p className="mt-2 text-sm text-[#77736f]">{description}</p>
     </div>
   );
 }

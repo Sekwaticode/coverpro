@@ -3,7 +3,7 @@ import { WorksDirectory } from "./works-directory";
 
 export default function WorksPage() {
   return (
-    <div className="min-h-svh bg-[#f8f9f6] font-(family-name:--font-dm-sans) text-[#20231f]">
+    <div className="min-h-svh bg-[#fbf7f4] font-(family-name:--font-dm-sans) text-[#23211f]">
       <Header />
       <WorksDirectory />
     </div>

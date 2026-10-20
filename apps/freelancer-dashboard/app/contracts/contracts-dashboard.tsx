@@ -36,7 +36,7 @@ type ApiContract = {
   }>;
 };
 
-const money = (value: number) => `$${value.toLocaleString()}`;
+const money = (value: number) => `R${value.toLocaleString()}`;
 const formatDate = (value: string) =>
   new Intl.DateTimeFormat("en-US", {
     month: "long",
@@ -264,7 +264,7 @@ export function ContractsDashboard() {
     );
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] font-(family-name:--font-dm-sans) text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] font-(family-name:--font-dm-sans) text-[#272624]">
       <DashboardHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <div className="grid items-start gap-6 xl:grid-cols-[240px_minmax(0,1fr)]">
@@ -272,13 +272,13 @@ export function ContractsDashboard() {
           <div className="min-w-0">
             <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
               <div>
-                <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
+                <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
                   Delivery workspace
                 </p>
                 <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
                   My contracts
                 </h1>
-                <p className="mt-2 text-sm text-[#72776f]">
+                <p className="mt-2 text-sm text-[#77736f]">
                   Manage milestones, submit work, and keep every active contract
                   moving.
                 </p>
@@ -294,7 +294,7 @@ export function ContractsDashboard() {
                       .length,
                   ),
                   "solar:case-round-linear",
-                  "bg-[#e7f2e4] text-[#4d784a]",
+                  "bg-[#fae7dc] text-[#d85a1b]",
                 ],
                 [
                   "Contract value",
@@ -328,7 +328,7 @@ export function ContractsDashboard() {
                     <p className="text-2xl font-semibold tracking-[-0.04em]">
                       {value}
                     </p>
-                    <p className="mt-0.5 text-xs text-[#7c8179]">{label}</p>
+                    <p className="mt-0.5 text-xs text-[#817d79]">{label}</p>
                   </div>
                 </div>
               ))}
@@ -342,7 +342,7 @@ export function ContractsDashboard() {
                       key={item}
                       type="button"
                       onClick={() => setStatus(item)}
-                      className={`shrink-0 cursor-pointer rounded-lg px-3 py-2 text-xs font-semibold ${status === item ? "bg-[#edf4ea] text-[#4e774b]" : "text-[#747971] hover:bg-black/3"}`}
+                      className={`shrink-0 cursor-pointer rounded-lg px-3 py-2 text-xs font-semibold ${status === item ? "bg-[#faece4] text-[#d85a1b]" : "text-[#797571] hover:bg-black/3"}`}
                     >
                       {item}
                     </button>
@@ -353,7 +353,7 @@ export function ContractsDashboard() {
                 <Icon
                   icon="solar:magnifer-linear"
                   width="18"
-                  className="text-[#7b8078]"
+                  className="text-[#807c78]"
                 />
                 <input
                   value={search}
@@ -384,10 +384,10 @@ export function ContractsDashboard() {
                   <Icon
                     icon="solar:case-round-linear"
                     width="36"
-                    className="mx-auto text-[#858a82]"
+                    className="mx-auto text-[#8a8682]"
                   />
                   <h2 className="mt-4 font-semibold">No contracts found</h2>
-                  <p className="mt-2 text-sm text-[#7c8179]">
+                  <p className="mt-2 text-sm text-[#817d79]">
                     Try another status or search term.
                   </p>
                 </div>
@@ -440,9 +440,9 @@ export function ContractsDashboard() {
 function ContractsSkeleton() {
   return (
     <div className="animate-pulse rounded-2xl border border-black/8 bg-white p-6">
-      <div className="h-5 w-24 rounded bg-[#e8ebe6]" />
-      <div className="mt-4 h-7 w-72 rounded bg-[#e8ebe6]" />
-      <div className="mt-6 h-28 rounded-xl bg-[#f0f2ee]" />
+      <div className="h-5 w-24 rounded bg-[#ebe9e6]" />
+      <div className="mt-4 h-7 w-72 rounded bg-[#ebe9e6]" />
+      <div className="mt-6 h-28 rounded-xl bg-[#f8eee9]" />
     </div>
   );
 }

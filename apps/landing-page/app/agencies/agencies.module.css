@@ -17,7 +17,7 @@
 .shimmer {
   position: relative;
   overflow: hidden;
-  background: #eef0ec;
+  background: #f0eeec;
 }
 
 .shimmer::after {

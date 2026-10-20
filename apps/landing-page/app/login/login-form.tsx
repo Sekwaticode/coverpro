@@ -157,13 +157,13 @@ export function LoginForm() {
     return (
       <div className="w-full max-w-md text-left">
         <div className="text-center">
-          <span className="inline-flex rounded-full bg-[#e9f4e6] px-3 py-1.5 text-xs font-semibold text-[#4f754d]">
+          <span className="inline-flex rounded-full bg-[#fce9de] px-3 py-1.5 text-xs font-semibold text-[#d85a1b]">
             Security check
           </span>
-          <h1 className={`${styles.formTitle} mt-4 text-[#171916]`}>
+          <h1 className={`${styles.formTitle} mt-4 text-[#191816]`}>
             Verify your login
           </h1>
-          <p className="mt-3 text-sm text-[#72766f]">
+          <p className="mt-3 text-sm text-[#76736f]">
             Enter the code sent to your email.
           </p>
         </div>
@@ -174,19 +174,19 @@ export function LoginForm() {
             inputMode="numeric"
             autoComplete="one-time-code"
             required
-            className="h-12 w-full rounded-xl border border-black/13 bg-white px-4 text-center text-lg tracking-[0.3em] outline-none focus:border-[#5d8b59]"
+            className="h-12 w-full rounded-xl border border-black/13 bg-white px-4 text-center text-lg tracking-[0.3em] outline-none focus:border-[#e67137]"
             placeholder="000000"
           />
           <button
             disabled={isLoading}
-            className="h-12 w-full cursor-pointer rounded-xl bg-[#252724] text-sm font-semibold text-white disabled:opacity-60"
+            className="h-12 w-full cursor-pointer rounded-xl bg-[#272624] text-sm font-semibold text-white disabled:opacity-60"
           >
             {isLoading ? "Verifying..." : "Verify and log in"}
           </button>
           {status && (
             <p
               role="status"
-              className={`rounded-xl px-4 py-3 text-center text-xs font-medium ${isError ? "bg-[#fff0ee] text-[#914d45]" : "bg-[#edf5eb] text-[#3e704b]"}`}
+              className={`rounded-xl px-4 py-3 text-center text-xs font-medium ${isError ? "bg-[#fff0ee] text-[#914d45]" : "bg-[#fbede5] text-[#c25018]"}`}
             >
               {status}
             </p>
@@ -199,15 +199,15 @@ export function LoginForm() {
   return (
     <div className="w-full max-w-md text-left">
       <div className="text-center">
-        <span className="inline-flex rounded-full bg-[#e9f4e6] px-3 py-1.5 text-xs font-semibold text-[#4f754d]">
+        <span className="inline-flex rounded-full bg-[#fce9de] px-3 py-1.5 text-xs font-semibold text-[#d85a1b]">
           Welcome back
         </span>
         <h1
-          className={`${styles.formTitle} mt-4 whitespace-nowrap text-[#171916] text-[clamp(1.65rem,5vw,2.25rem)]!`}
+          className={`${styles.formTitle} mt-4 whitespace-nowrap text-[#191816] text-[clamp(1.65rem,5vw,2.25rem)]!`}
         >
-          Log in to OneMarketplace
+          Log in to CoverPro
         </h1>
-        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#72766f]">
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#76736f]">
           Continue to your projects, conversations, and opportunities.
         </p>
       </div>
@@ -217,7 +217,7 @@ export function LoginForm() {
           <button
             type="button"
             onClick={() => handleSocialLogin("Google")}
-            className="flex h-12 cursor-pointer items-center justify-center gap-3 rounded-xl border border-black/13 bg-white px-4 text-sm font-semibold text-[#30332f] transition hover:border-black/20 hover:bg-[#f8f9f7] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#4c7849]"
+            className="flex h-12 cursor-pointer items-center justify-center gap-3 rounded-xl border border-black/13 bg-white px-4 text-sm font-semibold text-[#33312f] transition hover:border-black/20 hover:bg-[#fcf7f4] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#d7591b]"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
               <path
@@ -243,7 +243,7 @@ export function LoginForm() {
           <button
             type="button"
             onClick={() => handleSocialLogin("GitHub")}
-            className="flex h-12 cursor-pointer items-center justify-center gap-3 rounded-xl border border-black/13 bg-white px-4 text-sm font-semibold text-[#30332f] transition hover:border-black/20 hover:bg-[#f8f9f7] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#4c7849]"
+            className="flex h-12 cursor-pointer items-center justify-center gap-3 rounded-xl border border-black/13 bg-white px-4 text-sm font-semibold text-[#33312f] transition hover:border-black/20 hover:bg-[#fcf7f4] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#d7591b]"
           >
             <svg
               viewBox="0 0 24 24"
@@ -259,30 +259,30 @@ export function LoginForm() {
 
         <div className="flex items-center gap-4 py-1">
           <span className="h-px flex-1 bg-black/10"></span>
-          <span className="text-xs font-medium text-[#8a8e87]">
+          <span className="text-xs font-medium text-[#8e8b87]">
             or continue with email
           </span>
           <span className="h-px flex-1 bg-black/10"></span>
         </div>
 
-        <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+        <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
           Email address
           <input
             name="email"
             type="email"
             autoComplete="email"
             required
-            className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a2a59f] focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+            className="h-12 rounded-xl border border-black/13 bg-white px-4 font-normal outline-none transition placeholder:text-[#a5a29f] focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
             placeholder="you@example.com"
           />
         </label>
 
-        <label className="grid gap-2 text-sm font-semibold text-[#30332f]">
+        <label className="grid gap-2 text-sm font-semibold text-[#33312f]">
           <span className="flex items-center justify-between">
             Password
             <Link
               href="/forgot-password"
-              className="text-xs font-semibold text-[#477445] hover:underline!"
+              className="text-xs font-semibold text-[#ce5619] hover:underline!"
             >
               Forgot password?
             </Link>
@@ -293,13 +293,13 @@ export function LoginForm() {
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               required
-              className="h-12 w-full rounded-xl border border-black/13 bg-white px-4 pr-20 font-normal outline-none transition placeholder:text-[#a2a59f] focus:border-[#5d8b59] focus:ring-3 focus:ring-[#dcebd9]"
+              className="h-12 w-full rounded-xl border border-black/13 bg-white px-4 pr-20 font-normal outline-none transition placeholder:text-[#a5a29f] focus:border-[#e67137] focus:ring-3 focus:ring-[#f6ddce]"
               placeholder="Enter your password"
             />
             <button
               type="button"
               onClick={() => setShowPassword((value) => !value)}
-              className="absolute inset-y-0 right-4 cursor-pointer text-xs font-semibold text-[#52764f]"
+              className="absolute inset-y-0 right-4 cursor-pointer text-xs font-semibold text-[#db5b1b]"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? "Hide" : "Show"}
@@ -307,11 +307,11 @@ export function LoginForm() {
           </span>
         </label>
 
-        <label className="flex items-center gap-3 text-xs font-medium text-[#686c65]">
+        <label className="flex items-center gap-3 text-xs font-medium text-[#6c6965]">
           <input
             name="remember"
             type="checkbox"
-            className="h-4 w-4 rounded border-black/20 accent-[#426f40]"
+            className="h-4 w-4 rounded border-black/20 accent-[#c35118]"
           />
           Keep me logged in
         </label>
@@ -319,19 +319,19 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="h-12 w-full cursor-pointer rounded-xl bg-[#252724] text-sm font-semibold text-white shadow-sm transition hover:bg-[#3b3e39] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#4c7849]"
+          className="h-12 w-full cursor-pointer rounded-xl bg-[#272624] text-sm font-semibold text-white shadow-sm transition hover:bg-[#3e3c39] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#d7591b]"
         >
           {isLoading ? "Logging in..." : "Log in"}
         </button>
 
         {status && (
           <p
-            className={`rounded-xl bg-[#edf5eb] px-4 py-3 text-center text-xs font-medium text-[#4e704b]
+            className={`rounded-xl bg-[#fbede5] px-4 py-3 text-center text-xs font-medium text-[#d0561a]
               
               ${
                 isError
                   ? "bg-[#fff0ee] text-[#914d45]"
-                  : "bg-[#edf5eb] text-[#3e704b]"
+                  : "bg-[#fbede5] text-[#c25018]"
               }
               `}
             role="status"
@@ -341,11 +341,11 @@ export function LoginForm() {
         )}
       </form>
 
-      <p className="mt-7 text-center text-sm text-[#555952]">
-        New to OneMarketplace?{" "}
+      <p className="mt-7 text-center text-sm text-[#595652]">
+        New to CoverPro?{" "}
         <Link
           href="/signup"
-          className="font-semibold text-[#397236] hover:underline!"
+          className="font-semibold text-[#bb4e17] hover:underline!"
         >
           Create an account
         </Link>

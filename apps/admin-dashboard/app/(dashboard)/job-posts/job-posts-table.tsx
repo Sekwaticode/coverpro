@@ -76,7 +76,7 @@ export function JobPostsTable({
         footer={footer}
       >
         <table className="w-full min-w-200 border-collapse text-left">
-          <thead className="bg-[#fafbf9] text-[10px] font-semibold tracking-[.08em] text-[#7c8179] uppercase">
+          <thead className="bg-[#fdf9f7] text-[10px] font-semibold tracking-[.08em] text-[#817d79] uppercase">
             <tr>
               <th className="px-5 py-3">Job</th>
               <th className="px-5 py-3">Client</th>
@@ -92,15 +92,15 @@ export function JobPostsTable({
               <tr
                 key={job.id}
                 onClick={() => setSelected(job)}
-                className="cursor-pointer border-t border-black/6 text-xs hover:bg-[#fafbf9]"
+                className="cursor-pointer border-t border-black/6 text-xs hover:bg-[#fdf9f7]"
               >
                 <td className="max-w-80 px-5 py-4">
                   <strong className="line-clamp-1">{job.title}</strong>
-                  <p className="mt-0.5 text-[10px] text-[#858a82]">
+                  <p className="mt-0.5 text-[10px] text-[#8a8682]">
                     {job.expertiseLevel}
                   </p>
                 </td>
-                <td className="px-5 py-4 text-[#71766e]">{job.clientName}</td>
+                <td className="px-5 py-4 text-[#76726e]">{job.clientName}</td>
                 <td className="px-5 py-4 font-semibold">
                   {formatCurrency(job.totalBudget)}
                 </td>
@@ -110,9 +110,9 @@ export function JobPostsTable({
                     tone={STATUS_TONE[job.status] ?? "gray"}
                   />
                 </td>
-                <td className="px-5 py-4 text-[#71766e]">{job.proposalCount}</td>
-                <td className="px-5 py-4 text-[#71766e]">{job.hireCount}</td>
-                <td className="px-5 py-4 text-[#858a82]">
+                <td className="px-5 py-4 text-[#76726e]">{job.proposalCount}</td>
+                <td className="px-5 py-4 text-[#76726e]">{job.hireCount}</td>
+                <td className="px-5 py-4 text-[#8a8682]">
                   {formatDate(job.createdAt)}
                 </td>
               </tr>
@@ -138,7 +138,7 @@ export function JobPostsTable({
                     label={selected.status}
                     tone={STATUS_TONE[selected.status] ?? "gray"}
                   />
-                  <span className="text-[10px] text-[#858a82]">
+                  <span className="text-[10px] text-[#8a8682]">
                     {selected.expertiseLevel} · {selected.expectedDuration}
                   </span>
                 </div>
@@ -163,7 +163,7 @@ export function JobPostsTable({
               </div>
 
               <Section title="Description">
-                <p className="whitespace-pre-wrap text-xs leading-6 text-[#4a4e47]">
+                <p className="whitespace-pre-wrap text-xs leading-6 text-[#4e4b47]">
                   {selected.description}
                 </p>
               </Section>
@@ -174,7 +174,7 @@ export function JobPostsTable({
                     {selected.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="rounded-lg bg-[#f1f3ef] px-2.5 py-1.5 text-[10px] font-medium text-[#596057]"
+                        className="rounded-lg bg-[#f8efea] px-2.5 py-1.5 text-[10px] font-medium text-[#605c57]"
                       >
                         {skill}
                       </span>
@@ -189,10 +189,10 @@ export function JobPostsTable({
                     {selected.milestones.map((milestone) => (
                       <div
                         key={milestone.id}
-                        className="flex items-center justify-between gap-3 rounded-xl bg-[#f4f6f2] px-3 py-2.5 text-xs"
+                        className="flex items-center justify-between gap-3 rounded-xl bg-[#faf3ee] px-3 py-2.5 text-xs"
                       >
                         <span className="min-w-0 truncate">{milestone.title}</span>
-                        <span className="shrink-0 text-[#858a82]">
+                        <span className="shrink-0 text-[#8a8682]">
                           {formatCurrency(milestone.budget)} · due{" "}
                           {formatDate(milestone.dueDate)}
                         </span>
@@ -204,7 +204,7 @@ export function JobPostsTable({
 
               {selected.screeningQuestions.length > 0 && (
                 <Section title="Screening questions">
-                  <ol className="list-decimal space-y-1.5 pl-4 text-xs text-[#4a4e47]">
+                  <ol className="list-decimal space-y-1.5 pl-4 text-xs text-[#4e4b47]">
                     {selected.screeningQuestions.map((question) => (
                       <li key={question}>{question}</li>
                     ))}
@@ -221,10 +221,10 @@ export function JobPostsTable({
                         href={attachment.fileUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center justify-between gap-3 rounded-xl border border-black/8 px-3 py-2 text-xs hover:bg-[#fafbf9]"
+                        className="flex items-center justify-between gap-3 rounded-xl border border-black/8 px-3 py-2 text-xs hover:bg-[#fdf9f7]"
                       >
                         <span className="min-w-0 truncate">{attachment.fileName}</span>
-                        <span className="shrink-0 text-[10px] text-[#969b94]">
+                        <span className="shrink-0 text-[10px] text-[#9b9894]">
                           {Math.round(attachment.fileSize / 1024)} KB
                         </span>
                       </a>
@@ -234,27 +234,27 @@ export function JobPostsTable({
               )}
 
               <Section title="Client">
-                <div className="rounded-xl bg-[#f4f6f2] p-3 text-xs leading-6">
+                <div className="rounded-xl bg-[#faf3ee] p-3 text-xs leading-6">
                   <p className="font-semibold">{selected.clientName}</p>
                   {selected.clientEmail && <p>{selected.clientEmail}</p>}
-                  {selected.industry && <p className="text-[#71766e]">{selected.industry}</p>}
+                  {selected.industry && <p className="text-[#76726e]">{selected.industry}</p>}
                   {selected.companyWebsite && (
                     <a
                       href={selected.companyWebsite}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-[#52784f] hover:underline"
+                      className="text-[#dd5c1b] hover:underline"
                     >
                       {selected.companyWebsite}
                     </a>
                   )}
                   {selected.companyDescription && (
-                    <p className="mt-2 text-[#71766e]">{selected.companyDescription}</p>
+                    <p className="mt-2 text-[#76726e]">{selected.companyDescription}</p>
                   )}
                 </div>
               </Section>
 
-              <p className="mt-5 text-[10px] text-[#969b94]">
+              <p className="mt-5 text-[10px] text-[#9b9894]">
                 Job ID: {selected.id} · Client ID: {selected.clientId}
               </p>
             </div>
@@ -267,9 +267,9 @@ export function JobPostsTable({
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-[#f3f5f1] p-3">
+    <div className="rounded-xl bg-[#f9f1ed] p-3">
       <p className="text-sm font-semibold tracking-[-.02em]">{value}</p>
-      <p className="mt-1 text-[9px] text-[#7c8179]">{label}</p>
+      <p className="mt-1 text-[9px] text-[#817d79]">{label}</p>
     </div>
   );
 }
@@ -283,7 +283,7 @@ function Section({
 }) {
   return (
     <div className="mt-5">
-      <h3 className="text-[10px] font-semibold tracking-[.1em] text-[#7c8179] uppercase">
+      <h3 className="text-[10px] font-semibold tracking-[.1em] text-[#817d79] uppercase">
         {title}
       </h3>
       <div className="mt-2">{children}</div>

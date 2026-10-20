@@ -78,7 +78,7 @@ export default async function TransactionsPage({
         }
       >
         <table className="w-full min-w-180 border-collapse text-left">
-          <thead className="bg-[#fafbf9] text-[10px] font-semibold tracking-[.08em] text-[#7c8179] uppercase">
+          <thead className="bg-[#fdf9f7] text-[10px] font-semibold tracking-[.08em] text-[#817d79] uppercase">
             <tr>
               <th className="px-5 py-3">Type</th>
               <th className="px-5 py-3">Description</th>
@@ -91,7 +91,7 @@ export default async function TransactionsPage({
             {transactions.map((transaction) => (
               <tr
                 key={`${transaction.type}-${transaction.id}`}
-                className="border-t border-black/6 text-xs hover:bg-[#fafbf9]"
+                className="border-t border-black/6 text-xs hover:bg-[#fdf9f7]"
               >
                 <td className="px-5 py-4">
                   <Badge
@@ -99,14 +99,14 @@ export default async function TransactionsPage({
                     tone={TYPE_TONE[transaction.type]}
                   />
                 </td>
-                <td className="max-w-64 px-5 py-4 text-[#71766e]">
+                <td className="max-w-64 px-5 py-4 text-[#76726e]">
                   <span className="line-clamp-1">{transaction.description}</span>
                 </td>
-                <td className="px-5 py-4 text-[#71766e]">{transaction.party}</td>
+                <td className="px-5 py-4 text-[#76726e]">{transaction.party}</td>
                 <td className="px-5 py-4 text-right font-semibold">
                   {formatCurrency(transaction.amount)}
                 </td>
-                <td className="px-5 py-4 text-[#858a82]">
+                <td className="px-5 py-4 text-[#8a8682]">
                   {formatDate(transaction.createdAt)}
                 </td>
               </tr>

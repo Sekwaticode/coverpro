@@ -15,13 +15,13 @@ type AgencyMineMember = {
 const accountItems = [
   {
     href: "/profile",
-    label: "Agency profile",
-    description: "Preview your public agency profile",
+    label: "Company profile",
+    description: "Preview your public company profile",
     icon: "solar:buildings-2-linear",
   },
   {
     href: "/team",
-    label: "Agency team",
+    label: "Company team",
     description: "Manage members and access",
     icon: "solar:users-group-rounded-linear",
   },
@@ -33,7 +33,7 @@ const accountItems = [
   },
   {
     href: "/settings?section=overview",
-    label: "Agency settings",
+    label: "Company settings",
     description: "Security and preferences",
     icon: "solar:settings-linear",
   },
@@ -94,13 +94,13 @@ export function AgencyAccountDropdown() {
     <div ref={containerRef} className="relative">
       <button
         type="button"
-        aria-label="Open agency account menu"
+        aria-label="Open company account menu"
         aria-expanded={open}
         aria-haspopup="menu"
         onClick={() => setOpen((current) => !current)}
         className={`flex cursor-pointer items-center gap-2 rounded-full border p-1 pr-2.5 transition ${
           open
-            ? "border-[#aec2aa] bg-[#edf4ea]"
+            ? "border-[#d7ad95] bg-[#faece4]"
             : "border-black/8 hover:bg-black/3"
         }`}
       >
@@ -112,7 +112,7 @@ export function AgencyAccountDropdown() {
             className="h-8 w-8 rounded-full object-cover"
           />
         ) : (
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#496e67] text-xs font-semibold text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#cc5519] text-xs font-semibold text-white">
             ...
           </span>
         )}
@@ -126,8 +126,8 @@ export function AgencyAccountDropdown() {
       {open && (
         <div
           role="menu"
-          aria-label="Agency account menu"
-          className="fixed top-17 right-3 z-50 w-[calc(100vw-1.5rem)] overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_24px_70px_rgba(26,34,26,0.18)] sm:absolute sm:top-12 sm:right-0 sm:w-80"
+          aria-label="Company account menu"
+          className="fixed top-17 right-3 z-50 w-[calc(100vw-1.5rem)] overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_24px_70px_rgba(34,29,26,0.18)] sm:absolute sm:top-12 sm:right-0 sm:w-80"
         >
           <div className="flex items-center gap-3 border-b border-black/7 p-4">
             {isLoaded && user?.imageUrl ? (
@@ -138,7 +138,7 @@ export function AgencyAccountDropdown() {
                 className="h-11 w-11 rounded-full object-cover"
               />
             ) : (
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#496e67] text-sm font-semibold text-white">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#cc5519] text-sm font-semibold text-white">
                 ...
               </span>
             )}
@@ -146,12 +146,12 @@ export function AgencyAccountDropdown() {
               <p className="truncate text-sm font-semibold">
                 {user?.fullName ?? "Loading..."}
               </p>
-              <p className="mt-0.5 truncate text-[11px] text-[#7b8078]">
-                {roleLabel} · {agency?.name ?? "your agency"}
+              <p className="mt-0.5 truncate text-[11px] text-[#807c78]">
+                {roleLabel} · {agency?.name ?? "your company"}
               </p>
             </div>
-            <span className="rounded-full bg-[#e6f2e3] px-2 py-1 text-[9px] font-semibold text-[#477344]">
-              Agency
+            <span className="rounded-full bg-[#fbe6da] px-2 py-1 text-[9px] font-semibold text-[#cc5519]">
+              Company
             </span>
           </div>
 
@@ -162,21 +162,21 @@ export function AgencyAccountDropdown() {
                 href={item.href}
                 role="menuitem"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-3 rounded-xl px-3 py-3 transition hover:bg-[#f4f6f2]"
+                className="flex items-center gap-3 rounded-xl px-3 py-3 transition hover:bg-[#faf3ee]"
               >
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f0f3ee] text-[#5d765a]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f8efe9] text-[#e36221]">
                   <Icon icon={item.icon} width="19" />
                 </span>
                 <span className="min-w-0 flex-1">
                   <strong className="block text-xs">{item.label}</strong>
-                  <span className="mt-0.5 block truncate text-[10px] text-[#858a82]">
+                  <span className="mt-0.5 block truncate text-[10px] text-[#8a8682]">
                     {item.description}
                   </span>
                 </span>
                 <Icon
                   icon="solar:alt-arrow-right-linear"
                   width="15"
-                  className="text-[#92978f]"
+                  className="text-[#97938f]"
                 />
               </Link>
             ))}
@@ -187,14 +187,14 @@ export function AgencyAccountDropdown() {
               href={process.env.NEXT_PUBLIC_FREELANCER_DASHBOARD}
               role="menuitem"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-xl px-3 py-3 transition hover:bg-[#f4f6f2]"
+              className="flex items-center gap-3 rounded-xl px-3 py-3 transition hover:bg-[#faf3ee]"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f0f3ee] text-[#5d765a]">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f8efe9] text-[#e36221]">
                 <Icon icon="solar:user-circle-linear" width="19" />
               </span>
               <span className="min-w-0 flex-1">
-                <strong className="block text-xs">Switch to freelancer</strong>
-                <span className="mt-0.5 block truncate text-[10px] text-[#858a82]">
+                <strong className="block text-xs">Switch to pro</strong>
+                <span className="mt-0.5 block truncate text-[10px] text-[#8a8682]">
                   Open your individual workspace
                 </span>
               </span>

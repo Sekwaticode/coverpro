@@ -69,20 +69,20 @@ export function SettingsDashboard({
   };
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] font-(family-name:--font-dm-sans) text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] font-(family-name:--font-dm-sans) text-[#272624]">
       <DashboardHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <div className="grid items-start gap-6 xl:grid-cols-[240px_minmax(0,1fr)]">
           <WorkspaceSidebar />
           <div className="min-w-0">
             <div>
-              <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
+              <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
                 Account center
               </p>
               <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
                 Settings
               </h1>
-              <p className="mt-2 text-sm text-[#72776f]">
+              <p className="mt-2 text-sm text-[#77736f]">
                 Manage your finances, account preferences, security, and
                 marketplace activity.
               </p>
@@ -169,10 +169,10 @@ function IdentityVerificationModal({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="fixed inset-0 z-90 grid place-items-center bg-[#172018]/45 p-5 backdrop-blur-sm">
+    <div className="fixed inset-0 z-90 grid place-items-center bg-[#201a17]/45 p-5 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
         <div className="flex items-start justify-between gap-4">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
             <Icon icon="solar:user-id-linear" width="23" />
           </span>
           <button
@@ -185,9 +185,9 @@ function IdentityVerificationModal({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         <h2 className="mt-4 text-xl font-semibold">Verify your identity</h2>
-        <p className="mt-2 text-sm leading-6 text-[#737970]">
+        <p className="mt-2 text-sm leading-6 text-[#797570]">
           You’ll be redirected to Stripe to securely verify your identity.
-          OneMarketplace does not store your identity document.
+          CoverPro does not store your identity document.
         </p>
         {error && <p className="mt-4 text-xs text-red-600">{error}</p>}
         <div className="mt-6 flex justify-end gap-2">
@@ -203,7 +203,7 @@ function IdentityVerificationModal({ onClose }: { onClose: () => void }) {
             type="button"
             onClick={() => void startVerification()}
             disabled={redirecting}
-            className="h-10 rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white disabled:opacity-50"
+            className="h-10 rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:opacity-50"
           >
             {redirecting ? "Redirecting..." : "Continue to verification"}
           </button>

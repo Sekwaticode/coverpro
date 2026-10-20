@@ -7,8 +7,8 @@ import { auth } from "@clerk/nextjs/server";
 import { countries } from "@/utils/countries";
 
 export const metadata: Metadata = {
-  title: "Talent Profile",
-  description: "Review a freelancer’s public marketplace profile and work.",
+  title: "Pro Profile",
+  description: "Review a pro’s public marketplace profile and work.",
 };
 
 export default async function TalentProfilePage({
@@ -67,7 +67,7 @@ export default async function TalentProfilePage({
   };
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] text-[#272624]">
       <ClientHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <PublicMarketplaceProfile profile={profile} />

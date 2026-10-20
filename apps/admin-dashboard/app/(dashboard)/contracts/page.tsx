@@ -25,7 +25,7 @@ export default async function ContractsPage({
       <PageHeader
         eyebrow="Delivery"
         title="Contracts"
-        description="Every contract between a client and talent, newest first."
+        description="Every contract between a client and a pro, newest first."
       />
       {error && <ErrorBanner message={error} />}
       <ContractsTable

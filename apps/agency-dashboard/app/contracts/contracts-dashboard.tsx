@@ -35,7 +35,7 @@ type ApiContract = {
   }>;
 };
 
-const money = (value: number) => `$${value.toLocaleString()}`;
+const money = (value: number) => `R${value.toLocaleString()}`;
 const formatDate = (value: string) =>
   new Intl.DateTimeFormat("en-US", {
     month: "long",
@@ -277,14 +277,14 @@ export function ContractsDashboard() {
     <AgencyShell>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
+          <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
             Client delivery
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
-            Agency contracts
+            Company contracts
           </h1>
-          <p className="mt-2 text-sm text-[#72776f]">
-            Manage agency milestones, submissions, payments, and client
+          <p className="mt-2 text-sm text-[#77736f]">
+            Manage company milestones, submissions, payments, and client
             approvals.
           </p>
         </div>
@@ -299,7 +299,7 @@ export function ContractsDashboard() {
                 .length,
             ),
             "contract",
-            "bg-[#e7f2e4] text-[#4d784a]",
+            "bg-[#fae7dc] text-[#d85a1b]",
           ],
           [
             "Contract value",
@@ -328,7 +328,7 @@ export function ContractsDashboard() {
               <p className="text-2xl font-semibold tracking-[-0.04em]">
                 {value}
               </p>
-              <p className="mt-0.5 text-xs text-[#7c8179]">{label}</p>
+              <p className="mt-0.5 text-xs text-[#817d79]">{label}</p>
             </div>
           </div>
         ))}
@@ -343,8 +343,8 @@ export function ContractsDashboard() {
               onClick={() => setStatus(tab)}
               className={`shrink-0 cursor-pointer rounded-lg px-3 py-2 text-xs font-semibold ${
                 status === tab
-                  ? "bg-[#edf4ea] text-[#4e774b]"
-                  : "text-[#747971] hover:bg-black/3"
+                  ? "bg-[#faece4] text-[#d85a1b]"
+                  : "text-[#797571] hover:bg-black/3"
               }`}
             >
               {tab}
@@ -352,11 +352,11 @@ export function ContractsDashboard() {
           ))}
         </div>
         <label className="flex h-10 items-center gap-2 rounded-xl border border-black/9 px-3 sm:w-72">
-          <Icon name="search" size={18} className="text-[#7b8078]" />
+          <Icon name="search" size={18} className="text-[#807c78]" />
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search agency contracts"
+            placeholder="Search company contracts"
             className="min-w-0 flex-1 bg-transparent text-sm outline-none"
           />
         </label>
@@ -378,9 +378,9 @@ export function ContractsDashboard() {
           ))}
         {!isLoading && !visibleContracts.length && (
           <div className="rounded-2xl border border-dashed border-black/12 bg-white px-6 py-16 text-center">
-            <Icon name="contract" size={35} className="mx-auto text-[#858a82]" />
+            <Icon name="contract" size={35} className="mx-auto text-[#8a8682]" />
             <h2 className="mt-4 font-semibold">No contracts found</h2>
-            <p className="mt-2 text-sm text-[#7c8179]">
+            <p className="mt-2 text-sm text-[#817d79]">
               Try another status or search term.
             </p>
           </div>
@@ -427,9 +427,9 @@ export function ContractsDashboard() {
 function ContractsSkeleton() {
   return (
     <div className="animate-pulse rounded-2xl border border-black/8 bg-white p-6">
-      <div className="h-5 w-24 rounded bg-[#e8ebe6]" />
-      <div className="mt-4 h-7 w-72 rounded bg-[#e8ebe6]" />
-      <div className="mt-6 h-28 rounded-xl bg-[#f0f2ee]" />
+      <div className="h-5 w-24 rounded bg-[#ebe9e6]" />
+      <div className="mt-4 h-7 w-72 rounded bg-[#ebe9e6]" />
+      <div className="mt-6 h-28 rounded-xl bg-[#f8eee9]" />
     </div>
   );
 }

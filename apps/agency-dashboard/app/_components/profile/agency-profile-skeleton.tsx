@@ -1,5 +1,5 @@
 const Line = ({ className = "" }: { className?: string }) => (
-  <div className={`rounded-full bg-[#e1e5de] ${className}`} />
+  <div className={`rounded-full bg-[#e5e2de] ${className}`} />
 );
 
 const Card = ({
@@ -16,7 +16,7 @@ const Card = ({
 
 export function AgencyProfileSkeleton() {
   return (
-    <div aria-label="Loading agency profile" aria-busy="true" className="animate-pulse">
+    <div aria-label="Loading company profile" aria-busy="true" className="animate-pulse">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <Line className="h-3 w-40" />
@@ -29,7 +29,7 @@ export function AgencyProfileSkeleton() {
       <div className="mt-8 grid items-start gap-6 xl:grid-cols-[280px_minmax(0,1fr)]">
         <aside className="grid gap-5">
           <Card className="p-6 text-center">
-            <div className="mx-auto h-24 w-24 rounded-3xl bg-[#dce3d9]" />
+            <div className="mx-auto h-24 w-24 rounded-3xl bg-[#efdace]" />
             <Line className="mx-auto mt-5 h-5 w-32" />
             <Line className="mx-auto mt-3 h-3 w-24" />
             <Line className="mx-auto mt-3 h-3 w-36" />
@@ -78,7 +78,7 @@ export function AgencyProfileSkeleton() {
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               {[0, 1].map((item) => (
                 <div key={item} className="overflow-hidden rounded-xl border border-black/9">
-                  <div className="aspect-video bg-[#e4ead8]" />
+                  <div className="aspect-video bg-[#f5dccd]" />
                   <div className="space-y-3 p-5">
                     <Line className="h-3 w-24" />
                     <Line className="h-4 w-3/4" />
@@ -101,7 +101,7 @@ export function AgencyProfileSkeleton() {
               {[0, 1].map((item) => (
                 <div key={item} className="rounded-xl border border-black/7 p-4">
                   <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 shrink-0 rounded-full bg-[#dce3d9]" />
+                    <div className="h-12 w-12 shrink-0 rounded-full bg-[#efdace]" />
                     <div className="flex-1">
                       <Line className="h-3 w-28" />
                       <Line className="mt-2 h-3 w-20" />

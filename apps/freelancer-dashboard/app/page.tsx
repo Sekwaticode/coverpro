@@ -3,9 +3,9 @@ import { Suspense } from "react";
 import { FreelancerDashboard } from "./freelancer-dashboard";
 
 export const metadata: Metadata = {
-  title: "Freelancer Dashboard | OneMarketplace.io",
+  title: "Pro Dashboard | CoverPro",
   description:
-    "Discover matching projects, manage proposals, and grow your freelance business.",
+    "Discover matching projects, manage proposals, and grow your trade business.",
 };
 
 export default function MainDashboardPage() {

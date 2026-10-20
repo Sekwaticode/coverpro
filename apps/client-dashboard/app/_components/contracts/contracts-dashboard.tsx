@@ -172,7 +172,7 @@ export function ContractsDashboard() {
       ),
     );
     setSelected(null);
-    setNotice("Changes requested. Your feedback was sent to the freelancer.");
+    setNotice("Changes requested. Your feedback was sent to the pro.");
   };
   const activateMilestone = async (
     contractId: ClientContract["id"],
@@ -266,18 +266,18 @@ export function ContractsDashboard() {
   return (
     <>
       <div>
-        <p className="text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+        <p className="text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
           Delivery
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
           Contracts
         </h1>
-        <p className="mt-2 text-sm text-[#72776f]">
+        <p className="mt-2 text-sm text-[#77736f]">
           Track fixed-price work, funding, and milestone approvals.
         </p>
       </div>
       {notice && (
-        <p className="mt-5 rounded-xl bg-[#e7f2e4] p-3 text-xs font-semibold text-[#4d784a]">
+        <p className="mt-5 rounded-xl bg-[#fae7dc] p-3 text-xs font-semibold text-[#d85a1b]">
           {notice}
         </p>
       )}
@@ -290,11 +290,11 @@ export function ContractsDashboard() {
         />
         <Summary
           label="Currently in progress"
-          value={`$${contracts.reduce((total, contract) => total + contract.escrow, 0).toLocaleString()}`}
+          value={`R${contracts.reduce((total, contract) => total + contract.escrow, 0).toLocaleString()}`}
         />
         <Summary
           label="Paid"
-          value={`$${contracts.reduce((total, contract) => total + contract.paid, 0).toLocaleString()}`}
+          value={`R${contracts.reduce((total, contract) => total + contract.paid, 0).toLocaleString()}`}
         />
       </section>
       <div className="mt-6 grid gap-4">
@@ -308,16 +308,16 @@ export function ContractsDashboard() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <span
-                    className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${contract.status === "Awaiting approval" ? "bg-[#f5eed4] text-[#806d31]" : "bg-[#e7f2e4] text-[#4d784a]"}`}
+                    className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${contract.status === "Awaiting approval" ? "bg-[#f5eed4] text-[#806d31]" : "bg-[#fae7dc] text-[#d85a1b]"}`}
                   >
                     {contract.status}
                   </span>
-                  <span className="text-[10px] text-[#8a8f87]">
+                  <span className="text-[10px] text-[#8f8b87]">
                     Started {contract.started}
                   </span>
                 </div>
                 <h2 className="mt-3 text-lg font-semibold">{contract.title}</h2>
-                <p className="mt-2 text-xs text-[#747a72]">
+                <p className="mt-2 text-xs text-[#7a7672]">
                   {contract.talent} · {contract.accountType}
                 </p>
               </div>
@@ -333,7 +333,7 @@ export function ContractsDashboard() {
                   onClick={() => {
                     router.push(`/contracts?contractId=${contract.id}`);
                   }}
-                  className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+                  className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
                 >
                   View contract
                 </button>
@@ -352,15 +352,15 @@ export function ContractsDashboard() {
             <div className="mt-5 grid gap-4 sm:grid-cols-4">
               <ContractMetric
                 label="Total budget"
-                value={`$${contract.totalBudget.toLocaleString()}`}
+                value={`R${contract.totalBudget.toLocaleString()}`}
               />
               <ContractMetric
                 label="Paid"
-                value={`$${contract.paid.toLocaleString()}`}
+                value={`R${contract.paid.toLocaleString()}`}
               />
               <ContractMetric
                 label="In progress"
-                value={`$${contract.escrow.toLocaleString()}`}
+                value={`R${contract.escrow.toLocaleString()}`}
               />
               <ContractMetric
                 label="Next deadline"
@@ -368,13 +368,13 @@ export function ContractsDashboard() {
               />
             </div>
             <div className="mt-5">
-              <div className="flex justify-between text-[10px] text-[#7b8078]">
+              <div className="flex justify-between text-[10px] text-[#807c78]">
                 <span>Contract progress</span>
                 <span>{contract.progress}%</span>
               </div>
-              <div className="mt-2 h-1.5 rounded-full bg-[#e4e8e1]">
+              <div className="mt-2 h-1.5 rounded-full bg-[#f2e1d7]">
                 <div
-                  className="h-full rounded-full bg-[#658a62]"
+                  className="h-full rounded-full bg-[#e77840]"
                   style={{ width: `${contract.progress}%` }}
                 />
               </div>
@@ -382,7 +382,7 @@ export function ContractsDashboard() {
           </article>
         ))}
         {!isLoading && !contracts.length && (
-          <div className="rounded-2xl border border-dashed border-black/10 bg-white p-10 text-center text-sm text-[#72776f]">
+          <div className="rounded-2xl border border-dashed border-black/10 bg-white p-10 text-center text-sm text-[#77736f]">
             No contracts yet.
           </div>
         )}
@@ -414,7 +414,7 @@ export function ContractsDashboard() {
 function Summary({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-black/8 bg-white p-5">
-      <p className="text-xs text-[#7b8078]">{label}</p>
+      <p className="text-xs text-[#807c78]">{label}</p>
       <p className="mt-2 text-2xl font-semibold">{value}</p>
     </div>
   );
@@ -423,11 +423,11 @@ function Summary({ label, value }: { label: string; value: string }) {
 function ContractsSkeleton() {
   return (
     <div className="animate-pulse rounded-2xl border border-black/8 bg-white p-6">
-      <div className="h-5 w-28 rounded bg-[#e8ebe6]" />
-      <div className="mt-4 h-6 w-64 rounded bg-[#e8ebe6]" />
+      <div className="h-5 w-28 rounded bg-[#ebe9e6]" />
+      <div className="mt-4 h-6 w-64 rounded bg-[#ebe9e6]" />
       <div className="mt-6 grid gap-4 sm:grid-cols-4">
         {[0, 1, 2, 3].map((item) => (
-          <div key={item} className="h-16 rounded-xl bg-[#f0f2ee]" />
+          <div key={item} className="h-16 rounded-xl bg-[#f8eee9]" />
         ))}
       </div>
     </div>
@@ -436,8 +436,8 @@ function ContractsSkeleton() {
 
 function ContractMetric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-[#f3f5f1] p-3">
-      <p className="text-[9px] text-[#858a82]">{label}</p>
+    <div className="rounded-xl bg-[#f9f1ed] p-3">
+      <p className="text-[9px] text-[#8a8682]">{label}</p>
       <p className="mt-1 text-xs font-semibold">{value}</p>
     </div>
   );
@@ -491,33 +491,33 @@ function ContractDrawer({
       <aside className="absolute top-0 right-0 h-full w-full max-w-2xl overflow-y-auto bg-white p-5 sm:p-7">
         <div className="flex justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold text-[#62805f]">
+            <p className="text-xs font-semibold text-[#e66d31]">
               {contract.accountType} contract
             </p>
             <h2 className="mt-2 text-2xl font-semibold">{contract.title}</h2>
-            <p className="mt-1 text-sm text-[#747a72]">{contract.talent}</p>
+            <p className="mt-1 text-sm text-[#7a7672]">{contract.talent}</p>
           </div>
           <button type="button" onClick={onClose} className="cursor-pointer">
             <Icon icon="solar:close-circle-linear" width="24" />
           </button>
         </div>
-        <p className="mt-6 text-sm leading-7 text-[#686e66]">
+        <p className="mt-6 text-sm leading-7 text-[#6e6a66]">
           {contract.description}
         </p>
         <MilestoneProgress contract={contract} />
-        <div className="mt-4 flex gap-3 rounded-xl border border-[#d3e1cf] bg-[#edf4ea] p-4">
+        <div className="mt-4 flex gap-3 rounded-xl border border-[#ecd3c4] bg-[#faece4] p-4">
           <Icon
             icon="solar:shield-check-linear"
             width="20"
-            className="shrink-0 text-[#52784f]"
+            className="shrink-0 text-[#dd5c1b]"
           />
           <div>
-            <p className="text-xs font-semibold text-[#486d45]">
+            <p className="text-xs font-semibold text-[#c65218]">
               Milestone payment protection
             </p>
-            <p className="mt-1 text-[10px] leading-5 text-[#637061]">
+            <p className="mt-1 text-[10px] leading-5 text-[#706961]">
               Funded payments remain protected until milestones are approved. We
-              release payment to the freelancer only after the work is submitted
+              release payment to the pro only after the work is submitted
               and you confirm that the milestone is complete.
             </p>
           </div>
@@ -554,16 +554,16 @@ function ContractDrawer({
                     </span>
                     <div>
                       <p className="text-xs font-semibold">{milestone.title}</p>
-                      <p className="mt-1 text-[10px] text-[#858a82]">
+                      <p className="mt-1 text-[10px] text-[#8a8682]">
                         Due {milestone.due}
                       </p>
                     </div>
                   </div>
                   <div className="shrink-0 text-right">
                     <p className="text-xs font-semibold">
-                      ${milestone.amount.toLocaleString()}
+                      R{milestone.amount.toLocaleString()}
                     </p>
-                    <p className="mt-1 text-[10px] text-[#858a82]">
+                    <p className="mt-1 text-[10px] text-[#8a8682]">
                       <span
                         className={`inline-flex rounded-full px-2 py-1 font-semibold ${tone.badge}`}
                       >
@@ -575,11 +575,11 @@ function ContractDrawer({
                 {milestone.status === "Submitted" &&
                   milestone.submissionComment && (
                     <div className="mt-4 rounded-xl bg-white/80 p-3">
-                      <p className="flex items-center gap-1.5 text-[9px] font-semibold tracking-wide text-[#70806d] uppercase">
+                      <p className="flex items-center gap-1.5 text-[9px] font-semibold tracking-wide text-[#80766d] uppercase">
                         <Icon icon="solar:letter-linear" width="14" />
-                        Freelancer submission comment
+                        Pro submission comment
                       </p>
-                      <p className="mt-2 text-[11px] leading-5 text-[#616860]">
+                      <p className="mt-2 text-[11px] leading-5 text-[#686460]">
                         {milestone.submissionComment}
                       </p>
                     </div>
@@ -600,7 +600,7 @@ function ContractDrawer({
                       onClick={() =>
                         setDecision({ type: "approve", milestone })
                       }
-                      className="h-9 cursor-pointer rounded-lg bg-[#252724] px-3 text-xs font-semibold text-white"
+                      className="h-9 cursor-pointer rounded-lg bg-[#272624] px-3 text-xs font-semibold text-white"
                     >
                       Approve & release
                     </button>
@@ -608,7 +608,7 @@ function ContractDrawer({
                 )}
                 {canActivate && (
                   <div className="mt-4 flex flex-col justify-between gap-3 border-t border-black/7 pt-4 sm:flex-row sm:items-center">
-                    <p className="text-[10px] leading-5 text-[#747b72]">
+                    <p className="text-[10px] leading-5 text-[#7b7772]">
                       Previous work is complete. Fund this milestone to begin
                       the next phase.
                     </p>
@@ -617,7 +617,7 @@ function ContractDrawer({
                       onClick={() =>
                         setDecision({ type: "activate", milestone })
                       }
-                      className="h-9 shrink-0 cursor-pointer rounded-lg bg-[#52784f] px-3 text-xs font-semibold text-white"
+                      className="h-9 shrink-0 cursor-pointer rounded-lg bg-[#dd5c1b] px-3 text-xs font-semibold text-white"
                     >
                       Activate milestone
                     </button>
@@ -639,7 +639,7 @@ function ContractDrawer({
             <button
               type="button"
               onClick={() => setAddingMilestone(true)}
-              className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+              className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
             >
               Add milestone
             </button>
@@ -650,7 +650,7 @@ function ContractDrawer({
             <button
               type="button"
               onClick={onFinish}
-              className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+              className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
             >
               Give review
             </button>
@@ -700,7 +700,7 @@ function ContractReviewModal({
   const [error, setError] = useState("");
 
   return (
-    <div className="fixed inset-0 z-80 grid place-items-center bg-[#172018]/50 p-5 backdrop-blur-sm">
+    <div className="fixed inset-0 z-80 grid place-items-center bg-[#201a17]/50 p-5 backdrop-blur-sm">
       <form
         className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
         onSubmit={(event) => {
@@ -720,7 +720,7 @@ function ContractReviewModal({
         }}
       >
         <div className="flex items-start justify-between gap-4">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
             <Icon icon="solar:star-bold" width="22" />
           </span>
           <button
@@ -733,7 +733,7 @@ function ContractReviewModal({
           </button>
         </div>
         <h2 className="mt-4 text-xl font-semibold">Review {contract.talent}</h2>
-        <p className="mt-2 text-sm text-[#737970]">
+        <p className="mt-2 text-sm text-[#797570]">
           Share your experience from “{contract.title}”. A review is required to
           finish the contract.
         </p>
@@ -743,7 +743,7 @@ function ContractReviewModal({
               key={value}
               type="button"
               onClick={() => setRating(value)}
-              className={value <= rating ? "text-[#d5a62e]" : "text-[#d9ddd7]"}
+              className={value <= rating ? "text-[#d5a62e]" : "text-[#dddad7]"}
               aria-label={`${value} stars`}
             >
               <Icon icon="solar:star-bold" width="30" />
@@ -758,7 +758,7 @@ function ContractReviewModal({
           value={comment}
           onChange={(event) => setComment(event.target.value)}
           placeholder="Write your review..."
-          className="mt-5 w-full resize-none rounded-xl border border-black/10 p-3 text-sm outline-none focus:border-[#6e916a]"
+          className="mt-5 w-full resize-none rounded-xl border border-black/10 p-3 text-sm outline-none focus:border-[#e77840]"
         />
         {error && <p className="mt-3 text-xs text-red-600">{error}</p>}
         <div className="mt-6 flex justify-end gap-2">
@@ -773,7 +773,7 @@ function ContractReviewModal({
           <button
             type="submit"
             disabled={saving || rating === 0 || comment.trim().length < 10}
-            className="h-10 rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white disabled:opacity-40"
+            className="h-10 rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:opacity-40"
           >
             {saving
               ? "Submitting…"
@@ -811,7 +811,7 @@ function AddMilestoneModal({
   ].join("-");
 
   return (
-    <div className="fixed inset-0 z-70 grid place-items-center bg-[#172018]/50 p-5 backdrop-blur-[3px]">
+    <div className="fixed inset-0 z-70 grid place-items-center bg-[#201a17]/50 p-5 backdrop-blur-[3px]">
       <form
         className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
         onSubmit={(event) => {
@@ -846,7 +846,7 @@ function AddMilestoneModal({
             minLength={3}
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+            className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#e77840]"
           />
         </label>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -859,7 +859,7 @@ function AddMilestoneModal({
               step="0.01"
               value={amount}
               onChange={(event) => setAmount(event.target.value)}
-              className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+              className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#e77840]"
             />
           </label>
           <label className="text-xs font-semibold">
@@ -870,7 +870,7 @@ function AddMilestoneModal({
               min={minimumDueDate}
               value={dueDate}
               onChange={(event) => setDueDate(event.target.value)}
-              className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+              className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#e77840]"
             />
           </label>
         </div>
@@ -887,7 +887,7 @@ function AddMilestoneModal({
           <button
             type="submit"
             disabled={saving || !title.trim() || !amount || !dueDate}
-            className="h-10 rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white disabled:opacity-45"
+            className="h-10 rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:opacity-45"
           >
             {saving ? "Adding…" : "Add milestone"}
           </button>
@@ -936,7 +936,7 @@ function MilestoneDecisionModal({
 
   return (
     <div
-      className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/50 p-5 backdrop-blur-[3px]"
+      className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/50 p-5 backdrop-blur-[3px]"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
@@ -969,7 +969,7 @@ function MilestoneDecisionModal({
               className={`mt-2 w-full resize-none rounded-xl border p-3 text-sm font-normal outline-none ${
                 error
                   ? "border-[#c56b6b] focus:border-[#c56b6b]"
-                  : "border-black/10 focus:border-[#6e916a]"
+                  : "border-black/10 focus:border-[#e77840]"
               }`}
             />
           </label>
@@ -978,7 +978,7 @@ function MilestoneDecisionModal({
               {error}
             </p>
           )}
-          <p className="mt-3 text-[10px] leading-5 text-[#7b8179]">
+          <p className="mt-3 text-[10px] leading-5 text-[#817d79]">
             This feedback will be sent to {contract.talent}, and the milestone
             will return to In progress.
           </p>
@@ -993,7 +993,7 @@ function MilestoneDecisionModal({
             <button
               type="submit"
               disabled={!feedback.trim()}
-              className="h-11 cursor-pointer rounded-xl bg-[#252724] px-5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
+              className="h-11 cursor-pointer rounded-xl bg-[#272624] px-5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
             >
               Send revision request
             </button>
@@ -1014,41 +1014,41 @@ function MilestoneDecisionModal({
           <div className="mt-5 rounded-xl border border-black/8 p-4">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
                   <Icon icon="solar:card-linear" width="19" />
                 </span>
                 <div>
                   <p className="text-xs font-semibold">Milestone payment</p>
-                  <p className="mt-1 text-[9px] text-[#81877f]">
+                  <p className="mt-1 text-[9px] text-[#87837f]">
                     Continue to secure checkout
                   </p>
                 </div>
               </div>
               <strong className="text-sm">
-                ${decision.milestone.amount.toLocaleString()}
+                R{decision.milestone.amount.toLocaleString()}
               </strong>
             </div>
           </div>
 
           <label className="mt-5 block text-xs font-semibold">
             Additional requirements{" "}
-            <span className="font-normal text-[#8a8f87]">(optional)</span>
+            <span className="font-normal text-[#8f8b87]">(optional)</span>
             <textarea
               value={requirements}
               onChange={(event) => setRequirements(event.target.value)}
               rows={4}
               placeholder="Add any updated instructions, priorities, links, or acceptance requirements for this milestone…"
-              className="mt-2 w-full resize-none rounded-xl border border-black/10 p-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+              className="mt-2 w-full resize-none rounded-xl border border-black/10 p-3 text-sm font-normal outline-none focus:border-[#e77840]"
             />
           </label>
 
-          <div className="mt-4 flex gap-3 rounded-xl border border-[#d3e1cf] bg-[#edf4ea] p-4">
+          <div className="mt-4 flex gap-3 rounded-xl border border-[#ecd3c4] bg-[#faece4] p-4">
             <Icon
               icon="solar:shield-check-linear"
               width="21"
-              className="shrink-0 text-[#52784f]"
+              className="shrink-0 text-[#dd5c1b]"
             />
-            <p className="text-[10px] leading-5 text-[#5c6b59]">
+            <p className="text-[10px] leading-5 text-[#6b6259]">
               Your payment stays protected until it's released. It will not be
               released to {contract.talent} until work is submitted and you
               approve the completed milestone.
@@ -1078,7 +1078,7 @@ function MilestoneDecisionModal({
                   setFunding(false);
                 });
               }}
-              className="h-11 cursor-pointer rounded-xl bg-[#252724] px-5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+              className="h-11 cursor-pointer rounded-xl bg-[#272624] px-5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
             >
               {funding ? "Opening checkout…" : "Fund & activate"}
             </button>
@@ -1096,22 +1096,22 @@ function MilestoneDecisionModal({
             title={decision.milestone.title}
             amount={decision.milestone.amount}
           />
-          <div className="mt-5 rounded-xl border border-[#d6e3d2] bg-[#edf4ea] p-4">
+          <div className="mt-5 rounded-xl border border-[#edd6c8] bg-[#faece4] p-4">
             <div className="flex gap-3">
               <Icon
                 icon="solar:wallet-money-linear"
                 width="21"
-                className="shrink-0 text-[#52784f]"
+                className="shrink-0 text-[#dd5c1b]"
               />
-              <p className="text-xs leading-5 text-[#536250]">
+              <p className="text-xs leading-5 text-[#625950]">
                 Approving will release{" "}
-                <strong>${decision.milestone.amount.toLocaleString()}</strong>{" "}
+                <strong>R{decision.milestone.amount.toLocaleString()}</strong>{" "}
                 to {contract.talent} and permanently mark this milestone as
                 completed.
               </p>
             </div>
           </div>
-          <p className="mt-4 text-xs leading-5 text-[#737970]">
+          <p className="mt-4 text-xs leading-5 text-[#797570]">
             Confirm only after you have reviewed the submitted work and are
             satisfied that it meets the milestone requirements.
           </p>
@@ -1126,7 +1126,7 @@ function MilestoneDecisionModal({
             <button
               type="button"
               onClick={onApprove}
-              className="h-11 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white"
+              className="h-11 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white"
             >
               Yes, approve & release
             </button>
@@ -1149,7 +1149,7 @@ function ModalHeading({
   return (
     <div className="flex items-start justify-between gap-4">
       <div>
-        <p className="text-[10px] font-semibold tracking-[.12em] text-[#62805f] uppercase">
+        <p className="text-[10px] font-semibold tracking-[.12em] text-[#e66d31] uppercase">
           {eyebrow}
         </p>
         <h2 className="mt-2 text-xl font-semibold">{title}</h2>
@@ -1158,7 +1158,7 @@ function ModalHeading({
         type="button"
         onClick={onClose}
         aria-label="Close modal"
-        className="cursor-pointer text-[#697067]"
+        className="cursor-pointer text-[#706c67]"
       >
         <Icon icon="solar:close-circle-linear" width="24" />
       </button>
@@ -1174,12 +1174,12 @@ function MilestoneSummary({
   amount: number;
 }) {
   return (
-    <div className="mt-5 flex items-center justify-between gap-4 rounded-xl bg-[#f2f5f0] p-4">
+    <div className="mt-5 flex items-center justify-between gap-4 rounded-xl bg-[#f9f1ec] p-4">
       <div>
-        <p className="text-[9px] text-[#7b8179]">Milestone</p>
+        <p className="text-[9px] text-[#817d79]">Milestone</p>
         <p className="mt-1 text-xs font-semibold">{title}</p>
       </div>
-      <strong className="text-sm">${amount.toLocaleString()}</strong>
+      <strong className="text-sm">R{amount.toLocaleString()}</strong>
     </div>
   );
 }
@@ -1195,19 +1195,19 @@ function MilestoneProgress({ contract }: { contract: ClientContract }) {
   const completion = Math.round((paidAmount / contract.totalBudget) * 100);
 
   return (
-    <section className="mt-7 rounded-2xl border border-black/7 bg-[#f7f9f5] p-4 sm:p-5">
+    <section className="mt-7 rounded-2xl border border-black/7 bg-[#fbf6f3] p-4 sm:p-5">
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-xs font-semibold">Contract completion</p>
-          <p className="mt-1 text-[10px] text-[#7b8179]">
+          <p className="mt-1 text-[10px] text-[#817d79]">
             {paidMilestones.length} of {contract.milestones.length} milestones
             completed
           </p>
         </div>
-        <strong className="text-xl text-[#52784f]">{completion}%</strong>
+        <strong className="text-xl text-[#dd5c1b]">{completion}%</strong>
       </div>
 
-      <div className="mt-4 flex h-2 gap-1 overflow-hidden rounded-full bg-[#e4e8e1]">
+      <div className="mt-4 flex h-2 gap-1 overflow-hidden rounded-full bg-[#f2e1d7]">
         {contract.milestones.map((milestone) => (
           <span
             key={milestone.id}
@@ -1246,12 +1246,12 @@ function milestoneTone(status: ClientContract["milestones"][number]["status"]) {
   switch (status) {
     case "Paid":
       return {
-        bar: "bg-[#5e8b5a]",
-        dot: "bg-[#5e8b5a]",
-        text: "text-[#52784f]",
-        marker: "bg-[#e3f0df] text-[#52784f]",
-        badge: "bg-[#e3f0df] text-[#52784f]",
-        card: "border-[#cadcc6] bg-[#fbfdf9]",
+        bar: "bg-[#e67238]",
+        dot: "bg-[#e67238]",
+        text: "text-[#dd5c1b]",
+        marker: "bg-[#fae3d5] text-[#dd5c1b]",
+        badge: "bg-[#fae3d5] text-[#dd5c1b]",
+        card: "border-[#e7cbbb] bg-[#fffaf7]",
       };
     case "Submitted":
       return {
@@ -1273,11 +1273,11 @@ function milestoneTone(status: ClientContract["milestones"][number]["status"]) {
       };
     default:
       return {
-        bar: "bg-[#d9ddd6]",
-        dot: "bg-[#c8cdc5]",
-        text: "text-[#8a9088]",
-        marker: "bg-[#eef0ec] text-[#777e75]",
-        badge: "bg-[#eef0ec] text-[#777e75]",
+        bar: "bg-[#dddad6]",
+        dot: "bg-[#cdc9c5]",
+        text: "text-[#908c88]",
+        marker: "bg-[#f0eeec] text-[#7e7a75]",
+        badge: "bg-[#f0eeec] text-[#7e7a75]",
         card: "border-black/7 bg-white",
       };
   }

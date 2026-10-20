@@ -45,7 +45,7 @@ export function AgencySidebar() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || "The agency could not be loaded.");
+        throw new Error(result.message || "The company could not be loaded.");
       }
 
       return result.data as AgencySummary | null;
@@ -75,9 +75,9 @@ export function AgencySidebar() {
   const missingTeammates = Math.max(3 - Math.max(members.length - 1, 0), 0);
 
   const strengthSuggestions = [
-    !hasAvatar && "Add an agency logo.",
+    !hasAvatar && "Add a company logo.",
     !hasProfessionalTitle && "Add a professional title.",
-    !hasWebsite && "Add your agency website.",
+    !hasWebsite && "Add your company website.",
     missingTags > 0 &&
       `Add ${missingTags} more skill tag${missingTags === 1 ? "" : "s"}.`,
     missingPortfolio > 0 &&
@@ -90,19 +90,19 @@ export function AgencySidebar() {
     <aside className="grid gap-5 xl:sticky xl:top-24">
       {isLoading ? (
         <section
-          aria-label="Loading agency summary"
+          aria-label="Loading company summary"
           aria-busy="true"
           className="rounded-2xl border border-black/8 bg-white p-5"
         >
           <div className="animate-pulse">
             <div className="flex items-center gap-3">
-              <div className="h-12 w-12 shrink-0 rounded-xl bg-[#dce3d9]" />
+              <div className="h-12 w-12 shrink-0 rounded-xl bg-[#efdace]" />
               <div className="flex-1">
-                <div className="h-4 w-3/4 rounded-full bg-[#e1e5de]" />
-                <div className="mt-2 h-3 w-1/2 rounded-full bg-[#e9ece6]" />
+                <div className="h-4 w-3/4 rounded-full bg-[#e5e2de]" />
+                <div className="mt-2 h-3 w-1/2 rounded-full bg-[#f4e6de]" />
               </div>
             </div>
-            <div className="mt-5 h-1.5 rounded-full bg-[#e1e5de]" />
+            <div className="mt-5 h-1.5 rounded-full bg-[#e5e2de]" />
           </div>
         </section>
       ) : (
@@ -116,32 +116,32 @@ export function AgencySidebar() {
                 className="h-12 w-12 shrink-0 rounded-xl object-cover"
               />
             ) : (
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#496e67] text-sm font-semibold text-white">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#cc5519] text-sm font-semibold text-white">
                 {getInitials(agency?.name ?? "?")}
               </span>
             )}
             <div className="min-w-0">
               <h2 className="truncate font-semibold">
-                {agency?.name ?? "Your agency"}
+                {agency?.name ?? "Your company"}
               </h2>
-              <p className="truncate text-xs text-[#7b8078]">
+              <p className="truncate text-xs text-[#807c78]">
                 {members.length} team member{members.length === 1 ? "" : "s"}
               </p>
             </div>
           </div>
           <div className="mt-5 flex items-center justify-between text-xs">
-            <span className="font-medium">Agency profile</span>
-            <strong className="text-[#52784f]">{strength}%</strong>
+            <span className="font-medium">Company profile</span>
+            <strong className="text-[#dd5c1b]">{strength}%</strong>
             {!isLoading && strength < 100 && (
               <span className="group relative">
                 <button
                   type="button"
-                  aria-label="How to complete your agency profile"
-                  className="flex h-4 w-4 cursor-help items-center justify-center rounded-full border border-[#789075] text-[10px] font-bold text-[#52784f]"
+                  aria-label="How to complete your company profile"
+                  className="flex h-4 w-4 cursor-help items-center justify-center rounded-full border border-[#908375] text-[10px] font-bold text-[#dd5c1b]"
                 >
                   ?
                 </button>
-                <span className="pointer-events-none absolute right-0 bottom-6 z-20 hidden w-56 rounded-xl bg-[#252724] p-3 text-left text-[11px] leading-5 font-normal text-white shadow-xl group-hover:block group-focus-within:block">
+                <span className="pointer-events-none absolute right-0 bottom-6 z-20 hidden w-56 rounded-xl bg-[#272624] p-3 text-left text-[11px] leading-5 font-normal text-white shadow-xl group-hover:block group-focus-within:block">
                   <strong className="mb-1 block font-semibold">
                     Reach 100%
                   </strong>
@@ -154,17 +154,17 @@ export function AgencySidebar() {
               </span>
             )}
           </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#e6e9e3]">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#f3e3d9]">
             <div
-              className="h-full rounded-full bg-[#648b61]"
+              className="h-full rounded-full bg-[#e77840]"
               style={{ width: `${strength}%` }}
             />
           </div>
           <Link
             href={"/profile"}
-            className="mt-4 inline-block text-xs font-semibold text-[#4e774b] hover:underline"
+            className="mt-4 inline-block text-xs font-semibold text-[#d85a1b] hover:underline"
           >
-            Preview agency profile
+            Preview company profile
           </Link>
         </section>
       )}
@@ -177,7 +177,7 @@ export function AgencySidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 rounded-xl px-3 py-3 font-medium transition ${active ? "bg-[#edf4ea] text-[#4e774b]" : "text-[#686d65] hover:bg-black/3"}`}
+              className={`flex items-center gap-3 rounded-xl px-3 py-3 font-medium transition ${active ? "bg-[#faece4] text-[#d85a1b]" : "text-[#6d6965] hover:bg-black/3"}`}
             >
               <Icon name={item.icon} size={19} active={active} />
               {item.label}

@@ -29,14 +29,14 @@ export function AgencySettingsDashboard({
   return (
     <AgencyShell>
       <div>
-        <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
-          Agency account
+        <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
+          Company account
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
           Settings
         </h1>
-        <p className="mt-2 text-sm text-[#72776f]">
-          Manage your agency profile, access, and account preferences.
+        <p className="mt-2 text-sm text-[#77736f]">
+          Manage your company profile, access, and account preferences.
         </p>
       </div>
 

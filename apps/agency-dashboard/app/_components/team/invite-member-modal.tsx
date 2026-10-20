@@ -19,7 +19,7 @@ export function InviteMemberModal({
   const [notifiedInApp, setNotifiedInApp] = useState(false);
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<Exclude<AgencyMemberRole, "Agency owner">>(
-    "Agency member",
+    "Company member",
   );
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -68,23 +68,23 @@ export function InviteMemberModal({
       <div
         role="dialog"
         aria-modal="true"
-        className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/45 p-5 backdrop-blur-[2px]"
+        className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/45 p-5 backdrop-blur-[2px]"
       >
         <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-2xl">
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#e6f2e3] text-[#4d784a]">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#fbe6da] text-[#d85a1b]">
             <Icon name="team" size={29} />
           </span>
           <h2 className="mt-5 text-xl font-semibold">Invitation sent</h2>
-          <p className="mt-2 text-sm leading-6 text-[#737870]">
+          <p className="mt-2 text-sm leading-6 text-[#787470]">
             {email} was invited to join {agencyName}.{" "}
             {notifiedInApp
               ? "They've been notified in their dashboard and can accept it from there."
-              : "We couldn't find an existing freelancer account for that email yet — they'll see the invitation as soon as they sign up with it."}
+              : "We couldn't find an existing pro account for that email yet — they'll see the invitation as soon as they sign up with it."}
           </p>
           <button
             type="button"
             onClick={onClose}
-            className="mt-6 h-11 w-full cursor-pointer rounded-xl bg-[#252724] text-sm font-semibold text-white"
+            className="mt-6 h-11 w-full cursor-pointer rounded-xl bg-[#272624] text-sm font-semibold text-white"
           >
             Back to team
           </button>
@@ -98,7 +98,7 @@ export function InviteMemberModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="invite-title"
-      className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/45 p-5 backdrop-blur-[2px]"
+      className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/45 p-5 backdrop-blur-[2px]"
     >
       <form
         onSubmit={invite}
@@ -106,11 +106,11 @@ export function InviteMemberModal({
       >
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-xs font-semibold tracking-wide text-[#62805f] uppercase">
-              Agency membership
+            <p className="text-xs font-semibold tracking-wide text-[#e66d31] uppercase">
+              Company membership
             </p>
             <h2 id="invite-title" className="mt-2 text-xl font-semibold">
-              Invite a freelancer
+              Invite a pro
             </h2>
           </div>
           <button
@@ -122,9 +122,9 @@ export function InviteMemberModal({
             <Icon name="close" size={25} />
           </button>
         </div>
-        <p className="mt-4 text-sm leading-6 text-[#737870]">
-          Invited freelancers keep their personal accounts and choose whether
-          to join your agency.
+        <p className="mt-4 text-sm leading-6 text-[#787470]">
+          Invited pros keep their personal accounts and choose whether
+          to join your company.
         </p>
         <label className="mt-5 block text-xs font-semibold">
           Email address
@@ -133,12 +133,12 @@ export function InviteMemberModal({
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            placeholder="freelancer@example.com"
-            className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#6e916a]"
+            placeholder="pro@example.co.za"
+            className="mt-2 h-11 w-full rounded-xl border border-black/10 px-3 text-sm font-normal outline-none focus:border-[#e77840]"
           />
         </label>
         <label className="mt-4 block text-xs font-semibold">
-          Agency account role
+          Company account role
           <select
             value={role}
             onChange={(event) =>
@@ -146,12 +146,12 @@ export function InviteMemberModal({
             }
             className="mt-2 h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-normal outline-none"
           >
-            <option>Agency member</option>
+            <option value="Agency member">Company member</option>
             <option>Business manager</option>
           </select>
         </label>
-        <div className="mt-4 rounded-xl bg-[#f3f5f1] p-4 text-xs leading-5 text-[#70766e]">
-          Agency members appear on the public roster after accepting and
+        <div className="mt-4 rounded-xl bg-[#f9f1ed] p-4 text-xs leading-5 text-[#76726e]">
+          Company members appear on the public roster after accepting and
           completing their profile. This does not assign them to client work.
         </div>
         {error && <p className="mt-3 text-xs text-[#a65050]">{error}</p>}
@@ -166,7 +166,7 @@ export function InviteMemberModal({
           <button
             type="submit"
             disabled={submitting}
-            className="h-11 cursor-pointer rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-11 cursor-pointer rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             {submitting ? "Sending…" : "Send invitation"}
           </button>

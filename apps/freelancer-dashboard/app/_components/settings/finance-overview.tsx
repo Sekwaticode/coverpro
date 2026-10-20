@@ -13,7 +13,7 @@ type FinanceOverviewProps = {
 };
 
 const formatCurrency = (value: number) =>
-  `$${value.toLocaleString(undefined, {
+  `R${value.toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
@@ -127,9 +127,9 @@ export function FinanceOverview({
   return (
     <div className="grid gap-5">
       <section className="grid gap-4 md:grid-cols-3">
-        <article className="rounded-2xl bg-[#252724] p-5 text-white">
+        <article className="rounded-2xl bg-[#272624] p-5 text-white">
           <div className="flex items-start justify-between">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-[#a8c5a1]">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-[#d7a98f]">
               <Icon icon="solar:wallet-money-linear" width="21" />
             </span>
             <span className="text-[11px] text-white/55">Available</span>
@@ -145,7 +145,7 @@ export function FinanceOverview({
           <button
             type="button"
             onClick={onWithdraw}
-            className="mt-5 h-10 w-full cursor-pointer rounded-xl bg-white text-xs font-semibold text-[#252724]"
+            className="mt-5 h-10 w-full cursor-pointer rounded-xl bg-white text-xs font-semibold text-[#272624]"
           >
             Withdraw earnings
           </button>
@@ -159,7 +159,7 @@ export function FinanceOverview({
             <button
               type="button"
               onClick={() => onOpenSection("connects")}
-              className="cursor-pointer text-[11px] font-semibold text-[#52784f] hover:underline"
+              className="cursor-pointer text-[11px] font-semibold text-[#dd5c1b] hover:underline"
             >
               View history
             </button>
@@ -167,7 +167,7 @@ export function FinanceOverview({
           <p className="mt-6 text-3xl font-semibold tracking-[-0.045em]">
             {connectsMetadata?.connects ?? "..."}
           </p>
-          <p className="mt-1 text-xs text-[#7b8078]">Connects available</p>
+          <p className="mt-1 text-xs text-[#807c78]">Connects available</p>
           <button
             type="button"
             onClick={onBuyConnects}
@@ -179,13 +179,13 @@ export function FinanceOverview({
 
         <article className="rounded-2xl border border-black/8 bg-white p-5">
           <div className="flex items-start justify-between">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e7f2e4] text-[#4d784a]">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#fae7dc] text-[#d85a1b]">
               <Icon icon="solar:chart-2-linear" width="21" />
             </span>
             <button
               type="button"
               onClick={() => onOpenSection("earnings")}
-              className="cursor-pointer text-[11px] font-semibold text-[#52784f] hover:underline"
+              className="cursor-pointer text-[11px] font-semibold text-[#dd5c1b] hover:underline"
             >
               View report
             </button>
@@ -193,20 +193,20 @@ export function FinanceOverview({
           <p className="mt-6 text-3xl font-semibold tracking-[-0.045em]">
             {earnings ? formatCurrency(earnings.lifetime) : "..."}
           </p>
-          <p className="mt-1 text-xs text-[#7b8078]">Lifetime earnings</p>
+          <p className="mt-1 text-xs text-[#807c78]">Lifetime earnings</p>
           <div className="mt-5 flex h-10 items-end gap-1.5">
             {series.length ? (
               series.map((item) => (
                 <span
                   key={item.month}
-                  className="flex-1 rounded-t bg-[#8ba487]"
+                  className="flex-1 rounded-t bg-[#e77840]"
                   style={{
                     height: `${Math.max(4, Math.round((item.total / chartMax) * 100))}%`,
                   }}
                 />
               ))
             ) : (
-              <span className="w-full text-center text-[11px] text-[#a3a89e]">
+              <span className="w-full text-center text-[11px] text-[#a8a39e]">
                 No earnings yet
               </span>
             )}
@@ -217,7 +217,7 @@ export function FinanceOverview({
       <section className="rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
         <div>
           <h2 className="font-semibold">Quick actions</h2>
-          <p className="mt-1 text-xs text-[#7b8078]">
+          <p className="mt-1 text-xs text-[#807c78]">
             Jump straight to the things you manage most.
           </p>
         </div>
@@ -225,16 +225,16 @@ export function FinanceOverview({
           <button
             type="button"
             onClick={() => onOpenSection("verification")}
-            className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/7 p-4 text-left hover:bg-[#f8f9f6]"
+            className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/7 p-4 text-left hover:bg-[#fbf7f4]"
           >
             <Icon
               icon="solar:user-id-linear"
               width="20"
-              className="shrink-0 text-[#597b56]"
+              className="shrink-0 text-[#e46222]"
             />
             <span className="min-w-0 flex-1">
               <strong className="block text-xs">Identity verification</strong>
-              <span className="mt-1 block truncate text-[11px] text-[#858a82]">
+              <span className="mt-1 block truncate text-[11px] text-[#8a8682]">
                 {identityVerified ? "Verified" : "Not verified yet"}
               </span>
             </span>
@@ -243,16 +243,16 @@ export function FinanceOverview({
           <button
             type="button"
             onClick={() => onOpenSection("withdrawal")}
-            className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/7 p-4 text-left hover:bg-[#f8f9f6]"
+            className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/7 p-4 text-left hover:bg-[#fbf7f4]"
           >
             <Icon
               icon="solar:card-transfer-linear"
               width="20"
-              className="shrink-0 text-[#597b56]"
+              className="shrink-0 text-[#e46222]"
             />
             <span className="min-w-0 flex-1">
               <strong className="block text-xs">Withdrawal methods</strong>
-              <span className="mt-1 block truncate text-[11px] text-[#858a82]">
+              <span className="mt-1 block truncate text-[11px] text-[#8a8682]">
                 Manage payouts on Stripe
               </span>
             </span>
@@ -262,16 +262,16 @@ export function FinanceOverview({
             <button
               type="button"
               onClick={onDownloadStatement}
-              className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/7 p-4 text-left hover:bg-[#f8f9f6]"
+              className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/7 p-4 text-left hover:bg-[#fbf7f4]"
             >
               <Icon
                 icon="solar:document-text-linear"
                 width="20"
-                className="shrink-0 text-[#597b56]"
+                className="shrink-0 text-[#e46222]"
               />
               <span className="min-w-0 flex-1">
                 <strong className="block text-xs">Earnings certificate</strong>
-                <span className="mt-1 block truncate text-[11px] text-[#858a82]">
+                <span className="mt-1 block truncate text-[11px] text-[#8a8682]">
                   Download a signed PDF
                 </span>
               </span>

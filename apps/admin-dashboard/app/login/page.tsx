@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AdminIcon } from "../_components/admin-icon";
 
 export default function LoginPage() {
   const [password, setPassword] = useState("");
@@ -32,21 +31,21 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-[#f4f6f2] p-5">
+    <div className="flex min-h-svh items-center justify-center bg-[#faf3ee] p-5">
       <div className="w-full max-w-sm rounded-2xl border border-black/8 bg-white p-7 shadow-2xl">
         <div className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#252724] text-white">
-            <AdminIcon name="grid" size={18} />
-          </span>
-          <span className="text-lg font-semibold">OneMarketplace.io</span>
+          <img src="/coverpro-logo.png" alt="" className="h-9 w-9 shrink-0 rounded-full" />
+          <span className="text-lg font-semibold">
+              Cover<span className="text-[#ee6c2b]">Pro</span>
+            </span>
         </div>
-        <p className="mt-5 text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+        <p className="mt-5 text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
           Operations console
         </p>
         <h1 className="mt-2 text-2xl font-semibold tracking-[-.03em]">
           Admin access
         </h1>
-        <p className="mt-2 text-sm text-[#72776f]">
+        <p className="mt-2 text-sm text-[#77736f]">
           Enter the admin password to continue.
         </p>
 
@@ -57,13 +56,13 @@ export default function LoginPage() {
             onChange={(event) => setPassword(event.target.value)}
             placeholder="Password"
             autoFocus
-            className="h-11 w-full rounded-xl border border-black/10 px-3 text-sm outline-none focus:border-[#668c63]"
+            className="h-11 w-full rounded-xl border border-black/10 px-3 text-sm outline-none focus:border-[#e77840]"
           />
           {error && <p className="text-xs text-[#9a5953]">{error}</p>}
           <button
             type="submit"
             disabled={!password || submitting}
-            className="h-11 w-full rounded-xl bg-[#252724] text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+            className="h-11 w-full rounded-xl bg-[#272624] text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
             {submitting ? "Checking…" : "Enter"}
           </button>

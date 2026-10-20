@@ -51,10 +51,10 @@ const presentStatus = (status: string): Status => {
 };
 
 const statusStyles: Record<Status, string> = {
-  Interview: "bg-[#e6f2e3] text-[#477344]",
+  Interview: "bg-[#fbe6da] text-[#cc5519]",
   Viewed: "bg-[#e7eef4] text-[#496c86]",
   Submitted: "bg-[#f1f0e7] text-[#766f47]",
-  Archived: "bg-[#f0f1ee] text-[#747971]",
+  Archived: "bg-[#f1f0ee] text-[#797571]",
 };
 
 const activityFor = (status: Status) =>
@@ -80,8 +80,8 @@ const presentProposal = (proposal: ApiProposal): Proposal => {
           day: "numeric",
         })
       : "recently",
-    budget: `$${Number(proposal.budget).toLocaleString()} fixed`,
-    bid: `$${Number(proposal.bidAmount).toLocaleString()}`,
+    budget: `R${Number(proposal.budget).toLocaleString()} fixed`,
+    bid: `R${Number(proposal.bidAmount).toLocaleString()}`,
     duration: proposal.duration,
     connects: 6,
     clientRating: "Not rated",
@@ -140,7 +140,7 @@ export function ProposalsDashboard() {
     proposals.filter((proposal) => proposal.status === status).length;
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] font-(family-name:--font-dm-sans) text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] font-(family-name:--font-dm-sans) text-[#272624]">
       <DashboardHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <div className="grid items-start gap-6 xl:grid-cols-[240px_minmax(0,1fr)]">
@@ -149,19 +149,19 @@ export function ProposalsDashboard() {
           <div className="min-w-0">
             <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
               <div>
-                <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
+                <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
                   Opportunity pipeline
                 </p>
                 <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
                   My proposals
                 </h1>
-                <p className="mt-2 text-sm text-[#72776f]">
+                <p className="mt-2 text-sm text-[#77736f]">
                   Track client activity and keep every opportunity moving.
                 </p>
               </div>
               <Link
                 href="/"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white! hover:bg-[#3b3e39]"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white! hover:bg-[#3e3c39]"
               >
                 <Icon icon="solar:magnifer-linear" width="18" /> Find more work
               </Link>
@@ -173,7 +173,7 @@ export function ProposalsDashboard() {
                   "Interview",
                   count("Interview"),
                   "solar:chat-round-check-linear",
-                  "bg-[#e7f2e4] text-[#4d784a]",
+                  "bg-[#fae7dc] text-[#d85a1b]",
                 ],
                 [
                   "Viewed",
@@ -207,7 +207,7 @@ export function ProposalsDashboard() {
                     <p className="text-2xl font-semibold tracking-[-0.04em]">
                       {value}
                     </p>
-                    <p className="mt-0.5 text-xs text-[#7c8179]">{label}</p>
+                    <p className="mt-0.5 text-xs text-[#817d79]">{label}</p>
                   </div>
                 </div>
               ))}
@@ -222,7 +222,7 @@ export function ProposalsDashboard() {
                         key={tab}
                         type="button"
                         onClick={() => setActiveTab(tab)}
-                        className={`shrink-0 cursor-pointer rounded-lg px-3 py-2 text-xs font-semibold ${activeTab === tab ? "bg-[#edf4ea] text-[#4e774b]" : "text-[#747971] hover:bg-black/3"}`}
+                        className={`shrink-0 cursor-pointer rounded-lg px-3 py-2 text-xs font-semibold ${activeTab === tab ? "bg-[#faece4] text-[#d85a1b]" : "text-[#797571] hover:bg-black/3"}`}
                       >
                         {tab}
                       </button>
@@ -233,7 +233,7 @@ export function ProposalsDashboard() {
                   <Icon
                     icon="solar:magnifer-linear"
                     width="18"
-                    className="text-[#7b8078]"
+                    className="text-[#807c78]"
                   />
                   <input
                     value={search}
@@ -258,15 +258,15 @@ export function ProposalsDashboard() {
                           >
                             {proposal.status}
                           </span>
-                          <span className="text-xs text-[#858a82]">
+                          <span className="text-xs text-[#8a8682]">
                             Submitted {proposal.submitted}
                           </span>
                         </div>
                         <h2 className="mt-3 text-lg font-semibold tracking-[-0.02em]">
                           {proposal.title}
                         </h2>
-                        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#737870]">
-                          <strong className="text-[#343833]">
+                        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#787470]">
+                          <strong className="text-[#383633]">
                             {proposal.company}
                           </strong>
                           <span className="text-[#d1a238]">
@@ -275,7 +275,7 @@ export function ProposalsDashboard() {
                           <span>{proposal.clientSpent}</span>
                         </div>
                         <p
-                          className={`mt-4 inline-flex items-center gap-2 text-xs font-medium ${proposal.status === "Interview" ? "text-[#4d784a]" : "text-[#737870]"}`}
+                          className={`mt-4 inline-flex items-center gap-2 text-xs font-medium ${proposal.status === "Interview" ? "text-[#d85a1b]" : "text-[#787470]"}`}
                         >
                           <Icon
                             icon={
@@ -293,7 +293,7 @@ export function ProposalsDashboard() {
                           <p className="text-sm font-semibold">
                             {proposal.bid}
                           </p>
-                          <p className="mt-1 text-[11px] text-[#858a82]">
+                          <p className="mt-1 text-[11px] text-[#8a8682]">
                             Your bid · {proposal.duration}
                           </p>
                         </div>
@@ -307,7 +307,7 @@ export function ProposalsDashboard() {
                         {proposal.status === "Interview" && (
                           <button
                             type="button"
-                            className="cursor-pointer rounded-xl bg-[#252724] px-4 py-2.5 text-xs font-semibold text-white"
+                            className="cursor-pointer rounded-xl bg-[#272624] px-4 py-2.5 text-xs font-semibold text-white"
                           >
                             Message client
                           </button>
@@ -321,16 +321,16 @@ export function ProposalsDashboard() {
                     <Icon
                       icon="solar:document-text-linear"
                       width="34"
-                      className="mx-auto text-[#858a82]"
+                      className="mx-auto text-[#8a8682]"
                     />
                     <h2 className="mt-4 font-semibold">No proposals found</h2>
-                    <p className="mt-2 text-sm text-[#7c8179]">
+                    <p className="mt-2 text-sm text-[#817d79]">
                       Try another status or search term.
                     </p>
                   </div>
                 )}
                 {userLoaded && isLoading && (
-                  <div className="px-6 py-16 text-center text-sm text-[#7c8179]">
+                  <div className="px-6 py-16 text-center text-sm text-[#817d79]">
                     Loading proposals...
                   </div>
                 )}
@@ -345,12 +345,12 @@ export function ProposalsDashboard() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="proposal-detail-title"
-          className="fixed inset-0 z-50 flex justify-end bg-[#172018]/45 backdrop-blur-[2px]"
+          className="fixed inset-0 z-50 flex justify-end bg-[#201a17]/45 backdrop-blur-[2px]"
         >
           <div className="h-full w-full max-w-xl overflow-y-auto bg-white shadow-2xl">
             <div className="sticky top-0 z-10 flex items-start justify-between border-b border-black/8 bg-white px-6 py-5 sm:px-8">
               <div>
-                <p className="text-xs font-semibold tracking-wide text-[#62805f] uppercase">
+                <p className="text-xs font-semibold tracking-wide text-[#e66d31] uppercase">
                   Proposal details
                 </p>
                 <h2
@@ -379,7 +379,7 @@ export function ProposalsDashboard() {
                 <Link
                   href={`/jobs/${selected.jobId}`}
                   target="_blank"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#52784f] hover:underline"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b] hover:underline"
                 >
                   View job post{" "}
                   <Icon icon="solar:arrow-right-up-linear" width="15" />
@@ -394,16 +394,16 @@ export function ProposalsDashboard() {
                 ].map(([label, value]) => (
                   <div
                     key={String(label)}
-                    className="rounded-xl bg-[#f3f5f1] p-3"
+                    className="rounded-xl bg-[#f9f1ed] p-3"
                   >
-                    <p className="text-[10px] text-[#858a82]">{label}</p>
+                    <p className="text-[10px] text-[#8a8682]">{label}</p>
                     <p className="mt-1.5 text-sm font-semibold">{value}</p>
                   </div>
                 ))}
               </div>
               <section>
                 <h3 className="text-sm font-semibold">Cover letter</h3>
-                <p className="mt-3 whitespace-pre-line rounded-xl border border-black/8 p-4 text-sm leading-7 text-[#666c64]">
+                <p className="mt-3 whitespace-pre-line rounded-xl border border-black/8 p-4 text-sm leading-7 text-[#6c6864]">
                   {selected.coverLetter}
                 </p>
               </section>
@@ -413,18 +413,18 @@ export function ProposalsDashboard() {
                   {selected.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="rounded-lg bg-[#edf2eb] px-2.5 py-1.5 text-xs font-medium"
+                      className="rounded-lg bg-[#f7ece6] px-2.5 py-1.5 text-xs font-medium"
                     >
                       {skill}
                     </span>
                   ))}
                 </div>
               </section>
-              <section className="rounded-xl bg-[#edf4ea] p-4">
-                <p className="text-xs font-semibold text-[#4e774b]">
+              <section className="rounded-xl bg-[#faece4] p-4">
+                <p className="text-xs font-semibold text-[#d85a1b]">
                   {selected.activity}
                 </p>
-                <p className="mt-1 text-xs leading-5 text-[#697168]">
+                <p className="mt-1 text-xs leading-5 text-[#716d68]">
                   We’ll notify you when the client takes another action.
                 </p>
               </section>
@@ -438,7 +438,7 @@ export function ProposalsDashboard() {
           role="alertdialog"
           aria-modal="true"
           aria-labelledby="withdraw-title"
-          className="fixed inset-0 z-60 flex items-center justify-center bg-[#172018]/55 p-4"
+          className="fixed inset-0 z-60 flex items-center justify-center bg-[#201a17]/55 p-4"
         >
           <div className="w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f4eaea] text-[#925f5f]">
@@ -447,7 +447,7 @@ export function ProposalsDashboard() {
             <h2 id="withdraw-title" className="mt-5 text-xl font-semibold">
               Withdraw this proposal?
             </h2>
-            <p className="mt-2 text-sm leading-6 text-[#737870]">
+            <p className="mt-2 text-sm leading-6 text-[#787470]">
               The client will no longer be able to hire you from this proposal.
               This action cannot be undone.
             </p>

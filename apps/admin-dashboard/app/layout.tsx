@@ -9,8 +9,8 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Admin Dashboard | OneMarketplace.io",
-    template: "%s | OneMarketplace.io Admin",
+    default: "Admin Dashboard | CoverPro",
+    template: "%s | CoverPro Admin",
   },
   description:
     "Monitor marketplace activity, users, contracts, payments, and trust operations.",
@@ -20,7 +20,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} antialiased`}>
+    <html lang="en-ZA" className={`${dmSans.variable} antialiased`}>
       <body>{children}</body>
     </html>
   );

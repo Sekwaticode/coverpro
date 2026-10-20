@@ -88,26 +88,26 @@ export function AgencyInvitationsDashboard() {
   };
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] font-(family-name:--font-dm-sans) text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] font-(family-name:--font-dm-sans) text-[#272624]">
       <DashboardHeader />
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <div className="grid items-start gap-6 xl:grid-cols-[240px_minmax(0,1fr)]">
           <WorkspaceSidebar />
 
           <div className="min-w-0">
-            <p className="text-xs font-semibold tracking-[0.14em] text-[#62805f] uppercase">
-              Agency membership
+            <p className="text-xs font-semibold tracking-[0.14em] text-[#e66d31] uppercase">
+              Company membership
             </p>
             <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
-              Agency invitations
+              Company invitations
             </h1>
-            <p className="mt-2 text-sm text-[#72776f]">
-              Review invitations to join an agency team. You keep your
-              personal freelancer account either way.
+            <p className="mt-2 text-sm text-[#77736f]">
+              Review invitations to join a company team. You keep your
+              personal pro account either way.
             </p>
 
             {notice && (
-              <div className="mt-5 flex items-center justify-between rounded-xl border border-[#cfdfcb] bg-[#edf4ea] px-4 py-3 text-xs font-medium text-[#4e774b]">
+              <div className="mt-5 flex items-center justify-between rounded-xl border border-[#ebcfbf] bg-[#faece4] px-4 py-3 text-xs font-medium text-[#d85a1b]">
                 <span className="inline-flex items-center gap-2">
                   <Icon icon="solar:check-circle-bold" width="17" /> {notice}
                 </span>
@@ -128,8 +128,8 @@ export function AgencyInvitationsDashboard() {
             <div className="mt-6 grid gap-4">
               {isLoading && (
                 <div className="animate-pulse rounded-2xl border border-black/8 bg-white p-6">
-                  <div className="h-5 w-40 rounded bg-[#e8ebe6]" />
-                  <div className="mt-4 h-4 w-64 rounded bg-[#e8ebe6]" />
+                  <div className="h-5 w-40 rounded bg-[#ebe9e6]" />
+                  <div className="mt-4 h-4 w-64 rounded bg-[#ebe9e6]" />
                 </div>
               )}
               {!isLoading &&
@@ -140,7 +140,7 @@ export function AgencyInvitationsDashboard() {
                   >
                     <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
                       <div className="flex items-center gap-3">
-                        <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#496e67] text-sm font-semibold text-white">
+                        <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#cc5519] text-sm font-semibold text-white">
                           {invitation.agencyAvatar ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
@@ -156,7 +156,7 @@ export function AgencyInvitationsDashboard() {
                           <h2 className="truncate font-semibold">
                             {invitation.agencyName}
                           </h2>
-                          <p className="mt-1 text-xs text-[#7b8078]">
+                          <p className="mt-1 text-xs text-[#807c78]">
                             Invited you as {invitation.role} ·{" "}
                             {format(invitation.createdAt)}
                           </p>
@@ -175,7 +175,7 @@ export function AgencyInvitationsDashboard() {
                           type="button"
                           disabled={respondingId === invitation.id}
                           onClick={() => void respond(invitation, true)}
-                          className="h-10 cursor-pointer rounded-xl bg-[#252724] px-4 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+                          className="h-10 cursor-pointer rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           {respondingId === invitation.id
                             ? "Accepting…"
@@ -190,11 +190,11 @@ export function AgencyInvitationsDashboard() {
                   <Icon
                     icon="solar:letter-linear"
                     width="34"
-                    className="mx-auto text-[#858a82]"
+                    className="mx-auto text-[#8a8682]"
                   />
                   <h2 className="mt-4 font-semibold">No pending invitations</h2>
-                  <p className="mt-2 text-sm text-[#7c8179]">
-                    You don't have any agency invitations waiting right now.
+                  <p className="mt-2 text-sm text-[#817d79]">
+                    You don't have any company invitations waiting right now.
                   </p>
                 </div>
               )}

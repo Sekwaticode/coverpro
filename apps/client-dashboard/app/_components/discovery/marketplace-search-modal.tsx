@@ -25,10 +25,10 @@ type MarketplaceResult = {
 };
 
 const popularSearches = [
-  "Next.js",
-  "Product design",
-  "Applied AI",
-  "Design systems",
+  "Tiling",
+  "Roofing",
+  "Plumbing",
+  "Ceilings",
 ];
 
 const typeParam = (filter: AccountFilter) =>
@@ -143,14 +143,14 @@ export function MarketplaceSearchModal() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex h-10 cursor-pointer items-center gap-2 rounded-xl border border-black/8 px-3 text-[#656b63] transition-colors hover:border-[#a8bda5] hover:bg-[#f5f8f3] sm:w-60 xl:w-72"
-        aria-label="Search talent and agencies"
+        className="flex h-10 cursor-pointer items-center gap-2 rounded-xl border border-black/8 px-3 text-[#6b6763] transition-colors hover:border-[#d4a88e] hover:bg-[#fbf4f0] sm:w-60 xl:w-72"
+        aria-label="Search talent and companies"
       >
         <Icon icon="solar:magnifer-linear" width="19" />
         <span className="hidden flex-1 text-left text-xs sm:block">
           Search marketplace
         </span>
-        <span className="hidden rounded-md border border-black/8 bg-[#f4f6f2] px-1.5 py-1 text-[9px] text-[#8b9089] sm:block">
+        <span className="hidden rounded-md border border-black/8 bg-[#faf3ee] px-1.5 py-1 text-[9px] text-[#908d89] sm:block">
           ⌘ K
         </span>
       </button>
@@ -158,7 +158,7 @@ export function MarketplaceSearchModal() {
       {open &&
         createPortal(
         <div
-          className="fixed inset-0 z-60 flex items-start justify-center bg-[#172017]/38 px-3 py-5 backdrop-blur-[3px] sm:px-6 sm:py-16"
+          className="fixed inset-0 z-60 flex items-start justify-center bg-[#201a17]/38 px-3 py-5 backdrop-blur-[3px] sm:px-6 sm:py-16"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) closeModal();
           }}
@@ -167,36 +167,36 @@ export function MarketplaceSearchModal() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="marketplace-search-title"
-            className="flex max-h-[calc(100svh-2.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_30px_100px_rgba(20,28,20,.28)] sm:max-h-[calc(100svh-8rem)]"
+            className="flex max-h-[calc(100svh-2.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_30px_100px_rgba(28,23,20,.28)] sm:max-h-[calc(100svh-8rem)]"
           >
             <header className="border-b border-black/7 p-4 sm:p-5">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-[10px] font-semibold tracking-[.13em] text-[#62805f] uppercase">
+                  <p className="text-[10px] font-semibold tracking-[.13em] text-[#e66d31] uppercase">
                     Marketplace search
                   </p>
                   <h2
                     id="marketplace-search-title"
                     className="mt-1 text-lg font-semibold"
                   >
-                    Find talent or an agency
+                    Find pros or a company
                   </h2>
                 </div>
                 <button
                   type="button"
                   onClick={closeModal}
                   aria-label="Close marketplace search"
-                  className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-black/8 text-[#697067] hover:bg-black/4"
+                  className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-black/8 text-[#706c67] hover:bg-black/4"
                 >
                   <Icon icon="solar:close-circle-linear" width="21" />
                 </button>
               </div>
 
-              <label className="mt-4 flex h-13 items-center gap-3 rounded-xl border border-black/10 bg-[#f8faf7] px-4 focus-within:border-[#82a17f] focus-within:ring-3 focus-within:ring-[#dfeadb]">
+              <label className="mt-4 flex h-13 items-center gap-3 rounded-xl border border-black/10 bg-[#fcf8f5] px-4 focus-within:border-[#e77840] focus-within:ring-3 focus-within:ring-[#f3ded2]">
                 <Icon
                   icon="solar:magnifer-linear"
                   width="21"
-                  className="shrink-0 text-[#657064]"
+                  className="shrink-0 text-[#706a64]"
                 />
                 <span className="sr-only">Search marketplace</span>
                 <input
@@ -205,13 +205,13 @@ export function MarketplaceSearchModal() {
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Search by name, role, location, or skill"
-                  className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[#9ba19a]"
+                  className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[#a19e9a]"
                 />
                 {query && (
                   <button
                     type="button"
                     onClick={() => setQuery("")}
-                    className="text-[10px] font-semibold text-[#52784f]"
+                    className="text-[10px] font-semibold text-[#dd5c1b]"
                   >
                     Clear
                   </button>
@@ -219,7 +219,7 @@ export function MarketplaceSearchModal() {
               </label>
 
               <div className="mt-3 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-                <div className="flex items-center gap-1 rounded-lg bg-[#f0f3ed] p-1">
+                <div className="flex items-center gap-1 rounded-lg bg-[#f8eee9] p-1">
                   {(["All", "Freelancer", "Agency"] as AccountFilter[]).map(
                     (option) => (
                       <button
@@ -229,8 +229,8 @@ export function MarketplaceSearchModal() {
                         onClick={() => setAccountFilter(option)}
                         className={`h-8 rounded-md px-3 text-[10px] font-semibold ${
                           accountFilter === option
-                            ? "bg-white text-[#52784f] shadow-sm"
-                            : "text-[#727870]"
+                            ? "bg-white text-[#dd5c1b] shadow-sm"
+                            : "text-[#787470]"
                         }`}
                       >
                         {option === "Freelancer" ? "Talent" : option}
@@ -238,7 +238,7 @@ export function MarketplaceSearchModal() {
                     ),
                   )}
                 </div>
-                <p className="text-[10px] text-[#858b83]">
+                <p className="text-[10px] text-[#8b8783]">
                   {isLoading
                     ? "Searching..."
                     : `${results.length} ${results.length === 1 ? "result" : "results"}`}
@@ -249,7 +249,7 @@ export function MarketplaceSearchModal() {
             <div className="min-h-0 flex-1 overflow-y-auto">
               {!query && accountFilter === "All" && (
                 <div className="flex flex-wrap items-center gap-2 border-b border-black/6 px-4 py-3 sm:px-5">
-                  <span className="mr-1 text-[10px] text-[#858b83]">
+                  <span className="mr-1 text-[10px] text-[#8b8783]">
                     Popular:
                   </span>
                   {popularSearches.map((term) => (
@@ -257,7 +257,7 @@ export function MarketplaceSearchModal() {
                       key={term}
                       type="button"
                       onClick={() => setQuery(term)}
-                      className="rounded-lg bg-[#f1f4ef] px-2.5 py-1.5 text-[10px] text-[#596257] hover:bg-[#e4ede1] hover:text-[#52784f]"
+                      className="rounded-lg bg-[#f8f0eb] px-2.5 py-1.5 text-[10px] text-[#625d57] hover:bg-[#f4e3da] hover:text-[#dd5c1b]"
                     >
                       {term}
                     </button>
@@ -273,10 +273,10 @@ export function MarketplaceSearchModal() {
                       className="animate-pulse border-b border-black/6 p-4 odd:sm:border-r sm:p-5"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="h-11 w-11 shrink-0 rounded-full bg-[#eef0ec]" />
+                        <div className="h-11 w-11 shrink-0 rounded-full bg-[#f0eeec]" />
                         <div className="min-w-0 flex-1">
-                          <div className="h-3 w-28 rounded bg-[#eef0ec]" />
-                          <div className="mt-2 h-2.5 w-20 rounded bg-[#f1f3ef]" />
+                          <div className="h-3 w-28 rounded bg-[#f0eeec]" />
+                          <div className="mt-2 h-2.5 w-20 rounded bg-[#f8efea]" />
                         </div>
                       </div>
                     </div>
@@ -296,20 +296,20 @@ export function MarketplaceSearchModal() {
                   </div>
                   <div ref={sentinelRef} className="h-1" />
                   {isFetchingNextPage && (
-                    <p className="py-4 text-center text-[10px] text-[#858b83]">
+                    <p className="py-4 text-center text-[10px] text-[#8b8783]">
                       Loading more...
                     </p>
                   )}
                 </>
               ) : (
                 <div className="flex min-h-72 flex-col items-center justify-center px-6 text-center">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#edf4ea] text-[#52784f]">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#faece4] text-[#dd5c1b]">
                     <Icon icon="solar:magnifer-linear" width="25" />
                   </span>
                   <h3 className="mt-4 text-sm font-semibold">
                     No matching profiles
                   </h3>
-                  <p className="mt-2 max-w-sm text-xs leading-5 text-[#7b8078]">
+                  <p className="mt-2 max-w-sm text-xs leading-5 text-[#807c78]">
                     Try another name, role, location, or skill.
                   </p>
                 </div>
@@ -358,7 +358,7 @@ function SearchResult({
           />
         ) : (
           <span
-            className={`flex h-11 w-11 shrink-0 items-center justify-center bg-[#527a73] text-xs font-semibold text-white ${
+            className={`flex h-11 w-11 shrink-0 items-center justify-center bg-[#e35e1c] text-xs font-semibold text-white ${
               agency ? "rounded-xl" : "rounded-full"
             }`}
           >
@@ -372,18 +372,18 @@ function SearchResult({
               <Icon
                 icon="solar:verified-check-bold"
                 width="14"
-                className="shrink-0 text-[#5b8658]"
+                className="shrink-0 text-[#e56d30]"
               />
             )}
-            <span className="rounded-full bg-[#eef3eb] px-2 py-1 text-[8px] font-semibold text-[#587655]">
+            <span className="rounded-full bg-[#f8ede6] px-2 py-1 text-[8px] font-semibold text-[#e25e1c]">
               {agency ? "Agency" : "Talent"}
             </span>
           </div>
-          <p className="mt-1 truncate text-[10px] text-[#686f66]">
+          <p className="mt-1 truncate text-[10px] text-[#6f6b66]">
             {profile.title}
           </p>
           {profile.location && (
-            <p className="mt-1 flex items-center gap-1 text-[9px] text-[#929790]">
+            <p className="mt-1 flex items-center gap-1 text-[9px] text-[#979390]">
               <Icon icon="solar:map-point-linear" width="12" />
               <span className="truncate">{profile.location}</span>
             </p>
@@ -397,7 +397,7 @@ function SearchResult({
             key={skill}
             type="button"
             onClick={() => setQuery(skill)}
-            className="inline-flex h-5 items-center rounded-md bg-[#f0f3ed] px-2 text-[9px] leading-none font-medium text-[#667064] transition-colors hover:bg-[#e4ede1] hover:text-[#52784f]"
+            className="inline-flex h-5 items-center rounded-md bg-[#f8eee9] px-2 text-[9px] leading-none font-medium text-[#706a64] transition-colors hover:bg-[#f4e3da] hover:text-[#dd5c1b]"
           >
             {skill}
           </button>
@@ -405,16 +405,16 @@ function SearchResult({
       </div>
 
       <div className="mt-4 flex items-center justify-between gap-3 border-t border-black/6 pt-3">
-        <div className="flex gap-3 text-[9px] text-[#81877f]">
+        <div className="flex gap-3 text-[9px] text-[#87837f]">
           <span>
-            <strong className="text-[10px] text-[#30332f]">
+            <strong className="text-[10px] text-[#33312f]">
               {profile.jobSuccess}%
             </strong>{" "}
             success
           </span>
           <span className="flex items-center gap-1">
             <Icon icon="solar:star-bold" width="11" className="text-[#d3a631]" />
-            <strong className="text-[10px] text-[#30332f]">
+            <strong className="text-[10px] text-[#33312f]">
               {profile.rating}
             </strong>
           </span>
@@ -422,7 +422,7 @@ function SearchResult({
         <Link
           href={profileHref}
           onClick={closeModal}
-          className="inline-flex h-8 items-center justify-center gap-1 rounded-lg bg-[#252724] px-3 text-[10px] font-semibold text-white"
+          className="inline-flex h-8 items-center justify-center gap-1 rounded-lg bg-[#272624] px-3 text-[10px] font-semibold text-white"
         >
           View profile
           <Icon icon="solar:arrow-right-up-linear" width="13" />

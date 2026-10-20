@@ -43,12 +43,12 @@ export default async function AccountsPage({
       <PageHeader
         eyebrow="Directory"
         title="Accounts"
-        description="Every freelancer, client, and agency account, newest first."
+        description="Every pro, client, and company account, newest first."
       />
       {error && <ErrorBanner message={error} />}
       <TableShell
         title="Account explorer"
-        description="Clients, freelancers, and agencies in one place"
+        description="Clients, pros, and companies in one place"
         count={accounts.length}
         footer={
           <Pagination
@@ -61,7 +61,7 @@ export default async function AccountsPage({
         }
       >
         <table className="w-full min-w-180 border-collapse text-left">
-          <thead className="bg-[#fafbf9] text-[10px] font-semibold tracking-[.08em] text-[#7c8179] uppercase">
+          <thead className="bg-[#fdf9f7] text-[10px] font-semibold tracking-[.08em] text-[#817d79] uppercase">
             <tr>
               <th className="px-5 py-3">Account</th>
               <th className="px-5 py-3">Type</th>
@@ -74,7 +74,7 @@ export default async function AccountsPage({
             {accounts.map((account) => (
               <tr
                 key={account.id}
-                className="border-t border-black/6 text-xs hover:bg-[#fafbf9]"
+                className="border-t border-black/6 text-xs hover:bg-[#fdf9f7]"
               >
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
@@ -86,15 +86,15 @@ export default async function AccountsPage({
                         className="h-9 w-9 rounded-full object-cover"
                       />
                     ) : (
-                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#527a73] text-[9px] font-semibold text-white">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e35e1c] text-[9px] font-semibold text-white">
                         {initialsFor(account.name)}
                       </span>
                     )}
                     <strong>{account.name}</strong>
                   </div>
                 </td>
-                <td className="px-5 py-4 text-[#71766e]">{account.type}</td>
-                <td className="px-5 py-4 text-[#71766e]">{account.email}</td>
+                <td className="px-5 py-4 text-[#76726e]">{account.type}</td>
+                <td className="px-5 py-4 text-[#76726e]">{account.email}</td>
                 <td className="px-5 py-4">
                   <div className="flex flex-wrap gap-1.5">
                     {account.verified && <Badge label="Verified" tone="green" />}
@@ -105,7 +105,7 @@ export default async function AccountsPage({
                     )}
                   </div>
                 </td>
-                <td className="px-5 py-4 text-[#858a82]">
+                <td className="px-5 py-4 text-[#8a8682]">
                   {formatDate(account.createdAt)}
                 </td>
               </tr>

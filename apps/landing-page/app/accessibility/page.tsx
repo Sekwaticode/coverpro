@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "../_components/legal-page";
 
 export const metadata: Metadata = {
-  title: "Accessibility | OneMarketplace.io",
+  title: "Accessibility | CoverPro",
   description:
-    "Learn about OneMarketplace.io's commitment to an accessible marketplace.",
+    "Learn about CoverPro's commitment to an accessible marketplace.",
 };
 
 const sections: LegalSection[] = [
@@ -13,7 +13,7 @@ const sections: LegalSection[] = [
     title: "Our commitment",
     content: (
       <p>
-        OneMarketplace.io is committed to making its marketplace usable by as
+        CoverPro is committed to making its marketplace usable by as
         many people as possible, including people with disabilities. We treat
         accessibility as an ongoing part of product design, engineering,
         content, and support.
@@ -72,8 +72,8 @@ const sections: LegalSection[] = [
         </p>
         <p>
           Email{" "}
-          <a href="mailto:accessibility@onemarketplace.io">
-            accessibility@onemarketplace.io
+          <a href="mailto:accessibility@coverpro.co.za">
+            accessibility@coverpro.co.za
           </a>
           . We will acknowledge feedback and work to provide an accessible
           alternative when possible.
@@ -98,7 +98,7 @@ export default function AccessibilityPage() {
     <LegalPage
       eyebrow="Accessibility"
       title="A marketplace designed to include everyone."
-      introduction="We are building OneMarketplace.io so clients, talent, and agencies can discover opportunities and work together with fewer barriers."
+      introduction="We are building CoverPro so clients, pros, and companies can discover opportunities and work together with fewer barriers."
       updated="July 25, 2026"
       sections={sections}
     />

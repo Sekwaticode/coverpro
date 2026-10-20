@@ -38,7 +38,7 @@ export function FinanceModal({ onClose }: FinanceModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="finance-modal-title"
-      className="fixed inset-0 z-60 grid place-items-center bg-[#172018]/45 p-5 backdrop-blur-[2px]"
+      className="fixed inset-0 z-60 grid place-items-center bg-[#201a17]/45 p-5 backdrop-blur-[2px]"
     >
       <form
         onSubmit={(event) => {
@@ -49,7 +49,7 @@ export function FinanceModal({ onClose }: FinanceModalProps) {
       >
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-xs font-semibold tracking-wide text-[#62805f] uppercase">
+            <p className="text-xs font-semibold tracking-wide text-[#e66d31] uppercase">
               Proposal credits
             </p>
             <h2 id="finance-modal-title" className="mt-2 text-xl font-semibold">
@@ -71,20 +71,20 @@ export function FinanceModal({ onClose }: FinanceModalProps) {
               key={amount}
               type="button"
               onClick={() => setConnects(amount)}
-              className={`cursor-pointer rounded-xl border p-4 text-center ${connects === amount ? "border-[#6b9167] bg-[#edf4ea]" : "border-black/9"}`}
+              className={`cursor-pointer rounded-xl border p-4 text-center ${connects === amount ? "border-[#e77840] bg-[#faece4]" : "border-black/9"}`}
             >
               <strong className="block text-lg">{amount}</strong>
-              <span className="mt-1 block text-[10px] text-[#7b8078]">
-                ${(amount * 0.15).toFixed(2)}
+              <span className="mt-1 block text-[10px] text-[#807c78]">
+                R{(amount * 0.15).toFixed(2)}
               </span>
             </button>
           ))}
         </div>
-        <div className="mt-5 flex items-center justify-between rounded-xl bg-[#f3f5f1] p-4 text-sm">
+        <div className="mt-5 flex items-center justify-between rounded-xl bg-[#f9f1ed] p-4 text-sm">
           <span>Total</span>
-          <strong>${(connects * 0.15).toFixed(2)}</strong>
+          <strong>R{(connects * 0.15).toFixed(2)}</strong>
         </div>
-        <p className="mt-3 text-[11px] leading-5 text-[#858a82]">
+        <p className="mt-3 text-[11px] leading-5 text-[#8a8682]">
           Your saved payment method will be charged. Connects do not expire
           while your account remains active.
         </p>
@@ -99,7 +99,7 @@ export function FinanceModal({ onClose }: FinanceModalProps) {
           <button
             type="submit"
             disabled={checkout.isPending}
-            className="h-11 cursor-pointer rounded-xl bg-[#252724] px-5 text-sm font-semibold text-white"
+            className="h-11 cursor-pointer rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white"
           >
             {checkout.isPending ? "Redirecting..." : "Buy Connects"}
           </button>

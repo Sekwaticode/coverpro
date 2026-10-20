@@ -3,8 +3,8 @@ import { ProposalsDashboard } from "./proposals-dashboard";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Agency Proposals | OneMarketplace.io",
-  description: "Track proposals submitted by your agency.",
+  title: "Company Proposals | CoverPro",
+  description: "Track proposals submitted by your company.",
 };
 
 export default function AgencyProposalsPage() {

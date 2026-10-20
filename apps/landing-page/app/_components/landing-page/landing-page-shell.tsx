@@ -5,7 +5,7 @@ const sourceHtmlClassName = "";
 const sourceHtmlStyle = "";
 const sourceBodyId = "";
 const sourceBodyClassName =
-  "bg-[#fbfbfa] font-['DM_Sans'] text-[#20211f] antialiased";
+  "bg-[#fbfbfa] font-['DM_Sans'] text-[#21201f] antialiased";
 const sourceBodyStyle = "";
 const inlineEventAttributeNames = [
   "click",
@@ -115,7 +115,7 @@ export function LandingPageShell({ children }: LandingPageShellProps) {
   }, []);
 
   return (
-    <div className="aura-source-body bg-[#fbfbfa] font-['DM_Sans'] text-[#20211f] antialiased">
+    <div className="aura-source-body bg-[#fbfbfa] font-['DM_Sans'] text-[#21201f] antialiased">
       {children}
     </div>
   );

@@ -58,16 +58,16 @@ const JobCardsSkeleton = () => (
         key={item}
         className="animate-pulse rounded-2xl border border-black/8 bg-white p-7"
       >
-        <div className="h-3 w-32 rounded-full bg-[#e5e8e2]" />
-        <div className="mt-4 h-6 w-3/4 rounded-full bg-[#dfe4dc]" />
-        <div className="mt-5 h-3 w-2/5 rounded-full bg-[#e9ece6]" />
-        <div className="mt-6 h-3 w-full rounded-full bg-[#e5e8e2]" />
-        <div className="mt-2 h-3 w-4/5 rounded-full bg-[#e9ece6]" />
+        <div className="h-3 w-32 rounded-full bg-[#e8e5e2]" />
+        <div className="mt-4 h-6 w-3/4 rounded-full bg-[#f0dcd1]" />
+        <div className="mt-5 h-3 w-2/5 rounded-full bg-[#f4e6de]" />
+        <div className="mt-6 h-3 w-full rounded-full bg-[#e8e5e2]" />
+        <div className="mt-2 h-3 w-4/5 rounded-full bg-[#f4e6de]" />
         <div className="mt-6 flex gap-2">
           {[20, 24, 16].map((width) => (
             <div
               key={width}
-              className="h-7 rounded-lg bg-[#e5e8e2]"
+              className="h-7 rounded-lg bg-[#e8e5e2]"
               style={{ width: `${width}%` }}
             />
           ))}
@@ -345,7 +345,7 @@ export function FreelancerDashboard() {
     verified: job.paymentVerified,
     posted: format(job.published_at ?? job.created_at ?? new Date()),
     type: "Fixed price",
-    budget: `$${Number(job.total_budget).toLocaleString()}`,
+    budget: `R${Number(job.total_budget).toLocaleString()}`,
     level: job.expertise_level,
     duration: job.expected_duration,
     description: job.description,
@@ -486,13 +486,13 @@ export function FreelancerDashboard() {
   };
 
   return (
-    <div className="min-h-svh bg-[#f4f6f2] font-(family-name:--font-dm-sans) text-[#242724]">
+    <div className="min-h-svh bg-[#faf3ee] font-(family-name:--font-dm-sans) text-[#272624]">
       <DashboardHeader />
 
       <main className="mx-auto max-w-360 px-5 py-8 sm:px-8 lg:py-10">
         <div className="mb-8 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
           <div>
-            <p className="text-sm font-medium text-[#62805f]">
+            <p className="text-sm font-medium text-[#e66d31]">
               {new Date().toLocaleDateString("en-US", {
                 weekday: "long",
                 month: "long",
@@ -502,23 +502,23 @@ export function FreelancerDashboard() {
             <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
               Good morning, {user?.firstName}.
             </h1>
-            <p className="mt-2 text-sm text-[#72776f]">
+            <p className="mt-2 text-sm text-[#77736f]">
               Here are fresh opportunities matched to your profile.
             </p>
           </div>
-          <label className="flex h-12 w-full items-center gap-3 rounded-xl border border-black/9 bg-white px-4 focus-within:border-[#72956f] lg:max-w-md">
+          <label className="flex h-12 w-full items-center gap-3 rounded-xl border border-black/9 bg-white px-4 focus-within:border-[#e77840] lg:max-w-md">
             <Icon
               icon="solar:magnifer-linear"
               width="20"
-              className="text-[#7c8179]"
+              className="text-[#817d79]"
             />
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search jobs by title or skill"
-              className="h-full min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[#a0a49e]"
+              placeholder="Search jobs by title or trade"
+              className="h-full min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[#a4a19e]"
             />
-            <kbd className="hidden rounded-md border border-black/8 bg-[#f4f5f2] px-2 py-1 text-[10px] text-[#8b8f88] sm:block">
+            <kbd className="hidden rounded-md border border-black/8 bg-[#f9f2ee] px-2 py-1 text-[10px] text-[#8f8c88] sm:block">
               ⌘ K
             </kbd>
           </label>
@@ -536,12 +536,12 @@ export function FreelancerDashboard() {
                     type="button"
                     onClick={() => setActiveTab(tab)}
                     className={`relative shrink-0 cursor-pointer px-4 py-3 text-sm font-semibold ${
-                      activeTab === tab ? "text-[#4d764a]" : "text-[#777c74]"
+                      activeTab === tab ? "text-[#d6591a]" : "text-[#7c7874]"
                     }`}
                   >
                     {tab}
                     {activeTab === tab && (
-                      <span className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-[#5e875b]" />
+                      <span className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-[#e67035]" />
                     )}
                   </button>
                 ))}
@@ -549,7 +549,7 @@ export function FreelancerDashboard() {
               <div className="flex items-center justify-between px-3 py-4">
                 <div>
                   <h2 className="font-semibold">{activeTab}</h2>
-                  <p className="mt-0.5 text-xs text-[#858a82]">
+                  <p className="mt-0.5 text-xs text-[#8a8682]">
                     {visibleJobs.length} opportunities based on your skills
                   </p>
                 </div>
@@ -597,12 +597,12 @@ export function FreelancerDashboard() {
                       <Icon
                         icon="solar:case-minimalistic-linear"
                         width="34"
-                        className="mx-auto text-[#7c8179]"
+                        className="mx-auto text-[#817d79]"
                       />
                       <h2 className="mt-4 text-lg font-semibold">
                         No jobs here yet
                       </h2>
-                      <p className="mt-2 text-sm text-[#777c74]">
+                      <p className="mt-2 text-sm text-[#7c7874]">
                         {activeTab === "Saved jobs"
                           ? "Save a job and it will appear here."
                           : activeFilterCount
@@ -622,7 +622,7 @@ export function FreelancerDashboard() {
                 <h2 className="font-semibold">Proposal activity</h2>
                 <Link
                   href="/my-proposals"
-                  className="text-xs font-semibold text-[#52784f]"
+                  className="text-xs font-semibold text-[#dd5c1b]"
                 >
                   View all
                 </Link>
@@ -639,23 +639,23 @@ export function FreelancerDashboard() {
                   <div
                     key={label}
                     className={`rounded-xl px-2 py-3 ${
-                      index === 2 ? "bg-[#eaf3e7]" : "bg-[#f2f4f0]"
+                      index === 2 ? "bg-[#fae9e0]" : "bg-[#f9f0eb]"
                     }`}
                   >
                     <strong
                       className={
-                        index === 2 ? "text-lg text-[#4f784c]" : "text-lg"
+                        index === 2 ? "text-lg text-[#da5b1b]" : "text-lg"
                       }
                     >
                       {value}
                     </strong>
-                    <p className="mt-1 text-[10px] text-[#81867e]">{label}</p>
+                    <p className="mt-1 text-[10px] text-[#86827e]">{label}</p>
                   </div>
                 ))}
               </div>
               <div className="mt-5 border-t border-black/7 pt-4">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-[#777c74]">Available Connects</span>
+                  <span className="text-[#7c7874]">Available Connects</span>
                   <strong>{connectsMetadata?.connects || "..."}</strong>
                 </div>
                 <button
@@ -669,21 +669,21 @@ export function FreelancerDashboard() {
             </section>
 
             {earningsSummary?.hasEarnings && (
-              <section className="rounded-2xl bg-[#252a26] p-5 text-white">
+              <section className="rounded-2xl bg-[#2a2825] p-5 text-white">
                 <div className="flex items-center justify-between">
-                  <p className="text-xs font-medium text-[#b9c1b8]">
+                  <p className="text-xs font-medium text-[#c1bdb8]">
                     Earnings this month
                   </p>
                   <Icon
                     icon="solar:chart-2-linear"
                     width="20"
-                    className="text-[#9fbb9c]"
+                    className="text-[#d1a186]"
                   />
                 </div>
                 <p className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
-                  ${Math.round(earningsSummary.currentMonthTotal).toLocaleString()}
+                  R{Math.round(earningsSummary.currentMonthTotal).toLocaleString()}
                 </p>
-                <p className="mt-1 text-xs text-[#aeb6ad]">
+                <p className="mt-1 text-xs text-[#b6b2ad]">
                   {earningsChange >= 0 ? "+" : "-"}$
                   {Math.round(Math.abs(earningsChange)).toLocaleString()} from
                   last month
@@ -695,7 +695,7 @@ export function FreelancerDashboard() {
                   {earningsSummary.series.map((item) => (
                     <span
                       key={item.month}
-                      className="flex-1 rounded-t bg-[#71866f]"
+                      className="flex-1 rounded-t bg-[#867a6f]"
                       style={{
                         height: `${Math.max(4, Math.round((item.total / earningsChartMax) * 100))}%`,
                       }}
@@ -705,19 +705,19 @@ export function FreelancerDashboard() {
               </section>
             )}
 
-            <section className="rounded-2xl border border-[#d5dfd2] bg-[#edf4ea] p-5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[#52784f]">
+            <section className="rounded-2xl border border-[#ecd3c5] bg-[#faece4] p-5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[#dd5c1b]">
                 <Icon icon="solar:lightbulb-bolt-linear" width="21" />
               </span>
               <h2 className="mt-4 font-semibold">Stand out to clients</h2>
-              <p className="mt-2 text-xs leading-5 text-[#667064]">
+              <p className="mt-2 text-xs leading-5 text-[#706a64]">
                 {profileMetaDataLoading || !isLoaded
                   ? "..."
                   : strengthSuggestions.join(" ")}
               </p>
               <Link
                 href="/my-profile"
-                className="mt-4 inline-block text-xs font-semibold text-[#4c7549] hover:underline"
+                className="mt-4 inline-block text-xs font-semibold text-[#d3581a] hover:underline"
               >
                 Update portfolio
               </Link>

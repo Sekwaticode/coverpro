@@ -4,7 +4,7 @@ import { ClientShell } from "../_components/dashboard/client-shell";
 import { ClientSettings } from "./settings-client";
 
 export const metadata: Metadata = {
-  title: "Settings | OneMarketplace.io",
+  title: "Settings | CoverPro",
   description:
     "Manage client finances, company access, security, and marketplace preferences.",
 };

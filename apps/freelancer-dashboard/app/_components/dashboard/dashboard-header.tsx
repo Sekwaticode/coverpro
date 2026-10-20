@@ -17,8 +17,8 @@ export function DashboardHeader() {
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
           <BrandMark />
           <span className="hidden text-lg font-semibold tracking-tight sm:block">
-            OneMarketplace.io
-          </span>
+              Cover<span className="text-[#ee6c2b]">Pro</span>
+            </span>
         </Link>
 
         <nav className="ml-4 hidden items-center gap-1 lg:flex">
@@ -31,8 +31,8 @@ export function DashboardHeader() {
                 aria-current={active ? "page" : undefined}
                 className={`rounded-lg px-3 py-2 text-sm transition ${
                   active
-                    ? "bg-[#edf4ea] font-semibold text-[#4e774b]"
-                    : "font-medium text-[#62675f] hover:bg-black/4"
+                    ? "bg-[#faece4] font-semibold text-[#d85a1b]"
+                    : "font-medium text-[#67635f] hover:bg-black/4"
                 }`}
               >
                 {item.label}

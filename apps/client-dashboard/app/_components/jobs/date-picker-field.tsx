@@ -50,17 +50,17 @@ export function DatePickerField({
           error
             ? "border-[#bd6b6b] bg-[#fffafa]"
             : open
-              ? "border-[#6e916a] bg-white"
+              ? "border-[#e77840] bg-white"
               : "border-black/10 bg-white hover:border-black/20"
         }`}
       >
-        <span className={selectedDate ? "text-[#242724]" : "text-[#9a9f97]"}>
+        <span className={selectedDate ? "text-[#272624]" : "text-[#9f9b97]"}>
           {selectedDate ? format(selectedDate, "MMM d, yyyy") : "Select date"}
         </span>
         <Icon
           icon="solar:calendar-linear"
           width="17"
-          className="text-[#657062]"
+          className="text-[#706962]"
         />
       </button>
 
@@ -68,7 +68,7 @@ export function DatePickerField({
         <div
           role="dialog"
           aria-label="Choose milestone due date"
-          className="absolute top-12 right-0 z-30 rounded-2xl border border-black/8 bg-white p-3 shadow-[0_20px_60px_rgba(26,34,26,.18)]"
+          className="absolute top-12 right-0 z-30 rounded-2xl border border-black/8 bg-white p-3 shadow-[0_20px_60px_rgba(34,29,26,.18)]"
         >
           <DayPicker
             mode="single"
@@ -82,7 +82,7 @@ export function DatePickerField({
             }}
             showOutsideDays
           />
-          <p className="border-t border-black/7 px-2 pt-3 text-[10px] text-[#858a82]">
+          <p className="border-t border-black/7 px-2 pt-3 text-[10px] text-[#8a8682]">
             Earliest available date: {format(minimumDate, "MMM d, yyyy")}
           </p>
         </div>

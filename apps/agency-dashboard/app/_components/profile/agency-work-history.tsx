@@ -43,7 +43,7 @@ export function AgencyWorkHistory({
             year: "numeric",
           })
         : "Recently",
-      budget: `$${Number(job.amount).toLocaleString()}`,
+      budget: `R${Number(job.amount).toLocaleString()}`,
       rating: Number(job.rating).toFixed(1),
       review: job.review ?? "",
     }));
@@ -59,14 +59,14 @@ export function AgencyWorkHistory({
     <section className="rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-[10px] font-semibold tracking-[.13em] text-[#62805f] uppercase">
+          <p className="text-[10px] font-semibold tracking-[.13em] text-[#e66d31] uppercase">
             Client feedback
           </p>
           <h2 className="mt-2 text-xl font-semibold">
             Completed work and reviews
           </h2>
         </div>
-        <p className="text-xs text-[#8a8f87]">{averageRating} average rating</p>
+        <p className="text-xs text-[#8f8b87]">{averageRating} average rating</p>
       </div>
 
       <div className="grid gap-4">
@@ -78,7 +78,7 @@ export function AgencyWorkHistory({
             <div className="flex flex-wrap justify-between gap-3">
               <div>
                 <h3 className="text-sm font-semibold">{work.project}</h3>
-                <p className="mt-1 text-xs text-[#7b8078]">
+                <p className="mt-1 text-xs text-[#807c78]">
                   {work.client} · Completed {work.completed}
                 </p>
               </div>
@@ -94,13 +94,13 @@ export function AgencyWorkHistory({
                 </span>
               </div>
             </div>
-            <p className="mt-4 text-sm leading-7 text-[#626861]">
+            <p className="mt-4 text-sm leading-7 text-[#686561]">
               “{work.review}”
             </p>
           </article>
         ))}
         {!visibleWork.length && (
-          <p className="rounded-xl border border-dashed border-black/10 p-8 text-center text-sm text-[#838980]">
+          <p className="rounded-xl border border-dashed border-black/10 p-8 text-center text-sm text-[#898480]">
             No completed work yet.
           </p>
         )}
@@ -108,7 +108,7 @@ export function AgencyWorkHistory({
 
       {!!completedWork.length && (
         <div className="mt-5 flex flex-col gap-3 border-t border-black/7 pt-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-[#838980]">
+          <p className="text-xs text-[#898480]">
             Showing {pageStart + 1}–
             {Math.min(pageStart + itemsPerPage, completedWork.length)} of{" "}
             {completedWork.length} completed projects
@@ -139,8 +139,8 @@ export function AgencyWorkHistory({
                   onClick={() => openPage(pageNumber)}
                   className={`h-9 min-w-9 rounded-lg px-3 text-xs font-semibold ${
                     active
-                      ? "bg-[#e9f1e6] text-[#4f794c]"
-                      : "border border-black/10 text-[#656b63]"
+                      ? "bg-[#f8e8df] text-[#db5b1b]"
+                      : "border border-black/10 text-[#6b6763]"
                   }`}
                 >
                   {pageNumber}

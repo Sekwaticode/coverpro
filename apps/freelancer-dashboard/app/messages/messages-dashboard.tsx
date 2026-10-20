@@ -814,14 +814,14 @@ export function MessagesDashboard({
     <div className="min-w-0">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold tracking-[.14em] text-[#62805f] uppercase">
+          <p className="text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
             Client communication
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-[-.045em] sm:text-4xl">
             Messages
           </h1>
         </div>
-        <p className="text-xs text-[#858a82]">
+        <p className="text-xs text-[#8a8682]">
           {conversations.reduce((sum, item) => sum + item.unread, 0)} unread
           messages
         </p>
@@ -831,10 +831,10 @@ export function MessagesDashboard({
         <section className="flex min-h-0 flex-col border-b border-black/7 lg:border-r lg:border-b-0">
           <header className="shrink-0 p-5">
             <h2 className="font-semibold">Project threads</h2>
-            <p className="mt-1 text-[10px] text-[#858a82]">
+            <p className="mt-1 text-[10px] text-[#8a8682]">
               Proposals, meetings, contracts, and payments
             </p>
-            <label className="mt-4 flex h-11 items-center gap-2 rounded-xl bg-[#f2f4f1] px-3">
+            <label className="mt-4 flex h-11 items-center gap-2 rounded-xl bg-[#f9f1ec] px-3">
               <Icon icon="solar:magnifer-linear" width="18" />
               <span className="sr-only">Search project threads</span>
               <input
@@ -854,11 +854,11 @@ export function MessagesDashboard({
                 onClick={() => selectConversation(conversation)}
                 className={`flex cursor-pointer w-full gap-3 border-b border-black/6 p-4 text-left ${
                   conversationId === conversation.id
-                    ? "bg-[#edf4ea]"
-                    : "hover:bg-[#f8f9f6]"
+                    ? "bg-[#faece4]"
+                    : "hover:bg-[#fbf7f4]"
                 }`}
               >
-                <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#527a73] text-xs font-semibold text-white">
+                <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#e35e1c] text-xs font-semibold text-white">
                   {conversation.avatarUrl ? (
                     <Image
                       src={conversation.avatarUrl}
@@ -870,7 +870,7 @@ export function MessagesDashboard({
                     conversation.initials
                   )}
                   {conversation.online && (
-                    <span className="absolute right-0 bottom-0 h-3 w-3 rounded-full border-2 border-white bg-[#5ca568]" />
+                    <span className="absolute right-0 bottom-0 h-3 w-3 rounded-full border-2 border-white bg-[#e77840]" />
                   )}
                 </span>
                 <span className="min-w-0 flex-1">
@@ -878,26 +878,26 @@ export function MessagesDashboard({
                     <strong className="truncate text-sm">
                       {conversation.person}
                     </strong>
-                    <span className="text-[10px] text-[#8a8f87]">
+                    <span className="text-[10px] text-[#8f8b87]">
                       {conversation.time}
                     </span>
                   </span>
-                  <span className="mt-1 block truncate text-[10px] text-[#7b8078]">
+                  <span className="mt-1 block truncate text-[10px] text-[#807c78]">
                     {conversation.accountType} · {conversation.context}
                   </span>
-                  <span className="mt-1 block truncate text-xs text-[#656b64]">
+                  <span className="mt-1 block truncate text-xs text-[#6b6864]">
                     {conversation.lastMessage}
                   </span>
                 </span>
                 {conversation.unread > 0 && (
-                  <span className="mt-7 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#5f8d5c] px-1 text-[9px] text-white">
+                  <span className="mt-7 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#e7753c] px-1 text-[9px] text-white">
                     {conversation.unread}
                   </span>
                 )}
               </button>
             ))}
             {!filtered.length && (
-              <p className="p-8 text-center text-xs text-[#858a82]">
+              <p className="p-8 text-center text-xs text-[#8a8682]">
                 No project threads found.
               </p>
             )}
@@ -908,7 +908,7 @@ export function MessagesDashboard({
           <section className="flex min-h-0 flex-col">
             <header className="flex shrink-0 items-center justify-between gap-4 border-b border-black/7 p-4 sm:p-5">
               <div className="flex items-center gap-3">
-                <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#527a73] text-xs font-semibold text-white">
+                <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#e35e1c] text-xs font-semibold text-white">
                   {selected.avatarUrl ? (
                     <Image
                       src={selected.avatarUrl}
@@ -922,7 +922,7 @@ export function MessagesDashboard({
                 </span>
                 <div>
                   <h2 className="text-sm font-semibold">{selected.person}</h2>
-                  <p className="mt-1 text-[10px] text-[#7b8078]">
+                  <p className="mt-1 text-[10px] text-[#807c78]">
                     {typingUser?.conversationId === selected.id
                       ? "Typing..."
                       : `${selected.accountType} · ${selected.online ? "Online" : "Offline"}`}
@@ -935,7 +935,7 @@ export function MessagesDashboard({
                 disabled={creatingMeeting}
                 className={`inline-flex h-10 cursor-pointer items-center gap-2 rounded-xl border px-3 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60 ${
                   selected.activeMeeting
-                    ? "border-[#9dbc99] bg-[#e9f3e6] text-[#477344]"
+                    ? "border-[#d1a084] bg-[#fbe9de] text-[#cc5519]"
                     : "border-black/10"
                 }`}
               >
@@ -949,17 +949,17 @@ export function MessagesDashboard({
             </header>
 
             {selected.activeMeeting && (
-              <div className="flex shrink-0 items-center gap-2 border-b border-black/7 bg-[#f2f7ef] px-5 py-2.5 text-xs font-medium text-[#52784f]">
+              <div className="flex shrink-0 items-center gap-2 border-b border-black/7 bg-[#fcf1ea] px-5 py-2.5 text-xs font-medium text-[#dd5c1b]">
                 <Icon icon="solar:videocamera-record-linear" width="15" />
                 Meeting in progress — chat is paused until it ends.
               </div>
             )}
 
-            <div className="flex shrink-0 items-center justify-between border-b border-black/7 bg-[#fafbf9] px-5 py-3 text-xs">
+            <div className="flex shrink-0 items-center justify-between border-b border-black/7 bg-[#fdf9f7] px-5 py-3 text-xs">
               <span className="truncate">{selected.context}</span>
               <Link
                 href={selected.contextHref}
-                className="shrink-0 font-semibold text-[#52784f]"
+                className="shrink-0 font-semibold text-[#dd5c1b]"
               >
                 {selected.contextLabel}
               </Link>
@@ -980,17 +980,17 @@ export function MessagesDashboard({
                 )
                   void loadOlderMessages();
               }}
-              className="min-h-0 flex-1 space-y-4 overflow-y-auto bg-[#fbfcfa] p-5"
+              className="min-h-0 flex-1 space-y-4 overflow-y-auto bg-[#fdfaf9] p-5"
             >
               {isFetchingNextPage && (
                 <div className="flex justify-center py-2">
-                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-black/10 border-t-[#638b60]" />
+                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-black/10 border-t-[#e7773f]" />
                 </div>
               )}
               {!messagesLoading && !hasNextPage && selected.messages.length > 0 && (
                 <div className="flex items-center gap-3 py-1">
                 <span className="h-px flex-1 bg-black/7" />
-                <span className="text-[9px] font-medium text-[#969b94]">
+                <span className="text-[9px] font-medium text-[#9b9894]">
                   Project activity
                 </span>
                 <span className="h-px flex-1 bg-black/7" />
@@ -1012,11 +1012,11 @@ export function MessagesDashboard({
               ))}
               {messagesLoading && (
                 <div className="flex justify-center py-12">
-                  <span className="h-6 w-6 animate-spin rounded-full border-2 border-black/10 border-t-[#638b60]" />
+                  <span className="h-6 w-6 animate-spin rounded-full border-2 border-black/10 border-t-[#e7773f]" />
                 </div>
               )}
               {!messagesLoading && !selected.messages.length && (
-                <p className="py-12 text-center text-xs text-[#858a82]">
+                <p className="py-12 text-center text-xs text-[#8a8682]">
                   This project thread is ready. Send the first message.
                 </p>
               )}
@@ -1062,14 +1062,14 @@ export function MessagesDashboard({
                       ? "Chat is paused during the meeting…"
                       : "Reply in this project thread…"
                   }
-                  className="min-h-10 flex-1 resize-none py-2 text-sm outline-none disabled:cursor-not-allowed disabled:text-[#9a9e97]"
+                  className="min-h-10 flex-1 resize-none py-2 text-sm outline-none disabled:cursor-not-allowed disabled:text-[#9e9b97]"
                 />
                 <button
                   type="button"
                   onClick={() => void sendMessage()}
                   disabled={sending || Boolean(selected.activeMeeting)}
                   aria-label="Send message"
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#252724] text-white disabled:opacity-50"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#272624] text-white disabled:opacity-50"
                 >
                   <Icon icon="solar:plain-2-bold" width="18" />
                 </button>
@@ -1079,7 +1079,7 @@ export function MessagesDashboard({
         ) : (
           <section className="flex min-h-0 items-center justify-center p-8 text-center">
             <div>
-              <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#edf4ea] text-[#52784f]">
+              <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#faece4] text-[#dd5c1b]">
                 <Icon icon="solar:chat-round-dots-linear" width="30" />
               </span>
               <h2 className="mt-5 font-semibold">
@@ -1087,7 +1087,7 @@ export function MessagesDashboard({
                   ? "Loading conversation..."
                   : "Conversation does not exist"}
               </h2>
-              <p className="mt-2 max-w-sm text-sm leading-6 text-[#7b8078]">
+              <p className="mt-2 max-w-sm text-sm leading-6 text-[#807c78]">
                 {inboxLoading
                   ? "Please wait while the conversation is loaded."
                   : "The conversation ID is missing or you do not have access to it."}
@@ -1130,10 +1130,10 @@ function AttachmentModal({
   onAttach: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-90 grid place-items-center bg-[#1d221d]/45 p-5 backdrop-blur-sm">
+    <div className="fixed inset-0 z-90 grid place-items-center bg-[#221f1d]/45 p-5 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
         <div className="flex items-start justify-between gap-4">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#edf4ea] text-[#52784f]">
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#faece4] text-[#dd5c1b]">
             <Icon icon="solar:paperclip-linear" width="23" />
           </span>
           <button
@@ -1146,17 +1146,17 @@ function AttachmentModal({
           </button>
         </div>
         <h2 className="mt-4 text-xl font-semibold">Add an attachment</h2>
-        <p className="mt-2 text-sm leading-6 text-[#737970]">
+        <p className="mt-2 text-sm leading-6 text-[#797570]">
           Review the file before sharing it in this project thread.
         </p>
-        <label className="mt-5 flex cursor-pointer flex-col items-center rounded-2xl border border-dashed border-black/15 bg-[#fafbf9] px-5 py-8 text-center">
+        <label className="mt-5 flex cursor-pointer flex-col items-center rounded-2xl border border-dashed border-black/15 bg-[#fdf9f7] px-5 py-8 text-center">
           <Icon
             icon="solar:upload-minimalistic-linear"
             width="25"
-            className="text-[#52784f]"
+            className="text-[#dd5c1b]"
           />
           <span className="mt-2 text-sm font-semibold">Choose a file</span>
-          <span className="mt-1 text-[11px] text-[#858a82]">
+          <span className="mt-1 text-[11px] text-[#8a8682]">
             PDF, DOCX, PNG, JPG, or TXT · Maximum 5 MB
           </span>
           <input
@@ -1167,18 +1167,18 @@ function AttachmentModal({
           />
         </label>
         {file && (
-          <div className="mt-4 flex items-center gap-3 rounded-xl bg-[#f0f3ee] p-3">
+          <div className="mt-4 flex items-center gap-3 rounded-xl bg-[#f8efe9] p-3">
             <Icon icon="solar:file-text-linear" width="21" />
             <div className="min-w-0 flex-1">
               <p className="truncate text-xs font-semibold">{file.name}</p>
-              <p className="mt-0.5 text-[10px] text-[#858a82]">
+              <p className="mt-0.5 text-[10px] text-[#8a8682]">
                 {(file.size / 1024 / 1024).toFixed(1)} MB
               </p>
             </div>
             <Icon
               icon="solar:check-circle-bold"
               width="19"
-              className="text-[#5d8759]"
+              className="text-[#e66e32]"
             />
           </div>
         )}
@@ -1199,7 +1199,7 @@ function AttachmentModal({
             type="button"
             onClick={onAttach}
             disabled={!file || uploading}
-            className="h-10 rounded-xl bg-[#252724] px-4 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-35"
+            className="h-10 rounded-xl bg-[#272624] px-4 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-35"
           >
             {uploading ? "Uploading…" : "Attach file"}
           </button>
@@ -1233,23 +1233,23 @@ function TransactionMessage({
         <div
           className={`max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-6 ${
             message.sender === "talent"
-              ? "bg-[#252724] text-white"
-              : "bg-[#edf2eb]"
+              ? "bg-[#272624] text-white"
+              : "bg-[#f7ece6]"
           }`}
         >
           {repliedMessage && (
             <div
               className={`mb-2 rounded-lg border-l-3 px-3 py-2 ${
                 message.sender === "talent"
-                  ? "border-[#9fbd9b] bg-white/10"
-                  : "border-[#6f966b] bg-white/65"
+                  ? "border-[#d1a287] bg-white/10"
+                  : "border-[#e77840] bg-white/65"
               }`}
             >
               <p
                 className={`text-[9px] font-semibold tracking-wide uppercase ${
                   message.sender === "talent"
                     ? "text-white/65"
-                    : "text-[#52784f]"
+                    : "text-[#dd5c1b]"
                 }`}
               >
                 Replying to proposal
@@ -1289,7 +1289,7 @@ function TransactionMessage({
           )}
           <p
             className={`mt-1 text-[9px] ${
-              message.sender === "talent" ? "text-white/50" : "text-[#8a8f87]"
+              message.sender === "talent" ? "text-white/50" : "text-[#8f8b87]"
             }`}
           >
             {message.time}
@@ -1301,7 +1301,7 @@ function TransactionMessage({
 
   if (message.kind === "meeting_ended") {
     return (
-      <div className="mx-auto flex items-center gap-2 text-[10px] font-medium text-[#8a8f87]">
+      <div className="mx-auto flex items-center gap-2 text-[10px] font-medium text-[#8f8b87]">
         <Icon icon="solar:videocamera-record-linear" width="14" />
         Meeting ended · {message.durationMinutes} min
       </div>
@@ -1310,19 +1310,19 @@ function TransactionMessage({
 
   if (message.kind === "payment") {
     return (
-      <div className="mx-auto flex max-w-xl items-center gap-3 rounded-xl border border-[#d1dfcd] bg-[#edf4ea] px-4 py-3">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#52784f]">
+      <div className="mx-auto flex max-w-xl items-center gap-3 rounded-xl border border-[#ebd1c2] bg-[#faece4] px-4 py-3">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#dd5c1b]">
           <Icon icon="solar:shield-check-linear" width="19" />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-[10px] font-semibold text-[#486d45]">
+          <p className="text-[10px] font-semibold text-[#c65218]">
             Payment {message.status.toLowerCase()}
           </p>
-          <p className="mt-1 truncate text-[10px] text-[#697467]">
+          <p className="mt-1 truncate text-[10px] text-[#746e67]">
             {message.title}
           </p>
         </div>
-        <strong className="text-xs">${message.amount.toLocaleString()}</strong>
+        <strong className="text-xs">R{message.amount.toLocaleString()}</strong>
       </div>
     );
   }
@@ -1331,7 +1331,7 @@ function TransactionMessage({
     proposal: {
       icon: "solar:document-text-linear",
       eyebrow: "Proposal received",
-      tone: "bg-[#eef3eb] text-[#52784f]",
+      tone: "bg-[#f8ede6] text-[#dd5c1b]",
     },
     meeting: {
       icon: "solar:videocamera-record-linear",
@@ -1346,7 +1346,7 @@ function TransactionMessage({
     contract_completed: {
       icon: "solar:check-circle-bold",
       eyebrow: "Contract completed",
-      tone: "bg-[#edf4ea] text-[#52784f]",
+      tone: "bg-[#faece4] text-[#dd5c1b]",
     },
     milestone: {
       icon: "solar:flag-linear",
@@ -1369,30 +1369,30 @@ function TransactionMessage({
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-[9px] font-semibold tracking-wide text-[#798077] uppercase">
+            <p className="text-[9px] font-semibold tracking-wide text-[#807c77] uppercase">
               {eventStyle.eyebrow}
             </p>
-            <span className="text-[9px] text-[#969b94]">{message.time}</span>
+            <span className="text-[9px] text-[#9b9894]">{message.time}</span>
           </div>
           <h3 className="mt-2 text-sm font-semibold">{message.title}</h3>
 
           {message.kind === "proposal" && (
             <>
-              <p className="mt-3 text-xs leading-5 text-[#6c736a]">
+              <p className="mt-3 text-xs leading-5 text-[#736f6a]">
                 {message.summary}
               </p>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {message.skills.slice(0, 4).map((skill) => (
                   <span
                     key={skill}
-                    className="rounded-lg bg-[#f0f3ed] px-2.5 py-1.5 text-[10px]"
+                    className="rounded-lg bg-[#f8eee9] px-2.5 py-1.5 text-[10px]"
                   >
                     {skill}
                   </span>
                 ))}
               </div>
               <EventFooter
-                detail={`$${message.bid.toLocaleString()} · ${message.duration}`}
+                detail={`R${message.bid.toLocaleString()} · ${message.duration}`}
                 href={message.href}
                 action="View proposal"
               />
@@ -1401,7 +1401,7 @@ function TransactionMessage({
 
           {message.kind === "meeting" &&
             (message.ended ? (
-              <p className="mt-3 border-t border-black/6 pt-3 text-[10px] font-semibold text-[#8a8f87]">
+              <p className="mt-3 border-t border-black/6 pt-3 text-[10px] font-semibold text-[#8f8b87]">
                 Meeting ended
               </p>
             ) : (
@@ -1420,12 +1420,12 @@ function TransactionMessage({
                   First milestone funded
                 </p>
                 <p className="mt-1 text-lg font-semibold text-[#29252d]">
-                  ${message.amount.toLocaleString()}
+                  R{message.amount.toLocaleString()}
                 </p>
               </div>
               {message.status === "Awaiting acceptance" ? (
                 <>
-                  <p className="mt-3 text-[10px] leading-5 text-[#747a72]">
+                  <p className="mt-3 text-[10px] leading-5 text-[#7a7672]">
                     Review the offer carefully. The contract becomes active
                     after you accept it.
                   </p>
@@ -1433,7 +1433,7 @@ function TransactionMessage({
                     <button
                       type="button"
                       disabled={accepting}
-                      className="h-9 cursor-pointer rounded-lg border border-black/10 px-4 text-[10px] font-semibold text-[#656b64] disabled:cursor-not-allowed disabled:opacity-45"
+                      className="h-9 cursor-pointer rounded-lg border border-black/10 px-4 text-[10px] font-semibold text-[#6b6864] disabled:cursor-not-allowed disabled:opacity-45"
                     >
                       Decline
                     </button>
@@ -1441,14 +1441,14 @@ function TransactionMessage({
                       type="button"
                       onClick={() => onAcceptOffer(message.contractId)}
                       disabled={!message.contractId || accepting}
-                      className="h-9 cursor-pointer rounded-lg bg-[#252724] px-4 text-[10px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-55"
+                      className="h-9 cursor-pointer rounded-lg bg-[#272624] px-4 text-[10px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-55"
                     >
                       {accepting ? "Accepting…" : "Accept offer"}
                     </button>
                   </div>
                 </>
               ) : (
-                <p className="mt-3 border-t border-black/6 pt-3 text-[10px] font-semibold text-[#52784f]">
+                <p className="mt-3 border-t border-black/6 pt-3 text-[10px] font-semibold text-[#dd5c1b]">
                   {message.status === "Active"
                     ? "Contract accepted · The contract is active"
                     : message.status === "Completed"
@@ -1461,16 +1461,16 @@ function TransactionMessage({
 
           {message.kind === "contract_completed" && (
             <>
-              <div className="mt-3 rounded-xl border border-[#d2e4ce] bg-[#edf4ea]/70 p-4">
-                <p className="flex items-center gap-2 text-xs font-semibold text-[#486d45]">
+              <div className="mt-3 rounded-xl border border-[#f1d3c1] bg-[#faece4]/70 p-4">
+                <p className="flex items-center gap-2 text-xs font-semibold text-[#c65218]">
                   <Icon
                     icon="solar:check-circle-bold"
                     width="18"
-                    className="text-[#52784f]"
+                    className="text-[#dd5c1b]"
                   />
                   The contract “{message.title}” was completed.
                 </p>
-                <p className="mt-1.5 text-xs leading-5 text-[#5e695c]">
+                <p className="mt-1.5 text-xs leading-5 text-[#69625c]">
                   This contract has been completed. Feedback has been recorded and all remaining payments have been settled.
                 </p>
               </div>
@@ -1487,10 +1487,10 @@ function TransactionMessage({
               <div
                 className={`mt-3 rounded-xl p-4 ${
                   message.status === "Approved" || message.status === "Funded"
-                    ? "bg-[#edf4ea]"
+                    ? "bg-[#faece4]"
                     : message.status === "Changes requested"
                       ? "bg-[#faf5e8]"
-                      : "bg-[#f4f6f2]"
+                      : "bg-[#faf3ee]"
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -1509,10 +1509,10 @@ function TransactionMessage({
                     width="18"
                     className={
                       message.status === "Approved" || message.status === "Funded"
-                        ? "text-[#52784f]"
+                        ? "text-[#dd5c1b]"
                         : message.status === "Changes requested"
                           ? "text-[#8a6d30]"
-                          : "text-[#657064]"
+                          : "text-[#706a64]"
                     }
                   />
                   <p className="text-xs font-semibold">
@@ -1528,12 +1528,12 @@ function TransactionMessage({
                   </p>
                 </div>
                 {(message.status === "Submitted" || message.status === "Funded") && message.note && (
-                  <p className="mt-2 text-xs leading-5 text-[#697067]">
+                  <p className="mt-2 text-xs leading-5 text-[#706c67]">
                     {message.note}
                   </p>
                 )}
                 {message.status === "Added" && message.dueDate && (
-                  <p className="mt-2 text-[10px] text-[#697067]">
+                  <p className="mt-2 text-[10px] text-[#706c67]">
                     Due {message.dueDate}
                   </p>
                 )}
@@ -1542,7 +1542,7 @@ function TransactionMessage({
                     href={message.deliveryLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-2 inline-flex items-center gap-1 text-[10px] font-semibold text-[#52784f] underline"
+                    className="mt-2 inline-flex items-center gap-1 text-[10px] font-semibold text-[#dd5c1b] underline"
                   >
                     Open deliverable
                     <Icon icon="solar:arrow-right-up-linear" width="12" />
@@ -1552,7 +1552,7 @@ function TransactionMessage({
               <EventFooter
                 detail={
                   message.amount
-                    ? `$${message.amount.toLocaleString()} · ${message.status}`
+                    ? `R${message.amount.toLocaleString()} · ${message.status}`
                     : message.status
                 }
                 href={message.href}
@@ -1579,14 +1579,14 @@ function EventFooter({
 }) {
   return (
     <div className="mt-3 flex items-center justify-between gap-3 border-t border-black/6 pt-3">
-      <span className="truncate text-[9px] font-medium text-[#747b72]">
+      <span className="truncate text-[9px] font-medium text-[#7b7772]">
         {detail}
       </span>
       <a
         href={href}
         target={external ? "_blank" : undefined}
         rel={external ? "noreferrer" : undefined}
-        className="inline-flex h-8 shrink-0 items-center gap-1 rounded-lg bg-[#252724] px-3 text-[9px] font-semibold text-white"
+        className="inline-flex h-8 shrink-0 items-center gap-1 rounded-lg bg-[#272624] px-3 text-[9px] font-semibold text-white"
       >
         {action}
         <Icon icon="solar:arrow-right-up-linear" width="12" />
