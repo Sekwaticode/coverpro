@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
-import Link from "next/link";
+
+import LogoLoop, { type LogoItem } from "@/components/ui/logo-loop";
 
 export type BrandList = {
   name: string;
@@ -13,43 +14,42 @@ export type BrandList = {
 };
 
 export default function BrandSlider({ brandList }: { brandList: BrandList[] }) {
-  // Rendered twice so the -50% marquee loops seamlessly.
-  const items = [...brandList, ...brandList];
+  const logos: LogoItem[] = brandList.map((brand) => {
+    const Icon = brand.icon;
+    return {
+      node: Icon ? (
+        <Icon className="h-5 w-5" />
+      ) : brand.image ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={brand.image} alt="" className="h-6 w-auto" />
+      ) : null,
+      title: brand.name,
+      href: brand.href,
+      hoverColor: "var(--foreground)",
+    };
+  });
 
   return (
     <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-8">
       <div className="flex items-center gap-4">
         <span className="h-px flex-1 bg-linear-to-r from-transparent to-foreground/15" />
         <p className="text-center text-sm text-muted-foreground">
-          Every trade covered, in all nine provinces
+          Everything you need to get the job done
         </p>
         <span className="h-px flex-1 bg-linear-to-l from-transparent to-foreground/15" />
       </div>
 
-      <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
-        <ul className="flex w-max animate-[coverpro-marquee_40s_linear_infinite] gap-12 hover:[animation-play-state:paused]">
-          {items.map((brand, index) => {
-            const Icon = brand.icon;
-            const duplicate = index >= brandList.length;
-            return (
-              <li key={`${brand.name}-${index}`} aria-hidden={duplicate}>
-                <Link
-                  href={brand.href ?? `/talents?q=${encodeURIComponent(brand.name)}`}
-                  tabIndex={duplicate ? -1 : undefined}
-                  className="flex items-center gap-2 text-lg font-semibold tracking-tight whitespace-nowrap text-muted-foreground/70 transition-colors hover:text-foreground"
-                >
-                  {Icon ? (
-                    <Icon className="h-5 w-5" />
-                  ) : brand.image ? (
-                    <img src={brand.image} alt="" className="h-6 w-auto" />
-                  ) : null}
-                  {brand.name}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <LogoLoop
+        logos={logos}
+        speed={40}
+        // Label text is half the logo height, so 36 gives 18px labels; icons stay 20px.
+        logoHeight={36}
+        gap={48}
+        labels="inline"
+        hoverSpeed={0}
+        ariaLabel="CoverPro platform features"
+        className="mt-8 text-muted-foreground/70"
+      />
     </section>
   );
 }

@@ -1,16 +1,15 @@
 import {
-  Bath,
-  CookingPot,
-  Grid3x3,
-  Hammer,
-  HardHat,
-  House,
-  Layers,
-  PaintRoller,
-  PanelTop,
-  Shovel,
-  Wrench,
-  Zap,
+  BadgeCheck,
+  Bell,
+  FileText,
+  LayoutDashboard,
+  LifeBuoy,
+  ListChecks,
+  MessageCircle,
+  ShieldCheck,
+  Star,
+  Users,
+  Wallet,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -46,18 +45,17 @@ export default function AgencyHeroSection({
   }));
 
   const brandList: BrandList[] = [
-    { name: "General Construction", icon: HardHat },
-    { name: "Roofing", icon: House },
-    { name: "Tiling", icon: Grid3x3 },
-    { name: "Flooring", icon: Layers },
-    { name: "Ceilings", icon: PanelTop },
-    { name: "Plumbing", icon: Wrench },
-    { name: "Electrical", icon: Zap },
-    { name: "Painting", icon: PaintRoller },
-    { name: "Kitchen Renovation", icon: CookingPot },
-    { name: "Bathroom Remodel", icon: Bath },
-    { name: "Carpentry", icon: Hammer },
-    { name: "Paving & Landscaping", icon: Shovel },
+    { name: "Escrow payments", icon: ShieldCheck, href: "/#how-it-works" },
+    { name: "Milestone tracking", icon: ListChecks, href: "/#how-it-works" },
+    { name: "Built-in messaging", icon: MessageCircle, href: "/#features" },
+    { name: "Verified pro profiles", icon: BadgeCheck, href: "/talents" },
+    { name: "Client & pro dashboards", icon: LayoutDashboard, href: "/#features" },
+    { name: "Quotes & proposals", icon: FileText, href: "/#how-it-works" },
+    { name: "Reviews & ratings", icon: Star, href: "/talents" },
+    { name: "Agency teams", icon: Users, href: "/agencies" },
+    { name: "Real-time notifications", icon: Bell, href: "/#features" },
+    { name: "Secure payouts", icon: Wallet, href: "/#how-it-works" },
+    { name: "Dispute support", icon: LifeBuoy, href: "/#features" },
   ];
 
   return (
