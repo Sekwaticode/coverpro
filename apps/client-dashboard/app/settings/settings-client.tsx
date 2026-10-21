@@ -46,20 +46,24 @@ const Panel = ({
   </section>
 );
 
+type ClientType = "INDIVIDUAL" | "BUSINESS";
+
+// Company fields are null when the client hires as an individual.
 interface ClientProfileMetadata {
-  professionalRole?: string;
-  companyName?: string;
-  companyWebsite?: string;
-  companySize?: string;
-  industry?: string;
-  companyDescription?: string;
+  clientType?: ClientType;
+  professionalRole?: string | null;
+  companyName?: string | null;
+  companyWebsite?: string | null;
+  companySize?: string | null;
+  industry?: string | null;
+  companyDescription?: string | null;
   identityVerified?: boolean;
 }
 
 const navigation = [
   { id: "overview", label: "Overview", description: "Account summary", icon: "solar:widget-2-linear" },
   { id: "finances", label: "Finances", description: "Cards and billing details", icon: "solar:wallet-money-linear" },
-  { id: "company", label: "Company profile", description: "Business information", icon: "solar:buildings-2-linear" },
+  { id: "company", label: "Hiring profile", description: "Individual or business", icon: "solar:buildings-2-linear" },
   { id: "notifications", label: "Notifications", description: "Email and product alerts", icon: "solar:bell-linear" },
   { id: "verifications", label: "Verification", description: "Secure identity check by Stripe", icon: "solar:verified-check-linear" },
   { id: "account", label: "Password & security", description: "Password, 2FA, and devices", icon: "solar:shield-keyhole-linear" },
@@ -131,7 +135,11 @@ export function ClientSettings({
         <div className="min-w-0">
           {initialSection === "overview" && (
             <Overview
-              companyName={profileMetaData?.companyName}
+              hiringAs={
+                profileMetaData?.clientType === "INDIVIDUAL"
+                  ? "Hiring as an individual"
+                  : profileMetaData?.companyName ?? undefined
+              }
               identityVerified={profileMetaData?.identityVerified === true}
             />
           )}
@@ -139,7 +147,7 @@ export function ClientSettings({
           {initialSection === "company" && (
             <CompanySettings
               profile={profileMetaData}
-              onSave={() => saveNotice("Company profile updated.")}
+              onSave={() => saveNotice("Hiring profile updated.")}
             />
           )}
           {initialSection === "notifications" && <NotificationSettings onSave={() => saveNotice("Notification preferences saved.")} />}
@@ -167,15 +175,15 @@ function SectionCard({ title, description, children }: { title: string; descript
 }
 
 function Overview({
-  companyName,
+  hiringAs,
   identityVerified,
 }: {
-  companyName?: string;
+  hiringAs?: string;
   identityVerified: boolean;
 }) {
   const items = [
     { label: "Payment methods", value: "Cards & billing, managed in Stripe", href: "finances", icon: "solar:card-linear" },
-    { label: "Company profile", value: companyName || "Not set yet", href: "company", icon: "solar:buildings-2-linear" },
+    { label: "Hiring profile", value: hiringAs || "Not set yet", href: "company", icon: "solar:buildings-2-linear" },
     { label: "Identity verification", value: identityVerified ? "Verified" : "Not verified", href: "verifications", icon: "solar:verified-check-linear" },
     { label: "Password & security", value: "Password, 2FA, and devices", href: "account", icon: "solar:shield-keyhole-linear" },
   ];
@@ -297,6 +305,8 @@ function CompanySettings({
   const [error, setError] = useState("");
   const [hydrated, setHydrated] = useState(false);
 
+  const [clientType, setClientType] = useState<ClientType>("INDIVIDUAL");
+  const [professionalRole, setProfessionalRole] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyWebsite, setCompanyWebsite] = useState("");
   const [companySize, setCompanySize] = useState<string>(companySizeOptions[0]);
@@ -306,6 +316,8 @@ function CompanySettings({
 
   useEffect(() => {
     if (!profile || hydrated) return;
+    setClientType(profile.clientType ?? "BUSINESS");
+    setProfessionalRole(profile.professionalRole ?? "");
     setCompanyName(profile.companyName ?? "");
     setCompanyWebsite(profile.companyWebsite ?? "");
     setCompanySize(profile.companySize || companySizeOptions[0]);
@@ -323,27 +335,42 @@ function CompanySettings({
     setHydrated(true);
   }, [profile, hydrated]);
 
+  const isBusiness = clientType === "BUSINESS";
   const resolvedIndustry = industry === "Other" ? customIndustry : industry;
   const isDirty =
     hydrated &&
-    (companyName.trim() !== (profile?.companyName ?? "") ||
-      companyWebsite.trim() !== (profile?.companyWebsite ?? "") ||
-      companySize.trim() !== (profile?.companySize ?? "") ||
-      companyDescription.trim() !== (profile?.companyDescription ?? "") ||
-      resolvedIndustry.trim() !== (profile?.industry ?? ""));
+    (clientType !== (profile?.clientType ?? "BUSINESS") ||
+      (isBusiness &&
+        (professionalRole.trim() !== (profile?.professionalRole ?? "") ||
+          companyName.trim() !== (profile?.companyName ?? "") ||
+          companyWebsite.trim() !== (profile?.companyWebsite ?? "") ||
+          companySize.trim() !== (profile?.companySize ?? "") ||
+          companyDescription.trim() !== (profile?.companyDescription ?? "") ||
+          resolvedIndustry.trim() !== (profile?.industry ?? ""))));
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
 
-    const payload = {
-      professionalRole: profile?.professionalRole ?? "",
-      companyName: companyName.trim(),
-      companyWebsite: companyWebsite.trim(),
-      companySize: companySize.trim(),
-      industry: resolvedIndustry.trim(),
-      companyDescription: companyDescription.trim(),
-    };
+    const payload: ClientProfileMetadata = isBusiness
+      ? {
+          clientType,
+          professionalRole: professionalRole.trim(),
+          companyName: companyName.trim(),
+          companyWebsite: companyWebsite.trim(),
+          companySize: companySize.trim(),
+          industry: resolvedIndustry.trim(),
+          companyDescription: companyDescription.trim(),
+        }
+      : {
+          clientType,
+          professionalRole: null,
+          companyName: null,
+          companyWebsite: null,
+          companySize: null,
+          industry: null,
+          companyDescription: null,
+        };
 
     setSaving(true);
     try {
@@ -382,11 +409,50 @@ function CompanySettings({
 
   return (
     <SectionCard
-      title="Company profile"
-      description="Information pros and companies see when reviewing your opportunities."
+      title="Hiring profile"
+      description="Hire for yourself, or add company details if you're hiring on behalf of a business."
     >
       <form onSubmit={(event) => void handleSubmit(event)}>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div
+          role="radiogroup"
+          aria-label="Who are you hiring for?"
+          className="grid gap-2 rounded-xl bg-[#f9f1ed] p-1 sm:grid-cols-2"
+        >
+          {(
+            [
+              { value: "INDIVIDUAL", label: "Myself", icon: "solar:user-rounded-linear" },
+              { value: "BUSINESS", label: "A business", icon: "solar:buildings-2-linear" },
+            ] as const
+          ).map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              role="radio"
+              aria-checked={clientType === option.value}
+              onClick={() => setClientType(option.value)}
+              className={`flex h-10 items-center justify-center gap-2 rounded-lg text-sm font-semibold transition ${
+                clientType === option.value
+                  ? "bg-white text-[#d85a1b] shadow-sm"
+                  : "text-[#6e6a66] hover:text-[#272624]"
+              }`}
+            >
+              <Icon icon={option.icon} width="17" />
+              {option.label}
+            </button>
+          ))}
+        </div>
+
+        {!isBusiness && (
+          <p className="mt-4 rounded-xl border border-black/8 p-4 text-sm text-[#6e6a66]">
+            You&apos;re hiring for personal projects. Pros see you as a private
+            client, and no company details are needed.
+          </p>
+        )}
+
+        {isBusiness && (
+        <>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <Field label="Your role" value={professionalRole} onChange={setProfessionalRole} />
           <Field label="Company name" value={companyName} onChange={setCompanyName} />
           <Field label="Website" value={companyWebsite} onChange={setCompanyWebsite} />
           <label className="block">
@@ -430,13 +496,15 @@ function CompanySettings({
             className="w-full resize-none rounded-xl border border-black/10 p-3 text-sm outline-none focus:border-[#e77840]"
           />
         </label>
+        </>
+        )}
         {error && <p className="mt-3 text-xs text-red-600">{error}</p>}
         <button
           type="submit"
           disabled={saving || !isDirty}
           className="mt-5 h-10 rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {saving ? "Saving..." : "Save company profile"}
+          {saving ? "Saving..." : "Save hiring profile"}
         </button>
       </form>
     </SectionCard>

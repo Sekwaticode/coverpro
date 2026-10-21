@@ -17,34 +17,38 @@ export default function BrandSlider({ brandList }: { brandList: BrandList[] }) {
   const items = [...brandList, ...brandList];
 
   return (
-    <section className="border-y border-border bg-background py-8">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-5 px-5 sm:px-8 lg:flex-row lg:px-10">
-        <p className="shrink-0 text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">
-          Trades on CoverPro
+    <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-8">
+      <div className="flex items-center gap-4">
+        <span className="h-px flex-1 bg-linear-to-r from-transparent to-foreground/15" />
+        <p className="text-center text-sm text-muted-foreground">
+          Every trade covered, in all nine provinces
         </p>
-        <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <ul className="flex w-max animate-[coverpro-marquee_40s_linear_infinite] gap-3 hover:[animation-play-state:paused]">
-            {items.map((brand, index) => {
-              const Icon = brand.icon;
-              return (
-                <li key={`${brand.name}-${index}`} aria-hidden={index >= brandList.length}>
-                  <Link
-                    href={brand.href ?? `/talents?q=${encodeURIComponent(brand.name)}`}
-                    tabIndex={index >= brandList.length ? -1 : undefined}
-                    className="flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium whitespace-nowrap text-foreground transition-colors hover:border-primary/40 hover:text-primary"
-                  >
-                    {Icon ? (
-                      <Icon className="h-4 w-4 text-primary" />
-                    ) : brand.image ? (
-                      <img src={brand.image} alt="" className="h-5 w-auto" />
-                    ) : null}
-                    {brand.name}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <span className="h-px flex-1 bg-linear-to-l from-transparent to-foreground/15" />
+      </div>
+
+      <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+        <ul className="flex w-max animate-[coverpro-marquee_40s_linear_infinite] gap-12 hover:[animation-play-state:paused]">
+          {items.map((brand, index) => {
+            const Icon = brand.icon;
+            const duplicate = index >= brandList.length;
+            return (
+              <li key={`${brand.name}-${index}`} aria-hidden={duplicate}>
+                <Link
+                  href={brand.href ?? `/talents?q=${encodeURIComponent(brand.name)}`}
+                  tabIndex={duplicate ? -1 : undefined}
+                  className="flex items-center gap-2 text-lg font-semibold tracking-tight whitespace-nowrap text-muted-foreground/70 transition-colors hover:text-foreground"
+                >
+                  {Icon ? (
+                    <Icon className="h-5 w-5" />
+                  ) : brand.image ? (
+                    <img src={brand.image} alt="" className="h-6 w-auto" />
+                  ) : null}
+                  {brand.name}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

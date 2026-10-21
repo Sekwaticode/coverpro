@@ -14,6 +14,7 @@ import {
   proposals,
   reviews,
 } from "../../database/schema.js";
+import { clientDisplayName } from "../../database/client-display-name.js";
 import {
   FreelancerProfileData,
   PortfolioData,
@@ -782,7 +783,7 @@ export const getMatchedJobPostsBySkills = async (
   const jobs = await db
     .select({
       job: job_posts,
-      companyName: client_metadata.company_name,
+      companyName: clientDisplayName,
       paymentVerified: accounts.paymentMethodVerified,
       totalSpent: client_spents.total_spent,
       clientRating: client_spents.rating,
@@ -906,7 +907,7 @@ export const getFreelancerJobPost = async (jobId: string) => {
   const [result] = await db
     .select({
       job: job_posts,
-      companyName: client_metadata.company_name,
+      companyName: clientDisplayName,
       companyDescription: client_metadata.company_description,
       paymentVerified: accounts.paymentMethodVerified,
       clientJoinedAt: accounts.created_at,

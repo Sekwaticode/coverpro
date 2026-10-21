@@ -85,14 +85,25 @@ export const initializeMessagingSocket = (server: HttpServer) => {
     const userId = socket.data.auth.userId as string;
     const scope: ConversationScope =
       socket.handshake.auth.scope === "agency" ? "agency" : "default";
-    const agencyId =
-      scope === "agency" ? await getAgencyIdForMember(userId) : null;
+    // A rejected await in this listener is unhandled and would crash the
+    // whole API (e.g. when Neon is briefly unreachable), so drop just this
+    // socket; the socket.io client reconnects on its own.
+    let agencyId: string | null;
+    let conversationIds: string[];
+    let participants: Awaited<ReturnType<typeof getConversationUsers>>["participants"];
+    try {
+      agencyId = scope === "agency" ? await getAgencyIdForMember(userId) : null;
+      ({ conversationIds, participants } = await getConversationUsers(
+        userId,
+        scope,
+        agencyId,
+      ));
+    } catch (error) {
+      console.error("Messaging socket setup failed.", error);
+      socket.disconnect(true);
+      return;
+    }
     const selfRoomId = agencyId ?? userId;
-    const { conversationIds, participants } = await getConversationUsers(
-      userId,
-      scope,
-      agencyId,
-    );
     const partnerIds = [...new Set(participants.map((p) => p.userId))];
     socket.join(scopeRoom(selfRoomId, scope));
     conversationIds.forEach((id) => socket.join(`conversation:${id}`));
@@ -142,29 +153,34 @@ export const initializeMessagingSocket = (server: HttpServer) => {
           return;
         }
 
-        const [participant] = await db
-          .update(conversation_participants)
-          .set({
-            last_read_message_id: messageId,
-            last_read_at: new Date(),
-            unread_count: 0,
-          })
-          .where(
-            and(
-              eq(conversation_participants.conversation_id, conversationId),
-              agencyId
-                ? eq(conversation_participants.agency_id, agencyId)
-                : eq(conversation_participants.account_id, userId),
-              sql`EXISTS (
-                SELECT 1 FROM ${messages}
-                WHERE ${messages.id} = ${messageId}
-                  AND ${messages.conversation_id} = ${conversationId}
-              )`,
-            ),
-          )
-          .returning({ id: conversation_participants.id });
+        try {
+          const [participant] = await db
+            .update(conversation_participants)
+            .set({
+              last_read_message_id: messageId,
+              last_read_at: new Date(),
+              unread_count: 0,
+            })
+            .where(
+              and(
+                eq(conversation_participants.conversation_id, conversationId),
+                agencyId
+                  ? eq(conversation_participants.agency_id, agencyId)
+                  : eq(conversation_participants.account_id, userId),
+                sql`EXISTS (
+                  SELECT 1 FROM ${messages}
+                  WHERE ${messages.id} = ${messageId}
+                    AND ${messages.conversation_id} = ${conversationId}
+                )`,
+              ),
+            )
+            .returning({ id: conversation_participants.id });
 
-        acknowledge?.({ success: Boolean(participant) });
+          acknowledge?.({ success: Boolean(participant) });
+        } catch (error) {
+          console.error("Failed to mark conversation as read.", error);
+          acknowledge?.({ success: false });
+        }
       },
     );
 

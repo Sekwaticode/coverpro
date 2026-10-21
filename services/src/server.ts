@@ -68,6 +68,11 @@ const shutdown = async (signal: NodeJS.Signals): Promise<void> => {
 
 process.on("SIGINT", () => void shutdown("SIGINT"));
 process.on("SIGTERM", () => void shutdown("SIGTERM"));
+// Log instead of crashing: a transient DB/network failure in a stray promise
+// (socket handlers, background work) shouldn't take the whole API down.
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled promise rejection.", reason);
+});
 
 void start().catch(async (error) => {
   console.error(`Failed to start ${SERVICE_NAME}.`, error);

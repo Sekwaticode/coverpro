@@ -1,5 +1,8 @@
-import { Icon } from "@iconify/react";
-import Link from "next/link";
+import { Building2, CircleCheck } from "lucide-react";
+
+import ArrowLink from "@/components/ui/hero-01-utils/arrow-link";
+
+import { Eyebrow } from "./section-heading";
 
 const perks = [
   "A public company profile with your past projects",
@@ -9,73 +12,57 @@ const perks = [
 
 export function AgenciesSection() {
   return (
-    <section
-      id="companies"
-      className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-10"
-    >
-      <div className="overflow-hidden rounded-3xl bg-[#1f1c1a]">
-        <div className="grid lg:grid-cols-2">
-          <div className="p-8 sm:p-12 lg:p-16">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-[#f6c9ad]">
-              <Icon icon="solar:buildings-3-linear" width="15" />
-              CoverPro for construction companies
-            </span>
-            <h2 className="mt-7 max-w-lg text-4xl font-bold tracking-tight text-white sm:text-5xl">
-              Run a building company? Bring your whole team.
+    <section id="companies" className="bg-secondary py-20 sm:py-24">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="grid items-center gap-14 overflow-hidden rounded-3xl border border-border bg-background p-6 shadow-xl shadow-black/5 sm:p-10 lg:grid-cols-2 lg:gap-10 lg:p-14">
+          <div>
+            <Eyebrow icon={Building2}>CoverPro for construction companies</Eyebrow>
+            <h2 className="mt-6 max-w-lg text-3xl leading-[1.1] font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              Run a building company?{" "}
+              <span className="text-primary">Bring your whole team.</span>
             </h2>
-            <p className="mt-5 max-w-md text-sm leading-7 text-[#bdb5ae] sm:text-base">
-              Win more work in your province, show off finished projects, and
-              get paid on time — every milestone is funded before you start.
+            <p className="mt-5 max-w-md text-base leading-7 text-muted-foreground">
+              Win more work in your province, show off finished projects, and get
+              paid on time — every milestone is funded before you start.
             </p>
-            <ul className="mt-6 grid gap-3 text-sm text-[#e4ddd7]">
+            <ul className="mt-6 grid gap-3 text-sm text-foreground">
               {perks.map((perk) => (
                 <li key={perk} className="flex items-center gap-2.5">
-                  <Icon
-                    icon="solar:check-circle-bold"
-                    width="18"
-                    className="shrink-0 text-[#ee6c2b]"
-                  />
+                  <CircleCheck className="h-4 w-4 shrink-0 text-primary" />
                   {perk}
                 </li>
               ))}
             </ul>
-            <Link
-              href="/agencies"
-              className="mt-9 inline-flex items-center gap-2 rounded-full bg-[#ee6c2b] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#d95a1c]"
-            >
+            <ArrowLink href="/agencies" size="lg" className="mt-9">
               Explore companies
-              <Icon icon="solar:arrow-right-linear" width="18" />
-            </Link>
+            </ArrowLink>
           </div>
 
-          <div className="relative min-h-80">
+          <div className="relative">
             <img
               src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1100&q=80"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="aspect-[4/3] w-full rounded-3xl object-cover shadow-2xl shadow-black/10"
               alt="Construction crew on a building site"
             />
-            <div className="absolute right-6 bottom-6 left-6 rounded-2xl bg-white p-4 shadow-xl sm:left-auto sm:w-72">
+            <div className="absolute right-4 -bottom-7 w-64 rounded-2xl border border-border bg-background p-4 shadow-xl shadow-black/8 sm:-right-4">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ee6c2b] text-sm font-bold text-white">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
                   KB
                 </span>
                 <div>
                   <p className="text-sm font-semibold">Khumalo Builders</p>
-                  <p className="text-xs text-[#77716b]">
-                    Construction · Mpumalanga
-                  </p>
+                  <p className="text-xs text-muted-foreground">Construction · Mpumalanga</p>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
-                <span className="rounded-md bg-[#fdeee5] px-2 py-1 text-xs text-[#b84f1a]">
-                  Roofing
-                </span>
-                <span className="rounded-md bg-[#fdeee5] px-2 py-1 text-xs text-[#b84f1a]">
-                  Brickwork
-                </span>
-                <span className="rounded-md bg-[#fdeee5] px-2 py-1 text-xs text-[#b84f1a]">
-                  Ceilings
-                </span>
+                {["Roofing", "Brickwork", "Ceilings"].map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-accent px-2.5 py-1 text-xs font-medium text-accent-foreground"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

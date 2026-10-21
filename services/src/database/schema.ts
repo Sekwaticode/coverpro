@@ -45,15 +45,22 @@ export const accounts = pgTable("accounts", {
 export const client_metadata = pgTable("client_metadata", {
   id: uuid("id").defaultRandom().primaryKey(),
   auth_id: text("auth_id").notNull().unique(),
-  role: text("role").notNull(),
-  company_name: text("company_name").notNull(),
-  company_website: text("company_website").notNull(),
-  company_size: text("company_size").notNull(),
-  industry: text("industry").notNull(),
-  company_description: text("company_description").notNull(),
+  // INDIVIDUAL clients hire for themselves and leave the company fields null.
+  client_type: text("client_type").default("BUSINESS").notNull(),
+  role: text("role"),
+  company_name: text("company_name"),
+  company_website: text("company_website"),
+  company_size: text("company_size"),
+  industry: text("industry"),
+  company_description: text("company_description"),
   created_at: timestamp("created_at", { withTimezone: true }),
   updated_at: timestamp("updated_at", { withTimezone: true }),
-});
+}, (table) => [
+  check(
+    "client_metadata_client_type_check",
+    sql`${table.client_type} IN ('INDIVIDUAL', 'BUSINESS')`,
+  ),
+]);
 
 export const freelancer_metadata = pgTable("freelancer_metadata", {
   id: uuid("id").defaultRandom().primaryKey(),

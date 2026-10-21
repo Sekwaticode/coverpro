@@ -260,6 +260,13 @@
       "when": 1788374386931,
       "tag": "0036_third_giant_man",
       "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "7",
+      "when": 1792501859014,
+      "tag": "0037_client_type",
+      "breakpoints": true
     }
   ]
 }

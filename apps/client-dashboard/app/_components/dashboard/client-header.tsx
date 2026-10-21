@@ -361,7 +361,7 @@ function AccountMenu() {
                 </span>
               </div>
               <p className="mt-1 truncate text-[10px] text-[#807c78]">
-                {profileMetaData?.companyName}
+                {profileMetaData && (profileMetaData.companyName ?? "Individual client")}
               </p>
             </div>
           </div>

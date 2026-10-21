@@ -21,6 +21,7 @@ import {
   job_posts,
   proposals,
 } from "../../database/schema.js";
+import { clientDisplayName } from "../../database/client-display-name.js";
 import { ApiError } from "../../utils/api-error.js";
 import { imageKit } from "../../config/imageKit.js";
 import { env } from "../../config/env.js";
@@ -191,7 +192,7 @@ export const getSavedJobPosts = async (freelancerId: string) => {
     .select({
       job: job_posts,
       savedAt: freelancer_saved_job_posts.created_at,
-      companyName: client_metadata.company_name,
+      companyName: clientDisplayName,
       paymentVerified: accounts.paymentMethodVerified,
       proposalCount: sql<number>`(
         SELECT count(*) FROM ${proposals}
@@ -314,7 +315,7 @@ export const getPublicJobFeed = async (
   const rows = await db
     .select({
       job: job_posts,
-      companyName: client_metadata.company_name,
+      companyName: clientDisplayName,
       paymentVerified: accounts.paymentMethodVerified,
       totalSpent: client_spents.total_spent,
       clientRating: client_spents.rating,

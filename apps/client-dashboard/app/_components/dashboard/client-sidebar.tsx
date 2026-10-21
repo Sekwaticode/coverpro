@@ -65,7 +65,9 @@ export function ClientSidebar() {
               {!isLoaded ? "..." : user?.fullName}
             </h2>
             <p className="mt-1 text-xs text-[#8a8682]">
-              {profileMetaDataLoading ? "..." : profileMetaData?.companyName}
+              {profileMetaDataLoading
+                ? "..."
+                : profileMetaData && (profileMetaData.companyName ?? "Individual client")}
             </p>
           </div>
         </div>

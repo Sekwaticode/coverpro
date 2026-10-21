@@ -44,6 +44,7 @@ export const getLoggedInClientProfile: RequestHandler = asyncHandler(
 );
 
 interface ClientProfileBody {
+  clientType?: string;
   professionalRole?: string;
   companyName?: string;
   companyWebsite?: string | undefined;
@@ -63,18 +64,40 @@ export const upsertClientProfile: RequestHandler = asyncHandler(
     }
 
     const body = request.body as ClientProfileBody;
-    const input: SaveClientProfileInput = {
-      userId: request.auth.userId,
-      professionalRole: requireText(body.professionalRole, "Professional role"),
-      companyName: requireText(body.companyName, "Company name"),
-      companyWebsite: requireWebsite(body.companyWebsite),
-      companySize: requireText(body.companySize, "Company size"),
-      industry: requireText(body.industry, "Industry"),
-      companyDescription: requireText(
-        body.companyDescription,
-        "Company description",
-      ),
-    };
+    // Older clients don't send clientType; they were always businesses.
+    const clientType = body.clientType ?? "BUSINESS";
+    if (clientType !== "INDIVIDUAL" && clientType !== "BUSINESS") {
+      throw new ApiError(400, "Client type must be INDIVIDUAL or BUSINESS.");
+    }
+
+    const input: SaveClientProfileInput =
+      clientType === "INDIVIDUAL"
+        ? {
+            userId: request.auth.userId,
+            clientType,
+            professionalRole: null,
+            companyName: null,
+            companyWebsite: null,
+            companySize: null,
+            industry: null,
+            companyDescription: null,
+          }
+        : {
+            userId: request.auth.userId,
+            clientType,
+            professionalRole: requireText(
+              body.professionalRole,
+              "Professional role",
+            ),
+            companyName: requireText(body.companyName, "Company name"),
+            companyWebsite: requireWebsite(body.companyWebsite),
+            companySize: requireText(body.companySize, "Company size"),
+            industry: requireText(body.industry, "Industry"),
+            companyDescription: requireText(
+              body.companyDescription,
+              "Company description",
+            ),
+          };
 
     const profile = await saveClientProfile(input);
     await request.logger.info({

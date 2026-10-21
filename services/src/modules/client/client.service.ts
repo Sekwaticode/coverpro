@@ -26,23 +26,25 @@ import {
   getAccountAuthCacheKey,
 } from "../../config/constants.js";
 
-export interface SaveClientProfileInput {
-  userId: string;
-  professionalRole: string;
-  companyName: string;
-  companyWebsite: string;
-  companySize: string;
-  industry: string;
-  companyDescription: string;
+export type ClientType = "INDIVIDUAL" | "BUSINESS";
+
+/** Company fields are null for INDIVIDUAL clients. */
+export interface ClientCompanyFields {
+  professionalRole: string | null;
+  companyName: string | null;
+  companyWebsite: string | null;
+  companySize: string | null;
+  industry: string | null;
+  companyDescription: string | null;
 }
 
-export interface ClientMetadataData {
-  professionalRole: string;
-  companyName: string;
-  companyWebsite: string;
-  companySize: string;
-  industry: string;
-  companyDescription: string;
+export interface SaveClientProfileInput extends ClientCompanyFields {
+  userId: string;
+  clientType: ClientType;
+}
+
+export interface ClientMetadataData extends ClientCompanyFields {
+  clientType: ClientType;
   joinedAt: Date | null;
   identityVerified: boolean;
   paymentMethodVerified: boolean;
@@ -57,6 +59,7 @@ export const getClientProfile = async (
 ): Promise<ClientMetadataData | null> => {
   const [profile] = await db
     .select({
+      clientType: client_metadata.client_type,
       professionalRole: client_metadata.role,
       companyName: client_metadata.company_name,
       companyWebsite: client_metadata.company_website,
@@ -82,6 +85,7 @@ export const getClientProfile = async (
 
   return {
     ...profile,
+    clientType: profile.clientType as ClientType,
     identityVerified: profile.identityVerified === true,
     paymentMethodVerified: profile.paymentMethodVerified === true,
   };
@@ -116,6 +120,7 @@ export const saveClientProfile = async (
       .insert(client_metadata)
       .values({
         auth_id: input.userId,
+        client_type: input.clientType,
         role: input.professionalRole,
         company_name: input.companyName,
         company_website: input.companyWebsite,
@@ -128,6 +133,7 @@ export const saveClientProfile = async (
       .onConflictDoUpdate({
         target: client_metadata.auth_id,
         set: {
+          client_type: input.clientType,
           role: input.professionalRole,
           company_name: input.companyName,
           company_website: input.companyWebsite,
@@ -138,6 +144,7 @@ export const saveClientProfile = async (
         },
       })
       .returning({
+        clientType: client_metadata.client_type,
         professionalRole: client_metadata.role,
         companyName: client_metadata.company_name,
         companyWebsite: client_metadata.company_website,

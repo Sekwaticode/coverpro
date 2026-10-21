@@ -45,13 +45,17 @@ const formatResponseTime = (days: number | null) => {
   return `${rounded} day${rounded === 1 ? "" : "s"}`;
 };
 
+type ClientType = "INDIVIDUAL" | "BUSINESS";
+
+// Company fields are null when the client hires as an individual.
 interface ClientProfilePayload {
-  professionalRole: string;
-  companyName: string;
-  companyWebsite: string;
-  companySize: string;
-  industry: string;
-  companyDescription: string;
+  clientType: ClientType;
+  professionalRole: string | null;
+  companyName: string | null;
+  companyWebsite: string | null;
+  companySize: string | null;
+  industry: string | null;
+  companyDescription: string | null;
   identityVerified?: boolean;
   paymentMethodVerified?: boolean;
   joinedAt?: Date;
@@ -92,6 +96,8 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
   const [formError, setFormError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
+  const [selectedClientType, setSelectedClientType] =
+    useState<ClientType | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 
@@ -126,6 +132,9 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
   );
 
   const isIdentityVerified = Boolean(profileMetaData?.identityVerified);
+  const clientType: ClientType =
+    selectedClientType ?? profileMetaData?.clientType ?? "INDIVIDUAL";
+  const isBusiness = clientType === "BUSINESS";
 
   const savedIndustry = profileMetaData?.industry;
   const industry =
@@ -211,7 +220,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
 
   useEffect(() => {
     validateForm();
-  }, [industry, validateForm]);
+  }, [industry, clientType, validateForm]);
 
   useEffect(
     () => () => {
@@ -282,17 +291,28 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
       : SOUTH_AFRICA_CODE;
     const selectedIndustry = String(formData.get("industry") ?? "").trim();
     const customIndustry = String(formData.get("customIndustry") ?? "").trim();
-    const profilePayload: ClientProfilePayload = {
-      professionalRole: String(formData.get("jobRole") ?? "").trim(),
-      companyName: String(formData.get("companyName") ?? "").trim(),
-      companyWebsite: String(formData.get("companyWebsite") ?? "").trim(),
-      companySize: String(formData.get("companySize") ?? "").trim(),
-      industry:
-        selectedIndustry === "Other" ? customIndustry : selectedIndustry,
-      companyDescription: String(
-        formData.get("companyDescription") ?? "",
-      ).trim(),
-    };
+    const profilePayload: ClientProfilePayload = isBusiness
+      ? {
+          clientType,
+          professionalRole: String(formData.get("jobRole") ?? "").trim(),
+          companyName: String(formData.get("companyName") ?? "").trim(),
+          companyWebsite: String(formData.get("companyWebsite") ?? "").trim(),
+          companySize: String(formData.get("companySize") ?? "").trim(),
+          industry:
+            selectedIndustry === "Other" ? customIndustry : selectedIndustry,
+          companyDescription: String(
+            formData.get("companyDescription") ?? "",
+          ).trim(),
+        }
+      : {
+          clientType,
+          professionalRole: null,
+          companyName: null,
+          companyWebsite: null,
+          companySize: null,
+          industry: null,
+          companyDescription: null,
+        };
 
     setIsSubmitting(true);
 
@@ -455,13 +475,6 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
                 disabled={isIdentityVerified}
                 error={hasAttemptedSubmit ? fieldErrors.lastName : undefined}
               />
-              <Field
-                label="Role *"
-                name="jobRole"
-                defaultValue={profileMetaData?.professionalRole ?? ""}
-                placeholder="Managing Director"
-                error={hasAttemptedSubmit ? fieldErrors.jobRole : undefined}
-              />
               <label className="text-xs font-semibold">
                 Province *
                 <select
@@ -501,11 +514,47 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
           </section>
 
           <section className="rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
+            <h2 className="font-semibold">Who are you hiring for?</h2>
+            <p className="mt-1 text-xs text-[#807c78]">
+              Hire for your own home or project, or on behalf of a business.
+              You can change this later.
+            </p>
+            <div
+              role="radiogroup"
+              aria-label="Who are you hiring for?"
+              className="mt-5 grid gap-3 sm:grid-cols-2"
+            >
+              <ClientTypeOption
+                selected={!isBusiness}
+                onSelect={() => setSelectedClientType("INDIVIDUAL")}
+                icon="solar:user-rounded-linear"
+                title="Myself"
+                description="A personal job, like work on your own home. No company details needed."
+              />
+              <ClientTypeOption
+                selected={isBusiness}
+                onSelect={() => setSelectedClientType("BUSINESS")}
+                icon="solar:buildings-2-linear"
+                title="A business"
+                description="Hiring for a company, landlord, body corporate or other organisation."
+              />
+            </div>
+          </section>
+
+          {isBusiness && (
+          <section className="rounded-2xl border border-black/8 bg-white p-5 sm:p-6">
             <h2 className="font-semibold">Company information</h2>
             <p className="mt-1 text-xs text-[#807c78]">
               This information is attached to public job posts and proposals.
             </p>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              <Field
+                label="Your role *"
+                name="jobRole"
+                defaultValue={profileMetaData?.professionalRole ?? ""}
+                placeholder="Managing Director"
+                error={hasAttemptedSubmit ? fieldErrors.jobRole : undefined}
+              />
               <Field
                 label="Company name *"
                 name="companyName"
@@ -561,7 +610,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
                     !industryOptions.some(
                       (option) => option === profileMetaData.industry,
                     )
-                      ? profileMetaData.industry
+                      ? (profileMetaData.industry ?? "")
                       : ""
                   }
                   placeholder="Enter your industry"
@@ -598,6 +647,7 @@ export function ClientProfile({ editing = false }: { editing?: boolean }) {
               )}
             </label>
           </section>
+          )}
 
           {formError && (
             <p role="alert" className="text-sm font-medium text-[#a34f49]">
@@ -691,6 +741,9 @@ function ProfilePreview({
       },
     });
 
+  const isBusiness = profileMetadata?.clientType === "BUSINESS";
+  const memberSince =
+    profileMetadata?.joinedAt?.toString().slice(0, 4) || "2026";
   const contracts = completedContracts ?? [];
   const totalContractPages = Math.max(
     Math.ceil(contracts.length / contractsPerPage),
@@ -728,7 +781,9 @@ function ProfilePreview({
             )}
           </h2>
           <p className="mt-1 text-sm text-[#7a7672]">
-            {profileMetadata?.professionalRole} · {profileMetadata?.companyName}
+            {isBusiness
+              ? `${profileMetadata?.professionalRole} · ${profileMetadata?.companyName}`
+              : "Hiring as an individual"}
           </p>
           <div className="mt-3 flex justify-center text-xs text-[#8a8682]">
             <span className="inline-flex max-w-56 items-start gap-1.5 text-center">
@@ -796,61 +851,72 @@ function ProfilePreview({
           </dl>
         </section>
 
-        <section className="rounded-2xl border border-black/8 bg-white p-5">
-          <h2 className="text-sm font-semibold">Company details</h2>
-          <dl className="mt-4 grid gap-4">
-            <SidebarDetail
-              label="Industry"
-              value={profileMetadata?.industry || "N/A"}
-            />
-            <SidebarDetail
-              label="Company size"
-              value={profileMetadata?.companyName || "Just me"}
-            />
-            <SidebarDetail
-              label="Member since"
-              value={
-                profileMetadata?.joinedAt?.toString().slice(0, 4) || "2026"
-              }
-            />
-          </dl>
-          <a
-            href={profileMetadata?.companyWebsite}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b] hover:underline"
-          >
-            {profileMetadata?.companyWebsite}
-            <Icon icon="solar:arrow-right-up-linear" width="14" />
-          </a>
-        </section>
+        {isBusiness && (
+          <section className="rounded-2xl border border-black/8 bg-white p-5">
+            <h2 className="text-sm font-semibold">Company details</h2>
+            <dl className="mt-4 grid gap-4">
+              <SidebarDetail
+                label="Industry"
+                value={profileMetadata?.industry || "N/A"}
+              />
+              <SidebarDetail
+                label="Company size"
+                value={profileMetadata?.companySize || "N/A"}
+              />
+              <SidebarDetail label="Member since" value={memberSince} />
+            </dl>
+            {profileMetadata?.companyWebsite && (
+              <a
+                href={profileMetadata.companyWebsite}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b] hover:underline"
+              >
+                {profileMetadata.companyWebsite}
+                <Icon icon="solar:arrow-right-up-linear" width="14" />
+              </a>
+            )}
+          </section>
+        )}
       </aside>
 
       <div className="grid gap-6">
-        <section className="rounded-2xl border border-black/8 bg-white p-6 sm:p-8">
-          <p className="text-xs font-semibold tracking-[.13em] text-[#e66d31] uppercase">
-            About the company
-          </p>
-          <h2 className="mt-3 text-2xl font-semibold">
-            {profileMetadata?.companyName}
-          </h2>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-[#6e6a66]">
-            {profileMetadata?.companyDescription}
-          </p>
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
-            <Info label="Industry" value={profileMetadata?.industry || "N/A"} />
-            <Info
-              label="Company size"
-              value={profileMetadata?.companyName || "Just me"}
-            />
-            <Info
-              label="Member since"
-              value={
-                profileMetadata?.joinedAt?.toString().slice(0, 4) || "2026"
-              }
-            />
-          </div>
-        </section>
+        {isBusiness ? (
+          <section className="rounded-2xl border border-black/8 bg-white p-6 sm:p-8">
+            <p className="text-xs font-semibold tracking-[.13em] text-[#e66d31] uppercase">
+              About the company
+            </p>
+            <h2 className="mt-3 text-2xl font-semibold">
+              {profileMetadata?.companyName}
+            </h2>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-[#6e6a66]">
+              {profileMetadata?.companyDescription}
+            </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              <Info label="Industry" value={profileMetadata?.industry || "N/A"} />
+              <Info
+                label="Company size"
+                value={profileMetadata?.companySize || "N/A"}
+              />
+              <Info label="Member since" value={memberSince} />
+            </div>
+          </section>
+        ) : (
+          <section className="rounded-2xl border border-black/8 bg-white p-6 sm:p-8">
+            <p className="text-xs font-semibold tracking-[.13em] text-[#e66d31] uppercase">
+              Individual client
+            </p>
+            <h2 className="mt-3 text-2xl font-semibold">{user?.fullName}</h2>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-[#6e6a66]">
+              Hiring for personal projects. Pros see you as a private client on
+              job posts and proposals.
+            </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              <Info label="Client type" value="Individual" />
+              <Info label="Member since" value={memberSince} />
+            </div>
+          </section>
+        )}
         <section className="grid gap-4 sm:grid-cols-3">
           <InfoCard
             value={
@@ -1201,6 +1267,46 @@ function SelectField({
         ))}
       </select>
     </label>
+  );
+}
+
+function ClientTypeOption({
+  selected,
+  onSelect,
+  icon,
+  title,
+  description,
+}: {
+  selected: boolean;
+  onSelect: () => void;
+  icon: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <button
+      type="button"
+      role="radio"
+      aria-checked={selected}
+      onClick={onSelect}
+      className={`flex items-start gap-3 rounded-xl border p-4 text-left transition ${
+        selected
+          ? "border-[#e77840] bg-[#faf3ee]"
+          : "border-black/10 bg-white hover:border-black/20"
+      }`}
+    >
+      <span
+        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
+          selected ? "bg-[#e56d30] text-white" : "bg-[#f9f1ed] text-[#dd5c1b]"
+        }`}
+      >
+        <Icon icon={icon} width="20" />
+      </span>
+      <span className="min-w-0">
+        <strong className="block text-sm">{title}</strong>
+        <span className="mt-1 block text-xs text-[#807c78]">{description}</span>
+      </span>
+    </button>
   );
 }
 
