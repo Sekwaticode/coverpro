@@ -23,7 +23,7 @@ export function Features() {
             </span>
 
             <p className="mt-8 text-2xl font-semibold">
-              Find verified contractors near you, wherever you&apos;re building.
+              Find verified contractors near you and far.
             </p>
           </div>
 
