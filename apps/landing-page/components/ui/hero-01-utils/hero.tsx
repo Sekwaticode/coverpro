@@ -23,9 +23,10 @@ export default function HeroSection({ avatarList }: { avatarList: AvatarList[] }
       </h1>
 
       <p className="mt-7 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-        CoverPro connects you with verified builders, roofers, tilers, plumbers
-        and electricians across South Africa — and holds every rand in escrow
-        until you sign the work off.
+        CoverPro connects you with verified freelancers and service pros across
+        South Africa — web developers, designers, content creators,
+        photographers, event specialists, makeup and tattoo artists, and more —
+        and holds every rand in escrow until you sign the work off.
       </p>
 
       <div className="mt-10 flex flex-col items-center gap-8 sm:flex-row sm:gap-10">
@@ -51,7 +52,7 @@ export default function HeroSection({ avatarList }: { avatarList: AvatarList[] }
               ))}
             </div>
             <p className="mt-1 text-sm text-muted-foreground">
-              Trusted by 1000+ homeowners
+              Trusted by 1000+ clients
             </p>
           </div>
         </div>

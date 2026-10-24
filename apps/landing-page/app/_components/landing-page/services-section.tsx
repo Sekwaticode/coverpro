@@ -1,49 +1,20 @@
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Bath,
-  CookingPot,
-  Grid3x3,
-  Hammer,
-  HardHat,
-  House,
-  Layers,
-  PaintRoller,
-  PanelTop,
-  Shovel,
-  Wrench,
-  Zap,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, LayoutGrid } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { serviceCategories, talentSearchHref } from "@/lib/service-categories";
 
 import { SectionHeading } from "./section-heading";
-
-const services = [
-  { label: "General Construction", icon: HardHat },
-  { label: "Roofing", icon: House },
-  { label: "Tiling", icon: Grid3x3 },
-  { label: "Flooring", icon: Layers },
-  { label: "Ceilings & Drywall", icon: PanelTop },
-  { label: "Plumbing", icon: Wrench },
-  { label: "Electrical", icon: Zap },
-  { label: "Painting", icon: PaintRoller },
-  { label: "Kitchen Renovation", icon: CookingPot },
-  { label: "Bathroom Remodel", icon: Bath },
-  { label: "Carpentry", icon: Hammer },
-  { label: "Paving & Landscaping", icon: Shovel },
-];
 
 export function ServicesSection() {
   return (
     <section id="services" className="bg-background py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeading
-          icon={HardHat}
-          eyebrow="Browse by trade"
-          title="Every trade your project needs."
-          description="Builders, roofers, tilers, plumbers and more — ready to quote in your province."
+          icon={LayoutGrid}
+          eyebrow="Browse by category"
+          title="Talent for every kind of gig."
+          description="Developers, creators, photographers, singers, makeup and tattoo artists, renovation experts, tutors and coaches."
           action={
             <Button asChild variant="outline" className="self-start rounded-full font-semibold sm:self-auto">
               <Link href="/talents">
@@ -54,11 +25,11 @@ export function ServicesSection() {
           }
         />
 
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {services.map(({ label, icon: Icon }) => (
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5">
+          {serviceCategories.map(({ label, icon: Icon }) => (
             <Link
               key={label}
-              href={`/talents?q=${encodeURIComponent(label)}`}
+              href={talentSearchHref(label)}
               className="group rounded-2xl border border-border bg-background p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-xl hover:shadow-black/5"
             >
               <div className="flex items-start justify-between">

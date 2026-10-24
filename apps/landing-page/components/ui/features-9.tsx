@@ -23,14 +23,14 @@ export function Features() {
             </span>
 
             <p className="mt-8 text-2xl font-semibold">
-              Find verified contractors near you and far.
+              Hire verified pros nearby or work fully remote.
             </p>
           </div>
 
           <div aria-hidden className="relative">
             <div className="absolute inset-0 z-10 m-auto size-fit">
               <div className="relative z-[1] flex size-fit w-fit items-center gap-2 rounded-lg border bg-background px-3 py-1 text-xs font-medium shadow-md shadow-black/5">
-                <span className="text-lg">🇿🇦</span> New quote from a pro in Durban
+                <span className="text-lg">🇿🇦</span> New proposal from a photographer in Durban
               </div>
               <div className="absolute inset-2 -bottom-2 mx-auto rounded-lg border bg-background px-3 py-4 text-xs font-medium shadow-md shadow-black/5"></div>
             </div>
@@ -45,10 +45,12 @@ export function Features() {
           <div className="relative z-10">
             <span className="flex items-center gap-2 text-muted-foreground">
               <MessageCircle className="size-4" />
-Chat Function            </span>
+              Chat
+            </span>
 
             <p className="my-8 text-2xl font-semibold">
-Built in messaging to streamline communication            </p>
+              Built-in messaging to keep every gig on track.
+            </p>
           </div>
           <div aria-hidden className="flex flex-col gap-8">
             <div>
@@ -59,12 +61,13 @@ Built in messaging to streamline communication            </p>
                 <span className="text-xs text-muted-foreground">Sat 22 Feb</span>
               </div>
               <div className="mt-1.5 w-3/5 rounded-lg border bg-background p-3 text-xs">
-I just viewed your proposal. What experience do you have in this industry?              </div>
+                I just viewed your proposal. Have you shot weddings this size before?
+              </div>
             </div>
 
             <div>
               <div className="mb-1 ml-auto w-3/5 rounded-lg bg-primary p-3 text-xs text-primary-foreground">
-              Hey John. I have 15 years of experience in this industry, I know the best suppliers and I&apos;ve completed 130 projects just like yours!
+              Hi John! I&apos;ve covered 40+ weddings this year, 150 guests and up. I&apos;ll send my full gallery and a timeline for your day.
               </div>
               <span className="block text-right text-xs text-muted-foreground">Now</span>
             </div>

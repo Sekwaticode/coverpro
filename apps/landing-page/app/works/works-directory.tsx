@@ -486,13 +486,13 @@ export function WorksDirectory() {
       <section className="border-b border-black/7 bg-[#f8e7de]">
         <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-18 lg:px-10">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#e46526]">
-            Jobs for tradespeople
+            Jobs for freelancers &amp; pros
           </p>
           <h1 className={`${styles.pageTitle} max-w-3xl`}>
-            Find building and renovation jobs near you.
+            Find paid gigs near you or remote.
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-6 text-[#706a64] sm:text-base">
-            Quote on projects from verified homeowners and property owners —
+            Send proposals to clients across South Africa —
             every milestone is funded into escrow before you start.
           </p>
           <label className="mt-8 flex max-w-2xl items-center gap-3 rounded-2xl border border-black/10 bg-white px-4 focus-within:border-[#e77840] focus-within:ring-3 focus-within:ring-white/60">
@@ -522,7 +522,7 @@ export function WorksDirectory() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="h-14 w-full bg-transparent text-sm outline-none placeholder:text-[#9e9b97]"
-              placeholder="Search jobs by trade, town or client"
+              placeholder="Search jobs by skill, town or client"
             />
             {search && (
               <button

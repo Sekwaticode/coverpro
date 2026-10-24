@@ -7,31 +7,31 @@ import { SectionHeading } from "./section-heading";
 
 const pros = [
   {
-    name: "Mokoena Kitchens & Joinery",
-    trade: "Kitchen renovations",
+    name: "Thandi Mokoena Photography",
+    trade: "Wedding & event photography",
     province: "Gauteng",
-    rate: "From R450/hr",
+    rate: "From R850/hr",
     rating: "4.9",
     jobs: 86,
-    image: "photo-1556911220-bff31c812dba",
+    image: "photo-1519741497674-611481863552",
   },
   {
-    name: "Naidoo Tiling & Bathrooms",
-    trade: "Bathroom remodels & tiling",
+    name: "Ayesha Naidoo Beauty",
+    trade: "Bridal & editorial makeup",
     province: "KwaZulu-Natal",
-    rate: "From R380/hr",
+    rate: "From R600/hr",
     rating: "5.0",
     jobs: 64,
-    image: "photo-1552321554-5fefe8c9ef14",
+    image: "photo-1487412947147-5cebf100ffc2",
   },
   {
-    name: "Van Wyk Building Co.",
-    trade: "New builds & extensions",
+    name: "Pieter van Wyk",
+    trade: "Web developer · Next.js & Shopify",
     province: "Western Cape",
     rate: "From R520/hr",
     rating: "4.8",
     jobs: 112,
-    image: "photo-1600566753190-17f0baa2a6c3",
+    image: "photo-1498050108023-c5249f4df085",
   },
 ];
 
@@ -43,7 +43,7 @@ export function FeaturedProsSection() {
           icon={Star}
           eyebrow="Featured pros"
           title="Top-rated pros, taking on work this week."
-          description="Verified contractors with real reviews from homeowners near you."
+          description="Verified freelancers and service pros with real reviews from clients."
           action={
             <Button asChild variant="outline" className="self-start rounded-full font-semibold sm:self-auto">
               <Link href="/talents">

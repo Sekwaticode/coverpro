@@ -748,12 +748,14 @@ const agencySizeOptions = [
 ];
 
 const agencySpecialtyOptions = [
-  "General construction",
-  "Roofing & waterproofing",
-  "Tiling & flooring",
-  "Ceilings & drywall",
-  "Plumbing & electrical",
-  "Painting & renovations",
+  "Web & software development",
+  "Design & branding",
+  "Content creation & social media",
+  "Photography & video",
+  "Events & entertainment",
+  "Beauty, makeup & tattoo",
+  "Home services & trades",
+  "Other services",
 ];
 
 function AgencySetupForm({

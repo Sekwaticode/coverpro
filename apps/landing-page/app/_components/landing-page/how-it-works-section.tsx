@@ -6,12 +6,12 @@ const steps = [
   {
     icon: FilePlus2,
     title: "Post your project",
-    body: "Describe the job — a new roof, retiled bathroom or full kitchen renovation — with your budget in rands and the town you're in.",
+    body: "Describe what you need — a new website, a wedding shoot, UGC videos, a makeup trial or a geyser fix — with your budget in rands.",
   },
   {
     icon: Users,
     title: "Compare quotes from verified pros",
-    body: "Local contractors send proposals with milestones, timelines and pricing. Check their reviews, past jobs and verification first.",
+    body: "Pros send proposals with milestones, timelines and pricing. Check their reviews, portfolio and verification first.",
   },
   {
     icon: LockKeyhole,
@@ -35,10 +35,10 @@ export function HowItWorksSection() {
           title={
             <>
               Every rand protected,{" "}
-              <span className="text-primary">from deposit to final coat.</span>
+              <span className="text-primary">from deposit to delivery.</span>
             </>
           }
-          description="No more paying a deposit and hoping the builder comes back. CoverPro holds payment for each stage of the job until you sign it off."
+          description="No more paying upfront and hoping the work shows up. CoverPro holds payment for each stage of the gig until you sign it off."
         />
 
         <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

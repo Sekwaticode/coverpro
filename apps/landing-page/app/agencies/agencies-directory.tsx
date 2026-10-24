@@ -30,12 +30,14 @@ const SEARCH_DEBOUNCE_MS = 700;
 const RATE_CEILING = 500;
 
 const specialties = [
-  "General construction",
-  "Roofing & waterproofing",
-  "Tiling & flooring",
-  "Ceilings & drywall",
-  "Plumbing & electrical",
-  "Painting & renovations",
+  "Web & software development",
+  "Design & branding",
+  "Content creation & social media",
+  "Photography & video",
+  "Events & entertainment",
+  "Beauty, makeup & tattoo",
+  "Home services & trades",
+  "Other services",
 ];
 const teamSizes = [
   "2–5 members",
@@ -381,14 +383,14 @@ export function AgenciesDirectory() {
       <section className="border-b border-[#e5cbbc] bg-[#f9e8df]">
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-10">
           <p className="text-xs font-semibold tracking-[0.18em] text-[#e56b2e] uppercase">
-            Construction companies &amp; crews
+            Agencies, studios &amp; teams
           </p>
           <h1 className={styles.pageTitle}>
-            Find the right building company for bigger jobs.
+            Find the right team for bigger projects.
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-[#706c68] sm:text-lg">
-            Hire established contractors with full crews for new builds,
-            extensions, roofing and complete home renovations.
+            Hire established teams — from web and design studios to content
+            houses, event companies and trade crews.
           </p>
           <label className="mt-10 flex h-16 max-w-3xl items-center gap-4 rounded-2xl border border-black/8 bg-white px-5 focus-within:border-[#e77840]">
             <svg
@@ -414,7 +416,7 @@ export function AgenciesDirectory() {
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search by trade, company name, town or province"
+              placeholder="Search by service, company name, town or province"
               className="h-full w-full bg-transparent text-base outline-none placeholder:text-[#a5a19d]"
             />
           </label>

@@ -26,9 +26,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CoverPro | Hire trusted building & renovation pros",
+  title: "CoverPro | Hire trusted freelancers & service pros",
   description:
-    "South Africa's escrow-backed marketplace for construction, roofing, tiling, flooring, ceilings, plumbing and home renovation pros.",
+    "South Africa's escrow-backed marketplace for the gig economy: web developers, designers, content creators, photographers, event specialists, makeup and tattoo artists, trades and more.",
 };
 
 export default function RootLayout({

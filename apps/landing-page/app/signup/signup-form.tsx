@@ -326,8 +326,8 @@ export function SignupForm({ role }: SignupFormProps) {
         </h1>
         <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#76736f]">
           {isClient
-            ? "Hire verified builders, tilers, roofers and plumbers near you."
-            : "Show off your work, quote on local jobs, and get paid through escrow."}
+            ? "Hire verified developers, creators, photographers, artists and more."
+            : "Show off your work, win new clients, and get paid through escrow."}
         </p>
       </div>
 

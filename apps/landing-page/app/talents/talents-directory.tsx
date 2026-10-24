@@ -565,14 +565,15 @@ export function TalentsDirectory() {
       <section className="border-b border-black/7 bg-[#f8e7de]">
         <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-18 lg:px-10">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#e46526]">
-            Building &amp; renovation pros
+            Freelancers &amp; service pros
           </p>
           <h1 className={`${styles.pageTitle} max-w-3xl`}>
             Find a trusted pro for your next project.
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-6 text-[#706a64] sm:text-base">
-            Search verified builders, roofers, tilers, plumbers, electricians
-            and more by trade, province, reviews and rate.
+            Search verified developers, designers, content creators,
+            photographers, makeup and tattoo artists and more by skill,
+            province, reviews and rate.
           </p>
 
           <label className="mt-8 flex max-w-2xl items-center gap-3 rounded-2xl border border-black/10 bg-white px-4 focus-within:border-[#e77840] focus-within:ring-3 focus-within:ring-white/60">
@@ -602,7 +603,7 @@ export function TalentsDirectory() {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               className="h-14 w-full bg-transparent text-sm outline-none placeholder:text-[#9e9b97]"
-              placeholder="Search by trade, name, town or province"
+              placeholder="Search by skill, name, town or province"
             />
             {search && (
               <button

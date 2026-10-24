@@ -8,11 +8,9 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
+  DropdownNavigation,
+  type DropdownNavItem,
+} from "@/components/ui/dropdown-navigation";
 import {
   Sheet,
   SheetContent,
@@ -23,6 +21,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import ArrowLink from "./arrow-link";
+import { navSubMenus } from "./nav-menus";
 import type { NavigationSection } from "./navigation";
 
 export type { NavigationSection };
@@ -111,34 +110,22 @@ export default function Header({
   navigationData: NavigationSection[];
 }) {
   const [open, setOpen] = useState(false);
+  const navItems: DropdownNavItem[] = navigationData.map((item, index) => ({
+    id: index,
+    label: item.title,
+    link: item.href,
+    isActive: item.isActive,
+    subMenus: navSubMenus[item.href],
+  }));
 
   // pt-4 + h-16 = 80px; the hero pulls itself up by this much so its
   // background runs behind the floating bar.
   return (
     <header className="sticky top-0 z-50 px-3 pt-4 sm:px-6">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 rounded-full border border-border bg-background/80 pr-2 pl-3 shadow-lg shadow-black/5 backdrop-blur-md">
+      <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 rounded-full border border-border bg-background/80 pr-2 pl-3 shadow-lg shadow-black/5 backdrop-blur-md">
         <Logo />
 
-        <NavigationMenu className="hidden lg:flex">
-          <NavigationMenuList className="rounded-full bg-muted p-1">
-            {navigationData.map((item) => (
-              <NavigationMenuItem key={item.title}>
-                <NavigationMenuLink asChild active={item.isActive}>
-                  <Link
-                    href={item.href}
-                    aria-current={item.isActive ? "page" : undefined}
-                    className={cn(
-                      "block rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
-                      item.isActive && "bg-foreground text-background hover:text-background",
-                    )}
-                  >
-                    {item.title}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <DropdownNavigation navItems={navItems} className="hidden lg:block" />
 
         <div className="hidden sm:block">
           <AccountActions />

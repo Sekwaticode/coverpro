@@ -5,9 +5,9 @@ import ArrowLink from "@/components/ui/hero-01-utils/arrow-link";
 import { Eyebrow } from "./section-heading";
 
 const perks = [
-  "A public company profile with your past projects",
-  "Bring your whole crew onto one account",
-  "Bid on bigger jobs with milestone payments",
+  "A public team profile with your portfolio",
+  "Bring your whole team onto one account",
+  "Take on bigger projects with milestone payments",
 ];
 
 export function AgenciesSection() {
@@ -16,14 +16,14 @@ export function AgenciesSection() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid items-center gap-14 overflow-hidden rounded-3xl border border-border bg-background p-6 shadow-xl shadow-black/5 sm:p-10 lg:grid-cols-2 lg:gap-10 lg:p-14">
           <div>
-            <Eyebrow icon={Building2}>CoverPro for construction companies</Eyebrow>
+            <Eyebrow icon={Building2}>CoverPro for agencies &amp; teams</Eyebrow>
             <h2 className="mt-6 max-w-lg text-3xl leading-[1.1] font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-              Run a building company?{" "}
+              Run an agency, studio or crew?{" "}
               <span className="text-primary">Bring your whole team.</span>
             </h2>
             <p className="mt-5 max-w-md text-base leading-7 text-muted-foreground">
-              Win more work in your province, show off finished projects, and get
-              paid on time — every milestone is funded before you start.
+              Win more clients, show off your best work, and get paid on time —
+              every milestone is funded before you start.
             </p>
             <ul className="mt-6 grid gap-3 text-sm text-foreground">
               {perks.map((perk) => (
@@ -40,22 +40,22 @@ export function AgenciesSection() {
 
           <div className="relative">
             <img
-              src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1100&q=80"
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1100&q=80"
               className="aspect-[4/3] w-full rounded-3xl object-cover shadow-2xl shadow-black/10"
-              alt="Construction crew on a building site"
+              alt="A creative team working together at a shared table"
             />
             <div className="absolute right-4 -bottom-7 w-64 rounded-2xl border border-border bg-background p-4 shadow-xl shadow-black/8 sm:-right-4">
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-                  KB
+                  KS
                 </span>
                 <div>
-                  <p className="text-sm font-semibold">Khumalo Builders</p>
-                  <p className="text-xs text-muted-foreground">Construction · Mpumalanga</p>
+                  <p className="text-sm font-semibold">Khumalo Studio</p>
+                  <p className="text-xs text-muted-foreground">Design &amp; content · Mpumalanga</p>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
-                {["Roofing", "Brickwork", "Ceilings"].map((tag) => (
+                {["Branding", "Web design", "Video"].map((tag) => (
                   <span
                     key={tag}
                     className="rounded-full bg-accent px-2.5 py-1 text-xs font-medium text-accent-foreground"

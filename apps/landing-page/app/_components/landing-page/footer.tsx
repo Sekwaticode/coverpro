@@ -16,20 +16,20 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-6 text-muted-foreground">
-              South Africa&apos;s escrow-backed marketplace for construction,
-              renovation and home improvement pros.
+              South Africa&apos;s escrow-backed marketplace for freelancers,
+              creatives and service pros of every kind.
             </p>
           </div>
           <div>
             <p className="text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">
-              For homeowners
+              For clients
             </p>
             <div className="mt-4 flex flex-col gap-3 text-sm text-foreground/80">
               <Link href="/talents" className={footerLinkClass}>
                 Browse services
               </Link>
               <Link href="/agencies" className={footerLinkClass}>
-                Construction companies
+                Agencies &amp; teams
               </Link>
               <Link href="/#how-it-works" className={footerLinkClass}>
                 How escrow works

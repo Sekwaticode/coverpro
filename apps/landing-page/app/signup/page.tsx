@@ -66,7 +66,7 @@ function FreelancerIllustration() {
 
 const roles = [
   {
-    title: "Homeowner / Client",
+    title: "Client",
     description: "Post a project and hire pros",
     href: "/signup?role=client",
     illustration: <ClientIllustration />,
@@ -74,7 +74,7 @@ const roles = [
   },
   {
     title: "Service provider",
-    description: "Quote on jobs and get paid",
+    description: "Find work and get paid",
     href: "/signup?role=freelancer",
     illustration: <FreelancerIllustration />,
     background: "linear-gradient(135deg, #fcdcc9 0%, #fbd1b9 100%)",
