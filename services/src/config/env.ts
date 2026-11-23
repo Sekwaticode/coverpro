@@ -46,4 +46,13 @@ export const env = {
   clientDashboard: process.env.CLIENT_DASHBOARD,
   agencyDashboard: process.env.AGENCY_DASHBOARD,
   natsUrl: process.env.NATS_URL ?? "nats://localhost:4222",
+  tradesafe: {
+    clientId: process.env.TRADESAFE_CLIENT_ID,
+    clientSecret: process.env.TRADESAFE_CLIENT_SECRET,
+    // "sandbox" (default) uses TradeSafe's developer API; "production" uses the live API.
+    environment:
+      process.env.TRADESAFE_ENV === "production" ? "production" : "sandbox",
+    // Random string appended to the callback URL (?token=...) so only TradeSafe can call it.
+    callbackSecret: process.env.TRADESAFE_CALLBACK_SECRET,
+  },
 } as const;

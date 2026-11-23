@@ -14,6 +14,7 @@ import { contractsRouter } from "../modules/contracts/contracts.route.js";
 import { identityRouter } from "../modules/identity/identity.route.js";
 import { meetingsRouter } from "../modules/meetings/meetings.route.js";
 import { adminRouter } from "../modules/admin/admin.route.js";
+import { tradesafeRouter } from "../modules/tradesafe/tradesafe.route.js";
 
 export const apiRouter = Router();
 
@@ -30,6 +31,7 @@ apiRouter.use("/identity", identityRouter);
 apiRouter.use("/agency", agencyRouter);
 apiRouter.use("/meetings", meetingsRouter);
 apiRouter.use("/admin", adminRouter);
+apiRouter.use("/tradesafe", tradesafeRouter);
 
 apiRouter.get("/health", (_request, response) => {
   const body: ApiResponse<{
