@@ -30,6 +30,7 @@ import { env } from "../../config/env.js";
 import { createClerkClient } from "@clerk/backend";
 import { getAgencyOwnerId } from "../agency/agency.service.js";
 import { sendNotification } from "../../events/publisher.js";
+import { markInvitationApplied } from "../invitations/invitations.service.js";
 import { emitConversationUpdate } from "../messaging/messaging.socket.js";
 
 export const submitProposal = async (
@@ -118,6 +119,7 @@ export const submitProposal = async (
     CONNECTS_CACHE_TTL_SECONDS,
     String(result.connects),
   );
+  await markInvitationApplied(input.jobId, { freelancerId });
 
   await sendNotification({
     recipientId: result.clientId,
@@ -230,6 +232,7 @@ export const submitAgencyProposal = async (
     CONNECTS_CACHE_TTL_SECONDS,
     String(result.connects),
   );
+  await markInvitationApplied(input.jobId, { agencyId });
 
   await sendNotification({
     recipientId: result.clientId,

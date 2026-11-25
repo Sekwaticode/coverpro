@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { ProfileServices } from "../services/profile-services";
 import type { ClientProposal } from "../data/client-data";
 import { OngoingProjects } from "./ongoing-projects";
 import { WorkHistoryPagination } from "./work-history-pagination";
@@ -25,11 +26,11 @@ export function PublicMarketplaceProfile({
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <Link
-            href="/proposals"
+            href="/talent"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#dd5c1b]"
           >
             <Icon icon="solar:arrow-left-linear" width="15" />
-            Back to proposals
+            Back to pros
           </Link>
           <p className="mt-5 text-xs font-semibold tracking-[.14em] text-[#e66d31] uppercase">
             Public pro profile
@@ -38,6 +39,13 @@ export function PublicMarketplaceProfile({
             {profile.bidder}
           </h1>
         </div>
+        <a
+          href="#services"
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#272624] px-5 text-sm font-semibold text-white transition hover:bg-[#3e3c39]"
+        >
+          <Icon icon="solar:shop-2-linear" width="18" />
+          Request a service
+        </a>
       </div>
 
       <div className="mt-8 grid items-start gap-6 lg:grid-cols-[290px_minmax(0,1fr)]">
@@ -167,6 +175,7 @@ export function PublicMarketplaceProfile({
         </aside>
 
         <div className="grid min-w-0 gap-6">
+          <ProfileServices owner={{ freelancerId: profile.freelancerId ?? String(profile.id) }} name={profile.bidder} />
           <section className="overflow-hidden rounded-3xl border border-black/8 bg-white">
             <div className="bg-[radial-gradient(circle_at_82%_18%,rgba(220,157,120,.32),transparent_34%),linear-gradient(135deg,#f7e5da,#fcf7f4)] p-6 sm:p-8">
               <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">

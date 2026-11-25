@@ -41,9 +41,22 @@ export function SignupForm({ role }: SignupFormProps) {
   useEffect(() => {
     if (!user) return;
     void (async () => {
-      goToBackendSync(user.unsafeMetadata.role, await getToken());
+      let sessionRole = user.unsafeMetadata.role;
+      // A signed-in user without a role (e.g. created outside this form) would
+      // otherwise loop between /signup and the error page. Give them this page's role.
+      if (typeof sessionRole !== "string") {
+        try {
+          await user.update({ unsafeMetadata: { ...user.unsafeMetadata, role } });
+          sessionRole = role;
+        } catch (error) {
+          setIsError(true);
+          setStatus(getErrorMessage(error));
+          return;
+        }
+      }
+      goToBackendSync(sessionRole, await getToken());
     })();
-  }, [getToken, user]);
+  }, [getToken, user, role]);
 
   function getErrorMessage(error: unknown) {
     if (error instanceof Error) {

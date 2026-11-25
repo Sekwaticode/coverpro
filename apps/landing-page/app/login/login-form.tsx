@@ -9,7 +9,7 @@ import { useSignIn as useLegacySignIn } from "@clerk/nextjs/legacy";
 export function LoginForm() {
   const { signIn, fetchStatus } = useSignIn();
   const { signIn: redirectSignIn } = useLegacySignIn();
-  const { getToken } = useAuth();
+  const { getToken, signOut } = useAuth();
   const { user } = useUser();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -47,9 +47,17 @@ export function LoginForm() {
   useEffect(() => {
     if (!user) return;
     void (async () => {
+      if (typeof user.unsafeMetadata.role !== "string") {
+        // Stale session for an account that never finished CoverPro signup:
+        // sign it out instead of bouncing to the error page on every visit.
+        await signOut();
+        setIsError(true);
+        setStatus("That account isn't set up on CoverPro yet. Please sign up first.");
+        return;
+      }
       goToBackendSync(user.unsafeMetadata.role, await getToken());
     })();
-  }, [getToken, user]);
+  }, [getToken, signOut, user]);
 
   async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();

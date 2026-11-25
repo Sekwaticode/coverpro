@@ -1,0 +1,2 @@
+ALTER TABLE "agency_metadata" ADD COLUMN "tradesafe_token_id" text;--> statement-breakpoint
+ALTER TABLE "agency_metadata" ADD CONSTRAINT "agency_metadata_tradesafe_token_id_unique" UNIQUE("tradesafe_token_id");

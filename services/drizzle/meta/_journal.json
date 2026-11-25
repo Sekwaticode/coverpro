@@ -267,6 +267,41 @@
       "when": 1792501859014,
       "tag": "0037_client_type",
       "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "7",
+      "when": 1795451437062,
+      "tag": "0038_tradesafe_escrow",
+      "breakpoints": true
+    },
+    {
+      "idx": 39,
+      "version": "7",
+      "when": 1795471261755,
+      "tag": "0039_job_invitations",
+      "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "7",
+      "when": 1795472395472,
+      "tag": "0040_service_listings",
+      "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "7",
+      "when": 1795474733725,
+      "tag": "0041_booking_contracts",
+      "breakpoints": true
+    },
+    {
+      "idx": 42,
+      "version": "7",
+      "when": 1795514688890,
+      "tag": "0042_agency_tradesafe_token",
+      "breakpoints": true
     }
   ]
 }

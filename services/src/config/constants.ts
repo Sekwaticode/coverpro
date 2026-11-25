@@ -57,6 +57,9 @@ export type ConnectsPlan = keyof typeof CONNECTS_PLANS;
 export const PLATFORM_FEE_RATE = 0.1;
 
 export const EARNINGS_HOLD_PERIOD_DAYS = 5;
+
+/** Submitted milestones the client hasn't reviewed are approved after this many days. */
+export const AUTO_APPROVE_AFTER_DAYS = 7;
 export const EARNINGS_HOLD_PERIOD_MS =
   EARNINGS_HOLD_PERIOD_DAYS * 24 * 60 * 60 * 1000;
 

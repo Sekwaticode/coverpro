@@ -15,6 +15,7 @@ import {
   message_attachments,
   messages,
   proposals,
+  service_bookings,
 } from "../../database/schema.js";
 import { ApiError } from "../../utils/api-error.js";
 import {
@@ -186,7 +187,9 @@ export const getConversations = async (
         WHERE ${message_attachments.message_id} = ${messages.id}
         LIMIT 1
       )`,
-      jobTitle: job_posts.title,
+      // Booking chats have no job: fall back to the booked service title.
+      jobTitle: sql<string | null>`coalesce(${job_posts.title}, ${service_bookings.title})`,
+      bookingId: service_bookings.id,
       contractId: contracts.id,
       contractStatus: contracts.status,
     })
@@ -197,7 +200,8 @@ export const getConversations = async (
     )
     .leftJoin(messages, eq(conversations.last_message_id, messages.id))
     .leftJoin(job_posts, eq(conversations.job_id, job_posts.id))
-    .leftJoin(contracts, eq(conversations.proposal_id, contracts.proposal_id))
+    .leftJoin(contracts, eq(contracts.conversation_id, conversations.id))
+    .leftJoin(service_bookings, eq(service_bookings.conversation_id, conversations.id))
     .where(
       agencyId
         ? eq(conversation_participants.agency_id, agencyId)

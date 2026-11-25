@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  clientDashboardProfileUrl,
+  getPublicServices,
+  PublicServices,
+  rand,
+} from "../../_components/public-services";
 import { notFound } from "next/navigation";
 import { Header } from "../../_components/landing-page/header";
 import styles from "./agency-profile.module.css";
@@ -110,8 +116,15 @@ export default async function AgencyProfilePage({
   params,
 }: AgencyProfilePageProps) {
   const { id } = await params;
-  const agency = await getAgencyProfile(id);
+  const [agency, services] = await Promise.all([
+    getAgencyProfile(id),
+    getPublicServices({ agencyId: id }),
+  ]);
   if (!agency) notFound();
+  const requestHref = clientDashboardProfileUrl(`/agency/${id}`);
+  const startingPrice = services.length
+    ? Math.min(...services.map((service) => service.price))
+    : null;
 
   const initials = initialsFor(agency.name);
   const reviews = agency.workHistory.filter((item) => item.review);
@@ -176,12 +189,12 @@ export default async function AgencyProfilePage({
                 >
                   Save profile
                 </Link>
-                <Link
-                  href="/signup?role=client"
+                <a
+                  href="#services"
                   className="rounded-xl bg-[#272624] px-5 py-3 text-sm font-semibold text-white! transition hover:bg-[#3e3c39]"
                 >
-                  Hire this company
-                </Link>
+                  Request a service
+                </a>
               </div>
             </div>
           </div>
@@ -209,6 +222,12 @@ export default async function AgencyProfilePage({
 
         <div className="mx-auto grid max-w-7xl items-start gap-7 px-5 py-12 sm:px-8 lg:grid-cols-[1fr_20rem] lg:px-10">
           <div className="space-y-7">
+            <PublicServices
+              services={services}
+              name={agency.name}
+              requestHref={requestHref}
+              titleClassName={styles.sectionTitle}
+            />
             <section className="rounded-2xl border border-black/7 bg-white p-6 sm:p-8">
               <h2 className={styles.sectionTitle}>About</h2>
               <p className="mt-4 max-w-3xl text-sm leading-7 text-[#686562] sm:text-base">
@@ -368,12 +387,18 @@ export default async function AgencyProfilePage({
             <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#807265]">
               Work with {agency.name}
             </p>
-            <Link
-              href="/signup?role=client"
+            {startingPrice !== null && (
+              <p className="mt-4 text-3xl font-semibold tracking-tight">
+                <span className="text-base font-normal text-[#817e7a]">From </span>
+                {rand(startingPrice)}
+              </p>
+            )}
+            <a
+              href="#services"
               className="mt-6 block rounded-xl bg-[#272624] px-4 py-3 text-center text-sm font-semibold text-white! transition hover:bg-[#3e3c39]"
             >
-              Hire this company
-            </Link>
+              Request a service
+            </a>
             <Link
               href="/signup?role=client"
               className="mt-3 block rounded-xl text-center border border-black/10 px-4 py-3 text-sm font-semibold transition hover:bg-[#faf3ef]"

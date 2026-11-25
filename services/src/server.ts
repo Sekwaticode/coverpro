@@ -11,6 +11,7 @@ import {
 } from "./events/consumer.js";
 import { initializeMessagingSocket } from "./modules/messaging/messaging.socket.js";
 import { startPayoutCron } from "./modules/payouts/payouts.cron.js";
+import { startAutoApproveCron } from "./modules/contracts/auto-approve.cron.js";
 
 let server: Server | undefined;
 let isShuttingDown = false;
@@ -22,6 +23,7 @@ const start = async (): Promise<void> => {
   server = createServer(app);
   initializeMessagingSocket(server);
   startPayoutCron();
+  startAutoApproveCron();
   server.listen(env.port, () => {
     console.log(
       `${SERVICE_NAME} listening on http://localhost:${env.port} in ${env.nodeEnv} mode`,

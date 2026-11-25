@@ -9,9 +9,9 @@ import { createPortal } from "react-dom";
 
 const RESULTS_PAGE_SIZE = 20;
 
-type AccountFilter = "All" | "Freelancer" | "Agency";
+export type AccountFilter = "All" | "Freelancer" | "Agency";
 
-type MarketplaceResult = {
+export type MarketplaceResult = {
   id: string;
   accountType: "Freelancer" | "Agency";
   name: string;
@@ -31,7 +31,7 @@ const popularSearches = [
   "Ceilings",
 ];
 
-const typeParam = (filter: AccountFilter) =>
+export const typeParam = (filter: AccountFilter) =>
   filter === "Freelancer" ? "freelancer" : filter === "Agency" ? "agency" : "all";
 
 export function MarketplaceSearchModal() {
@@ -323,13 +323,13 @@ export function MarketplaceSearchModal() {
   );
 }
 
-function SearchResult({
+export function SearchResult({
   profile,
   closeModal,
   setQuery,
 }: {
   profile: MarketplaceResult;
-  closeModal: () => void;
+  closeModal?: () => void;
   setQuery: (query: string) => void;
 }) {
   const agency = profile.accountType === "Agency";

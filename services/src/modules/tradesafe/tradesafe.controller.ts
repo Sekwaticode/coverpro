@@ -4,6 +4,7 @@ import { env } from "../../config/env.js";
 import { ApiError } from "../../utils/api-error.js";
 import { asyncHandler } from "../../utils/async-handler.js";
 import {
+  callbackFingerprint,
   getTradeSafeTransaction,
   handleTradeSafeTransactionUpdate,
   markCallbackProcessed,
@@ -78,13 +79,14 @@ export const tradesafeCallback: RequestHandler = asyncHandler(
       throw new ApiError(502, "Could not verify TradeSafe transaction.");
     }
 
-    if (await wasCallbackProcessed(transaction.id, transaction.state)) {
+    const fingerprint = callbackFingerprint(transaction);
+    if (await wasCallbackProcessed(transaction.id, fingerprint)) {
       response.status(200).json({ received: true, duplicate: true });
       return;
     }
 
     await handleTradeSafeTransactionUpdate(transaction);
-    await markCallbackProcessed(transaction.id, transaction.state);
+    await markCallbackProcessed(transaction.id, fingerprint);
 
     response.status(200).json({ received: true });
   },

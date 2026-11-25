@@ -1258,6 +1258,7 @@ function TransactionMessage({
     "APPROVE" | "REQUEST_CHANGES" | null
   >(null);
   const [modificationMessage, setModificationMessage] = useState("");
+  const [reviewError, setReviewError] = useState("");
   useEffect(() => {
     if (!reviewDialog) return;
     const previousHtmlOverflow = document.documentElement.style.overflow;
@@ -1619,7 +1620,7 @@ function TransactionMessage({
           </h3>
           <p className="mt-2 text-sm leading-6 text-[#77736f]">
             {reviewDialog === "APPROVE"
-              ? "Confirming will approve this milestone and release the funded amount to the pro."
+              ? "Confirming approves this milestone. TradeSafe releases the escrowed amount to the pro within 1 day."
               : "Tell the pro exactly what needs to be changed."}
           </p>
           {reviewDialog === "REQUEST_CHANGES" && (
@@ -1631,11 +1632,19 @@ function TransactionMessage({
               className="mt-4 min-h-32 w-full resize-none rounded-xl border border-black/10 p-3 text-sm outline-none focus:border-[#e7773f]"
             />
           )}
+          {reviewError && (
+            <p className="mt-4 rounded-xl bg-[#fff0ee] px-4 py-3 text-xs font-medium text-[#9a4d45]" role="alert">
+              {reviewError}
+            </p>
+          )}
           <div className="mt-5 flex justify-end gap-2">
             <button
               type="button"
               disabled={Boolean(reviewing)}
-              onClick={() => setReviewDialog(null)}
+              onClick={() => {
+                setReviewDialog(null);
+                setReviewError("");
+              }}
               className="h-10 rounded-xl border border-black/10 px-4 text-xs font-semibold disabled:opacity-50"
             >
               Cancel
@@ -1649,6 +1658,7 @@ function TransactionMessage({
               }
               onClick={() => {
                 const action = reviewDialog;
+                setReviewError("");
                 setReviewing(action);
                 void onReviewMilestone(
                   message,
@@ -1661,6 +1671,11 @@ function TransactionMessage({
                     setReviewDialog(null);
                     setModificationMessage("");
                   })
+                  .catch((error: unknown) =>
+                    setReviewError(
+                      error instanceof Error ? error.message : "Something went wrong. Please try again.",
+                    ),
+                  )
                   .finally(() => setReviewing(null));
               }}
               className="h-10 rounded-xl bg-[#272624] px-4 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"

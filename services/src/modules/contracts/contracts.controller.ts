@@ -44,7 +44,7 @@ export const startContractCheckout: RequestHandler = asyncHandler(
 
     response.status(200).json({
       success: true,
-      message: "Stripe Checkout created.",
+      message: "Checkout created.",
       data: { url },
     } satisfies ApiResponse<{ url: string }>);
   },
@@ -262,7 +262,7 @@ export const reviewMilestoneWork: RequestHandler = asyncHandler(
               ? "Milestone accepted"
               : "Modifications requested",
             message: milestone.approved
-              ? `Your work for “${milestone.milestoneTitle}” was accepted.`
+              ? `Your work for “${milestone.milestoneTitle}” was accepted.${milestone.escrowRelease ? " TradeSafe releases your payment within 1 day." : ""}`
               : `The client requested modifications for “${milestone.milestoneTitle}”.`,
             link: `/messages?conversationId=${milestone.conversationId}`,
             metadata: {
@@ -279,7 +279,7 @@ export const reviewMilestoneWork: RequestHandler = asyncHandler(
               ? "Milestone accepted"
               : "Modifications requested",
             message: milestone.approved
-              ? `Your work for “${milestone.milestoneTitle}” was accepted.`
+              ? `Your work for “${milestone.milestoneTitle}” was accepted.${milestone.escrowRelease ? " TradeSafe releases your payment within 1 day." : ""}`
               : `The client requested modifications for “${milestone.milestoneTitle}”.`,
             link: `/messages?conversationId=${milestone.conversationId}`,
             metadata: {

@@ -5,6 +5,7 @@ import { db } from "../../database/client.js";
 import {
   accounts,
   agency_metadata,
+  contracts,
   earning_history,
   payout_history,
 } from "../../database/schema.js";
@@ -52,11 +53,14 @@ export const processDuePayouts = async (): Promise<PayoutRunSummary> => {
       payout_history,
       eq(payout_history.earning_history_id, earning_history.id),
     )
+    .innerJoin(contracts, eq(contracts.id, earning_history.contract_id))
     .where(
       and(
         lte(earning_history.created_at, cutoff),
         isNull(payout_history.id),
         isNotNull(earning_history.freelancer_id),
+        // TradeSafe pays escrow contracts out directly.
+        isNull(contracts.tradesafe_transaction_id),
       ),
     );
 
@@ -77,11 +81,14 @@ export const processDuePayouts = async (): Promise<PayoutRunSummary> => {
       payout_history,
       eq(payout_history.earning_history_id, earning_history.id),
     )
+    .innerJoin(contracts, eq(contracts.id, earning_history.contract_id))
     .where(
       and(
         lte(earning_history.created_at, cutoff),
         isNull(payout_history.id),
         isNotNull(earning_history.agency_id),
+        // TradeSafe pays escrow contracts out directly.
+        isNull(contracts.tradesafe_transaction_id),
       ),
     );
 

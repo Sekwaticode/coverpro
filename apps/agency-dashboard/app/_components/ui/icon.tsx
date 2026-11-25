@@ -34,7 +34,8 @@ export type IconName =
   | "star"
   | "clock"
   | "money"
-  | "question-circle";
+  | "question-circle"
+  | "shop";
 
 const icons: Record<IconName, { default: string; active?: string }> = {
   home: {
@@ -101,6 +102,7 @@ const icons: Record<IconName, { default: string; active?: string }> = {
   clock: { default: "solar:clock-circle-linear" },
   money: { default: "solar:hand-money-linear" },
   "question-circle": { default: "solar:question-circle-linear" },
+  shop: { default: "solar:shop-2-linear", active: "solar:shop-2-bold" },
 };
 
 export function Icon({

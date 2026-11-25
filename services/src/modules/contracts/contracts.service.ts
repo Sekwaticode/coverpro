@@ -2,7 +2,7 @@ import type Stripe from "stripe";
 import { createClerkClient } from "@clerk/backend";
 import { and, asc, desc, eq, inArray, isNotNull, ne, sql } from "drizzle-orm";
 import { env } from "../../config/env.js";
-import { PLATFORM_FEE_RATE } from "../../config/constants.js";
+import { AUTO_APPROVE_AFTER_DAYS, PLATFORM_FEE_RATE } from "../../config/constants.js";
 import { stripe } from "../../config/stripe.js";
 import { db } from "../../database/client.js";
 import {
@@ -21,8 +21,21 @@ import {
   messages,
   proposals,
   reviews,
+  service_bookings,
+  tradesafe_transactions,
 } from "../../database/schema.js";
+import {
+  advanceAllocation,
+  createEscrowTransaction,
+  createTradeSafeUserToken,
+  getCheckoutLink,
+  getPlatformToken,
+  type AllocationTarget,
+} from "../tradesafe/tradesafe.api.js";
+import { logger } from "../../config/logger.js";
+import { getSellerToken } from "../tradesafe/tradesafe.payouts.js";
 import { ApiError } from "../../utils/api-error.js";
+import type { ListingMilestone } from "../../database/schema.js";
 import { sendNotification } from "../../events/publisher.js";
 import { emitConversationUpdate } from "../messaging/messaging.socket.js";
 import { getJSSContribution } from "../freelancer/freelancer.service.js";
@@ -34,11 +47,140 @@ const participantMatch = (accountId: string, agencyId?: string | null) =>
     ? eq(conversation_participants.agency_id, agencyId)
     : eq(conversation_participants.account_id, accountId);
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+// TradeSafe's minimum. CoverPro only marks delivery complete once the client approves,
+// so this is just the delay before TradeSafe auto-releases (the client can release
+// instantly via TradeSafe's own email/SMS link).
+const TRADESAFE_INSPECTION_DAYS = 1;
+
+/** The TradeSafe transaction + allocation behind a milestone (null for Stripe contracts). */
+const getMilestoneAllocation = async (milestoneId: string) => {
+  const [row] = (await db
+    .select({
+      transactionId: contracts.tradesafe_transaction_id,
+      allocationId: contract_milestones.tradesafe_allocation_id,
+    })
+    .from(contract_milestones)
+    .innerJoin(contracts, eq(contracts.id, contract_milestones.contract_id))
+    .where(eq(contract_milestones.id, milestoneId))
+    .limit(1)) as { transactionId: string | null; allocationId: string | null }[];
+  return row?.transactionId && row.allocationId
+    ? { transactionId: row.transactionId, allocationId: row.allocationId }
+    : null;
+};
+
+/**
+ * Moves a milestone's TradeSafe allocation to `target`. Returns false for non-TradeSafe
+ * milestones. Errors propagate so callers can decide whether they are fatal.
+ */
+const syncMilestoneAllocation = async (milestoneId: string, target: AllocationTarget) => {
+  const allocation = await getMilestoneAllocation(milestoneId);
+  if (!allocation) return false;
+  await advanceAllocation(allocation.transactionId, allocation.allocationId, target);
+  return true;
+};
+
+/** Marks a milestone as started on TradeSafe. Best effort: submitting retries it anyway. */
+const startMilestoneAllocation = async (milestoneId: string) => {
+  try {
+    await syncMilestoneAllocation(milestoneId, "STARTED");
+  } catch (error) {
+    await logger.warn({
+      message: "TradeSafe start delivery failed",
+      eventName: "tradesafe.allocation.start_failed",
+      attributes: {
+        "coverpro.milestone_id": milestoneId,
+        "error.message": error instanceof Error ? error.message : String(error),
+      },
+    });
+  }
+};
+
+/** TradeSafe buyer token for a client, created on first use. */
+export const getClientTradeSafeToken = async (clientId: string) => {
+  const [account] = await db
+    .select({
+      email: accounts.email,
+      tokenId: accounts.tradesafe_token_id,
+    })
+    .from(accounts)
+    .where(eq(accounts.auth_id, clientId))
+    .limit(1);
+  if (!account) throw new ApiError(404, "Client account not found.");
+  if (account.tokenId) return account.tokenId;
+
+  const clerk = createClerkClient({ secretKey: env.clerkSecretKey });
+  const user = await clerk.users.getUser(clientId).catch(() => null);
+  const tokenId = await createTradeSafeUserToken({
+    givenName: user?.firstName?.trim() || "CoverPro",
+    familyName: user?.lastName?.trim() || "Client",
+    email: account.email,
+  });
+
+  await db
+    .update(accounts)
+    .set({ tradesafe_token_id: tokenId, updated_at: new Date() })
+    .where(eq(accounts.auth_id, clientId));
+  return tokenId;
+};
+
+/**
+ * Escrows the whole contract in one TradeSafe transaction (one allocation per milestone)
+ * and returns the checkout link. The FUNDS_RECEIVED callback then creates the contract.
+ */
+const createTradeSafeContractCheckout = async (
+  clientId: string,
+  proposalId: string,
+  job: { title: string; milestones: { title: string; budget: number; dueDate: string }[] },
+  seller: { freelancerId: string } | { agencyId: string },
+) => {
+  const amounts = job.milestones.map((milestone) => Number(milestone.budget));
+  if (amounts.some((amount) => !Number.isFinite(amount) || amount <= 0)) {
+    throw new ApiError(400, "Contract milestones are invalid.");
+  }
+
+  // Seller = the pro/agency who sent the proposal; CoverPro is the AGENT (commission).
+  const [buyerToken, sellerToken, agentToken] = await Promise.all([
+    getClientTradeSafeToken(clientId),
+    getSellerToken(seller),
+    getPlatformToken(),
+  ]);
+
+  const now = Date.now();
+  const transaction = await createEscrowTransaction({
+    title: job.title,
+    description: `CoverPro contract: ${job.title}`,
+    reference: `CP-${proposalId}`,
+    buyerToken,
+    sellerToken,
+    agent: { token: agentToken, feePercent: PLATFORM_FEE_RATE * 100 },
+    allocations: job.milestones.map((milestone, position) => ({
+      title: milestone.title,
+      description: milestone.title,
+      value: amounts[position]!,
+      daysToDeliver: Math.ceil((Date.parse(milestone.dueDate) - now) / DAY_MS),
+      daysToInspect: TRADESAFE_INSPECTION_DAYS,
+    })),
+  });
+
+  await db.insert(tradesafe_transactions).values({
+    transaction_id: transaction.id,
+    proposal_id: proposalId,
+    client_id: clientId,
+    amount: amounts.reduce((total, amount) => total + amount, 0).toFixed(2),
+    allocation_ids: transaction.allocationIds,
+    state: transaction.state,
+  });
+
+  return getCheckoutLink(transaction.id);
+};
+
 export const createContractCheckout = async (
   clientId: string,
   proposalId: string,
 ) => {
-  if (!env.stripeSecretKey || !env.clientDashboard) {
+  const usesTradeSafe = env.paymentProvider === "tradesafe";
+  if (!usesTradeSafe && (!env.stripeSecretKey || !env.clientDashboard)) {
     throw new ApiError(503, "Contract payments are not configured.");
   }
 
@@ -70,6 +212,17 @@ export const createContractCheckout = async (
   const amount = Number(firstMilestone.budget);
   if (!Number.isFinite(amount) || amount <= 0) {
     throw new ApiError(400, "The first milestone amount is invalid.");
+  }
+
+  if (usesTradeSafe) {
+    return createTradeSafeContractCheckout(
+      clientId,
+      offer.proposal.id,
+      offer.job,
+      offer.proposal.sender_type === "AGENCY"
+        ? { agencyId: offer.proposal.sender_id }
+        : { freelancerId: offer.proposal.sender_id },
+    );
   }
 
   let customerId = offer.account.stripe_customer_id;
@@ -119,7 +272,7 @@ export const createMilestoneFundingCheckout = async (
   milestoneId: string,
   requirements?: string,
 ) => {
-  if (!env.stripeSecretKey || !env.clientDashboard) {
+  if (!env.clientDashboard) {
     throw new ApiError(503, "Contract payments are not configured.");
   }
 
@@ -128,6 +281,8 @@ export const createMilestoneFundingCheckout = async (
       contractId: contracts.id,
       contractTitle: contracts.title,
       contractStatus: contracts.status,
+      tradesafeTransactionId: contracts.tradesafe_transaction_id,
+      tradesafeAllocationId: contract_milestones.tradesafe_allocation_id,
       milestoneId: contract_milestones.id,
       milestoneTitle: contract_milestones.title,
       milestoneAmount: contract_milestones.amount,
@@ -171,6 +326,30 @@ export const createMilestoneFundingCheckout = async (
     milestone.activeMilestones > 0
   ) {
     throw new ApiError(409, "This milestone cannot be funded yet.");
+  }
+
+  // TradeSafe contracts escrow every milestone upfront, so activating one needs no payment.
+  if (milestone.tradesafeTransactionId) {
+    if (!milestone.tradesafeAllocationId) {
+      throw new ApiError(
+        409,
+        "This milestone was added after the contract was escrowed and can't be funded yet.",
+      );
+    }
+    await activateFundedMilestone(
+      {
+        contractId: milestone.contractId,
+        milestoneId: milestone.milestoneId,
+        clientId,
+        requirements: requirements ?? null,
+      },
+      { funded_at: new Date() },
+    );
+    return `${env.clientDashboard}/contracts?contractId=${milestone.contractId}&funding=success`;
+  }
+
+  if (!env.stripeSecretKey) {
+    throw new ApiError(503, "Contract payments are not configured.");
   }
   if (!milestone.customerId) {
     throw new ApiError(409, "Client payment profile was not found.");
@@ -220,6 +399,63 @@ export const fundContractMilestoneFromPayment = async (
     throw new ApiError(400, "Stripe milestone metadata is missing.");
   }
 
+  const paymentIntentId =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : session.payment_intent?.id;
+
+  await activateFundedMilestone(
+    {
+      contractId,
+      milestoneId,
+      clientId,
+      requirements: session.metadata?.requirements || null,
+    },
+    {
+      funded_at: new Date(),
+      stripe_checkout_session_id: session.id,
+      stripe_payment_intent_id: paymentIntentId,
+    },
+    (milestone) => {
+      const customerId =
+        typeof session.customer === "string"
+          ? session.customer
+          : session.customer?.id;
+      if (
+        customerId !== milestone.customerId ||
+        session.amount_total !==
+          Math.round(Number(milestone.milestoneAmount) * 100) ||
+        session.currency !== "usd"
+      ) {
+        throw new ApiError(400, "Stripe milestone payment does not match.");
+      }
+    },
+  );
+};
+
+/** Moves a PENDING milestone to ACTIVE and tells the pro they can start work. */
+const activateFundedMilestone = async (
+  {
+    contractId,
+    milestoneId,
+    clientId,
+    requirements,
+  }: {
+    contractId: string;
+    milestoneId: string;
+    clientId: string;
+    requirements: string | null;
+  },
+  fields: {
+    funded_at: Date;
+    stripe_checkout_session_id?: string;
+    stripe_payment_intent_id?: string;
+  },
+  verify?: (milestone: {
+    customerId: string | null;
+    milestoneAmount: string;
+  }) => void,
+) => {
   const [milestone] = await db
     .select({
       contractId: contracts.id,
@@ -238,7 +474,7 @@ export const fundContractMilestoneFromPayment = async (
     )
     .innerJoin(
       conversations,
-      eq(conversations.proposal_id, contracts.proposal_id),
+      eq(conversations.id, contracts.conversation_id),
     )
     .innerJoin(accounts, eq(accounts.auth_id, contracts.client_id))
     .where(
@@ -258,32 +494,15 @@ export const fundContractMilestoneFromPayment = async (
     (milestone.agencyId ? await getAgencyOwnerId(milestone.agencyId) : null);
   if (!recipientId) throw new ApiError(500, "Contract owner could not be resolved.");
 
-  const customerId =
-    typeof session.customer === "string"
-      ? session.customer
-      : session.customer?.id;
-  if (
-    customerId !== milestone.customerId ||
-    session.amount_total !==
-      Math.round(Number(milestone.milestoneAmount) * 100) ||
-    session.currency !== "usd"
-  ) {
-    throw new ApiError(400, "Stripe milestone payment does not match.");
-  }
+  verify?.(milestone);
 
-  const paymentIntentId =
-    typeof session.payment_intent === "string"
-      ? session.payment_intent
-      : session.payment_intent?.id;
   const now = new Date();
   const funded = await db.transaction(async (transaction) => {
     const [updated] = await transaction
       .update(contract_milestones)
       .set({
         status: "ACTIVE",
-        funded_at: now,
-        stripe_checkout_session_id: session.id,
-        stripe_payment_intent_id: paymentIntentId,
+        ...fields,
         updated_at: now,
       })
       .where(
@@ -308,7 +527,7 @@ export const fundContractMilestoneFromPayment = async (
           milestoneId: milestone.milestoneId,
           milestoneTitle: milestone.milestoneTitle,
           amount: Number(milestone.milestoneAmount),
-          requirements: session.metadata?.requirements || null,
+          requirements,
         },
       })
       .returning({ id: messages.id, createdAt: messages.created_at });
@@ -337,6 +556,7 @@ export const fundContractMilestoneFromPayment = async (
   });
 
   if (!funded) return;
+  await startMilestoneAllocation(milestone.milestoneId);
   await sendNotification(
     milestone.agencyId
       ? {
@@ -379,7 +599,7 @@ export const getAccountContracts = async (
       freelancerId: contracts.freelancer_id,
       agencyId: contracts.agency_id,
       title: contracts.title,
-      description: job_posts.description,
+      description: sql<string>`coalesce(${job_posts.description}, '')`,
       totalAmount: contracts.total_amount,
       status: contracts.status,
       startedAt: contracts.started_at,
@@ -414,14 +634,14 @@ export const getAccountContracts = async (
             )`,
     })
     .from(contracts)
-    .innerJoin(job_posts, eq(contracts.job_id, job_posts.id))
+    .leftJoin(job_posts, eq(contracts.job_id, job_posts.id))
     .innerJoin(
       contract_milestones,
       eq(contract_milestones.contract_id, contracts.id),
     )
     .leftJoin(
       conversations,
-      eq(conversations.proposal_id, contracts.proposal_id),
+      eq(conversations.id, contracts.conversation_id),
     )
     .leftJoin(client_metadata, eq(client_metadata.auth_id, contracts.client_id))
     .where(
@@ -579,7 +799,7 @@ export const finishContractWithReview = async (
     .from(contracts)
     .leftJoin(
       conversations,
-      eq(conversations.proposal_id, contracts.proposal_id),
+      eq(conversations.id, contracts.conversation_id),
     )
     .where(
       and(
@@ -806,7 +1026,7 @@ export const acceptContract = async (
     .innerJoin(accounts, eq(accounts.auth_id, freelancerId))
     .innerJoin(
       conversations,
-      eq(conversations.proposal_id, contracts.proposal_id),
+      eq(conversations.id, contracts.conversation_id),
     )
     .innerJoin(
       contract_milestones,
@@ -921,6 +1141,7 @@ export const acceptContract = async (
       );
   });
 
+  await startMilestoneAllocation(offer.milestoneId);
   return { ...offer, freelancerId };
 };
 
@@ -952,7 +1173,7 @@ export const submitContractMilestone = async (
     )
     .innerJoin(
       conversations,
-      eq(conversations.proposal_id, contracts.proposal_id),
+      eq(conversations.id, contracts.conversation_id),
     )
     .where(
       and(
@@ -976,6 +1197,10 @@ export const submitContractMilestone = async (
       "Only the active funded milestone can be submitted.",
     );
   }
+
+  // Delivery is only completed on TradeSafe when the client approves (see review),
+  // so the inspection clock never runs while work is still under review.
+  await startMilestoneAllocation(milestone.milestoneId);
 
   const now = new Date();
   await db.transaction(async (transaction) => {
@@ -1042,6 +1267,11 @@ export const reviewContractMilestone = async (
   clientId: string,
   action: "APPROVE" | "REQUEST_CHANGES",
   feedback?: string,
+  options: {
+    releasedByTradeSafe?: boolean;
+    /** Approved by the auto-approve job: the client didn't respond in time. */
+    autoApproved?: boolean;
+  } = {},
 ) => {
   const [milestone] = await db
     .select({
@@ -1063,7 +1293,7 @@ export const reviewContractMilestone = async (
     )
     .innerJoin(
       conversations,
-      eq(conversations.proposal_id, contracts.proposal_id),
+      eq(conversations.id, contracts.conversation_id),
     )
     .where(
       and(
@@ -1088,6 +1318,28 @@ export const reviewContractMilestone = async (
   }
 
   const approved = action === "APPROVE";
+
+  // Approval completes delivery on TradeSafe, which releases the funds after its
+  // inspection period (1 day) or immediately if the client taps TradeSafe's own link.
+  // TradeSafe doesn't let the platform accept on the client's behalf. When TradeSafe
+  // already released the funds (callback), there's nothing to do there.
+  let escrowRelease = false;
+  if (approved && !options.releasedByTradeSafe) {
+    try {
+      escrowRelease = await syncMilestoneAllocation(milestone.milestoneId, "SUBMITTED");
+    } catch (error) {
+      await logger.error({
+        message: "TradeSafe complete delivery failed",
+        eventName: "tradesafe.allocation.deliver_failed",
+        attributes: {
+          "coverpro.milestone_id": milestone.milestoneId,
+          "error.message": error instanceof Error ? error.message : String(error),
+        },
+      });
+      throw new ApiError(502, "We couldn't release the escrow for this milestone. Please try again.");
+    }
+  }
+
   const now = new Date();
   const grossAmount = Number(milestone.milestoneAmount);
   const platformFeeAmount =
@@ -1095,14 +1347,22 @@ export const reviewContractMilestone = async (
   const netAmount = Math.round((grossAmount - platformFeeAmount) * 100) / 100;
 
   await db.transaction(async (transaction) => {
-    await transaction
+    const [reviewed] = (await transaction
       .update(contract_milestones)
       .set(
         approved
           ? { status: "COMPLETED", completed_at: now, updated_at: now }
           : { payment_requested_at: null, updated_at: now },
       )
-      .where(eq(contract_milestones.id, milestone.milestoneId));
+      .where(
+        and(
+          eq(contract_milestones.id, milestone.milestoneId),
+          eq(contract_milestones.status, "ACTIVE"),
+          isNotNull(contract_milestones.payment_requested_at),
+        ),
+      )
+      .returning({ id: contract_milestones.id })) as { id: string }[];
+    if (!reviewed) throw new ApiError(409, "This milestone was already reviewed.");
 
     if (approved) {
       if (milestone.agencyId) {
@@ -1164,7 +1424,13 @@ export const reviewContractMilestone = async (
             conversation_id: milestone.conversationId,
             sender_id: clientId,
             message_type: "SYSTEM_EVENT" as const,
-            body: `The client accepted the work for “${milestone.milestoneTitle}”.`,
+            body: options.releasedByTradeSafe
+              ? `TradeSafe released the payment for “${milestone.milestoneTitle}”.`
+              : options.autoApproved
+                ? `“${milestone.milestoneTitle}” was approved automatically after ${AUTO_APPROVE_AFTER_DAYS} days without a response.${escrowRelease ? " TradeSafe releases the payment within 1 day." : ""}`
+                : escrowRelease
+                ? `The client accepted the work for “${milestone.milestoneTitle}”. TradeSafe releases the payment within 1 day.`
+                : `The client accepted the work for “${milestone.milestoneTitle}”.`,
             event_type: "MILESTONE_APPROVED",
             event_payload: {
               contractId: milestone.contractId,
@@ -1234,7 +1500,7 @@ export const reviewContractMilestone = async (
       );
   });
 
-  return { ...milestone, approved, freelancerId: freelancerAccountId };
+  return { ...milestone, approved, escrowRelease, freelancerId: freelancerAccountId };
 };
 
 export const addContractMilestone = async (
@@ -1265,15 +1531,20 @@ export const addContractMilestone = async (
       )`,
     })
     .from(contracts)
-    .innerJoin(job_posts, eq(job_posts.id, contracts.job_id))
+    .leftJoin(job_posts, eq(job_posts.id, contracts.job_id))
     .leftJoin(
       conversations,
-      eq(conversations.proposal_id, contracts.proposal_id),
+      eq(conversations.id, contracts.conversation_id),
     )
     .where(and(eq(contracts.id, contractId), eq(contracts.client_id, clientId)))
     .limit(1);
 
   if (!contract) throw new ApiError(404, "Contract not found.");
+  if (!contract.jobId || !contract.jobMilestones) {
+    throw new ApiError(409, "Booked services have a fixed milestone plan.");
+  }
+  const jobId = contract.jobId;
+  const jobMilestones = contract.jobMilestones;
   if (contract.status !== "ACTIVE" || contract.incompleteMilestones > 0) {
     throw new ApiError(
       409,
@@ -1304,7 +1575,7 @@ export const addContractMilestone = async (
     if (!milestone) throw new ApiError(500, "Milestone could not be added.");
 
     const updatedJobMilestones = [
-      ...contract.jobMilestones,
+      ...jobMilestones,
       {
         id: milestone.id,
         title: input.title,
@@ -1319,7 +1590,7 @@ export const addContractMilestone = async (
         total_budget: (Number(contract.jobBudget) + input.amount).toFixed(2),
         updated_at: now,
       })
-      .where(eq(job_posts.id, contract.jobId));
+      .where(eq(job_posts.id, jobId));
     await transaction
       .update(contracts)
       .set({
@@ -1422,6 +1693,75 @@ export const createContractFromPayment = async (
     throw new ApiError(400, "Stripe contract metadata is missing.");
   }
 
+  const contractOffer = await loadContractOffer(proposalId, clientId);
+  const { offer, amounts } = contractOffer;
+
+  const stripeCustomerId =
+    typeof session.customer === "string"
+      ? session.customer
+      : session.customer?.id;
+  const firstMilestoneAmount = Math.round(amounts[0]! * 100);
+  if (
+    stripeCustomerId !== offer.stripeCustomerId ||
+    session.amount_total !== firstMilestoneAmount ||
+    session.currency !== "usd"
+  ) {
+    throw new ApiError(400, "Stripe contract payment does not match.");
+  }
+
+  const paymentIntentId =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : session.payment_intent?.id;
+
+  await insertContractOffer(contractOffer, clientId, {
+    milestone: (position) =>
+      position === 0
+        ? {
+            stripe_checkout_session_id: session.id,
+            stripe_payment_intent_id: paymentIntentId,
+            funded_at: new Date(),
+          }
+        : {},
+  });
+};
+
+/**
+ * Creates the contract once TradeSafe confirms the whole contract amount is in escrow.
+ * Milestone 0 counts as funded (as with Stripe); later milestones are already escrowed
+ * and start when the client activates them, without another payment.
+ */
+export const createContractFromTradeSafe = async (escrow: {
+  transactionId: string;
+  proposalId: string;
+  clientId: string;
+  amount: number;
+  allocationIds: string[];
+}) => {
+  const contractOffer = await loadContractOffer(escrow.proposalId, escrow.clientId);
+  const { amounts } = contractOffer;
+
+  const expected = amounts.reduce(
+    (total: number, amount: number) => total + amount,
+    0,
+  );
+  if (
+    Math.round(expected * 100) !== Math.round(escrow.amount * 100) ||
+    escrow.allocationIds.length !== amounts.length
+  ) {
+    throw new ApiError(400, "TradeSafe escrow does not match the contract offer.");
+  }
+
+  return insertContractOffer(contractOffer, escrow.clientId, {
+    contract: { tradesafe_transaction_id: escrow.transactionId },
+    milestone: (position) => ({
+      tradesafe_allocation_id: escrow.allocationIds[position],
+      funded_at: position === 0 ? new Date() : undefined,
+    }),
+  });
+};
+
+const loadContractOffer = async (proposalId: string, clientId: string) => {
   const [offer] = await db
     .select({
       proposal: proposals,
@@ -1448,30 +1788,32 @@ export const createContractFromPayment = async (
     throw new ApiError(400, "Contract milestones are invalid.");
   }
 
-  const stripeCustomerId =
-    typeof session.customer === "string"
-      ? session.customer
-      : session.customer?.id;
-  const firstMilestoneAmount = Math.round(amounts[0]! * 100);
-  if (
-    stripeCustomerId !== offer.stripeCustomerId ||
-    session.amount_total !== firstMilestoneAmount ||
-    session.currency !== "usd"
-  ) {
-    throw new ApiError(400, "Stripe contract payment does not match.");
-  }
+  return { offer, isAgency, milestones, amounts };
+};
 
-  const paymentIntentId =
-    typeof session.payment_intent === "string"
-      ? session.payment_intent
-      : session.payment_intent?.id;
+type ContractOffer = Awaited<ReturnType<typeof loadContractOffer>>;
 
+const insertContractOffer = async (
+  { offer, isAgency, milestones, amounts }: ContractOffer,
+  clientId: string,
+  payment: {
+    contract?: { tradesafe_transaction_id: string };
+    milestone: (position: number) => {
+      stripe_checkout_session_id?: string;
+      stripe_payment_intent_id?: string;
+      tradesafe_allocation_id?: string;
+      funded_at?: Date;
+    };
+  },
+) => {
   const result = await db.transaction(async (transaction) => {
     const [contract] = await transaction
       .insert(contracts)
       .values({
+        ...payment.contract,
         proposal_id: offer.proposal.id,
         job_id: offer.job.id,
+        conversation_id: offer.conversationId,
         client_id: clientId,
         freelancer_id: isAgency ? null : offer.proposal.sender_id,
         agency_id: isAgency ? offer.proposal.sender_id : null,
@@ -1493,9 +1835,7 @@ export const createContractFromPayment = async (
         amount: amounts[position]!.toFixed(2),
         due_date: milestone.dueDate,
         position,
-        stripe_checkout_session_id: position === 0 ? session.id : undefined,
-        stripe_payment_intent_id: position === 0 ? paymentIntentId : undefined,
-        funded_at: position === 0 ? new Date() : undefined,
+        ...payment.milestone(position),
       })),
     );
 
@@ -1551,7 +1891,8 @@ export const createContractFromPayment = async (
     return { contractId: contract.id };
   });
 
-  if (!result) return;
+  // Already created (duplicate payment event): nothing more to do.
+  if (!result) return null;
 
   await sendNotification(
     isAgency
@@ -1580,4 +1921,193 @@ export const createContractFromPayment = async (
   );
 
   await emitConversationUpdate(offer.conversationId, clientId);
+  return result.contractId;
+};
+
+/**
+ * Creates the contract for a booked service once TradeSafe confirms the full amount is in
+ * escrow. The pro already accepted the booking, so the contract starts ACTIVE with its
+ * first milestone running; later milestones are escrowed and start when the client
+ * activates them.
+ */
+export const createContractFromBooking = async (escrow: {
+  transactionId: string;
+  bookingId: string;
+  clientId: string;
+  amount: number;
+  allocationIds: string[];
+}) => {
+  const [booking] = (await db
+    .select()
+    .from(service_bookings)
+    .where(
+      and(
+        eq(service_bookings.id, escrow.bookingId),
+        eq(service_bookings.client_id, escrow.clientId),
+      ),
+    )
+    .limit(1)) as (typeof service_bookings.$inferSelect)[];
+  if (!booking) throw new ApiError(404, "Booking not found.");
+  if (!booking.conversation_id) {
+    throw new ApiError(409, "Booking has no chat to post the contract to.");
+  }
+  const conversationId = booking.conversation_id;
+
+  const milestones = booking.milestones;
+  const amounts = milestones.map((milestone: ListingMilestone) => Number(milestone.amount));
+  const expected = amounts.reduce((total: number, amount: number) => total + amount, 0);
+  if (
+    !milestones.length ||
+    Math.round(expected * 100) !== Math.round(escrow.amount * 100) ||
+    escrow.allocationIds.length !== milestones.length
+  ) {
+    throw new ApiError(400, "TradeSafe escrow does not match the booking.");
+  }
+
+  // Due dates run back to back from today, using each milestone's days.
+  const now = new Date();
+  let elapsedDays = 0;
+  const dueDates = milestones.map((milestone: ListingMilestone) => {
+    elapsedDays += milestone.days;
+    return new Date(now.getTime() + elapsedDays * DAY_MS).toISOString().slice(0, 10);
+  });
+
+  const result = await db.transaction(async (transaction) => {
+    const [contract] = (await transaction
+      .insert(contracts)
+      .values({
+        booking_id: booking.id,
+        conversation_id: conversationId,
+        client_id: booking.client_id,
+        freelancer_id: booking.freelancer_id,
+        agency_id: booking.agency_id,
+        title: booking.title,
+        total_amount: expected.toFixed(2),
+        status: "ACTIVE",
+        started_at: now,
+        tradesafe_transaction_id: escrow.transactionId,
+      })
+      .onConflictDoNothing({ target: contracts.booking_id })
+      .returning({ id: contracts.id })) as { id: string }[];
+    if (!contract) return null;
+
+    await transaction.insert(contract_milestones).values(
+      milestones.map((milestone: ListingMilestone, position: number) => ({
+        contract_id: contract.id,
+        title: milestone.title,
+        amount: amounts[position]!.toFixed(2),
+        due_date: dueDates[position]!,
+        position,
+        tradesafe_allocation_id: escrow.allocationIds[position],
+        status: position === 0 ? ("ACTIVE" as const) : ("PENDING" as const),
+        funded_at: position === 0 ? now : undefined,
+      })),
+    );
+
+    await transaction
+      .update(service_bookings)
+      .set({ status: "PAID", updated_at: now })
+      .where(eq(service_bookings.id, booking.id));
+
+    await transaction
+      .update(accounts)
+      .set({ paymentMethodVerified: true, updated_at: now })
+      .where(eq(accounts.auth_id, booking.client_id));
+
+    if (booking.agency_id) {
+      await transaction
+        .insert(agency_earning)
+        .values({ agency_id: booking.agency_id, ongoing_jobs: 1 })
+        .onConflictDoUpdate({
+          target: agency_earning.agency_id,
+          set: { ongoing_jobs: sql`${agency_earning.ongoing_jobs} + 1`, updated_at: now },
+        });
+    } else if (booking.freelancer_id) {
+      await transaction
+        .insert(freelancer_earning)
+        .values({ freelancer_id: booking.freelancer_id, ongoing_jobs: 1 })
+        .onConflictDoUpdate({
+          target: freelancer_earning.freelancer_id,
+          set: { ongoing_jobs: sql`${freelancer_earning.ongoing_jobs} + 1`, updated_at: now },
+        });
+    }
+    await transaction
+      .insert(client_spents)
+      .values({ client_id: booking.client_id, ongoing_contracts: 1 })
+      .onConflictDoUpdate({
+        target: client_spents.client_id,
+        set: { ongoing_contracts: sql`${client_spents.ongoing_contracts} + 1`, updated_at: now },
+      });
+
+    const [message] = (await transaction
+      .insert(messages)
+      .values({
+        conversation_id: conversationId,
+        sender_id: booking.client_id,
+        message_type: "SYSTEM_EVENT",
+        body: "Payment is safely in escrow. The contract is now active.",
+        event_type: "CONTRACT_ACCEPTED",
+        event_payload: { contractId: contract.id, title: booking.title },
+      })
+      .returning({ id: messages.id, createdAt: messages.created_at })) as {
+      id: string;
+      createdAt: Date;
+    }[];
+    if (!message) throw new ApiError(500, "Contract message could not be sent.");
+
+    await transaction
+      .update(conversations)
+      .set({ last_message_id: message.id, last_message_at: message.createdAt, updated_at: now })
+      .where(eq(conversations.id, conversationId));
+    await transaction
+      .update(conversation_participants)
+      .set({ unread_count: sql`${conversation_participants.unread_count} + 1` })
+      .where(
+        and(
+          eq(conversation_participants.conversation_id, conversationId),
+          ne(conversation_participants.participant_type, "CLIENT"),
+        ),
+      );
+
+    return { contractId: contract.id };
+  });
+
+  // Already created (retried callback).
+  if (!result) return null;
+
+  const proNotification = {
+    type: "CONTRACT_STARTED",
+    title: "Booking paid – contract started",
+    message: `The client paid “${booking.title}” into escrow. You can start the first milestone.`,
+    link: `/contracts?contractId=${result.contractId}`,
+    metadata: { contractId: result.contractId, bookingId: booking.id },
+  };
+  await sendNotification(
+    booking.agency_id
+      ? { ...proNotification, agencyId: booking.agency_id }
+      : { ...proNotification, recipientId: booking.freelancer_id! },
+  );
+  await sendNotification({
+    recipientId: booking.client_id,
+    type: "CONTRACT_STARTED",
+    title: "Payment received",
+    message: `Your payment for “${booking.title}” is in escrow and the contract has started.`,
+    link: `/contracts?contractId=${result.contractId}`,
+    metadata: { contractId: result.contractId, bookingId: booking.id },
+  });
+
+  const [firstMilestone] = (await db
+    .select({ id: contract_milestones.id })
+    .from(contract_milestones)
+    .where(
+      and(
+        eq(contract_milestones.contract_id, result.contractId),
+        eq(contract_milestones.position, 0),
+      ),
+    )
+    .limit(1)) as { id: string }[];
+  if (firstMilestone) await startMilestoneAllocation(firstMilestone.id);
+
+  await emitConversationUpdate(conversationId, booking.client_id);
+  return result.contractId;
 };

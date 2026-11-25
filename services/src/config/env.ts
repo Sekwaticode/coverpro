@@ -46,6 +46,9 @@ export const env = {
   clientDashboard: process.env.CLIENT_DASHBOARD,
   agencyDashboard: process.env.AGENCY_DASHBOARD,
   natsUrl: process.env.NATS_URL ?? "nats://localhost:4222",
+  // Which provider funds contracts: "tradesafe" (escrow, ZAR) or "stripe" (default, legacy).
+  paymentProvider:
+    process.env.PAYMENT_PROVIDER === "tradesafe" ? "tradesafe" : "stripe",
   tradesafe: {
     clientId: process.env.TRADESAFE_CLIENT_ID,
     clientSecret: process.env.TRADESAFE_CLIENT_SECRET,

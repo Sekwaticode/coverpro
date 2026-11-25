@@ -15,6 +15,9 @@ import { identityRouter } from "../modules/identity/identity.route.js";
 import { meetingsRouter } from "../modules/meetings/meetings.route.js";
 import { adminRouter } from "../modules/admin/admin.route.js";
 import { tradesafeRouter } from "../modules/tradesafe/tradesafe.route.js";
+import { invitationRouter } from "../modules/invitations/invitations.route.js";
+import { listingRouter } from "../modules/listings/listings.route.js";
+import { bookingRouter } from "../modules/bookings/bookings.route.js";
 
 export const apiRouter = Router();
 
@@ -22,6 +25,9 @@ apiRouter.use("/auth", authRouter);
 apiRouter.use("/client", clientRouter);
 apiRouter.use("/freelancer", freelancerRouter);
 apiRouter.use("/jobs", jobRouter);
+apiRouter.use("/invitations", invitationRouter);
+apiRouter.use("/listings", listingRouter);
+apiRouter.use("/bookings", bookingRouter);
 apiRouter.use("/connects", connectsRouter);
 apiRouter.use("/notifications", notificationRouter);
 apiRouter.use("/proposals", proposalRouter);

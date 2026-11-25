@@ -1,12 +1,16 @@
 export const headerNavigation = [
   { href: "/", label: "Find jobs" },
+  { href: "/services", label: "My services" },
+  { href: "/bookings", label: "Bookings" },
   { href: "/my-proposals", label: "My proposals" },
   { href: "/contracts", label: "Contracts" },
-  { href: "/saved-jobs", label: "Saved jobs" },
 ] as const;
 
 export const sidebarNavigation = [
   { href: "/", label: "Home", icon: "solar:home-2-linear" },
+  { href: "/services", label: "My services", icon: "solar:shop-2-linear" },
+  { href: "/bookings", label: "Bookings", icon: "solar:calendar-linear" },
+  { href: "/payout-details", label: "Payouts", icon: "solar:wallet-money-linear" },
   {
     href: "/my-proposals",
     label: "My proposals",

@@ -34,6 +34,7 @@ export const accounts = pgTable("accounts", {
   email: text("email").notNull(),
   stripe_customer_id: text("stripe_customer_id").unique(),
   stripe_connect_account_id: text("stripe_connect_account_id").unique(),
+  tradesafe_token_id: text("tradesafe_token_id").unique(),
   role: accountRole().default("CLIENT").notNull(),
   identityVerified: boolean("identityVerified").default(false),
   paymentMethodVerified: boolean("paymentMethodVerified").default(false),
@@ -619,12 +620,21 @@ export const contracts = pgTable(
   "contracts",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    proposal_id: uuid("proposal_id")
-      .notNull()
-      .references(() => proposals.id, { onDelete: "restrict" }),
-    job_id: uuid("job_id")
-      .notNull()
-      .references(() => job_posts.id, { onDelete: "restrict" }),
+    // Set for contracts from the job/proposal flow; null for booked services.
+    proposal_id: uuid("proposal_id").references(() => proposals.id, {
+      onDelete: "restrict",
+    }),
+    job_id: uuid("job_id").references(() => job_posts.id, {
+      onDelete: "restrict",
+    }),
+    // Set for contracts created from a paid service booking.
+    booking_id: uuid("booking_id")
+      .unique()
+      .references((): AnyPgColumn => service_bookings.id, { onDelete: "restrict" }),
+    // The chat this contract's events are posted to.
+    conversation_id: uuid("conversation_id").references(() => conversations.id, {
+      onDelete: "set null",
+    }),
     client_id: text("client_id")
       .notNull()
       .references(() => accounts.auth_id, { onDelete: "restrict" }),
@@ -640,6 +650,7 @@ export const contracts = pgTable(
       scale: 2,
     }).notNull(),
     status: contractStatus().notNull().default("PENDING"),
+    tradesafe_transaction_id: text("tradesafe_transaction_id").unique(),
     started_at: timestamp("started_at", { withTimezone: true }),
     completed_at: timestamp("completed_at", { withTimezone: true }),
     created_at: timestamp("created_at", { withTimezone: true })
@@ -657,6 +668,10 @@ export const contracts = pgTable(
       table.status,
     ),
     check("contracts_total_amount_check", sql`${table.total_amount} > 0`),
+    check(
+      "contracts_source_check",
+      sql`${table.proposal_id} IS NOT NULL OR ${table.booking_id} IS NOT NULL`,
+    ),
     check(
       "contracts_owner_check",
       sql`(${table.freelancer_id} IS NOT NULL) <> (${table.agency_id} IS NOT NULL)`,
@@ -678,6 +693,7 @@ export const contract_milestones = pgTable(
     status: contractMilestoneStatus().notNull().default("PENDING"),
     stripe_checkout_session_id: text("stripe_checkout_session_id").unique(),
     stripe_payment_intent_id: text("stripe_payment_intent_id").unique(),
+    tradesafe_allocation_id: text("tradesafe_allocation_id").unique(),
     funded_at: timestamp("funded_at", { withTimezone: true }),
     payment_requested_at: timestamp("payment_requested_at", {
       withTimezone: true,
@@ -1073,6 +1089,8 @@ export const agency_metadata = pgTable("agency_metadata", {
   }>(),
   is_onboarded: boolean("is_onboarded").notNull().default(false),
   stripe_connect_account_id: text("stripe_connect_account_id"),
+  // The agency's TradeSafe token (payout details live at TradeSafe, not here).
+  tradesafe_token_id: text("tradesafe_token_id").unique(),
   created_at: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -1179,3 +1197,171 @@ export const agencyMemberRelations = relations(agency_members, ({ one }) => ({
     references: [accounts.auth_id],
   }),
 }));
+
+// A TradeSafe escrow transaction created for a contract offer, before the contract exists.
+// The FUNDS_RECEIVED callback looks it up by transaction_id and creates the contract.
+export const tradesafe_transactions = pgTable("tradesafe_transactions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  transaction_id: text("transaction_id").notNull().unique(),
+  // Exactly one source: a proposal (job flow) or a service booking.
+  proposal_id: uuid("proposal_id").references(() => proposals.id, {
+    onDelete: "restrict",
+  }),
+  booking_id: uuid("booking_id").references((): AnyPgColumn => service_bookings.id, {
+    onDelete: "restrict",
+  }),
+  client_id: text("client_id")
+    .notNull()
+    .references(() => accounts.auth_id, { onDelete: "restrict" }),
+  contract_id: uuid("contract_id").references(() => contracts.id, {
+    onDelete: "set null",
+  }),
+  amount: numeric("amount", { precision: 12, scale: 2 }).notNull(),
+  // Allocation IDs in milestone order (index = milestone position).
+  allocation_ids: jsonb("allocation_ids").$type<string[]>().notNull(),
+  state: text("state").notNull(),
+  created_at: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updated_at: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
+/** A client inviting a specific pro (freelancer) or agency to apply to a job. */
+export const job_invitations = pgTable(
+  "job_invitations",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    job_id: uuid("job_id")
+      .notNull()
+      .references(() => job_posts.id, { onDelete: "cascade" }),
+    client_id: text("client_id")
+      .notNull()
+      .references(() => accounts.auth_id, { onDelete: "cascade" }),
+    // Exactly one of these is set: the freelancer's auth ID or the agency's ID.
+    freelancer_id: text("freelancer_id").references(() => accounts.auth_id, {
+      onDelete: "cascade",
+    }),
+    agency_id: uuid("agency_id").references(() => agency_metadata.id, {
+      onDelete: "cascade",
+    }),
+    message: text("message"),
+    // PENDING | APPLIED | DECLINED
+    status: text("status").notNull().default("PENDING"),
+    created_at: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    responded_at: timestamp("responded_at", { withTimezone: true }),
+  },
+  (table) => [
+    uniqueIndex("job_invitation_freelancer_unique").on(
+      table.job_id,
+      table.freelancer_id,
+    ),
+    uniqueIndex("job_invitation_agency_unique").on(table.job_id, table.agency_id),
+    index("job_invitation_freelancer_idx").on(table.freelancer_id),
+    index("job_invitation_agency_idx").on(table.agency_id),
+    check(
+      "job_invitations_target_check",
+      sql`(${table.freelancer_id} IS NOT NULL) <> (${table.agency_id} IS NOT NULL)`,
+    ),
+  ],
+);
+
+export type ListingMilestone = {
+  title: string;
+  description: string;
+  amount: number;
+  days: number;
+};
+
+/** A fixed-price service a pro or agency advertises. Clients request it as-is. */
+export const service_listings = pgTable(
+  "service_listings",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    // Exactly one owner: an individual pro (auth ID) or an agency.
+    freelancer_id: text("freelancer_id").references(() => accounts.auth_id, {
+      onDelete: "cascade",
+    }),
+    agency_id: uuid("agency_id").references(() => agency_metadata.id, {
+      onDelete: "cascade",
+    }),
+    title: text("title").notNull(),
+    description: text("description").notNull(),
+    category: text("category").notNull(),
+    tags: text("tags").array().notNull().default([]),
+    price: numeric("price", { precision: 12, scale: 2 }).notNull(),
+    milestones: jsonb("milestones").$type<ListingMilestone[]>().notNull(),
+    delivery_days: integer("delivery_days").notNull(),
+    // ACTIVE | PAUSED
+    status: text("status").notNull().default("ACTIVE"),
+    created_at: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updated_at: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [
+    index("service_listings_freelancer_idx").on(table.freelancer_id),
+    index("service_listings_agency_idx").on(table.agency_id),
+    index("service_listings_status_idx").on(table.status),
+    check("service_listings_price_check", sql`${table.price} > 0`),
+    check(
+      "service_listings_owner_check",
+      sql`(${table.freelancer_id} IS NOT NULL) <> (${table.agency_id} IS NOT NULL)`,
+    ),
+  ],
+);
+
+/**
+ * A client's request to book a listing. Holds a snapshot of the listing so later
+ * edits by the pro don't change what the client asked for.
+ */
+export const service_bookings = pgTable(
+  "service_bookings",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    listing_id: uuid("listing_id").references(() => service_listings.id, {
+      onDelete: "set null",
+    }),
+    client_id: text("client_id")
+      .notNull()
+      .references(() => accounts.auth_id, { onDelete: "cascade" }),
+    freelancer_id: text("freelancer_id").references(() => accounts.auth_id, {
+      onDelete: "cascade",
+    }),
+    agency_id: uuid("agency_id").references(() => agency_metadata.id, {
+      onDelete: "cascade",
+    }),
+    title: text("title").notNull(),
+    price: numeric("price", { precision: 12, scale: 2 }).notNull(),
+    milestones: jsonb("milestones").$type<ListingMilestone[]>().notNull(),
+    note: text("note"),
+    preferred_start: date("preferred_start"),
+    // REQUESTED | ACCEPTED | DECLINED | CANCELLED | PAID (escrow funded, contract created)
+    status: text("status").notNull().default("REQUESTED"),
+    decline_reason: text("decline_reason"),
+    conversation_id: uuid("conversation_id").references(() => conversations.id, {
+      onDelete: "set null",
+    }),
+    responded_at: timestamp("responded_at", { withTimezone: true }),
+    created_at: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updated_at: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [
+    index("service_bookings_client_idx").on(table.client_id, table.status),
+    index("service_bookings_freelancer_idx").on(table.freelancer_id, table.status),
+    index("service_bookings_agency_idx").on(table.agency_id, table.status),
+    check(
+      "service_bookings_owner_check",
+      sql`(${table.freelancer_id} IS NOT NULL) <> (${table.agency_id} IS NOT NULL)`,
+    ),
+  ],
+);
